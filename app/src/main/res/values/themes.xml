@@ -1,0 +1,5 @@
+<resources>
+
+    <style name="Theme.Thunderscopefrontend" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
+
+</resources>
