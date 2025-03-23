@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<incidents format="6" by="lint 8.9.0" type="conditional_incidents">
+
+    <incident
+        id="ObsoleteSdkInt"
+        severity="warning"
+        message="Unnecessary; `SDK_INT` is always >= 31">
+        <fix-replace
+            description="Delete tools:targetApi"
+            replacement=""
+            priority="0">
+            <range
+                file="${:app*debug*MAIN*sourceProvider*0*manifest*0}"
+                startOffset="635"
+                endOffset="655"/>
+        </fix-replace>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*manifest*0}"
+            line="15"
+            column="9"
+            startOffset="635"
+            endLine="15"
+            endColumn="29"
+            endOffset="655"/>
+        <map>
+            <condition minGE="31-∞"/>
+        </map>
+    </incident>
+
+    <incident
+        id="RtlSymmetry"
+        severity="warning"
+        message="When you define `paddingEnd` you should probably also define `paddingStart` for right-to-left symmetry">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/main_activity.xml"
+            line="139"
+            column="21"
+            startOffset="5649"
+            endLine="139"
+            endColumn="39"
+            endOffset="5667"/>
+        <map>
+            <entry
+                name="applies"
+                int="2"/>
+        </map>
+    </incident>
+
+    <incident
+        id="RtlSymmetry"
+        severity="warning"
+        message="When you define `paddingStart` you should probably also define `paddingEnd` for right-to-left symmetry">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/patient_list_activity.xml"
+            line="118"
+            column="13"
+            startOffset="5160"
+            endLine="118"
+            endColumn="33"
+            endOffset="5180"/>
+        <map>
+            <entry
+                name="applies"
+                int="2"/>
+        </map>
+    </incident>
+
+    <incident
+        id="RtlSymmetry"
+        severity="warning"
+        message="When you define `paddingEnd` you should probably also define `paddingStart` for right-to-left symmetry">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/patient_list_activity.xml"
+            line="135"
+            column="13"
+            startOffset="5958"
+            endLine="135"
+            endColumn="31"
+            endOffset="5976"/>
+        <map>
+            <entry
+                name="applies"
+                int="2"/>
+        </map>
+    </incident>
+
+</incidents>

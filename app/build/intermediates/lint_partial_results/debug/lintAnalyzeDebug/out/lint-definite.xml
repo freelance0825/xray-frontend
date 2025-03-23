@@ -1,0 +1,1105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<incidents format="6" by="lint 8.9.0" type="incidents">
+
+    <incident
+        id="RedundantLabel"
+        severity="warning"
+        message="Redundant label can be removed">
+        <fix-attribute
+            description="Delete label"
+            namespace="http://schemas.android.com/apk/res/android"
+            attribute="label"/>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*manifest*0}"
+            line="21"
+            column="13"
+            startOffset="826"
+            endLine="21"
+            endColumn="45"
+            endOffset="858"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.appcompat:appcompat than 1.6.1 is available: 1.7.0">
+        <fix-replace
+            description="Change to 1.7.0"
+            family="Update versions"
+            oldString="1.6.1"
+            replacement="1.7.0"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="56"
+            column="20"
+            startOffset="1441"
+            endLine="56"
+            endColumn="56"
+            endOffset="1477"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.constraintlayout:constraintlayout than 2.1.4 is available: 2.2.1">
+        <fix-replace
+            description="Change to 2.2.1"
+            family="Update versions"
+            oldString="2.1.4"
+            replacement="2.2.1"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="59"
+            column="20"
+            startOffset="1523"
+            endLine="59"
+            endColumn="70"
+            endOffset="1573"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of com.google.android.material:material than 1.10.0 is available: 1.12.0">
+        <fix-replace
+            description="Change to 1.12.0"
+            family="Update versions"
+            oldString="1.10.0"
+            replacement="1.12.0"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="65"
+            column="21"
+            startOffset="1690"
+            endLine="65"
+            endColumn="66"
+            endOffset="1735"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.compose:compose-bom than 2024.09.00 is available: 2025.03.00">
+        <fix-replace
+            description="Change to 2025.03.00"
+            family="Update versions"
+            oldString="2024.09.00"
+            replacement="2025.03.00"
+            priority="0"/>
+        <location
+            file="$HOME/AndroidStudioProjects/thunderscopefrontend/gradle/libs.versions.toml"
+            line="10"
+            column="14"
+            startOffset="195"
+            endLine="10"
+            endColumn="26"
+            endOffset="207"/>
+    </incident>
+
+    <incident
+        id="DiscouragedApi"
+        severity="warning"
+        message="Should not restrict activity to fixed orientation. This may not be suitable for different form factors, causing the app to be letterboxed.">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*manifest*0}"
+            line="23"
+            column="13"
+            startOffset="935"
+            endLine="23"
+            endColumn="50"
+            endOffset="972"/>
+    </incident>
+
+    <incident
+        id="UseCompoundDrawables"
+        severity="warning"
+        message="This tag and its children can be replaced by one `&lt;TextView/>` and a compound drawable">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/main_activity.xml"
+            line="12"
+            column="6"
+            startOffset="485"
+            endLine="12"
+            endColumn="18"
+            endOffset="497"/>
+    </incident>
+
+    <incident
+        id="UseCompoundDrawables"
+        severity="warning"
+        message="This tag and its children can be replaced by one `&lt;TextView/>` and a compound drawable">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="10"
+            column="6"
+            startOffset="405"
+            endLine="10"
+            endColumn="18"
+            endOffset="417"/>
+    </incident>
+
+    <incident
+        id="DisableBaselineAlignment"
+        severity="warning"
+        message="Set `android:baselineAligned=&quot;false&quot;` on this element for better performance">
+        <fix-attribute
+            description="Set baselineAligned=&quot;false&quot;"
+            robot="true"
+            independent="true"
+            namespace="http://schemas.android.com/apk/res/android"
+            attribute="baselineAligned"
+            value="false"/>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="74"
+            column="14"
+            startOffset="2813"
+            endLine="74"
+            endColumn="26"
+            endOffset="2825"/>
+    </incident>
+
+    <incident
+        id="DisableBaselineAlignment"
+        severity="warning"
+        message="Set `android:baselineAligned=&quot;false&quot;` on this element for better performance">
+        <fix-attribute
+            description="Set baselineAligned=&quot;false&quot;"
+            robot="true"
+            independent="true"
+            namespace="http://schemas.android.com/apk/res/android"
+            attribute="baselineAligned"
+            value="false"/>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="148"
+            column="14"
+            startOffset="6397"
+            endLine="148"
+            endColumn="26"
+            endOffset="6409"/>
+    </incident>
+
+    <incident
+        id="DisableBaselineAlignment"
+        severity="warning"
+        message="Set `android:baselineAligned=&quot;false&quot;` on this element for better performance">
+        <fix-attribute
+            description="Set baselineAligned=&quot;false&quot;"
+            robot="true"
+            independent="true"
+            namespace="http://schemas.android.com/apk/res/android"
+            attribute="baselineAligned"
+            value="false"/>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="219"
+            column="14"
+            startOffset="9789"
+            endLine="219"
+            endColumn="26"
+            endOffset="9801"/>
+    </incident>
+
+    <incident
+        id="Overdraw"
+        severity="warning"
+        message="Possible overdraw: Root element paints background `@color/blue_gradient` with a theme that also paints a background (inferred theme is `@style/Theme_Thunderscopefrontend`)">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/main_activity.xml"
+            line="8"
+            column="5"
+            startOffset="352"
+            endLine="8"
+            endColumn="46"
+            endOffset="393"/>
+    </incident>
+
+    <incident
+        id="Overdraw"
+        severity="warning"
+        message="Possible overdraw: Root element paints background `@color/blue_gradient` with a theme that also paints a background (inferred theme is `@style/Theme.Thunderscopefrontend`)">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="6"
+            column="5"
+            startOffset="295"
+            endLine="6"
+            endColumn="46"
+            endOffset="336"/>
+    </incident>
+
+    <incident
+        id="IconLocation"
+        severity="warning"
+        message="Found bitmap drawable `res/drawable/circle_green.png` in densityless folder">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/drawable/circle_green.png"/>
+    </incident>
+
+    <incident
+        id="IconLocation"
+        severity="warning"
+        message="Found bitmap drawable `res/drawable/edittext_bg.png` in densityless folder">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/drawable/edittext_bg.png"/>
+    </incident>
+
+    <incident
+        id="IconLocation"
+        severity="warning"
+        message="Found bitmap drawable `res/drawable/ic_add.png` in densityless folder">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/drawable/ic_add.png"/>
+    </incident>
+
+    <incident
+        id="IconLocation"
+        severity="warning"
+        message="Found bitmap drawable `res/drawable/ic_arrow_right.png` in densityless folder">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/drawable/ic_arrow_right.png"/>
+    </incident>
+
+    <incident
+        id="IconLocation"
+        severity="warning"
+        message="Found bitmap drawable `res/drawable/ic_dropdown.png` in densityless folder">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/drawable/ic_dropdown.png"/>
+    </incident>
+
+    <incident
+        id="IconLocation"
+        severity="warning"
+        message="Found bitmap drawable `res/drawable/ic_email.png` in densityless folder">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/drawable/ic_email.png"/>
+    </incident>
+
+    <incident
+        id="IconLocation"
+        severity="warning"
+        message="Found bitmap drawable `res/drawable/ic_lock.png` in densityless folder">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/drawable/ic_lock.png"/>
+    </incident>
+
+    <incident
+        id="IconLocation"
+        severity="warning"
+        message="Found bitmap drawable `res/drawable/ic_poweredby.png` in densityless folder">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/drawable/ic_poweredby.png"/>
+    </incident>
+
+    <incident
+        id="IconLocation"
+        severity="warning"
+        message="Found bitmap drawable `res/drawable/ic_settings.png` in densityless folder">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/drawable/ic_settings.png"/>
+    </incident>
+
+    <incident
+        id="IconLocation"
+        severity="warning"
+        message="Found bitmap drawable `res/drawable/input_bg.png` in densityless folder">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/drawable/input_bg.png"/>
+    </incident>
+
+    <incident
+        id="IconLocation"
+        severity="warning"
+        message="Found bitmap drawable `res/drawable/logo.png` in densityless folder">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/drawable/logo.png"/>
+    </incident>
+
+    <incident
+        id="Autofill"
+        severity="warning"
+        message="Missing `autofillHints` attribute">
+        <fix-alternatives>
+            <fix-attribute
+                description="Set autofillHints"
+                namespace="http://schemas.android.com/apk/res/android"
+                attribute="autofillHints"
+                value=""
+                point="0"
+                mark="0"/>
+            <fix-attribute
+                description="Set importantForAutofill=&quot;no&quot;"
+                namespace="http://schemas.android.com/apk/res/android"
+                attribute="importantForAutofill"
+                value="no"/>
+        </fix-alternatives>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/main_activity.xml"
+            line="90"
+            column="14"
+            startOffset="3441"
+            endLine="90"
+            endColumn="22"
+            endOffset="3449"/>
+    </incident>
+
+    <incident
+        id="Autofill"
+        severity="warning"
+        message="Missing `autofillHints` attribute">
+        <fix-alternatives>
+            <fix-attribute
+                description="Set autofillHints"
+                namespace="http://schemas.android.com/apk/res/android"
+                attribute="autofillHints"
+                value=""
+                point="0"
+                mark="0"/>
+            <fix-attribute
+                description="Set importantForAutofill=&quot;no&quot;"
+                namespace="http://schemas.android.com/apk/res/android"
+                attribute="importantForAutofill"
+                value="no"/>
+        </fix-alternatives>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/main_activity.xml"
+            line="122"
+            column="18"
+            startOffset="4815"
+            endLine="122"
+            endColumn="26"
+            endOffset="4823"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for appcompat"
+            robot="true">
+            <fix-replace
+                description="Replace with appcompatVersion = &quot;1.6.1&quot;..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="appcompatVersion = &quot;1.6.1&quot;&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/AndroidStudioProjects/thunderscopefrontend/gradle/libs.versions.toml"
+                    startOffset="25"
+                    endOffset="25"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with appcompat = { module = &quot;androidx.appcompat:appcompat&quot;, version.ref = &quot;appcompatVersion&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="appcompat = { module = &quot;androidx.appcompat:appcompat&quot;, version.ref = &quot;appcompatVersion&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/AndroidStudioProjects/thunderscopefrontend/gradle/libs.versions.toml"
+                    startOffset="313"
+                    endOffset="313"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.appcompat"
+                robot="true"
+                replacement="libs.appcompat"
+                priority="0">
+                <range
+                    file="${:app*projectDir}/build.gradle.kts"
+                    startOffset="1441"
+                    endOffset="1477"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="56"
+            column="20"
+            startOffset="1441"
+            endLine="56"
+            endColumn="56"
+            endOffset="1477"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for constraintlayout"
+            robot="true">
+            <fix-replace
+                description="Replace with constraintlayoutVersion = &quot;2.1.4&quot;..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="constraintlayoutVersion = &quot;2.1.4&quot;&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/AndroidStudioProjects/thunderscopefrontend/gradle/libs.versions.toml"
+                    startOffset="25"
+                    endOffset="25"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with constraintlayout = { module = &quot;androidx.constraintlayout:constraintlayout&quot;, version.ref = &quot;constraintlayoutVersion&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="constraintlayout = { module = &quot;androidx.constraintlayout:constraintlayout&quot;, version.ref = &quot;constraintlayoutVersion&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/AndroidStudioProjects/thunderscopefrontend/gradle/libs.versions.toml"
+                    startOffset="313"
+                    endOffset="313"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.constraintlayout"
+                robot="true"
+                replacement="libs.constraintlayout"
+                priority="0">
+                <range
+                    file="${:app*projectDir}/build.gradle.kts"
+                    startOffset="1523"
+                    endOffset="1573"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="59"
+            column="20"
+            startOffset="1523"
+            endLine="59"
+            endColumn="70"
+            endOffset="1573"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for cardview"
+            robot="true">
+            <fix-replace
+                description="Replace with cardviewVersion = &quot;1.0.0&quot;..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="cardviewVersion = &quot;1.0.0&quot;&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/AndroidStudioProjects/thunderscopefrontend/gradle/libs.versions.toml"
+                    startOffset="25"
+                    endOffset="25"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with cardview = { module = &quot;androidx.cardview:cardview&quot;, version.ref = &quot;cardviewVersion&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="cardview = { module = &quot;androidx.cardview:cardview&quot;, version.ref = &quot;cardviewVersion&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/AndroidStudioProjects/thunderscopefrontend/gradle/libs.versions.toml"
+                    startOffset="313"
+                    endOffset="313"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.cardview"
+                robot="true"
+                replacement="libs.cardview"
+                priority="0">
+                <range
+                    file="${:app*projectDir}/build.gradle.kts"
+                    startOffset="1611"
+                    endOffset="1645"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="62"
+            column="20"
+            startOffset="1611"
+            endLine="62"
+            endColumn="54"
+            endOffset="1645"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for google-material"
+            robot="true">
+            <fix-replace
+                description="Replace with materialVersion = &quot;1.10.0&quot;..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="materialVersion = &quot;1.10.0&quot;&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/AndroidStudioProjects/thunderscopefrontend/gradle/libs.versions.toml"
+                    startOffset="208"
+                    endOffset="208"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with google-material = { module = &quot;com.google.android.material:material&quot;, version.ref = &quot;materialVersion&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="google-material = { module = &quot;com.google.android.material:material&quot;, version.ref = &quot;materialVersion&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/AndroidStudioProjects/thunderscopefrontend/gradle/libs.versions.toml"
+                    startOffset="313"
+                    endOffset="313"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.google.material"
+                robot="true"
+                replacement="libs.google.material"
+                priority="0">
+                <range
+                    file="${:app*projectDir}/build.gradle.kts"
+                    startOffset="1690"
+                    endOffset="1735"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="65"
+            column="21"
+            startOffset="1690"
+            endLine="65"
+            endColumn="66"
+            endOffset="1735"/>
+    </incident>
+
+    <incident
+        id="UseTomlInstead"
+        severity="warning"
+        message="Use version catalog instead">
+        <fix-composite
+            description="Replace with new library catalog declaration for gridlayout"
+            robot="true">
+            <fix-replace
+                description="Replace with gridlayoutVersion = &quot;1.0.0&quot;..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="gridlayoutVersion = &quot;1.0.0&quot;&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/AndroidStudioProjects/thunderscopefrontend/gradle/libs.versions.toml"
+                    startOffset="25"
+                    endOffset="25"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with gridlayout = { module = &quot;androidx.gridlayout:gridlayout&quot;, version.ref = &quot;gridlayoutVersion&quot; }..."
+                robot="true"
+                oldString="_lint_insert_begin_"
+                replacement="gridlayout = { module = &quot;androidx.gridlayout:gridlayout&quot;, version.ref = &quot;gridlayoutVersion&quot; }&#xA;"
+                priority="0">
+                <range
+                    file="$HOME/AndroidStudioProjects/thunderscopefrontend/gradle/libs.versions.toml"
+                    startOffset="313"
+                    endOffset="313"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with libs.gridlayout"
+                robot="true"
+                replacement="libs.gridlayout"
+                priority="0">
+                <range
+                    file="${:app*projectDir}/build.gradle.kts"
+                    startOffset="1776"
+                    endOffset="1814"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="68"
+            column="21"
+            startOffset="1776"
+            endLine="68"
+            endColumn="59"
+            endOffset="1814"/>
+    </incident>
+
+    <incident
+        id="ContentDescription"
+        severity="warning"
+        message="Missing `contentDescription` attribute on image">
+        <fix-alternatives>
+            <fix-attribute
+                description="Set contentDescription"
+                namespace="http://schemas.android.com/apk/res/android"
+                attribute="contentDescription"
+                value="TODO"
+                point="4"
+                mark="0"/>
+            <fix-attribute
+                description="Set importantForAccessibility=&quot;no&quot;"
+                namespace="http://schemas.android.com/apk/res/android"
+                attribute="importantForAccessibility"
+                value="no"/>
+        </fix-alternatives>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/main_activity.xml"
+            line="25"
+            column="10"
+            startOffset="1006"
+            endLine="25"
+            endColumn="19"
+            endOffset="1015"/>
+    </incident>
+
+    <incident
+        id="ContentDescription"
+        severity="warning"
+        message="Missing `contentDescription` attribute on image">
+        <fix-alternatives>
+            <fix-attribute
+                description="Set contentDescription"
+                namespace="http://schemas.android.com/apk/res/android"
+                attribute="contentDescription"
+                value="TODO"
+                point="4"
+                mark="0"/>
+            <fix-attribute
+                description="Set importantForAccessibility=&quot;no&quot;"
+                namespace="http://schemas.android.com/apk/res/android"
+                attribute="importantForAccessibility"
+                value="no"/>
+        </fix-alternatives>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/patient_list_activity.xml"
+            line="59"
+            column="10"
+            startOffset="2534"
+            endLine="59"
+            endColumn="19"
+            endOffset="2543"/>
+    </incident>
+
+    <incident
+        id="ContentDescription"
+        severity="warning"
+        message="Missing `contentDescription` attribute on image">
+        <fix-alternatives>
+            <fix-attribute
+                description="Set contentDescription"
+                namespace="http://schemas.android.com/apk/res/android"
+                attribute="contentDescription"
+                value="TODO"
+                point="4"
+                mark="0"/>
+            <fix-attribute
+                description="Set importantForAccessibility=&quot;no&quot;"
+                namespace="http://schemas.android.com/apk/res/android"
+                attribute="importantForAccessibility"
+                value="no"/>
+        </fix-alternatives>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/patient_list_activity.xml"
+            line="82"
+            column="10"
+            startOffset="3517"
+            endLine="82"
+            endColumn="19"
+            endOffset="3526"/>
+    </incident>
+
+    <incident
+        id="ContentDescription"
+        severity="warning"
+        message="Missing `contentDescription` attribute on image">
+        <fix-alternatives>
+            <fix-attribute
+                description="Set contentDescription"
+                namespace="http://schemas.android.com/apk/res/android"
+                attribute="contentDescription"
+                value="TODO"
+                point="4"
+                mark="0"/>
+            <fix-attribute
+                description="Set importantForAccessibility=&quot;no&quot;"
+                namespace="http://schemas.android.com/apk/res/android"
+                attribute="importantForAccessibility"
+                value="no"/>
+        </fix-alternatives>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="23"
+            column="10"
+            startOffset="926"
+            endLine="23"
+            endColumn="19"
+            endOffset="935"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Thunderscope&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/main_activity.xml"
+            line="34"
+            column="13"
+            startOffset="1327"
+            endLine="34"
+            endColumn="40"
+            endOffset="1354"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;LOGIN TO ACCOUNT&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/main_activity.xml"
+            line="70"
+            column="17"
+            startOffset="2697"
+            endLine="70"
+            endColumn="48"
+            endOffset="2728"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Email&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/main_activity.xml"
+            line="85"
+            column="17"
+            startOffset="3262"
+            endLine="85"
+            endColumn="37"
+            endOffset="3282"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Email&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/main_activity.xml"
+            line="101"
+            column="17"
+            startOffset="3977"
+            endLine="101"
+            endColumn="37"
+            endOffset="3997"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Password&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/main_activity.xml"
+            line="110"
+            column="17"
+            startOffset="4332"
+            endLine="110"
+            endColumn="40"
+            endOffset="4355"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Password&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/main_activity.xml"
+            line="129"
+            column="21"
+            startOffset="5189"
+            endLine="129"
+            endColumn="44"
+            endOffset="5212"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;SHOW&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/main_activity.xml"
+            line="140"
+            column="21"
+            startOffset="5696"
+            endLine="140"
+            endColumn="40"
+            endOffset="5715"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Login to account&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/main_activity.xml"
+            line="160"
+            column="17"
+            startOffset="6586"
+            endLine="160"
+            endColumn="48"
+            endOffset="6617"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Forgot password&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/main_activity.xml"
+            line="171"
+            column="17"
+            startOffset="7072"
+            endLine="171"
+            endColumn="47"
+            endOffset="7102"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;CASES&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/patient_list_activity.xml"
+            line="26"
+            column="13"
+            startOffset="1117"
+            endLine="26"
+            endColumn="33"
+            endOffset="1137"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;DEVICE CONNECTED&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/patient_list_activity.xml"
+            line="39"
+            column="13"
+            startOffset="1654"
+            endLine="39"
+            endColumn="44"
+            endOffset="1685"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;All Cases (27)&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/patient_list_activity.xml"
+            line="111"
+            column="13"
+            startOffset="4813"
+            endLine="111"
+            endColumn="42"
+            endOffset="4842"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Start New Test&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/patient_list_activity.xml"
+            line="129"
+            column="13"
+            startOffset="5649"
+            endLine="129"
+            endColumn="42"
+            endOffset="5678"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Thunderscope&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="32"
+            column="13"
+            startOffset="1247"
+            endLine="32"
+            endColumn="40"
+            endOffset="1274"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;SIGNUP&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="69"
+            column="17"
+            startOffset="2646"
+            endLine="69"
+            endColumn="38"
+            endOffset="2667"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Email&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="93"
+            column="25"
+            startOffset="3623"
+            endLine="93"
+            endColumn="45"
+            endOffset="3643"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Password&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="124"
+            column="25"
+            startOffset="5167"
+            endLine="124"
+            endColumn="48"
+            endOffset="5190"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Name&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="167"
+            column="25"
+            startOffset="7206"
+            endLine="167"
+            endColumn="44"
+            endOffset="7225"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Phone Number&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="198"
+            column="25"
+            startOffset="8727"
+            endLine="198"
+            endColumn="52"
+            endOffset="8754"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Specialist&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="238"
+            column="25"
+            startOffset="10603"
+            endLine="238"
+            endColumn="50"
+            endOffset="10628"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Select a specialist&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="260"
+            column="33"
+            startOffset="11794"
+            endLine="260"
+            endColumn="81"
+            endOffset="11842"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Dropdown icon&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="274"
+            column="33"
+            startOffset="12619"
+            endLine="274"
+            endColumn="75"
+            endOffset="12661"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Birthdate&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="293"
+            column="25"
+            startOffset="13449"
+            endLine="293"
+            endColumn="49"
+            endOffset="13473"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Create Account&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="323"
+            column="17"
+            startOffset="14940"
+            endLine="323"
+            endColumn="46"
+            endOffset="14969"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Have Account: &quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="342"
+            column="21"
+            startOffset="15770"
+            endLine="342"
+            endColumn="50"
+            endOffset="15799"/>
+    </incident>
+
+    <incident
+        id="HardcodedText"
+        severity="warning"
+        message="Hardcoded string &quot;Login&quot;, should use `@string` resource">
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/layout/signup_activity.xml"
+            line="353"
+            column="21"
+            startOffset="16298"
+            endLine="353"
+            endColumn="41"
+            endOffset="16318"/>
+    </incident>
+
+</incidents>

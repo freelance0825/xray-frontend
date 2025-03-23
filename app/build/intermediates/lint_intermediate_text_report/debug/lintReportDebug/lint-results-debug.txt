@@ -1,0 +1,362 @@
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:21: Warning: Redundant label can be removed [RedundantLabel]
+            android:label="@string/app_name"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "RedundantLabel":
+   When an activity does not have a label attribute, it will use the one from
+   the application tag. Since the application has already specified the same
+   label, the label on this activity can be omitted.
+
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\build.gradle.kts:56: Warning: A newer version of androidx.appcompat:appcompat than 1.6.1 is available: 1.7.0 [GradleDependency]
+    implementation("androidx.appcompat:appcompat:1.6.1")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\build.gradle.kts:59: Warning: A newer version of androidx.constraintlayout:constraintlayout than 2.1.4 is available: 2.2.1 [GradleDependency]
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\build.gradle.kts:65: Warning: A newer version of com.google.android.material:material than 1.10.0 is available: 1.12.0 [GradleDependency]
+    implementation ("com.google.android.material:material:1.10.0")
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\gradle\libs.versions.toml:10: Warning: A newer version of androidx.compose:compose-bom than 2024.09.00 is available: 2025.03.00 [GradleDependency]
+composeBom = "2024.09.00"
+             ~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\gradle\libs.versions.toml:10: Warning: A newer version of androidx.compose:compose-bom than 2024.09.00 is available: 2025.03.00 [GradleDependency]
+composeBom = "2024.09.00"
+             ~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\gradle\libs.versions.toml:10: Warning: A newer version of androidx.compose:compose-bom than 2024.09.00 is available: 2025.03.00 [GradleDependency]
+composeBom = "2024.09.00"
+             ~~~~~~~~~~~~
+
+   Explanation for issues of type "GradleDependency":
+   This detector looks for usages of libraries where the version you are using
+   is not the current stable release. Using older versions is fine, and there
+   are cases where you deliberately want to stick with an older version.
+   However, you may simply not be aware that a more recent version is
+   available, and that is what this lint check helps find.
+
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:23: Warning: Should not restrict activity to fixed orientation. This may not be suitable for different form factors, causing the app to be letterboxed. [DiscouragedApi]
+            android:screenOrientation="landscape">
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "DiscouragedApi":
+   Discouraged APIs are allowed and are not deprecated, but they may be unfit
+   for common use (e.g. due to slow performance or subtle behavior).
+
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\main_activity.xml:12: Warning: This tag and its children can be replaced by one <TextView/> and a compound drawable [UseCompoundDrawables]
+    <LinearLayout
+     ~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:10: Warning: This tag and its children can be replaced by one <TextView/> and a compound drawable [UseCompoundDrawables]
+    <LinearLayout
+     ~~~~~~~~~~~~
+
+   Explanation for issues of type "UseCompoundDrawables":
+   A LinearLayout which contains an ImageView and a TextView can be more
+   efficiently handled as a compound drawable (a single TextView, using the
+   drawableTop, drawableLeft, drawableRight and/or drawableBottom attributes
+   to draw one or more images adjacent to the text).
+
+   If the two widgets are offset from each other with margins, this can be
+   replaced with a drawablePadding attribute.
+
+   There's a lint quickfix to perform this conversion in the Eclipse plugin.
+
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:74: Warning: Set android:baselineAligned="false" on this element for better performance [DisableBaselineAlignment]
+            <LinearLayout
+             ~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:148: Warning: Set android:baselineAligned="false" on this element for better performance [DisableBaselineAlignment]
+            <LinearLayout
+             ~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:219: Warning: Set android:baselineAligned="false" on this element for better performance [DisableBaselineAlignment]
+            <LinearLayout
+             ~~~~~~~~~~~~
+
+   Explanation for issues of type "DisableBaselineAlignment":
+   When a LinearLayout is used to distribute the space proportionally between
+   nested layouts, the baseline alignment property should be turned off to
+   make the layout computation faster.
+
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\main_activity.xml:8: Warning: Possible overdraw: Root element paints background @color/blue_gradient with a theme that also paints a background (inferred theme is @style/Theme_Thunderscopefrontend) [Overdraw]
+    android:background="@color/blue_gradient"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:6: Warning: Possible overdraw: Root element paints background @color/blue_gradient with a theme that also paints a background (inferred theme is @style/Theme.Thunderscopefrontend) [Overdraw]
+    android:background="@color/blue_gradient"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "Overdraw":
+   If you set a background drawable on a root view, then you should use a
+   custom theme where the theme background is null. Otherwise, the theme
+   background will be painted first, only to have your custom background
+   completely cover it; this is called "overdraw".
+
+   NOTE: This detector relies on figuring out which layouts are associated
+   with which activities based on scanning the Java code, and it's currently
+   doing that using an inexact pattern matching algorithm. Therefore, it can
+   incorrectly conclude which activity the layout is associated with and then
+   wrongly complain that a background-theme is hidden.
+
+   If you want your custom background on multiple pages, then you should
+   consider making a custom theme with your custom background and just using
+   that theme instead of a root element background.
+
+   Of course it's possible that your custom drawable is translucent and you
+   want it to be mixed with the background. However, you will get better
+   performance if you pre-mix the background with your drawable and use that
+   resulting image or color as a custom theme background instead.
+
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\values\colors.xml:3: Warning: The resource R.color.purple_200 appears to be unused [UnusedResources]
+    <color name="purple_200">#FFBB86FC</color>
+           ~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\values\colors.xml:4: Warning: The resource R.color.purple_500 appears to be unused [UnusedResources]
+    <color name="purple_500">#FF6200EE</color>
+           ~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\values\colors.xml:5: Warning: The resource R.color.purple_700 appears to be unused [UnusedResources]
+    <color name="purple_700">#FF3700B3</color>
+           ~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\values\colors.xml:6: Warning: The resource R.color.teal_200 appears to be unused [UnusedResources]
+    <color name="teal_200">#FF03DAC5</color>
+           ~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\values\colors.xml:7: Warning: The resource R.color.teal_700 appears to be unused [UnusedResources]
+    <color name="teal_700">#FF018786</color>
+           ~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\values\colors.xml:9: Warning: The resource R.color.white appears to be unused [UnusedResources]
+    <color name="white">#FFFFFFFF</color>
+           ~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\spinner_item.xml:2: Warning: The resource R.layout.spinner_item appears to be unused [UnusedResources]
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+^
+
+   Explanation for issues of type "UnusedResources":
+   Unused resources make applications larger and slow down builds.
+
+
+   The unused resource check can ignore tests. If you want to include
+   resources that are only referenced from tests, consider packaging them in a
+   test source set instead.
+
+   You can include test sources in the unused resource check by setting the
+   system property lint.unused-resources.include-tests =true, and to exclude
+   them (usually for performance reasons), use
+   lint.unused-resources.exclude-tests =true.
+   ,
+
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\drawable\circle_green.png: Warning: Found bitmap drawable res/drawable/circle_green.png in densityless folder [IconLocation]
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\drawable\edittext_bg.png: Warning: Found bitmap drawable res/drawable/edittext_bg.png in densityless folder [IconLocation]
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\drawable\ic_add.png: Warning: Found bitmap drawable res/drawable/ic_add.png in densityless folder [IconLocation]
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\drawable\ic_arrow_right.png: Warning: Found bitmap drawable res/drawable/ic_arrow_right.png in densityless folder [IconLocation]
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\drawable\ic_dropdown.png: Warning: Found bitmap drawable res/drawable/ic_dropdown.png in densityless folder [IconLocation]
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\drawable\ic_email.png: Warning: Found bitmap drawable res/drawable/ic_email.png in densityless folder [IconLocation]
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\drawable\ic_lock.png: Warning: Found bitmap drawable res/drawable/ic_lock.png in densityless folder [IconLocation]
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\drawable\ic_poweredby.png: Warning: Found bitmap drawable res/drawable/ic_poweredby.png in densityless folder [IconLocation]
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\drawable\ic_settings.png: Warning: Found bitmap drawable res/drawable/ic_settings.png in densityless folder [IconLocation]
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\drawable\input_bg.png: Warning: Found bitmap drawable res/drawable/input_bg.png in densityless folder [IconLocation]
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\drawable\logo.png: Warning: Found bitmap drawable res/drawable/logo.png in densityless folder [IconLocation]
+
+   Explanation for issues of type "IconLocation":
+   The res/drawable folder is intended for density-independent graphics such
+   as shapes defined in XML. For bitmaps, move it to drawable-mdpi and
+   consider providing higher and lower resolution versions in drawable-ldpi,
+   drawable-hdpi and drawable-xhdpi. If the icon really is density independent
+   (for example a solid color) you can place it in drawable-nodpi.
+
+   https://developer.android.com/guide/practices/screens_support.html
+
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:8: Warning: Should explicitly set android:icon, there is no default [MissingApplicationIcon]
+    <application
+     ~~~~~~~~~~~
+
+   Explanation for issues of type "MissingApplicationIcon":
+   You should set an icon for the application as whole because there is no
+   default. This attribute must be set as a reference to a drawable resource
+   containing the image (for example @drawable/icon).
+
+   https://developer.android.com/studio/publish/preparing#publishing-configure
+
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\main_activity.xml:90: Warning: Missing autofillHints attribute [Autofill]
+            <EditText
+             ~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\main_activity.xml:122: Warning: Missing autofillHints attribute [Autofill]
+                <EditText
+                 ~~~~~~~~
+
+   Explanation for issues of type "Autofill":
+   Specify an autofillHints attribute when targeting SDK version 26 or higher
+   or explicitly specify that the view is not important for autofill. Your app
+   can help an autofill service classify the data correctly by providing the
+   meaning of each view that could be autofillable, such as views representing
+   usernames, passwords, credit card fields, email addresses, etc.
+
+   The hints can have any value, but it is recommended to use predefined
+   values like 'username' for a username or 'creditCardNumber' for a credit
+   card number. For a list of all predefined autofill hint constants, see the
+   AUTOFILL_HINT_ constants in the View reference at
+   https://developer.android.com/reference/android/view/View.html.
+
+   You can mark a view unimportant for autofill by specifying an
+   importantForAutofill attribute on that view or a parent view. See
+   https://developer.android.com/reference/android/view/View.html#setImportant
+   ForAutofill(int).
+
+   https://developer.android.com/guide/topics/text/autofill.html
+
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\build.gradle.kts:56: Warning: Use version catalog instead [UseTomlInstead]
+    implementation("androidx.appcompat:appcompat:1.6.1")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\build.gradle.kts:59: Warning: Use version catalog instead [UseTomlInstead]
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\build.gradle.kts:62: Warning: Use version catalog instead [UseTomlInstead]
+    implementation("androidx.cardview:cardview:1.0.0")
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\build.gradle.kts:65: Warning: Use version catalog instead [UseTomlInstead]
+    implementation ("com.google.android.material:material:1.10.0")
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\build.gradle.kts:68: Warning: Use version catalog instead [UseTomlInstead]
+    implementation ("androidx.gridlayout:gridlayout:1.0.0")
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "UseTomlInstead":
+   If your project is using a libs.versions.toml file, you should place all
+   Gradle dependencies in the TOML file. This lint check looks for version
+   declarations outside of the TOML file and suggests moving them (and in the
+   IDE, provides a quickfix to performing the operation automatically).
+
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\main_activity.xml:25: Warning: Missing contentDescription attribute on image [ContentDescription]
+        <ImageView
+         ~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\patient_list_activity.xml:59: Warning: Missing contentDescription attribute on image [ContentDescription]
+        <ImageView
+         ~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\patient_list_activity.xml:82: Warning: Missing contentDescription attribute on image [ContentDescription]
+        <ImageView
+         ~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:23: Warning: Missing contentDescription attribute on image [ContentDescription]
+        <ImageView
+         ~~~~~~~~~
+
+   Explanation for issues of type "ContentDescription":
+   Non-textual widgets like ImageViews and ImageButtons should use the
+   contentDescription attribute to specify a textual description of the widget
+   such that screen readers and other accessibility tools can adequately
+   describe the user interface.
+
+   Note that elements in application screens that are purely decorative and do
+   not provide any content or enable a user action should not have
+   accessibility content descriptions. In this case, set their descriptions to
+   @null. If your app's minSdkVersion is 16 or higher, you can instead set
+   these graphical elements' android:importantForAccessibility attributes to
+   no.
+
+   Note that for text fields, you should not set both the hint and the
+   contentDescription attributes since the hint will never be shown. Just set
+   the hint.
+
+   https://developer.android.com/guide/topics/ui/accessibility/apps#special-cases
+
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\main_activity.xml:34: Warning: Hardcoded string "Thunderscope", should use @string resource [HardcodedText]
+            android:text="Thunderscope"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\main_activity.xml:70: Warning: Hardcoded string "LOGIN TO ACCOUNT", should use @string resource [HardcodedText]
+                android:text="LOGIN TO ACCOUNT"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\main_activity.xml:85: Warning: Hardcoded string "Email", should use @string resource [HardcodedText]
+                android:text="Email"
+                ~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\main_activity.xml:101: Warning: Hardcoded string "Email", should use @string resource [HardcodedText]
+                android:hint="Email"
+                ~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\main_activity.xml:110: Warning: Hardcoded string "Password", should use @string resource [HardcodedText]
+                android:text="Password"
+                ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\main_activity.xml:129: Warning: Hardcoded string "Password", should use @string resource [HardcodedText]
+                    android:hint="Password"
+                    ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\main_activity.xml:140: Warning: Hardcoded string "SHOW", should use @string resource [HardcodedText]
+                    android:text="SHOW"
+                    ~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\main_activity.xml:160: Warning: Hardcoded string "Login to account", should use @string resource [HardcodedText]
+                android:text="Login to account"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\main_activity.xml:171: Warning: Hardcoded string "Forgot password", should use @string resource [HardcodedText]
+                android:text="Forgot password"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\patient_list_activity.xml:26: Warning: Hardcoded string "CASES", should use @string resource [HardcodedText]
+            android:text="CASES"
+            ~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\patient_list_activity.xml:39: Warning: Hardcoded string "DEVICE CONNECTED", should use @string resource [HardcodedText]
+            android:text="DEVICE CONNECTED"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\patient_list_activity.xml:111: Warning: Hardcoded string "All Cases (27)", should use @string resource [HardcodedText]
+            android:text="All Cases (27)"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\patient_list_activity.xml:129: Warning: Hardcoded string "Start New Test", should use @string resource [HardcodedText]
+            android:text="Start New Test"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:32: Warning: Hardcoded string "Thunderscope", should use @string resource [HardcodedText]
+            android:text="Thunderscope"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:69: Warning: Hardcoded string "SIGNUP", should use @string resource [HardcodedText]
+                android:text="SIGNUP"
+                ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:93: Warning: Hardcoded string "Email", should use @string resource [HardcodedText]
+                        android:text="Email"
+                        ~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:124: Warning: Hardcoded string "Password", should use @string resource [HardcodedText]
+                        android:text="Password"
+                        ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:167: Warning: Hardcoded string "Name", should use @string resource [HardcodedText]
+                        android:text="Name"
+                        ~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:198: Warning: Hardcoded string "Phone Number", should use @string resource [HardcodedText]
+                        android:text="Phone Number"
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:238: Warning: Hardcoded string "Specialist", should use @string resource [HardcodedText]
+                        android:text="Specialist"
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:260: Warning: Hardcoded string "Select a specialist", should use @string resource [HardcodedText]
+                                android:contentDescription="Select a specialist"
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:274: Warning: Hardcoded string "Dropdown icon", should use @string resource [HardcodedText]
+                                android:contentDescription="Dropdown icon"
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:293: Warning: Hardcoded string "Birthdate", should use @string resource [HardcodedText]
+                        android:text="Birthdate"
+                        ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:323: Warning: Hardcoded string "Create Account", should use @string resource [HardcodedText]
+                android:text="Create Account"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:342: Warning: Hardcoded string "Have Account: ", should use @string resource [HardcodedText]
+                    android:text="Have Account: "
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\signup_activity.xml:353: Warning: Hardcoded string "Login", should use @string resource [HardcodedText]
+                    android:text="Login"
+                    ~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "HardcodedText":
+   Hardcoding text attributes directly in layout files is bad for several
+   reasons:
+
+   * When creating configuration variations (for example for landscape or
+   portrait) you have to repeat the actual text (and keep it up to date when
+   making changes)
+
+   * The application cannot be translated to other languages by just adding
+   new translations for existing string resources.
+
+   There are quickfixes to automatically extract this hardcoded string into a
+   resource lookup.
+
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\main_activity.xml:139: Warning: When you define paddingEnd you should probably also define paddingStart for right-to-left symmetry [RtlSymmetry]
+                    android:paddingEnd="24dp"
+                    ~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\patient_list_activity.xml:118: Warning: When you define paddingStart you should probably also define paddingEnd for right-to-left symmetry [RtlSymmetry]
+            android:paddingStart="20dp"/>
+            ~~~~~~~~~~~~~~~~~~~~
+C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\res\layout\patient_list_activity.xml:135: Warning: When you define paddingEnd you should probably also define paddingStart for right-to-left symmetry [RtlSymmetry]
+            android:paddingEnd="20dp"/>
+            ~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "RtlSymmetry":
+   If you specify padding or margin on the left side of a layout, you should
+   probably also specify padding on the right side (and vice versa) for
+   right-to-left layout symmetry.
+
+0 errors, 74 warnings
