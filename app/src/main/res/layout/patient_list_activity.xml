@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@color/light_gray"
+    tools:context=".ui.patient.PatientListActivity">
 
     <!-- Header Layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,6 +31,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Status Indicator -->
+        <View
+            android:id="@+id/status_indicator"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/circle_green"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/device_status"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/device_status"
             android:layout_width="wrap_content"
@@ -42,16 +54,7 @@
             app:layout_constraintEnd_toStartOf="@id/divider"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/status_indicator"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/circle_green"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/device_status"
-            app:layout_constraintTop_toTopOf="parent" />
-
+        <!-- Divider Line -->
         <View
             android:id="@+id/divider"
             android:layout_width="1dp"
@@ -69,6 +72,17 @@
             android:layout_marginEnd="32dp"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_poweredby"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/settings_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Divider Line -->
+        <View
+            android:id="@+id/settingDivider"
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/settings_icon"
             app:layout_constraintTop_toTopOf="parent" />
@@ -335,8 +349,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/sidebar"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="20dp"
         tools:layout="@layout/patient_list_table_fragment" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
