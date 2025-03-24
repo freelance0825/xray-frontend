@@ -96,6 +96,8 @@ layout patient_list_activity
 layout patient_list_table_fragment
 layout signup_activity
 layout spinner_item
+layout todo_list
+layout todo_list_fragment
 string app_name
 style Theme.Thunderscopefrontend
 xml backup_rules

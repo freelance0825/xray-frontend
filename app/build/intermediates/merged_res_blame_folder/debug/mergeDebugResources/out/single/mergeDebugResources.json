@@ -52,16 +52,20 @@
         "source": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-main-64:\\drawable\\sample_image3.png"
     },
     {
+        "merged": "com.example.thunderscope_frontend.app-debug-62:/layout_patient_list_activity.xml.flat",
+        "source": "com.example.thunderscope_frontend.app-main-64:/layout/patient_list_activity.xml"
+    },
+    {
         "merged": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-debug-62:\\drawable_ic_poweredby.png.flat",
         "source": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-main-64:\\drawable\\ic_poweredby.png"
     },
     {
-        "merged": "com.example.thunderscope_frontend.app-debug-62:/layout_patient_list_table_fragment.xml.flat",
-        "source": "com.example.thunderscope_frontend.app-main-64:/layout/patient_list_table_fragment.xml"
-    },
-    {
         "merged": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-debug-62:\\drawable_ic_prev.png.flat",
         "source": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-main-64:\\drawable\\ic_prev.png"
+    },
+    {
+        "merged": "com.example.thunderscope_frontend.app-debug-62:/layout_todo_list.xml.flat",
+        "source": "com.example.thunderscope_frontend.app-main-64:/layout/todo_list.xml"
     },
     {
         "merged": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-debug-62:\\drawable_ic_next.png.flat",
@@ -78,6 +82,10 @@
     {
         "merged": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-debug-62:\\drawable_ic_export.png.flat",
         "source": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-main-64:\\drawable\\ic_export.png"
+    },
+    {
+        "merged": "com.example.thunderscope_frontend.app-debug-62:/layout_todo_list_fragment.xml.flat",
+        "source": "com.example.thunderscope_frontend.app-main-64:/layout/todo_list_fragment.xml"
     },
     {
         "merged": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-debug-62:\\font_figtree.ttf.flat",

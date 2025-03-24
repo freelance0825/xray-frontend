@@ -3861,6 +3861,8 @@ int layout select_dialog_singlechoice_material 0x7f0c006c
 int layout signup_activity 0x7f0c006d
 int layout spinner_item 0x7f0c006e
 int layout support_simple_spinner_dropdown_item 0x7f0c006f
+int layout todo_list 0x7f0c0070
+int layout todo_list_fragment 0x7f0c0071
 int plurals mtrl_badge_content_description 0x7f0e0000
 int string abc_action_bar_home_description 0x7f0f0000
 int string abc_action_bar_up_description 0x7f0f0001

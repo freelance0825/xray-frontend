@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -288,15 +289,68 @@
             android:minHeight="48dp"
             android:paddingBottom="8dp">
 
-            <TextView android:layout_width="0dp" android:layout_weight="0.8" android:text=""/>
-            <TextView android:layout_width="0dp" android:layout_weight="1.5" android:text="Case" android:textStyle="bold"/>
-            <TextView android:layout_width="0dp" android:layout_weight="1.5" android:text="Physician" android:textStyle="bold"/>
-            <TextView android:layout_width="0dp" android:layout_weight="1.5" android:text="Patient" android:textStyle="bold"/>
-            <TextView android:layout_width="0dp" android:layout_weight="2.2" android:text="Birthdate &amp; Gender" android:textStyle="bold"/>
-            <TextView android:layout_width="0dp" android:layout_weight="1.8" android:text="Last Update" android:textStyle="bold"/>
-            <TextView android:layout_width="0dp" android:layout_weight="2.5" android:text="Status" android:textStyle="bold" android:id="@+id/etStatus"/>
-            <TextView android:layout_width="0dp" android:layout_weight="1.5" android:text="Type" android:textStyle="bold"/>
-            <TextView android:layout_width="0dp" android:layout_weight="3" android:text="Assessments" android:textStyle="bold"/>
+            <!-- Header: Blank space to match the data checkbox row -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:text="" />
+
+            <!-- Header: Case -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:text="Case"
+                android:textStyle="bold" />
+
+            <!-- Header: Physician -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:text="Physician"
+                android:textStyle="bold" />
+
+            <!-- Header: Patient -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:text="Patient"
+                android:textStyle="bold" />
+
+            <!-- Header: Birthdate & Gender -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="2.2"
+                android:text="Birthdate &amp; Gender"
+                android:textStyle="bold" />
+
+            <!-- Header: Last Update -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1.8"
+                android:text="Last Update"
+                android:textStyle="bold" />
+
+            <!-- Header: Status -->
+            <TextView
+                android:id="@+id/etStatus"
+                android:layout_width="0dp"
+                android:layout_weight="2.5"
+                android:text="Status"
+                android:textStyle="bold" />
+
+            <!-- Header: Type -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:text="Type"
+                android:textStyle="bold" />
+
+            <!-- Header: Assessment -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:text="Assessments"
+                android:textStyle="bold" />
         </TableRow>
 
         <!-- Table Data Row -->
@@ -307,18 +361,114 @@
             android:minHeight="48dp"
             android:paddingBottom="8dp">
 
-            <CheckBox android:layout_width="0dp" android:layout_weight="0.8" android:minHeight="48dp"/>
-            <TextView android:layout_width="0dp" android:layout_weight="1.5" android:text="T121210-EU"/>
-            <TextView android:layout_width="0dp" android:layout_weight="1.5" android:text="Dr. Lee K."/>
-            <TextView android:layout_width="0dp" android:layout_weight="1.5" android:text="Cedar Pete"/>
-            <TextView android:layout_width="0dp" android:layout_weight="2.2" android:text="24 Nov, 1990 (26yo)\nMale"/>
-            <TextView android:layout_width="0dp" android:layout_weight="1.8" android:text="10 Nov, 2024\n10:00 AM"/>
+            <!-- Data: Checkbox -->
+            <CheckBox
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:minHeight="48dp" />
 
+            <!-- Data: Case -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="2.5"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
                 android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="T121210-EU"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="P-9890200"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- Data: Physician -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dr. Lee K." />
+            </LinearLayout>
+
+            <!-- Data: Patient -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cedar Pete" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="P-9890200"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- Data: Birthdate & Gender -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="24 Nov, 1990 (26yo)" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- Data: Last Update -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.8"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10 Nov, 2024" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10:00 AM"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- Data: Status -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.5"
+                android:gravity="top"
                 android:orientation="vertical"
                 android:paddingVertical="4dp">
 
@@ -332,41 +482,45 @@
                     android:textColor="@color/blue" />
             </LinearLayout>
 
+            <!-- Data: Type -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:text="Left &amp;\n Right" />
 
-            <TextView android:layout_width="0dp" android:layout_weight="1.5" android:text="Left &amp;\n Right"/>
-
-            <!-- Assessments Column: Fixed Alignment and Width -->
+            <!-- Data: Assessments -->
             <LinearLayout
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingEnd="8dp"
-                android:layout_height="match_parent">
+                android:paddingEnd="8dp">
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_gravity="center"
                     android:layout_marginEnd="4dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/sample_image1"
-                    android:layout_gravity="center"/>
+                    android:src="@drawable/sample_image1" />
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_gravity="center"
                     android:layout_marginEnd="4dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/sample_image2"
-                    android:layout_gravity="center"/>
+                    android:src="@drawable/sample_image2" />
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_gravity="center"
                     android:layout_marginEnd="15dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/sample_image3"
-                    android:layout_gravity="center"/>
+                    android:src="@drawable/sample_image3" />
 
                 <TextView
                     android:layout_width="50dp"
@@ -379,9 +533,13 @@
                     android:textStyle="bold" />
             </LinearLayout>
         </TableRow>
+
+        <!-- Divider Line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray" />
     </TableLayout>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

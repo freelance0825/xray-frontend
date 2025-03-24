@@ -52,6 +52,11 @@
         <activity
             android:name="com.example.thunderscope_frontend.ui.patient.PatientListActivity"
             android:exported="true" />
+
+        <!-- To Do List Activity -->
+        <activity
+            android:name="com.example.thunderscope_frontend.ui.todolist.TodoList"
+            android:exported="true" />
         <activity
             android:name="androidx.compose.ui.tooling.PreviewActivity"
             android:exported="true" />
