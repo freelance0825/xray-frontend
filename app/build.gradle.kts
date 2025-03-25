@@ -62,14 +62,14 @@ dependencies {
     // CardView
     implementation("androidx.cardview:cardview:1.0.0")
 
-    //Material Button
-    implementation ("com.google.android.material:material:1.10.0")
+    // Material Button
+    implementation("com.google.android.material:material:1.10.0")
 
-    //Grid Layout
-    implementation ("androidx.gridlayout:gridlayout:1.0.0")
+    // Grid Layout
+    implementation("androidx.gridlayout:gridlayout:1.0.0")
 
-    //Appcompat
-    implementation ("androidx.appcompat:appcompat:1.6.1")
+    // Appcompat
+    implementation("androidx.appcompat:appcompat:1.6.1")
 
     // OKHTTP3
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
@@ -78,8 +78,11 @@ dependencies {
     // Gson
     implementation("com.google.code.gson:gson:2.10.1")
 
-    //View Models
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    // View Models
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+
+    // Glide for image loading and caching
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
     // Testing dependencies
     testImplementation(libs.junit)

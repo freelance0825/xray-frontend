@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.thunderscope_frontend.app-mergeDebugResources-60:/values-pt/values-pt.xml",
+            "outputFile": "com.example.thunderscope_frontend.app-mergeDebugResources-61:/values-pt/values-pt.xml",
             "map": [
                 {
                     "source": "C:\\Users\\user\\.gradle\\caches\\8.11.1\\transforms\\3253277842d9be21adb63abf400a3bfa\\transformed\\foundation-release\\res\\values-pt\\values-pt.xml",

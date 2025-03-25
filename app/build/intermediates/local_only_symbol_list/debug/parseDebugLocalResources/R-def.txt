@@ -1,6 +1,8 @@
 R_DEF: Internal format may change without notice
 local
+array gender_options
 array specialist_options
+array state_options
 color black
 color blue
 color blue_dark
@@ -161,6 +163,7 @@ id start_new_test_button
 id status
 id status_indicator
 id tableLayoutHeader
+id textPagination
 id title_divider
 id todo_count
 id todo_icon
@@ -188,13 +191,14 @@ layout main_activity
 layout patient_activity
 layout patient_activity_fragment
 layout patient_list_activity
+layout patient_list_table_data_row
 layout patient_list_table_fragment
 layout signup_activity
 layout spinner_item
-layout table_data_row
 layout todo_list
 layout todo_list_fragment
 string app_name
+style CustomDatePickerDialog
 style Theme.Thunderscopefrontend
 xml backup_rules
 xml data_extraction_rules

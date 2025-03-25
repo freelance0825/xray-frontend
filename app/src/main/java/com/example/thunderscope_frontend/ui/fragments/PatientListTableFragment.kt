@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TableLayout
 import android.widget.TableRow
@@ -25,8 +26,19 @@ class PatientListTableFragment : Fragment() {
     private lateinit var genderFilter: Spinner
     private lateinit var ageFilter: Spinner
 
+    // UI Components for Pagination Section
+    private lateinit var textPagination: TextView
+    private lateinit var btnNextPage: ImageButton
+    private lateinit var btnPrevPage: ImageButton
+
     // Case Record View Model
     private lateinit var caseRecordViewModel: CaseRecordViewModel
+
+    // Pagination variables
+    private var currentPage = 0
+    private val recordsPerPage = 5
+    private var totalRecords = 0
+    private var caseRecords: List<CaseRecordUI> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,13 +57,24 @@ class PatientListTableFragment : Fragment() {
         genderFilter = view.findViewById(R.id.spinnerGender)
         ageFilter = view.findViewById(R.id.spinnerAge)
 
+        // Initialize UI components For Pagination Section
+        textPagination = view.findViewById(R.id.textPagination)
+        btnNextPage = view.findViewById(R.id.btnNextPage)
+        btnPrevPage = view.findViewById(R.id.btnPrevPage)
+
         // Initialize ViewModel Manually
-        caseRecordViewModel = ViewModelProvider(requireActivity()).get(CaseRecordViewModel::class.java)
+        caseRecordViewModel =
+            ViewModelProvider(requireActivity()).get(CaseRecordViewModel::class.java)
 
         // Observe case records data
         caseRecordViewModel.caseRecordsLiveData.observe(
             viewLifecycleOwner,
-            Observer { caseRecords -> processCaseRecords(caseRecords) })
+            Observer { records ->
+                caseRecords = records
+                totalRecords = caseRecords.size
+                currentPage = 0 // Reset to first page
+                updateTable()
+            })
 
         // Observe error messages
         caseRecordViewModel.errorLiveData.observe(viewLifecycleOwner, Observer { errorMessage ->
@@ -60,9 +83,23 @@ class PatientListTableFragment : Fragment() {
 
         // Fetch case records when the fragment is created
         caseRecordViewModel.fetchCaseRecords()
+        // Pagination button listeners
+        btnNextPage.setOnClickListener {
+            if ((currentPage + 1) * recordsPerPage < totalRecords) {
+                currentPage++
+                updateTable()
+            }
+        }
+
+        btnPrevPage.setOnClickListener {
+            if (currentPage > 0) {
+                currentPage--
+                updateTable()
+            }
+        }
     }
 
-    private fun processCaseRecords(caseRecords: List<CaseRecordUI>) {
+    private fun updateTable() {
         val tableLayout = view?.findViewById<TableLayout>(R.id.tableLayoutHeader) ?: return
 
         // Remove only the data rows, keeping the first row (header) intact
@@ -75,19 +112,18 @@ class PatientListTableFragment : Fragment() {
             return
         }
 
-        // Show only the first two records
-        val maxRows = 2
-        for (i in 0 until minOf(caseRecords.size, maxRows)) {
-            val record = caseRecords[i]
+        // Get paginated data
+        val start = currentPage * recordsPerPage
+        val end = minOf(start + recordsPerPage, totalRecords)
+        val paginatedRecords = caseRecords.subList(start, end)
 
-            // Inflate the existing table row layout
+        for (record in paginatedRecords) {
             val inflater = LayoutInflater.from(requireContext())
             val newRow = inflater.inflate(R.layout.patient_list_table_data_row, tableLayout, false) as TableRow
 
             // Bind data to views
             newRow.findViewById<TextView>(R.id.caseRecordId).text = record.caseRecordId.toString()
-            newRow.findViewById<TextView>(R.id.caseRecordPatientId).text =
-                record.patientId.toString()
+            newRow.findViewById<TextView>(R.id.caseRecordPatientId).text = record.patientId.toString()
             newRow.findViewById<TextView>(R.id.physicianName).text = record.physicianName
             newRow.findViewById<TextView>(R.id.patientName).text = record.patientName
             newRow.findViewById<TextView>(R.id.patientId).text = record.patientId.toString()
@@ -96,11 +132,36 @@ class PatientListTableFragment : Fragment() {
             newRow.findViewById<TextView>(R.id.patientGender).text = record.patientGender
             newRow.findViewById<TextView>(R.id.lastUpdateDate).text = record.lastUpdateDate
             newRow.findViewById<TextView>(R.id.lastUpdateTime).text = record.lastUpdateTime
-            newRow.findViewById<TextView>(R.id.status).text = record.status
+            newRow.findViewById<TextView>(R.id.status).apply {
+                text = record.status.uppercase() // Convert to uppercase for display in XML
+
+                // Change background based on status (case-insensitive)
+                background = when (record.status.uppercase()) {
+                    "COMPLETED" -> resources.getDrawable(R.drawable.bg_status_completed, null)
+                    "FOR REVIEW" -> resources.getDrawable(R.drawable.bg_status_for_review, null)
+                    else -> resources.getDrawable(R.drawable.bg_status_for_review, null)
+                }
+
+                // Change text color based on status
+                setTextColor(
+                    when (record.status.uppercase()) {
+                        "COMPLETED" -> resources.getColor(R.color.white, null)
+                        else -> resources.getColor(R.color.blue, null)
+                    }
+                )
+            }
+
             newRow.findViewById<TextView>(R.id.type).text = record.type
 
             // Add the new row to the TableLayout
             tableLayout.addView(newRow)
         }
+
+        // Update pagination text
+        textPagination.text = "${start + 1}-$end of $totalRecords"
+
+        // Enable/disable buttons based on page
+        btnPrevPage.isEnabled = currentPage > 0
+        btnNextPage.isEnabled = end < totalRecords
     }
 }

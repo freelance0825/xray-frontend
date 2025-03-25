@@ -77,7 +77,9 @@ animator mtrl_fab_hide_motion_spec
 animator mtrl_fab_show_motion_spec
 animator mtrl_fab_transformation_sheet_collapse_spec
 animator mtrl_fab_transformation_sheet_expand_spec
+array gender_options
 array specialist_options
+array state_options
 attr SharedValue
 attr SharedValueId
 attr actionBarDivider
@@ -3369,6 +3371,7 @@ id frost
 id fullscreen_header
 id ghost_view
 id ghost_view_holder
+id glide_custom_view_target_tag
 id gone
 id graph
 id graph_wrap
@@ -3679,6 +3682,7 @@ id tag_window_insets_animation_callback
 id text
 id text2
 id textEnd
+id textPagination
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
@@ -3950,6 +3954,7 @@ layout notification_template_part_time
 layout patient_activity
 layout patient_activity_fragment
 layout patient_list_activity
+layout patient_list_table_data_row
 layout patient_list_table_fragment
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
@@ -3957,7 +3962,6 @@ layout select_dialog_singlechoice_material
 layout signup_activity
 layout spinner_item
 layout support_simple_spinner_dropdown_item
-layout table_data_row
 layout todo_list
 layout todo_list_fragment
 plurals mtrl_badge_content_description
@@ -4438,6 +4442,7 @@ style Base_Widget_MaterialComponents_TextView
 style CardView
 style CardView_Dark
 style CardView_Light
+style CustomDatePickerDialog
 style DialogWindowTheme
 style FloatingDialogTheme
 style FloatingDialogWindowTheme

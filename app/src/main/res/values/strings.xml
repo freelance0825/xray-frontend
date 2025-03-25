@@ -1,8 +1,25 @@
 <resources>
     <string name="app_name">thunderscope-frontend</string>
+
+    <!--- Spinner Specialist -->
     <string-array name="specialist_options">
         <item>Pathologist</item>
         <item>Surgeon</item>
         <item>Cardiologists</item>
+    </string-array>
+
+    <!--- Spinner Gender -->
+    <string-array name="gender_options">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+
+    <!--- Spinner State -->
+    <string-array name="state_options">
+        <item>United States</item>
+        <item>Singapore</item>
+        <item>Macau</item>
+        <item>New York</item>
     </string-array>
 </resources>
