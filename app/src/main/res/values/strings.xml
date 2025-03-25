@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">thunderscope-frontend</string>
+    <string-array name="specialist_options">
+        <item>Pathologist</item>
+        <item>Surgeon</item>
+        <item>Cardiologists</item>
+    </string-array>
 </resources>

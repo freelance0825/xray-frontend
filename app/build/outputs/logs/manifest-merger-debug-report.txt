@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:2:1-42:12
-INJECTED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:2:1-42:12
-INJECTED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:2:1-42:12
-INJECTED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:2:1-42:12
+ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:2:1-56:12
+INJECTED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:2:1-56:12
+INJECTED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:2:1-56:12
+INJECTED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:2:1-56:12
 MERGED from [com.google.android.material:material:1.10.0] C:\Users\user\.gradle\caches\8.11.1\transforms\cbc57cf02e30896a9c398eacd953bc6b\transformed\material-1.10.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\user\.gradle\caches\8.11.1\transforms\0b8b71e094f0973d145f8661af53c000\transformed\constraintlayout-2.1.4\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\user\.gradle\caches\8.11.1\transforms\bbff676f4bc3882183d2d7d168a11ae4\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
@@ -100,8 +100,8 @@ ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main
 	android:name
 		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:6:22-76
 application
-ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:8:5-40:19
-INJECTED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:8:5-40:19
+ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:8:5-54:19
+INJECTED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:8:5-54:19
 MERGED from [com.google.android.material:material:1.10.0] C:\Users\user\.gradle\caches\8.11.1\transforms\cbc57cf02e30896a9c398eacd953bc6b\transformed\material-1.10.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.10.0] C:\Users\user\.gradle\caches\8.11.1\transforms\cbc57cf02e30896a9c398eacd953bc6b\transformed\material-1.10.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\user\.gradle\caches\8.11.1\transforms\0b8b71e094f0973d145f8661af53c000\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -127,59 +127,87 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\us
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.15.0] C:\Users\user\.gradle\caches\8.11.1\transforms\cb041487ee8092aabf67f17fdc9f3d64\transformed\core-1.15.0\AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:13:9-35
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:15:9-35
 	android:label
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:12:9-41
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:14:9-41
+	android:hardwareAccelerated
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:10:9-43
 	android:fullBackupContent
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:11:9-54
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:13:9-54
 	tools:targetApi
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:15:9-29
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:17:9-29
 	android:allowBackup
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:9:9-35
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:11:9-35
 	android:theme
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:14:9-58
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:16:9-58
 	android:dataExtractionRules
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:10:9-65
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:12:9-65
+	android:usesCleartextTraffic
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:9:9-44
 activity#com.example.thunderscope_frontend.MainActivity
-ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:18:9-29:20
+ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:20:9-31:20
 	android:screenOrientation
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:23:13-50
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:25:13-50
 	android:label
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:21:13-45
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:23:13-45
 	android:exported
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:20:13-36
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:22:13-36
 	android:theme
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:22:13-62
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:24:13-62
 	android:name
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:19:13-41
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:21:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:25:13-28:29
+ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:27:13-30:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:26:17-69
+ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:28:17-69
 	android:name
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:26:25-66
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:28:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:27:17-77
+ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:29:17-77
 	android:name
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:27:27-74
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:29:27-74
 activity#com.example.thunderscope_frontend.ui.user.SignupActivity
-ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:32:9-83
+ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:34:9-83
 	android:exported
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:32:58-81
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:34:58-81
 	android:name
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:32:19-57
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:34:19-57
 activity#com.example.thunderscope_frontend.ui.patient.PatientListActivity
-ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:35:9-91
+ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:37:9-91
 	android:exported
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:35:66-89
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:37:66-89
 	android:name
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:35:19-65
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:37:19-65
 activity#com.example.thunderscope_frontend.ui.todolist.TodoList
-ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:38:9-81
+ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:40:9-81
 	android:exported
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:38:56-79
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:40:56-79
 	android:name
-		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:38:19-55
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:40:19-55
+activity#com.example.thunderscope_frontend.ui.patient.EditPatientActivity
+ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:43:9-91
+	android:exported
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:43:66-89
+	android:name
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:43:19-65
+activity#com.example.thunderscope_frontend.ui.createnewtest.CreateNewTestActivity
+ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:46:9-99
+	android:exported
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:46:74-97
+	android:name
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:46:19-73
+activity#com.example.thunderscope_frontend.ui.createnewtest.CreatePatientInfoActivity
+ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:49:9-103
+	android:exported
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:49:78-101
+	android:name
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:49:19-77
+activity#com.example.thunderscope_frontend.ui.createnewtest.LoadingPrepareTestActivity
+ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:52:9-104
+	android:exported
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:52:79-102
+	android:name
+		ADDED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml:52:19-78
 uses-sdk
 INJECTED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\user\AndroidStudioProjects\thunderscopefrontend\app\src\main\AndroidManifest.xml

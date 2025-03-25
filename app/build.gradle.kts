@@ -71,6 +71,10 @@ dependencies {
     //Appcompat
     implementation ("androidx.appcompat:appcompat:1.6.1")
 
+    // OKHTTP3
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+
     // Testing dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -29,7 +29,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Thunderscope"
+            android:text="Fundoscope"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
 
@@ -126,10 +126,12 @@
                         android:textSize="14sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/passwordInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:boxBackgroundMode="none"
                         app:endIconMode="password_toggle"
+
                         app:startIconDrawable="@drawable/ic_lock">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -138,7 +140,6 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/input_bg"
                             android:padding="18dp"
-                            android:text=""
                             android:inputType="textPassword" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
@@ -179,7 +180,6 @@
                             android:layout_height="wrap_content"
                             android:padding="18dp"
                             android:background="@drawable/input_bg"
-                            android:text=""
                             android:inputType="textPersonName" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
@@ -253,7 +253,7 @@
 
                             <!-- Spinner (Dropdown) -->
                             <androidx.appcompat.widget.AppCompatSpinner
-                                android:id="@+id/specialist_spinner"
+                                android:id="@+id/spinnerSpecialist"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@null"
@@ -305,7 +305,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/input_bg"
                             android:padding="18dp"
-                            android:inputType="date" />
+                            android:inputType="none" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </LinearLayout>
