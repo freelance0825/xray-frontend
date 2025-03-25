@@ -20,12 +20,12 @@
         "source": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-main-64:\\layout\\signup_activity.xml"
     },
     {
-        "merged": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-debug-62:\\drawable_ic_dropdown.png.flat",
-        "source": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-main-64:\\drawable\\ic_dropdown.png"
-    },
-    {
         "merged": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-debug-62:\\layout_todo_list_fragment.xml.flat",
         "source": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-main-64:\\layout\\todo_list_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-debug-62:\\drawable_ic_dropdown.png.flat",
+        "source": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-main-64:\\drawable\\ic_dropdown.png"
     },
     {
         "merged": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-debug-62:\\drawable_ic_lock.png.flat",
@@ -42,6 +42,10 @@
     {
         "merged": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-debug-62:\\drawable_rounded_edittext.png.flat",
         "source": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-main-64:\\drawable\\rounded_edittext.png"
+    },
+    {
+        "merged": "com.example.thunderscope_frontend.app-debug-62:/layout_patient_list_table_fragment.xml.flat",
+        "source": "com.example.thunderscope_frontend.app-main-64:/layout/patient_list_table_fragment.xml"
     },
     {
         "merged": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-debug-62:\\layout_edit_patient_activity.xml.flat",
@@ -62,6 +66,10 @@
     {
         "merged": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-debug-62:\\drawable_ic_add.png.flat",
         "source": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-main-64:\\drawable\\ic_add.png"
+    },
+    {
+        "merged": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-debug-62:\\layout_table_data_row.xml.flat",
+        "source": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-main-64:\\layout\\table_data_row.xml"
     },
     {
         "merged": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-debug-62:\\drawable_ic_email.png.flat",
@@ -152,10 +160,6 @@
         "source": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-main-64:\\drawable\\microscope_image.png"
     },
     {
-        "merged": "com.example.thunderscope_frontend.app-debug-62:/layout_signup_activity.xml.flat",
-        "source": "com.example.thunderscope_frontend.app-main-64:/layout/signup_activity.xml"
-    },
-    {
         "merged": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-debug-62:\\layout_custom_spinner_dropdown.xml.flat",
         "source": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-main-64:\\layout\\custom_spinner_dropdown.xml"
     },
@@ -214,6 +218,10 @@
     {
         "merged": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-debug-62:\\layout_main_activity.xml.flat",
         "source": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-main-64:\\layout\\main_activity.xml"
+    },
+    {
+        "merged": "com.example.thunderscope_frontend.app-debug-62:/layout_table_data_row.xml.flat",
+        "source": "com.example.thunderscope_frontend.app-main-64:/layout/table_data_row.xml"
     },
     {
         "merged": "C:\\Users\\user\\.gradle\\daemon\\8.11.1\\com.example.thunderscope_frontend.app-debug-62:\\drawable_input_bg.png.flat",

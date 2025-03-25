@@ -75,6 +75,12 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
 
+    // Gson
+    implementation("com.google.code.gson:gson:2.10.1")
+
+    //View Models
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+
     // Testing dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

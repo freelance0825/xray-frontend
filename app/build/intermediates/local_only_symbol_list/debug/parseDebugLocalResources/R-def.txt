@@ -63,6 +63,7 @@ id add_new_patient_button
 id address
 id all_cases_label
 id all_cases_number
+id assessment
 id back_button
 id birthAgeStateLayout
 id brandingLayout
@@ -77,6 +78,8 @@ id btnNextPage
 id btnOpenViewer
 id btnPrevPage
 id btnSubmit
+id caseRecordId
+id caseRecordPatientId
 id deleteIcon
 id detailsContainer
 id deviceImage
@@ -102,6 +105,8 @@ id header_layout
 id header_title
 id imageContainer
 id imgProfile
+id lastUpdateDate
+id lastUpdateTime
 id loading_container
 id loading_spinner
 id loading_text
@@ -124,8 +129,14 @@ id menu_on_progress_count
 id menu_on_progress_label
 id menu_todo_list
 id passwordInputLayout
+id patientAge
+id patientBirthdate
+id patientGender
+id patientId
+id patientName
 id patient_info_container
 id patient_label
+id physicianName
 id powered_by_logo
 id profileLayout
 id progressBar
@@ -147,7 +158,9 @@ id spinnerStatus
 id spinnerTimePeriod
 id spinnerType
 id start_new_test_button
+id status
 id status_indicator
+id tableLayoutHeader
 id title_divider
 id todo_count
 id todo_icon
@@ -163,6 +176,7 @@ id tvStep1
 id tvStep2
 id tvStepsHeader
 id txtPagination
+id type
 layout create_new_test_activity
 layout create_new_test_activity_fragment
 layout create_patient_info_activity
@@ -177,6 +191,7 @@ layout patient_list_activity
 layout patient_list_table_fragment
 layout signup_activity
 layout spinner_item
+layout table_data_row
 layout todo_list
 layout todo_list_fragment
 string app_name

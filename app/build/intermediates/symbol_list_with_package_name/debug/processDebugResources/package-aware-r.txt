@@ -3212,6 +3212,7 @@ id antiClockwise
 id anticipate
 id arc
 id asConfigured
+id assessment
 id async
 id auto
 id autoComplete
@@ -3247,6 +3248,8 @@ id cache_measures
 id callMeasure
 id cancel_button
 id carryVelocity
+id caseRecordId
+id caseRecordPatientId
 id center
 id centerCrop
 id centerInside
@@ -3406,6 +3409,8 @@ id item_touch_helper_previous_elevation
 id jumpToEnd
 id jumpToStart
 id labeled
+id lastUpdateDate
+id lastUpdateTime
 id layout
 id left
 id leftToRight
@@ -3544,10 +3549,16 @@ id passwordInputLayout
 id password_toggle
 id path
 id pathRelative
+id patientAge
+id patientBirthdate
+id patientGender
+id patientId
+id patientName
 id patient_info_container
 id patient_label
 id peekHeight
 id percent
+id physicianName
 id pin
 id pooling_container_listener_holder_tag
 id position
@@ -3643,6 +3654,7 @@ id startVertical
 id start_new_test_button
 id staticLayout
 id staticPostLayout
+id status
 id status_indicator
 id stop
 id stretch
@@ -3650,6 +3662,7 @@ id submenuarrow
 id submit_area
 id supportScrollUp
 id tabMode
+id tableLayoutHeader
 id tag_accessibility_actions
 id tag_accessibility_clickable_spans
 id tag_accessibility_heading
@@ -3710,6 +3723,7 @@ id tvStep1
 id tvStep2
 id tvStepsHeader
 id txtPagination
+id type
 id unchecked
 id uniform
 id unlabeled
@@ -3943,6 +3957,7 @@ layout select_dialog_singlechoice_material
 layout signup_activity
 layout spinner_item
 layout support_simple_spinner_dropdown_item
+layout table_data_row
 layout todo_list
 layout todo_list_fragment
 plurals mtrl_badge_content_description
