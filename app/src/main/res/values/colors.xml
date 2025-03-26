@@ -13,6 +13,8 @@
 
 
 
+    <color name="night_blue_start_gradient">#0E214F</color>
+    <color name="night_blue_end_gradient">#204CB5</color>
     <color name="blue_gradient">#10265A</color>
 
     <color name="blue_dark">#183A87</color>
