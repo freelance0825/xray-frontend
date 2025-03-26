@@ -105,9 +105,9 @@ class CaseRecordViewModel(application: Application) : AndroidViewModel(applicati
                     physicianName = doctor.optString("name", "N/A"),
                     patientName = patient.optString("name", "N/A"),
                     patientId = patient.optInt("id", -1),  // Ensure ID is not null (-1 as fallback)
-                    patientImage = patient.optString("imageBase64", "N/A"),
-                    patientPhoneNumber = patient.optString("phoneNumber", "N/A"),
-                    patientBirthdate = patient.optString("dateOfBirth", "N/A"),
+                    patientImage = patient.optString("image_base64", "N/A"),
+                    patientPhoneNumber = patient.optString("phone_number", "N/A"),
+                    patientBirthdate = patient.optString("date_of_birth", "N/A"),
                     patientAge = patient.optString("age", "N/A"),
                     patientGender = patient.optString("gender", "N/A"),
                     lastUpdateDate = jsonObject.optString("date", "N/A"),

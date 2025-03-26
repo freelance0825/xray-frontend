@@ -28,4 +28,51 @@
         <item>Macau</item>
         <item>New York</item>
     </string-array>
+
+
+    <!--- Spinner Time Period -->
+    <string-array name="time_period_options">
+        <item>All Time</item>
+        <item>Last 24 Hours</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+    </string-array>
+
+    <!--- Spinner Status -->
+    <string-array name="status_options">
+        <item>All Status</item>
+        <item>High Priority</item>
+        <item>In Preparations</item>
+        <item>For Review</item>
+        <item>Finished</item>
+    </string-array>
+
+    <!--- Spinner Type -->
+    <string-array name="type_options">
+        <item>All Type</item>
+        <item>Left</item>
+        <item>Right</item>
+        <item>Left &amp; Right</item>
+    </string-array>
+
+
+    <!--- Spinner Gender Filter-->
+    <string-array name="gende_filter_options">
+        <item>All Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+
+    <!--- Spinner Age -->
+    <string-array name="age_options">
+        <item>All Age</item>
+        <item>0-12 (Children)</item>
+        <item>13-17 (Teens)</item>
+        <item>18-64 (Adults)</item>
+        <item>65+ (Seniors)</item>
+    </string-array>
+
+
+
 </resources>
