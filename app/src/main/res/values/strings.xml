@@ -57,11 +57,10 @@
 
 
     <!--- Spinner Gender Filter-->
-    <string-array name="gende_filter_options">
+    <string-array name="gender_filter_options">
         <item>All Gender</item>
         <item>Male</item>
         <item>Female</item>
-        <item>Other</item>
     </string-array>
 
     <!--- Spinner Age -->

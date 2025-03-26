@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -19,17 +20,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!-- Back Navigation Button -->
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back"
+            android:contentDescription="Back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:tint="@android:color/white" />
+
+        <!-- Divider Line before Title -->
+        <View
+            android:id="@+id/title_divider"
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:background="@android:color/white"
+            app:layout_constraintStart_toEndOf="@id/back_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Header Title -->
         <TextView
             android:id="@+id/header_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingStart="20dp"
             android:text="PATIENT"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/title_divider"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <!-- Status Indicator -->
         <View
@@ -128,7 +154,7 @@
 
         <!-- "26" Text (Separate) -->
         <TextView
-            android:id="@+id/all_cases_number"
+            android:id="@+id/all_patient_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -143,7 +169,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/add_new_patient_button"
             android:layout_width="169dp"
-            android:layout_height="44dp"
+            android:layout_height="48dp"
             android:layout_marginEnd="92dp"
             android:backgroundTint="@color/header_blue"
             android:drawableStart="@drawable/ic_add"
@@ -199,7 +225,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/menu_all_cases_count"
+                    android:id="@+id/menu_all_patient_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/sidebar_divider"
@@ -227,7 +253,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/menu_high_priority_count"
+                    android:id="@+id/menu_not_started_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/sidebar_divider"
@@ -254,7 +280,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/menu_in_preparations_count"
+                    android:id="@+id/menu_on_progress_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/sidebar_divider"
@@ -276,12 +302,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Finised"
+                    android:text="Finished"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/menu_for_review_count"
+                    android:id="@+id/menu_finished_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/sidebar_divider"

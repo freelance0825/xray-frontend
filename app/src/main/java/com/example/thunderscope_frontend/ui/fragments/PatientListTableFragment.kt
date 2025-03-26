@@ -155,7 +155,7 @@ class PatientListTableFragment : Fragment() {
         typeFilter.adapter = typeAdapter
 
         // Gender Spinner Setup
-        val genderOptions = resources.getStringArray(R.array.gende_filter_options)
+        val genderOptions = resources.getStringArray(R.array.gender_filter_options)
         val genderAdapter =
             ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, genderOptions)
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -375,22 +375,6 @@ class PatientListTableFragment : Fragment() {
         } catch (e: ParseException) {
             Log.e("FilterError", "Date parsing failed: $recordDate $recordTime", e)
             false
-        }
-    }
-
-
-    private fun filterByAge(patientAge: String, selectedAge: String): Boolean {
-        return try {
-            val age = patientAge.replace(Regex("[^0-9]"), "").toInt() // Extract numeric value
-            when (selectedAge) {
-                "0-18" -> age in 0..18
-                "19-35" -> age in 19..35
-                "36-50" -> age in 36..50
-                "51+" -> age >= 51
-                else -> true // Default: Show all records
-            }
-        } catch (e: NumberFormatException) {
-            false // If parsing fails, exclude the record
         }
     }
 

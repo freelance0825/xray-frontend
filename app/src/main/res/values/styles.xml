@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!--- Custom date Picker -->
     <style name="CustomDatePickerDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="colorAccent">@color/blue_gradient</item>
 

@@ -174,8 +174,8 @@
         <!-- Sidebar Menu List (Now starts at the top) -->
         <LinearLayout
             android:id="@+id/sidebar_menu"
-            android:layout_width="141dp"
-            android:layout_height="260dp"
+            android:layout_width="137dp"
+            android:layout_height="300dp"
             android:orientation="vertical"
             android:paddingBottom="20dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -345,6 +345,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="To Do List"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Patient Icon and Text -->
+            <LinearLayout
+                android:id="@+id/menu_patient_module"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp">
+
+                <ImageView
+                    android:id="@+id/patient_icon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_patient" />
+
+                <TextView
+                    android:id="@+id/etPatient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Patient"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />

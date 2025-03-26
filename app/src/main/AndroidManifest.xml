@@ -30,28 +30,31 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Sign Up Activity -->
+        </activity>
         <activity
             android:name=".ui.user.SignupActivity"
-            android:exported="true" /> <!-- Patient List Activity -->
+            android:exported="true" /> <!-- Sign Up Activity -->
         <activity
             android:name=".ui.patient.PatientListActivity"
-            android:exported="true" /> <!-- To Do List Activity -->
+            android:exported="true" /> <!-- Patient List Activity -->
         <activity
             android:name=".ui.todolist.TodoList"
-            android:exported="true" /> <!-- Edit Patient Activity -->
+            android:exported="true" /> <!-- To Do List Activity -->
         <activity
             android:name=".ui.patient.EditPatientActivity"
-            android:exported="true" /> <!-- Create New Test Activity -->
+            android:exported="true" /> <!-- Edit Patient Activity -->
         <activity
             android:name=".ui.createnewtest.CreateNewTestActivity"
-            android:exported="true" /> <!-- Create Patient Info Activity -->
+            android:exported="true" /> <!-- Create New Test Activity -->
         <activity
             android:name=".ui.createnewtest.CreatePatientInfoActivity"
-            android:exported="true" /> <!-- Loading Prepare Test Activity -->
+            android:exported="true" /> <!-- Create Patient Info Activity -->
         <activity
             android:name=".ui.createnewtest.LoadingPrepareTestActivity"
-            android:exported="true" />
+            android:exported="true" /><!-- Loading Prepare Test Activity -->
+        <activity
+            android:name=".ui.patient.PatientActivity"
+            android:exported="true" /><!-- Patient Activity -->
     </application>
 
 </manifest>

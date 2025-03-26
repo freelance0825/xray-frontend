@@ -21,6 +21,7 @@ class PatientListActivity : AppCompatActivity() {
     private lateinit var menuForReview: TextView
     private lateinit var menuFinished: TextView
     private lateinit var startNewTest: Button
+    private lateinit var patientModule: TextView
 
     // Case Record ViewModel (properly initialized)
     private val caseRecordViewModel: CaseRecordViewModel by viewModels()
@@ -37,6 +38,7 @@ class PatientListActivity : AppCompatActivity() {
         menuForReview = findViewById(R.id.menu_for_review_count)
         menuFinished = findViewById(R.id.menu_finished_count)
         startNewTest = findViewById(R.id.start_new_test_button)
+        patientModule = findViewById(R.id.etPatient)
 
         // Observe case records list and update UI
         caseRecordViewModel.caseRecordsLiveData.observe(this, Observer { caseList ->
@@ -61,6 +63,12 @@ class PatientListActivity : AppCompatActivity() {
         // Set click listener for "Start New Test" button
         startNewTest.setOnClickListener {
             val intent = Intent(this, CreateNewTestActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Set click listener for Patient Module
+        patientModule.setOnClickListener {
+            val intent = Intent(this, PatientActivity::class.java)
             startActivity(intent)
         }
     }

@@ -6,35 +6,28 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Patterns
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.ui.createnewtest.LoadingPrepareTestActivity
-import okhttp3.Call
-import okhttp3.Callback
+import com.example.thunderscope_frontend.ui.patient.PatientActivity
+import com.example.thunderscope_frontend.viewmodel.PatientRecordUI
+import com.example.thunderscope_frontend.viewmodel.PatientRecordViewModel
+import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
 import java.io.IOException
-import java.util.Calendar
+import java.util.*
 
-class CreatePatientInfoActivityFragment : Fragment() {
+class EditPatientDialogFragment : DialogFragment() {
 
     private lateinit var imgProfile: ImageView
     private lateinit var editProfile: ImageView
@@ -47,16 +40,32 @@ class CreatePatientInfoActivityFragment : Fragment() {
     private lateinit var spinnerState: Spinner
     private lateinit var address: EditText
     private lateinit var btnSubmit: Button
-    private var selectedImageUri: Uri? = null
+    private lateinit var closeButton: ImageView
 
+    // Patient Record View Model
+    private lateinit var patientRecordViewModel: PatientRecordViewModel
+
+    private var selectedImageUri: Uri? = null
+    private var patientId: String? = null
     private val client = OkHttpClient()
+
+    companion object {
+        private const val ARG_PATIENT_ID = "patientId"
+
+        fun newInstance(patientId: String): EditPatientDialogFragment {
+            val fragment = EditPatientDialogFragment()
+            val args = Bundle()
+            args.putString(ARG_PATIENT_ID, patientId)
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     // Image Picker Launcher
     private val pickImageLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK && result.data != null) {
                 selectedImageUri = result.data?.data // Update class-level variable
-
                 if (selectedImageUri != null) {
                     Glide.with(this)
                         .load(selectedImageUri)
@@ -69,12 +78,15 @@ class CreatePatientInfoActivityFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.create_patient_info_activity_fragment, container, false)
+    ): View {
+        return inflater.inflate(R.layout.edit_patient_dialog_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Retrieve patientId from arguments
+        patientId = arguments?.getString(ARG_PATIENT_ID)
 
         // Initialize UI components
         imgProfile = view.findViewById(R.id.imgProfile)
@@ -88,6 +100,35 @@ class CreatePatientInfoActivityFragment : Fragment() {
         spinnerState = view.findViewById(R.id.spinnerState)
         address = view.findViewById(R.id.etAddress)
         btnSubmit = view.findViewById(R.id.btnSubmit)
+        closeButton = view.findViewById(R.id.btnClose)
+
+        // Retrieve patientId from arguments
+        patientId = arguments?.getString(ARG_PATIENT_ID)
+
+        // Initialize ViewModel
+        patientRecordViewModel =
+            ViewModelProvider(requireActivity()).get(PatientRecordViewModel::class.java)
+
+        // Fetch records to populate LiveData
+        patientRecordViewModel.fetchCaseRecords()
+
+        // Observe LiveData correctly
+        patientRecordViewModel.patientRecordsLiveData.observe(viewLifecycleOwner) { records ->
+            val patient = records.find { it.patientId == patientId?.toIntOrNull() }
+
+            if (patient != null) {
+                populateFields(patient)
+            } else {
+                Toast.makeText(requireContext(), "Patient not found", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // On click listener for close button
+        closeButton.setOnClickListener {
+            val intent = Intent(requireContext(), PatientActivity::class.java)
+            startActivity(intent)
+            dismiss() // Close the dialog
+        }
 
         // Gender Spinner Setup
         val genderOptions = resources.getStringArray(R.array.gender_options)
@@ -95,7 +136,6 @@ class CreatePatientInfoActivityFragment : Fragment() {
             ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, genderOptions)
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerGender.adapter = genderAdapter
-        spinnerGender.setSelection(0)
 
         // State Spinner Setup
         val stateOptions = mutableListOf("Select State").apply {
@@ -105,16 +145,38 @@ class CreatePatientInfoActivityFragment : Fragment() {
             ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, stateOptions)
         stateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerState.adapter = stateAdapter
-        spinnerState.setSelection(0, false)
 
         // Event Listeners
         editProfile.setOnClickListener { openImagePicker() }
         birthDate.setOnClickListener { showDatePicker() }
-        btnSubmit.setOnClickListener {
-            if (validateInputs()) {
-                sendPatientData()
-            }
-        }
+        btnSubmit.setOnClickListener { updatePatientData() }
+    }
+
+
+    // Populate UI Fields
+    private fun populateFields(patient: PatientRecordUI) {
+        editPatientName.setText(patient.patientName)
+        email.setText(patient.patientEmail)
+        phoneNumber.setText(patient.patientPhoneNumber)
+        birthDate.setText(patient.patientBirthDate)
+        age.setText(patient.patientAge.toString())
+        address.setText(patient.patientAddress)
+
+        // Set Gender Spinner
+        val genderIndex =
+            resources.getStringArray(R.array.gender_options).indexOf(patient.patientGender)
+        if (genderIndex >= 0) spinnerGender.setSelection(genderIndex)
+
+        // Set State Spinner
+        val stateIndex =
+            resources.getStringArray(R.array.state_options).indexOf(patient.patientState)
+        if (stateIndex >= 0) spinnerState.setSelection(stateIndex + 1) // +1 to skip "Select State"
+
+        // Load Image with Glide
+        Glide.with(this)
+            .load(patient.patientImage)
+            .apply(RequestOptions.circleCropTransform())
+            .into(imgProfile)
     }
 
     // Open Image Picker
@@ -123,67 +185,21 @@ class CreatePatientInfoActivityFragment : Fragment() {
         pickImageLauncher.launch(intent)
     }
 
-    // Date Picker
+    // Show Date Picker
     private fun showDatePicker() {
         val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-
         val datePickerDialog = DatePickerDialog(
             requireContext(),
             R.style.CustomDatePickerDialog,
-            { _, selectedYear, selectedMonth, selectedDay ->
-                val selectedDate =
-                    String.format("%02d-%02d-%04d", selectedMonth + 1, selectedDay, selectedYear)
-                birthDate.setText(selectedDate)
-            }, year, month, day
+            { _, year, month, day ->
+                val formattedDate = String.format("%02d-%02d-%04d", month + 1, day, year)
+                birthDate.setText(formattedDate)
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
         )
-
         datePickerDialog.show()
-    }
-
-    // Validate Input Fields
-    private fun validateInputs(): Boolean {
-        if (editPatientName.text.isBlank()) {
-            editPatientName.error = "Name is required"
-            return false
-        }
-        if (email.text.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(email.text.toString())
-                .matches()
-        ) {
-            email.error = "Enter a valid email"
-            return false
-        }
-        if (phoneNumber.text.isBlank() || !phoneNumber.text.toString()
-                .matches(Regex("^[0-9]{10,15}$"))
-        ) {
-            phoneNumber.error = "Phone Number is required"
-            return false
-        }
-        if (birthDate.text.isBlank() || !birthDate.text.toString()
-                .matches(Regex("^\\d{2}-\\d{2}-\\d{4}$"))
-        ) {
-            birthDate.error = "Enter birthdate in MM-DD-YYYY format"
-            return false
-        }
-        if (age.text.isBlank()) {
-            age.error = "Age is required"
-            return false
-        }
-        if (spinnerState.selectedItemPosition == 0) {
-            Toast.makeText(requireContext(), "Please select a state", Toast.LENGTH_SHORT).show()
-            return false
-        }
-        if (address.text.isBlank()) {
-            address.error = "Address is required"
-            return false
-        }
-        if (selectedImageUri == null) {
-            Toast.makeText(requireContext(), "Please select an image", Toast.LENGTH_SHORT).show()
-            return false
-        }
-        return true
     }
 
     // Get InputStream from selectedImageUri
@@ -193,8 +209,8 @@ class CreatePatientInfoActivityFragment : Fragment() {
         }
     }
 
-
-    private fun sendPatientData() {
+    // Update Patient Data
+    private fun updatePatientData() {
         val sharedPreferences =
             requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("token", "") ?: ""
@@ -227,8 +243,8 @@ class CreatePatientInfoActivityFragment : Fragment() {
             .build()
 
         val request = Request.Builder()
-            .url("http://10.0.2.2:8080/api/patients/add")
-            .post(requestBody)
+            .url("http://10.0.2.2:8080/api/patients/$patientId")
+            .put(requestBody)
             .addHeader("Authorization", "Bearer $token")
             .build()
 
@@ -246,12 +262,11 @@ class CreatePatientInfoActivityFragment : Fragment() {
             override fun onResponse(call: Call, response: Response) {
                 requireActivity().runOnUiThread {
                     if (response.isSuccessful) {
-                        startActivity(
-                            Intent(
-                                requireContext(),
-                                LoadingPrepareTestActivity::class.java
-                            )
-                        )
+                        Toast.makeText(requireContext(), "Patient updated successfully!", Toast.LENGTH_LONG).show()
+                        val handler = android.os.Handler()
+                        handler.postDelayed({
+                        }, 30000)
+
                     } else {
                         Toast.makeText(
                             requireContext(),
@@ -263,4 +278,11 @@ class CreatePatientInfoActivityFragment : Fragment() {
             }
         })
     }
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(1800, 1300) // Force dialog to match XML size
+    }
+
+
 }
