@@ -1,2 +1,25 @@
-.build
-/build
+# Ignore Android Studio project files
+*.iml
+.gradle
+.idea/
+
+# Ignore build directories
+/build/
+.build/
+
+# Ignore local properties (should not be in version control)
+local.properties
+
+# Ignore other unnecessary files
+.DS_Store
+/captures
+.externalNativeBuild
+.cxx
+
+# Specific IDE and editor files for IntelliJ/Android Studio
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
