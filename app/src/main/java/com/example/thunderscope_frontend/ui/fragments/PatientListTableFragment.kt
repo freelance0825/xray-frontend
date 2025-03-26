@@ -1,5 +1,6 @@
 package com.example.thunderscope_frontend.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.thunderscope_frontend.R
+import com.example.thunderscope_frontend.ui.slides.SlidesActivity
 import com.example.thunderscope_frontend.viewmodel.CaseRecordUI
 import com.example.thunderscope_frontend.viewmodel.CaseRecordViewModel
 
@@ -152,6 +154,12 @@ class PatientListTableFragment : Fragment() {
             }
 
             newRow.findViewById<TextView>(R.id.type).text = record.type
+
+            newRow.setOnClickListener {
+                val intent = Intent(requireContext(), SlidesActivity::class.java)
+                intent.putExtra(SlidesActivity.EXTRA_CASE_RECORD, record)
+                startActivity(intent)
+            }
 
             // Add the new row to the TableLayout
             tableLayout.addView(newRow)

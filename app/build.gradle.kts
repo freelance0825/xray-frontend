@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -16,9 +17,14 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        buildConfigField("String", "APP_ENDPOINT", "\"http://10.0.2.2:8080/api/\"")
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -73,7 +79,7 @@ dependencies {
 
     // OKHTTP3
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
     // Gson
     implementation("com.google.code.gson:gson:2.10.1")
@@ -83,6 +89,14 @@ dependencies {
 
     // Glide for image loading and caching
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // Retrofit2
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.androidx.activity)
+
+    // CircleImageView
+    implementation(libs.circleimageview)
 
     // Testing dependencies
     testImplementation(libs.junit)

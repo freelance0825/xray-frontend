@@ -1,5 +1,7 @@
 <resources>
 
-    <style name="Theme.Thunderscopefrontend" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
+    <style name="Theme.Thunderscopefrontend" parent="Theme.MaterialComponents.DayNight.NoActionBar" >
+        <item name="android:statusBarColor">@color/black</item>
+    </style>
 
 </resources>

@@ -148,18 +148,20 @@ class MainActivity : AppCompatActivity() {
             val jsonResponse = JSONObject(responseBody)
             val token = jsonResponse.optString("token", "")
 
-            if (token.isNotEmpty()) {
-                saveToken(token)
-                runOnUiThread {
-                    showSuccessToast("Login Successful!")
-                    redirectToActivity(PatientListActivity::class.java)
-                }
-            } else {
-                runOnUiThread {
-                    showErrorToast(ERROR_USER_NOT_FOUND)
-                    redirectToActivity(SignupActivity::class.java)
-                }
-            }
+            showSuccessToast("Login Successful!")
+            redirectToActivity(PatientListActivity::class.java)
+//            if (token.isNotEmpty()) {
+//                saveToken(token)
+//                runOnUiThread {
+//                    showSuccessToast("Login Successful!")
+//                    redirectToActivity(PatientListActivity::class.java)
+//                }
+//            } else {
+//                runOnUiThread {
+//                    showErrorToast(ERROR_USER_NOT_FOUND)
+//                    redirectToActivity(SignupActivity::class.java)
+//                }
+//            }
         } ?: runOnUiThread { showErrorToast("Unexpected error. Please try again.") }
     }
 

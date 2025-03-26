@@ -8,6 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFF</color>
 
+    <color name="border_gray">#EDEDED</color>
+    <color name="gray_opacity_80">#CC8D8D8D</color>
+
 
 
     <color name="blue_gradient">#10265A</color>
