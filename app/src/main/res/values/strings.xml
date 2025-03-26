@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">thunderscope-frontend</string>
 
+    <!--- Activity Slides Resource -->
+    <string name="activity_slides_assesment_count">Assesment (%1s)</string>
+    <string name="activity_slides_annotation_count">Image and documents (%1s)</string>
+    <string name="activity_slides_photo_count">Photo Gallery (%1s)</string>
+    <string name="activity_slides_active_count">%1s Slides Selected</string>
+
     <!--- Spinner Specialist -->
     <string-array name="specialist_options">
         <item>Pathologist</item>
