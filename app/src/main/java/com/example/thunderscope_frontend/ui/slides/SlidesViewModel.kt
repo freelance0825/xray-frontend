@@ -23,7 +23,12 @@ class SlidesViewModel(
     val currentlySelectedSlide = MutableLiveData<SlidesItem?>(null)
 
     val photoGalleryItems = MutableLiveData(this.getDummyPhotos())
-    val annotationItems = MutableLiveData(this.getDummyPhotos())
+    val annotationItems = MutableLiveData(this.generateDummyAnnotationItem())
+
+    val isOpeningRightMenu = MutableLiveData(false)
+
+    var isDraggingSlides = false
+    var isDraggingPhotos = false
 
     init {
         getAllSlides()
@@ -75,7 +80,7 @@ class SlidesViewModel(
             finalList.find { it.isCurrentlySelected } ?: finalList.firstOrNull()
     }
 
-
+    // DUMMY DATA - CHANGE LATER
     private fun getDummyPhotos(): MutableList<PhotoItem> {
         val hours = listOf(
             "10:00 AM", "10:15 AM", "10:30 AM", "10:45 AM", "11:00 AM",
@@ -96,6 +101,7 @@ class SlidesViewModel(
         }.toMutableList()
     }
 
+    // DUMMY DATA - CHANGE LATER
     private fun generateDummyAnnotationItem() = mutableListOf(
         AnnotationItem(
             id = 1,

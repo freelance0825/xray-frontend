@@ -12,6 +12,7 @@ import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.databinding.ItemSlidesIndicatorColumnBinding
 
 class MenuSlidesAdapter : ListAdapter<SlidesItem, MenuSlidesAdapter.SlidesViewHolder>(DIFF_CALLBACK) {
+    var onItemClick: ((SlidesItem, Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SlidesViewHolder {
         val binding = ItemSlidesIndicatorColumnBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -19,13 +20,13 @@ class MenuSlidesAdapter : ListAdapter<SlidesItem, MenuSlidesAdapter.SlidesViewHo
     }
 
     override fun onBindViewHolder(holder: SlidesViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position)
     }
 
     inner class SlidesViewHolder(private val binding: ItemSlidesIndicatorColumnBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: SlidesItem) {
+        fun bind(item: SlidesItem, position: Int) {
             binding.tvSlidesId.text = item.id.toString()
 
             if (item.isCurrentlySelected) {
@@ -34,6 +35,10 @@ class MenuSlidesAdapter : ListAdapter<SlidesItem, MenuSlidesAdapter.SlidesViewHo
             } else {
                 binding.tvSlidesId.setTypeface(null, Typeface.NORMAL)
                 binding.menuIndicator.setBackgroundColor(android.graphics.Color.TRANSPARENT)
+            }
+
+            binding.root.setOnClickListener {
+                onItemClick?.invoke(item, position)
             }
         }
     }
