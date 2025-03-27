@@ -13,8 +13,10 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.thunderscope_frontend.MainActivity
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.ui.patient.PatientListActivity
 import com.google.android.material.textfield.TextInputEditText
@@ -41,6 +43,7 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var phoneNumberEditText: TextInputEditText
     private lateinit var birthDateEditText: EditText
     private lateinit var creatAccountButton: Button
+    private lateinit var linkLogin: TextView
 
     private var isFirstSelection = true
 
@@ -66,6 +69,7 @@ class SignupActivity : AppCompatActivity() {
         spinnerSpecialist = findViewById(R.id.spinnerSpecialist)
         birthDateEditText = findViewById(R.id.etBirthDate)
         creatAccountButton = findViewById(R.id.btnCreateAccount)
+        linkLogin = findViewById(R.id.linkLogin)
 
         // Set Input Field Placeholders
         setPlaceholder(emailEditText, "Enter email")
@@ -119,8 +123,14 @@ class SignupActivity : AppCompatActivity() {
         // Handle login button click
         creatAccountButton.setOnClickListener { if (validateInputs()) performRegistration() }
 
-    }
+        // On click listener for login
+        linkLogin.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
+    }
 
     // Validate Input Data
     private fun validateInputs(): Boolean {

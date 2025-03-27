@@ -4,28 +4,39 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.thunderscope_frontend.R
-import com.example.thunderscope_frontend.ui.createnewtest.LoadingPrepareTestActivity
 import com.example.thunderscope_frontend.ui.patient.PatientActivity
 import com.example.thunderscope_frontend.viewmodel.PatientRecordUI
 import com.example.thunderscope_frontend.viewmodel.PatientRecordViewModel
-import okhttp3.*
+import okhttp3.Call
+import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import java.io.IOException
-import java.util.*
+import java.util.Calendar
 
 class EditPatientDialogFragment : DialogFragment() {
 
@@ -172,11 +183,26 @@ class EditPatientDialogFragment : DialogFragment() {
             resources.getStringArray(R.array.state_options).indexOf(patient.patientState)
         if (stateIndex >= 0) spinnerState.setSelection(stateIndex + 1) // +1 to skip "Select State"
 
-        // Load Image with Glide
-        Glide.with(this)
-            .load(patient.patientImage)
-            .apply(RequestOptions.circleCropTransform())
-            .into(imgProfile)
+        // Decode Base64 image string and load into Glide
+        if (!patient.patientImage.isNullOrEmpty()) {
+            try {
+                val decodedBytes = Base64.decode(patient.patientImage, Base64.DEFAULT)
+                val decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+
+                // Load decoded Bitmap into Glide
+                Glide.with(this)
+                    .load(decodedBitmap)
+                    .apply(RequestOptions.circleCropTransform()) // Apply circular transformation
+                    .into(imgProfile)
+            } catch (e: IllegalArgumentException) {
+                e.printStackTrace()
+                // Set a default image in case of decoding error
+                imgProfile.setImageResource(R.drawable.circle_background)
+            }
+        } else {
+            // Set a default profile picture if image data is empty
+            imgProfile.setImageResource(R.drawable.circle_background)
+        }
     }
 
     // Open Image Picker

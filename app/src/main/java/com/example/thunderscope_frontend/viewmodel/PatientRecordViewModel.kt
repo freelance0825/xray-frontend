@@ -121,7 +121,8 @@ class PatientRecordViewModel(application: Application) : AndroidViewModel(applic
                 patientRecordsList.add(patientRecord)
             }
         }
-        return patientRecordsList
+        // Sort the list by patientId in descending order before returning
+        return patientRecordsList.sortedByDescending { it.patientId }
     }
 
 
