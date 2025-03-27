@@ -47,7 +47,7 @@ class PatientActivityFragment : Fragment() {
 
     // Pagination variables
     private var currentPage = 0
-    private val recordsPerPage = 5
+    private val recordsPerPage = 6
     private var totalRecords = 0
     private var patientRecords: List<PatientRecordUI> = emptyList()
     private var filteredRecords: List<PatientRecordUI> = emptyList()
@@ -143,8 +143,8 @@ class PatientActivityFragment : Fragment() {
         timePeriodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         timePeriodFilter.adapter = timePeriodAdapter
 
-        // Status Spinner Setup
-        val statusOptions = resources.getStringArray(R.array.status_options)
+        // Patient Status Spinner Setup
+        val statusOptions = resources.getStringArray(R.array.patient_status_options)
         val statusAdapter =
             ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, statusOptions)
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

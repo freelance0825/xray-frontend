@@ -45,7 +45,7 @@ class PatientListTableFragment : Fragment() {
 
     // Pagination variables
     private var currentPage = 0
-    private val recordsPerPage = 5
+    private val recordsPerPage = 7
     private var totalRecords = 0
     private var caseRecords: List<CaseRecordUI> = emptyList()
     private var filteredRecords: List<CaseRecordUI> = emptyList()
@@ -140,8 +140,8 @@ class PatientListTableFragment : Fragment() {
         timePeriodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         timePeriodFilter.adapter = timePeriodAdapter
 
-        // Status Spinner Setup
-        val statusOptions = resources.getStringArray(R.array.status_options)
+        // Case Record Status Spinner Setup
+        val statusOptions = resources.getStringArray(R.array.case_record_status_options)
         val statusAdapter =
             ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, statusOptions)
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

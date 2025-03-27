@@ -38,8 +38,8 @@
         <item>Monthly</item>
     </string-array>
 
-    <!--- Spinner Status -->
-    <string-array name="status_options">
+    <!--- Spinner Case Record Status -->
+    <string-array name="case_record_status_options">
         <item>All Status</item>
         <item>High Priority</item>
         <item>In Preparations</item>
@@ -70,6 +70,15 @@
         <item>13-17 (Teens)</item>
         <item>18-64 (Adults)</item>
         <item>65+ (Seniors)</item>
+    </string-array>
+
+
+    <!--- Spinner Patient Status -->
+    <string-array name="patient_status_options">
+        <item>All Status</item>
+        <item>Not Started</item>
+        <item>On Progress</item>
+        <item>Finished</item>
     </string-array>
 
 
