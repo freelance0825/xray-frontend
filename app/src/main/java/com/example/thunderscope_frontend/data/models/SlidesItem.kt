@@ -1,7 +1,10 @@
 package com.example.thunderscope_frontend.data.models
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class SlidesItem(
 
 	@field:SerializedName("mainImage")
@@ -36,4 +39,4 @@ data class SlidesItem(
 
 	var isActive: Boolean = false,
 	var isCurrentlySelected: Boolean = false,
-)
+) : Parcelable

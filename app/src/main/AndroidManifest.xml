@@ -16,27 +16,37 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.slides.SlidesActivity"
+            android:name=".ui.slidesdetail.SlidesDetailActivity"
+            android:theme="@style/Theme.Thunderscopefrontend.Material3"
             android:exported="false" />
-        <!-- Main Activity - Forced Landscape Mode -->
+        <activity
+            android:name=".ui.slides.SlidesActivity"
+            android:theme="@style/Theme.Thunderscopefrontend.Material3"
+            android:exported="false" /> <!-- Main Activity - Forced Landscape Mode -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.Thunderscopefrontend">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".ui.user.SignupActivity"
             android:exported="true" /> <!-- Sign Up Activity -->
         <activity
             android:name=".ui.patient.PatientListActivity"
-            android:exported="true" /> <!-- Patient List Activity -->
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> <!-- Patient List Activity -->
         <activity
             android:name=".ui.todolist.TodoList"
             android:exported="true" /> <!-- To Do List Activity -->

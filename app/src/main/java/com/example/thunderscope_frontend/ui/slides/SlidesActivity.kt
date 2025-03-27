@@ -2,21 +2,28 @@ package com.example.thunderscope_frontend.ui.slides
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.transition.Slide
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.thunderscope_frontend.R
+import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.databinding.ActivitySlidesBinding
 import com.example.thunderscope_frontend.ui.slides.adapters.AnnotationAdapter
 import com.example.thunderscope_frontend.ui.slides.adapters.MenuSlidesAdapter
 import com.example.thunderscope_frontend.ui.slides.adapters.PhotoAdapter
 import com.example.thunderscope_frontend.ui.slides.adapters.SlidesAdapter
+import com.example.thunderscope_frontend.ui.slidesdetail.SlidesDetailActivity
+import com.example.thunderscope_frontend.ui.slidesdetail.SlidesDetailViewModel
 import com.example.thunderscope_frontend.ui.utils.Base64Helper
 import com.example.thunderscope_frontend.viewmodel.CaseRecordUI
 
@@ -25,14 +32,15 @@ class SlidesActivity : AppCompatActivity() {
 
     private val caseRecord: CaseRecordUI? by lazy {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(EXTRA_CASE_RECORD, CaseRecordUI::class.java)
+            intent.getSerializableExtra(EXTRA_CASE_RECORD, CaseRecordUI::class.java)
         } else {
-            intent.getParcelableExtra(EXTRA_CASE_RECORD)
+            @Suppress("DEPRECATION")
+            intent.getSerializableExtra(EXTRA_CASE_RECORD) as? CaseRecordUI
         }
     }
 
     private val slidesViewModel by viewModels<SlidesViewModel> {
-        SlidesViewModel.Factory(caseRecord)
+        SlidesViewModel.Factory(caseRecord, this)
     }
 
     private val slidesAdapter = SlidesAdapter()
@@ -119,7 +127,8 @@ class SlidesActivity : AppCompatActivity() {
 
                         if (totalItemCount > 0) {
                             val scrollX = recyclerView.computeHorizontalScrollOffset().toFloat()
-                            val maxScrollX = recyclerView.computeHorizontalScrollRange() - recyclerView.computeHorizontalScrollExtent()
+                            val maxScrollX =
+                                recyclerView.computeHorizontalScrollRange() - recyclerView.computeHorizontalScrollExtent()
                             val maxSliderX = (recyclerView.width - slidesSliderBar.width).toFloat()
                             val newX = (scrollX / maxScrollX) * maxSliderX
                             slidesSliderBar.translationX = newX
@@ -142,7 +151,8 @@ class SlidesActivity : AppCompatActivity() {
 
                         if (totalItemCount > 0) {
                             val scrollX = recyclerView.computeHorizontalScrollOffset().toFloat()
-                            val maxScrollX = recyclerView.computeHorizontalScrollRange() - recyclerView.computeHorizontalScrollExtent()
+                            val maxScrollX =
+                                recyclerView.computeHorizontalScrollRange() - recyclerView.computeHorizontalScrollExtent()
                             val maxSliderX = (recyclerView.width - photoSliderBar.width).toFloat()
                             val newX = (scrollX / maxScrollX) * maxSliderX
                             photoSliderBar.translationX = newX
@@ -168,7 +178,18 @@ class SlidesActivity : AppCompatActivity() {
     private fun setListeners() {
         binding.apply {
             btnOpenViewer.setOnClickListener {
-                // NAVIGATE TO IMAGE PROCESSING HERE
+                val activeSlidesList = slidesViewModel.activeSlidesItem.value
+                    ?: mutableListOf()
+
+                if (activeSlidesList.isEmpty()) {
+                    Toast.makeText(this@SlidesActivity, "Select Slides First!", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    slidesViewModel.insertSlides(activeSlidesList)
+
+                    val iDetail = Intent(this@SlidesActivity, SlidesDetailActivity::class.java)
+                    startActivity(iDetail)
+                }
             }
 
             slidesAdapter.onItemClick = { slideItem, position ->
@@ -208,15 +229,20 @@ class SlidesActivity : AppCompatActivity() {
                             val parentWidth = (slidesSliderBar.parent as View).width
                             val maxSliderX = parentWidth - slidesSliderBar.width
 
-                            val newX = (event.rawX - slidesSliderBar.width / 2).coerceIn(0f,
+                            val newX = (event.rawX - slidesSliderBar.width / 2).coerceIn(
+                                0f,
                                 maxSliderX.toFloat()
                             )
                             slidesSliderBar.translationX = newX
 
-                            val maxScrollX = rvSlides.computeHorizontalScrollRange() - rvSlides.computeHorizontalScrollExtent()
+                            val maxScrollX =
+                                rvSlides.computeHorizontalScrollRange() - rvSlides.computeHorizontalScrollExtent()
                             val scrollX = (newX / maxSliderX) * maxScrollX
 
-                            rvSlides.scrollBy((scrollX - rvSlides.computeHorizontalScrollOffset()).toInt(), 0)
+                            rvSlides.scrollBy(
+                                (scrollX - rvSlides.computeHorizontalScrollOffset()).toInt(),
+                                0
+                            )
                         }
                         true
                     }
@@ -242,15 +268,20 @@ class SlidesActivity : AppCompatActivity() {
                             val parentWidth = (photoSliderBar.parent as View).width
                             val maxSliderX = parentWidth - photoSliderBar.width
 
-                            val newX = (event.rawX - photoSliderBar.width / 2).coerceIn(0f,
+                            val newX = (event.rawX - photoSliderBar.width / 2).coerceIn(
+                                0f,
                                 maxSliderX.toFloat()
                             )
                             photoSliderBar.translationX = newX
 
-                            val maxScrollX = rvPhoto.computeHorizontalScrollRange() - rvPhoto.computeHorizontalScrollExtent()
+                            val maxScrollX =
+                                rvPhoto.computeHorizontalScrollRange() - rvPhoto.computeHorizontalScrollExtent()
                             val scrollX = (newX / maxSliderX) * maxScrollX
 
-                            rvPhoto.scrollBy((scrollX - rvPhoto.computeHorizontalScrollOffset()).toInt(), 0)
+                            rvPhoto.scrollBy(
+                                (scrollX - rvPhoto.computeHorizontalScrollOffset()).toInt(),
+                                0
+                            )
                         }
                         true
                     }
