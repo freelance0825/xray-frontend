@@ -41,9 +41,6 @@
             android:name=".ui.todolist.TodoList"
             android:exported="true" /> <!-- To Do List Activity -->
         <activity
-            android:name=".ui.patient.EditPatientActivity"
-            android:exported="true" /> <!-- Edit Patient Activity -->
-        <activity
             android:name=".ui.createnewtest.CreateNewTestActivity"
             android:exported="true" /> <!-- Create New Test Activity -->
         <activity

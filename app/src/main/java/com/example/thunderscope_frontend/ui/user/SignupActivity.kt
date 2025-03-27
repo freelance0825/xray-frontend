@@ -225,25 +225,17 @@ class SignupActivity : AppCompatActivity() {
                                 sharedPreferences.edit().putString("token", token).apply()
                             }
 
-                            Toast.makeText(
-                                this@SignupActivity,
-                                "Registration successful!",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(this@SignupActivity, "Registration successful!", Toast.LENGTH_SHORT).show()
 
                             // Delay for 1.5 seconds before navigating
                             birthDateEditText.postDelayed({
-                                val intent =
-                                    Intent(this@SignupActivity, PatientListActivity::class.java)
+                                val intent = Intent(this@SignupActivity, PatientListActivity::class.java)
                                 startActivity(intent)
                                 finish()
                             }, 1500)
 
                         } catch (e: JSONException) {
-                            Toast.makeText(
-                                this@SignupActivity,
-                                "Invalid response format: ${e.message}",
-                                Toast.LENGTH_SHORT
+                            Toast.makeText(this@SignupActivity, "Invalid response format: ${e.message}", Toast.LENGTH_SHORT
                             ).show()
                         }
                     } else {

@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +35,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import java.io.IOException
 import java.util.Calendar
+import java.util.Locale
+
 
 class CreatePatientInfoActivityFragment : Fragment() {
 
@@ -232,6 +236,7 @@ class CreatePatientInfoActivityFragment : Fragment() {
             .addHeader("Authorization", "Bearer $token")
             .build()
 
+
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 requireActivity().runOnUiThread {
@@ -246,18 +251,21 @@ class CreatePatientInfoActivityFragment : Fragment() {
             override fun onResponse(call: Call, response: Response) {
                 requireActivity().runOnUiThread {
                     if (response.isSuccessful) {
-                        startActivity(
-                            Intent(
-                                requireContext(),
-                                LoadingPrepareTestActivity::class.java
+                        Toast.makeText(requireContext(), "Patient record is added successfully",
+                            Toast.LENGTH_SHORT).show()
+
+                        // Delay the navigation slightly for better UX
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            startActivity(
+                                Intent(requireContext(), LoadingPrepareTestActivity::class.java)
                             )
-                        )
+                        }, 1000L) // 1 second delay
+
                     } else {
                         Toast.makeText(
                             requireContext(),
-                            "Error: ${response.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                            String.format(Locale.getDefault(), "Error: %s", response.message),
+                            Toast.LENGTH_SHORT).show()
                     }
                 }
             }

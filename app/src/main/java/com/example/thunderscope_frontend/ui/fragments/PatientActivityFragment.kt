@@ -363,5 +363,4 @@ class PatientActivityFragment : Fragment() {
         builder.create().show()
     }
 
-
 }
