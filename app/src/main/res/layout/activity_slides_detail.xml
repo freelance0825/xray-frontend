@@ -219,20 +219,64 @@
         android:orientation="vertical"
         android:gravity="center">
 
-        <ImageView
-            android:id="@+id/ivImage"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:scaleType="fitCenter"
-            android:background="@android:color/darker_gray" />
+        <LinearLayout
+            android:id="@+id/drawToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <com.example.thunderscope_frontend.ui.slidesdetail.customview.DrawingView
-            android:id="@+id/drawingView"
+            <Button
+                android:id="@+id/btnRectangle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Rectangle" />
+
+            <Button
+                android:id="@+id/btnCircle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Circle" />
+
+            <Button
+                android:id="@+id/btnFreeDraw"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Free Draw" />
+        </LinearLayout>
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent" />
+            android:layout_weight="1">
 
+            <!-- ImageView untuk Menampilkan Gambar -->
+            <com.example.thunderscope_frontend.ui.slidesdetail.customview.ZoomImageView
+                android:id="@+id/iv_base_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true" />
+
+
+        </FrameLayout>
+        <!-- Container untuk ImageView & DrawingView -->
+<!--        <FrameLayout-->
+<!--            android:id="@+id/frameContainer"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_weight="1">-->
+<!--            &lt;!&ndash; Custom Drawing View untuk Anotasi &ndash;&gt;-->
+<!--            <com.example.thunderscope_frontend.ui.slidesdetail.customview.DrawingView-->
+<!--                android:id="@+id/drawingView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:background="@android:color/transparent"/>-->
+
+
+<!--        </FrameLayout>-->
         <Button
             android:id="@+id/btnClear"
             android:layout_width="wrap_content"

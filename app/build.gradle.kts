@@ -104,6 +104,9 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
 
+    // OpenCV from QuickBird
+    implementation(libs.opencv.contrib)
+
     // Testing dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
