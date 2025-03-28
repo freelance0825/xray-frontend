@@ -29,12 +29,11 @@ import com.example.thunderscope_frontend.viewmodel.PatientRecordViewModel
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
+import org.json.JSONObject
 import java.io.IOException
 import java.util.Calendar
 
@@ -228,13 +227,6 @@ class EditPatientDialogFragment : DialogFragment() {
         datePickerDialog.show()
     }
 
-    // Get InputStream from selectedImageUri
-    private fun getImageRequestBody(uri: Uri): RequestBody? {
-        return requireContext().contentResolver.openInputStream(uri)?.use { inputStream ->
-            inputStream.readBytes().toRequestBody("image/*".toMediaTypeOrNull())
-        }
-    }
-
     // Update Patient Data
     private fun updatePatientData() {
         val sharedPreferences =
@@ -246,32 +238,32 @@ class EditPatientDialogFragment : DialogFragment() {
             return
         }
 
-        val imageRequestBody = getImageRequestBody(selectedImageUri!!)
-        if (imageRequestBody == null) {
+        val imageBase64 = getImageBase64(selectedImageUri!!)
+        if (imageBase64 == null) {
             Toast.makeText(requireContext(), "Failed to process image", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val requestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-            .addFormDataPart("name", editPatientName.text.toString())
-            .addFormDataPart("address", address.text.toString())
-            .addFormDataPart("gender", spinnerGender.selectedItem.toString())
-            .addFormDataPart("email", email.text.toString())
-            .addFormDataPart("state", spinnerState.selectedItem.toString())
-            .addFormDataPart("age", age.text.toString())
-            .addFormDataPart("dob", birthDate.text.toString())
-            .addFormDataPart("phoneNumber", phoneNumber.text.toString())
-            .addFormDataPart(
-                "image",
-                "profile.jpg",
-                imageRequestBody
-            ) // Send image as "profile.jpg"
-            .build()
+        // Create JSON object
+        val jsonObject = JSONObject().apply {
+            put("name", editPatientName.text.toString())
+            put("address", address.text.toString())
+            put("gender", spinnerGender.selectedItem.toString())
+            put("email", email.text.toString())
+            put("state", spinnerState.selectedItem.toString())
+            put("age", age.text.toString())
+            put("dob", birthDate.text.toString())
+            put("phoneNumber", phoneNumber.text.toString())
+            put("image_base64", imageBase64) // Send image as Base64 string
+        }
+
+        val requestBody = jsonObject.toString().toRequestBody("application/json".toMediaTypeOrNull())
 
         val request = Request.Builder()
             .url("http://10.0.2.2:8080/api/patients/$patientId")
             .put(requestBody)
             .addHeader("Authorization", "Bearer $token")
+            .addHeader("Content-Type", "application/json")
             .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -289,10 +281,6 @@ class EditPatientDialogFragment : DialogFragment() {
                 requireActivity().runOnUiThread {
                     if (response.isSuccessful) {
                         Toast.makeText(requireContext(), "Patient updated successfully!", Toast.LENGTH_LONG).show()
-                        val handler = android.os.Handler()
-                        handler.postDelayed({
-                        }, 30000)
-
                     } else {
                         Toast.makeText(
                             requireContext(),
@@ -304,6 +292,24 @@ class EditPatientDialogFragment : DialogFragment() {
             }
         })
     }
+
+    // Convert image to Base64 string
+    private fun getImageBase64(imageUri: Uri): String? {
+        return try {
+            val inputStream = requireContext().contentResolver.openInputStream(imageUri)
+            val bytes = inputStream?.readBytes()
+            inputStream?.close()
+            Base64.encodeToString(bytes, Base64.NO_WRAP)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+
+
+
+
 
     override fun onStart() {
         super.onStart()

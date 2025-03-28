@@ -68,7 +68,8 @@
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:background="@drawable/circle_background"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_default_profile"/>
 
                 <!-- Edit Icon inside Profile Picture -->
                 <ImageView
