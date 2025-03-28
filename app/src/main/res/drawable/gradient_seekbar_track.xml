@@ -1,0 +1,24 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Track background (abu-abu) -->
+    <item>
+        <shape android:shape="rectangle">
+            <size android:height="6dp"/>
+            <corners android:radius="20dp"/>
+            <solid android:color="#4B5563"/> <!-- Warna abu-abu -->
+        </shape>
+    </item>
+    <!-- Track aktif (gradient) -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape android:shape="rectangle">
+                <size android:height="6dp"/>
+                <corners android:radius="20dp"/>
+                <gradient
+                    android:angle="0"
+                    android:startColor="#6EE7B7"
+                    android:centerColor="#3B82F6"
+                    android:endColor="#64748B"/>
+            </shape>
+        </clip>
+    </item>
+</layer-list>

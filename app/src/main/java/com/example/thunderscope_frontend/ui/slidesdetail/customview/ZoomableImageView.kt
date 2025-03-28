@@ -11,6 +11,8 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.graphics.*
 import android.graphics.drawable.Drawable
+import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewConfiguration
@@ -28,94 +30,69 @@ import androidx.core.view.ViewCompat
 import com.example.thunderscope_frontend.R
 import com.google.android.material.button.MaterialButton
 import kotlin.math.absoluteValue
+import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
 
-    private var annotationView: View? = null
+    private var annotationCreateView: View? = null
+
+    private val mappedFixedAnnotationLabel = mutableMapOf<Shape, String>()
 
     @SuppressLint("ClickableViewAccessibility")
     private fun showAnnotationOverlay() {
-        if (selectedShape == null) {
-            removeAnnotationOverlay()
-            return
-        }
-
+        val shape = selectedShape ?: return removeAnnotationOverlay()
         val parentView = parent as? ViewGroup ?: return
 
-        if (annotationView == null) {
-            annotationView = LayoutInflater.from(context)
-                .inflate(R.layout.dialog_create_annotation, parentView, false)
-
-            if (annotationView?.parent == null) {
-                parentView.addView(annotationView)
+        if (!mappedFixedAnnotationLabel.containsKey(shape)) {
+            if (annotationCreateView == null) {
+                annotationCreateView = LayoutInflater.from(context)
+                    .inflate(R.layout.dialog_create_annotation, parentView, false)
+                parentView.addView(annotationCreateView)
             }
-
-            annotationView?.post {
-                positionAnnotationOverlay()
+            annotationCreateView?.apply {
+                visibility = View.VISIBLE
+                findViewById<MaterialButton>(R.id.btn_save).setOnClickListener { saveAnnotation() }
+                findViewById<MaterialButton>(R.id.btn_cancel).setOnClickListener { removeAnnotationOverlay() }
+                findViewById<ImageView>(R.id.btn_close).setOnClickListener { removeAnnotationOverlay() }
             }
-        } else {
-            positionAnnotationOverlay()
-        }
-
-        parentView.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                if (annotationView?.visibility == View.VISIBLE) {
-                    val (x, y) = mapTouchToImage(event.x, event.y)
-
-                    val isInsideShape = selectedShape?.rect?.contains(x, y) ?: false
-
-                    if (!isInsideShape) {
-                        removeAnnotationOverlay()
-                        return@setOnTouchListener true
-                    }
-                }
-            }
-            false
+            positionAnnotationOverlay(annotationCreateView)
         }
     }
 
-    private fun positionAnnotationOverlay() {
-        val boundingBox = selectedShape?.let { getBoundingBox(it) } ?: return
-        val overlayX = boundingBox.right + 20f
-        val overlayY =
-            boundingBox.top + (boundingBox.height() / 2) - (annotationView?.height ?: 0) / 2f
+    private fun saveAnnotation() {
+        val shape = selectedShape ?: return
+        val edAnnotationName = annotationCreateView?.findViewById<EditText>(R.id.ed_annotation_name) ?: return
+        val labelName = edAnnotationName.text.toString()
 
-        annotationView?.apply {
-            visibility = View.VISIBLE
+        if (labelName.isNotEmpty()) {
+            mappedFixedAnnotationLabel[shape] = labelName
+            annotationCreateView?.visibility = View.GONE
+            edAnnotationName.text.clear()
+            invalidate()
+        } else {
+            Toast.makeText(context, "Label cannot be empty", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun positionAnnotationOverlay(view: View?) {
+        val boundingBox = selectedShape?.let { getBoundingBox(it) } ?: return
+        val overlayX = boundingBox.right + 25f
+        val overlayY = boundingBox.top
+
+        view?.apply {
             x = overlayX
             y = overlayY
-
-            // Handling crash error when layout clicked.
-            setOnClickListener {
-                // Silent click
-            }
-
-            val edAnnotationName = findViewById<EditText>(R.id.ed_annotation_name)
-
-            findViewById<MaterialButton>(R.id.btn_save).setOnClickListener {
-                if (edAnnotationName.text.toString().isNotEmpty()) {
-                    // Process label name here
-                } else {
-                    Toast.makeText(context, "Label cannot be empty", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            findViewById<ImageView>(R.id.btn_close).setOnClickListener {
-                removeAnnotationOverlay()
-            }
-
-            findViewById<MaterialButton>(R.id.btn_cancel).setOnClickListener {
-                removeAnnotationOverlay()
-            }
         }
     }
 
     private fun removeAnnotationOverlay() {
-        annotationView?.visibility = View.GONE
+        annotationCreateView?.visibility = View.GONE
         clearLastDrawing()
     }
+
+
 
     private val textPaint = Paint()
     private val zoomMatrix = Matrix()
@@ -143,6 +120,10 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
     var onDrawableLoaded: () -> Unit = {}
     var dismissProgressListener: (progress: Float) -> Unit = {}
 
+    private var lastScale = 1f
+    private var lastX = 0f
+    private var lastY = 0f
+
     private val boundingBoxPaint = Paint().apply {
         color = Color.BLUE
         strokeWidth = 10f
@@ -160,6 +141,7 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         style = Paint.Style.STROKE
         strokeWidth = 15f
         isAntiAlias = true
+        strokeCap = Paint.Cap.ROUND
     }
 
     fun setPaintColor(color: Int) {
@@ -167,6 +149,9 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         paint.color = selectedColor
         invalidate()
     }
+
+    private var resetRequested = false
+    private var firstInitialized = true
 
     private var drawingEnabled = false
     private val drawPaths =
@@ -328,6 +313,11 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
 
     private fun setZoom(scale: Float, x: Float, y: Float) {
         zoomMatrix.postScale(scale, scale, x, y)
+
+        lastScale = scale
+        lastX = x
+        lastY = y
+
         setBounds()
         updateMatrix(drawMatrix)
     }
@@ -360,10 +350,16 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
 
     override fun setImageDrawable(drawable: Drawable?) {
         super.setImageDrawable(drawable)
-        if (drawable != null) {
+        drawable?.let {
             onDrawableLoaded.invoke()
-            resetZoom()
-            zoomMatrix.set(imageMatrix)
+
+            if (resetRequested || firstInitialized) {
+                resetZoom()
+                zoomMatrix.set(imageMatrix)
+                firstInitialized = false
+            } else {
+                setZoom(lastScale, lastX, lastY)
+            }
         }
     }
 
@@ -371,7 +367,7 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         super.onLayout(changed, left, top, right, bottom)
         viewWidth = right - left - paddingLeft - paddingRight
         viewHeight = bottom - top - paddingTop - paddingBottom
-        if (changed) resetZoom()
+        if (changed && resetRequested) resetZoom()
     }
 
     fun resetZoom() {
@@ -380,6 +376,13 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         baseMatrix.setRectToRect(tempSrc, tempDst, Matrix.ScaleToFit.CENTER)
         setScaleAbsolute(MIN_SCALE, viewWidth / 2F, viewHeight / 2F)
         imageMatrix = baseMatrix
+        resetRequested = false
+    }
+
+    fun resetZoomManually() {
+        resetRequested = true
+        firstInitialized = true
+        resetZoom()
     }
 
     private val scaleListener = object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
@@ -411,7 +414,7 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         super.onDraw(canvas)
 
         canvas.save()
-
+        Log.e("FTEST", "onDraw: checker #1", )
         canvas.concat(zoomMatrix)
 
         shapes.forEach { shape ->
@@ -419,15 +422,27 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         }
 
         // Bounding Box Helper
-//        selectedShape?.let {
+        selectedShape?.let {
+            showAnnotationOverlay()
 //            drawBoundingBox(canvas, it)
-//        }
+        }
+
+        // Menampilkan label di samping kanan setiap shape yang sudah memiliki label
+        mappedFixedAnnotationLabel.forEach { (shape, label) ->
+            Log.e("FTEST", "onDraw: checker #2", )
+
+            val boundingBox = getBoundingBox(shape)
+            val textX = boundingBox.right + 25f
+            val textY = boundingBox.centerY()
+
+            // Make the layout with the canvas here
+            drawAnnotationLabel(canvas, label, textX, textY)
+        }
 
         currentShape?.let { drawShape(canvas, it) }
 
         canvas.restore()
 
-        showAnnotationOverlay()
 
         if (debugInfoVisible) {
             canvas.drawText(logText, 10F, height - 10F, textPaint)
@@ -436,6 +451,68 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
             } ?: ""
             canvas.drawText(drawableBound, 10F, 40F, textPaint)
         }
+    }
+
+    private fun drawAnnotationLabel(canvas: Canvas, label: String, overlayX: Float, overlayY: Float) {
+        val cornerRadius = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics
+        )
+        val padding = 16f
+        val textMargin = 12f
+
+        val textPaintLabel = Paint().apply {
+            color = ContextCompat.getColor(context, R.color.gray_opacity_80)
+            textSize = 24f
+            typeface = Typeface.DEFAULT
+            isAntiAlias = true
+            textAlign = Paint.Align.LEFT
+        }
+
+        val textPaintAnnotation = Paint().apply {
+            color = Color.WHITE
+            textSize = 32f
+            typeface = Typeface.DEFAULT_BOLD
+            isAntiAlias = true
+            textAlign = Paint.Align.LEFT
+        }
+
+        // Measure text sizes
+        val labelWidth = max(
+            textPaintLabel.measureText("Label"),
+            textPaintAnnotation.measureText(label)
+        )
+        val labelHeight = textPaintAnnotation.descent() - textPaintAnnotation.ascent()
+
+        val boxWidth = labelWidth + (2 * padding)
+        val boxHeight = (labelHeight * 2) + textMargin + (2 * padding)
+
+        val boxLeft = overlayX
+        val boxTop = overlayY - (boxHeight / 2)
+        val boxRight = boxLeft + boxWidth + 50
+        val boxBottom = boxTop + boxHeight
+
+        // Background Paint (matches @drawable/bg_rounded_dialog)
+        val rectPaint = Paint().apply {
+            color = ContextCompat.getColor(context, R.color.base_dialog) // Use your color
+            style = Paint.Style.FILL
+            isAntiAlias = true
+        }
+
+        // Draw rounded rectangle background
+        canvas.drawRoundRect(
+            boxLeft, boxTop, boxRight, boxBottom,
+            cornerRadius, cornerRadius, rectPaint
+        )
+
+        // Calculate text positions (gravity: start|center)
+        val textStartX = boxLeft + padding
+        val textCenterY = boxTop + (boxHeight / 2) - ((labelHeight + textMargin) / 2) + 12
+
+        // Draw "Label" title
+        canvas.drawText("Label", textStartX, textCenterY, textPaintLabel)
+
+        // Draw annotation text (below "Label")
+        canvas.drawText(label, textStartX, textCenterY + labelHeight + textMargin, textPaintAnnotation)
     }
 
     fun enableDrawing(enable: Boolean) {
@@ -609,7 +686,7 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         event ?: return false
         val (x, y) = mapTouchToImage(event.x, event.y)
 
-        if (annotationView?.visibility == View.VISIBLE) {
+        if (annotationCreateView?.visibility == View.VISIBLE) {
             removeAnnotationOverlay()
             return true // Prevent new shape creation
         }
@@ -817,12 +894,14 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
     }
 
     fun clearLastDrawing() {
+        mappedFixedAnnotationLabel.remove(shapes.lastOrNull())
         shapes.removeLastOrNull()
         selectedShape = null
         invalidate()
     }
 
     fun clearCanvas() {
+        mappedFixedAnnotationLabel.clear()
         shapes.clear()
         selectedShape = null
         invalidate()
