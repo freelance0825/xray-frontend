@@ -1,5 +1,6 @@
 package com.example.thunderscope_frontend.ui.slides
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +12,7 @@ import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.data.repo.ThunderscopeRepository
 import com.example.thunderscope_frontend.ui.utils.Result
 import com.example.thunderscope_frontend.viewmodel.CaseRecordUI
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SlidesViewModel(
@@ -135,15 +137,20 @@ class SlidesViewModel(
         ),
     )
 
+    fun insertSlides(slides: List<SlidesItem>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            thunderscopeRepository.insertSlides(slides)
+        }
+    }
 
     @Suppress("UNCHECKED_CAST")
     class Factory(
         private val caseRecord: CaseRecordUI?,
-        private val thunderscopeRepository: ThunderscopeRepository = ThunderscopeRepository()
+        private val context: Context
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(SlidesViewModel::class.java)) {
-                return SlidesViewModel(caseRecord, thunderscopeRepository) as T
+                return SlidesViewModel(caseRecord, ThunderscopeRepository(context)) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

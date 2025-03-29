@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:background="@drawable/bg_rounded_dialog_opacity"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="3dp">
+
+    <LinearLayout
+        android:id="@+id/accordion_card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/titleHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                card_view:ignore="ContentDescription"
+                card_view:src="@drawable/ic_down" />
+
+            <!-- Title of the Accordion -->
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                card_view:text="Title" />
+
+            <!-- Arrow indicating status of the accordion -->
+            <ImageView
+                android:id="@+id/arrow"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_down"
+                app:tint="@color/white"
+                card_view:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+        <!-- Container untuk Konten -->
+        <FrameLayout
+            android:id="@+id/textHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            card_view:visibility="visible"
+            android:padding="8dp">
+
+            <!-- Konten bisa langsung dimasukkan dari XML -->
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>

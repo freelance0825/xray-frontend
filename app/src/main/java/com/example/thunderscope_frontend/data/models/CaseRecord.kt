@@ -1,7 +1,10 @@
 package com.example.thunderscope_frontend.data.models
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class CaseRecord(
 
 	@field:SerializedName("doctor")
@@ -27,4 +30,4 @@ data class CaseRecord(
 
 	@field:SerializedName("status")
 	val status: String? = null
-)
+): Parcelable

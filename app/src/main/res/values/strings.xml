@@ -7,6 +7,9 @@
     <string name="activity_slides_photo_count">Photo Gallery (%1s)</string>
     <string name="activity_slides_active_count">%1s Slides Selected</string>
 
+    <!--- Activity Slides Detail Resource -->
+    <string name="activity_slides_detail_slides_selected">Slide %1s of %1s</string>
+
     <!--- Spinner Specialist -->
     <string-array name="specialist_options">
         <item>Pathologist</item>
@@ -80,7 +83,6 @@
         <item>On Progress</item>
         <item>Finished</item>
     </string-array>
-
 
 
 </resources>

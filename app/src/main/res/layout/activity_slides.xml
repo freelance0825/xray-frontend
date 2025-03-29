@@ -530,6 +530,7 @@
                         android:text="Open in viewer"
                         android:textAllCaps="false"
                         android:translationX="10dp"
+                        app:cornerRadius="6dp"
                         android:visibility="invisible"
                         tools:translationX="0dp"
                         tools:visibility="visible" />

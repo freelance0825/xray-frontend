@@ -4,6 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
 
     <application
         android:allowBackup="true"
@@ -16,9 +20,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.slides.SlidesActivity"
+            android:name=".ui.slidesdetail.SlidesDetailActivity"
+            android:theme="@style/Theme.Thunderscopefrontend.Material3"
             android:exported="false" />
-        <!-- Main Activity - Forced Landscape Mode -->
+        <activity
+            android:name=".ui.slides.SlidesActivity"
+            android:theme="@style/Theme.Thunderscopefrontend.Material3"
+            android:exported="false" /> <!-- Main Activity - Forced Landscape Mode -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -36,7 +44,7 @@
             android:exported="true" /> <!-- Sign Up Activity -->
         <activity
             android:name=".ui.patient.PatientListActivity"
-            android:exported="true" /> <!-- Patient List Activity -->
+            android:exported="true"/> <!-- Patient List Activity -->
         <activity
             android:name=".ui.todolist.TodoList"
             android:exported="true" /> <!-- To Do List Activity -->
@@ -52,6 +60,16 @@
         <activity
             android:name=".ui.patient.PatientActivity"
             android:exported="true" /><!-- Patient Activity -->
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.thunderscope"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/img_paths" />
+        </provider>
     </application>
 
 </manifest>
