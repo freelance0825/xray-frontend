@@ -3,6 +3,7 @@ package com.example.thunderscope_frontend.ui.slidesdetail
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -11,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.createBitmap
 import com.example.thunderscope_frontend.R
+import com.example.thunderscope_frontend.data.models.Patient
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.databinding.ActivitySlidesDetailBinding
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.ShapeType
@@ -30,6 +32,15 @@ class SlidesDetailActivity : AppCompatActivity() {
 
     private val slidesDetailViewModel by viewModels<SlidesDetailViewModel> {
         SlidesDetailViewModel.Factory(this)
+    }
+
+    private val patientData: Patient? by lazy {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(EXTRA_PATIENT, Patient::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getParcelableExtra(EXTRA_PATIENT)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -195,6 +206,34 @@ class SlidesDetailActivity : AppCompatActivity() {
             blueAdjust.observe(this@SlidesDetailActivity) { value ->
                 binding.tvBlueCount.text = "${(value * 100).toInt() - 100}%"
             }
+
+            // DUMMY SEGMENTATIONS!!!
+            selectedViewSettings.observe(this@SlidesDetailActivity) { viewSettings ->
+                when (viewSettings) {
+                    SlidesDetailViewModel.SelectedViewSettings.ORIGINAL -> {
+                        binding.ivDummySegmentation.visibility = View.GONE
+                        binding.layoutSegmentationSettings.visibility = View.GONE
+                    }
+
+                    SlidesDetailViewModel.SelectedViewSettings.SEGMENTATION -> {
+                        binding.ivDummySegmentation.visibility = View.VISIBLE
+                        binding.layoutSegmentationSettings.visibility = View.VISIBLE
+                    }
+
+                    else -> {
+                        binding.ivDummySegmentation.visibility = View.GONE
+                    }
+                }
+            }
+
+            selectedSegmentationSettings.observe(this@SlidesDetailActivity, ::showSegmentationConfigurationLayout)
+
+            patientData?.let { patient ->
+                binding.tvPatientName.text = patient.name
+                binding.tvPatientId.text = patient.id.toString()
+                binding.tvPatientDob.text = StringBuilder("${patient.dateOfBirth} (${patient.age} yo)")
+                binding.tvPatientGender.text = patient.gender
+            }
         }
     }
 
@@ -221,6 +260,50 @@ class SlidesDetailActivity : AppCompatActivity() {
                     SlidesDetailViewModel.SelectedMenu.IMAGE_SETTINGS
             }
 
+            // View Settings Configuration
+            rgViewSettings.setOnCheckedChangeListener { _, checkedId ->
+                when (checkedId) {
+                    R.id.rb_view_settings_original -> {
+                        slidesDetailViewModel.selectedViewSettings.value =
+                            SlidesDetailViewModel.SelectedViewSettings.ORIGINAL
+                    }
+
+                    R.id.rb_view_settings_segmentation -> {
+                        slidesDetailViewModel.selectedViewSettings.value =
+                            SlidesDetailViewModel.SelectedViewSettings.SEGMENTATION
+                    }
+                }
+            }
+
+            // Segmentation Settings Configuration
+            rgSegmentationSettings.setOnCheckedChangeListener { _, checkedId ->
+                when (checkedId) {
+                    R.id.rb_st_optic_disc_centroid -> {
+                        slidesDetailViewModel.selectedSegmentationSettings.value =
+                            SlidesDetailViewModel.SelectedSegmentationSettings.ODC
+                    }
+
+                    R.id.rb_st_optic_disc_mask -> {
+                        slidesDetailViewModel.selectedSegmentationSettings.value =
+                            SlidesDetailViewModel.SelectedSegmentationSettings.ODM
+                    }
+
+                    R.id.rb_st_optic_cup_mask -> {
+                        slidesDetailViewModel.selectedSegmentationSettings.value =
+                            SlidesDetailViewModel.SelectedSegmentationSettings.OCM
+                    }
+
+                    R.id.rb_st_fovea_centroid -> {
+                        slidesDetailViewModel.selectedSegmentationSettings.value =
+                            SlidesDetailViewModel.SelectedSegmentationSettings.FC
+                    }
+
+                    R.id.rb_st_morphological_measurement -> {
+                        slidesDetailViewModel.selectedSegmentationSettings.value =
+                            SlidesDetailViewModel.SelectedSegmentationSettings.MM
+                    }
+                }
+            }
 
             // Annotate Shape Configuration
             btnAnnotateRectangle.setOnClickListener {
@@ -379,9 +462,12 @@ class SlidesDetailActivity : AppCompatActivity() {
             slidesDetailViewModel.updateSelectedSlide(slideList[0])
         }
 
+        // RESET STATE WHEN CHANGE IMAGE
         binding.spinnerSlides.setOnItemClickListener { _, _, position, _ ->
             resetFilters()
 
+            binding.rbViewSettingsOriginal.isChecked = true
+            slidesDetailViewModel.selectedViewSettings.value = SlidesDetailViewModel.SelectedViewSettings.ORIGINAL
             binding.ivBaseImage.clearCanvas()
             binding.ivBaseImage.resetZoomManually()
 
@@ -428,5 +514,41 @@ class SlidesDetailActivity : AppCompatActivity() {
             ivImageSettings.setImageTintList(ColorStateList.valueOf(Color.WHITE))
             tvImageSettings.setTextColor(Color.WHITE)
         }
+    }
+
+    private fun showSegmentationConfigurationLayout(segmentationType: SlidesDetailViewModel.SelectedSegmentationSettings) {
+        binding.apply {
+            layoutOdcConfig.visibility = View.GONE
+            layoutOdmConfig.visibility = View.GONE
+            layoutOcmConfig.visibility = View.GONE
+            layoutFcConfig.visibility = View.GONE
+            layoutMmConfig.visibility = View.GONE
+
+            when (segmentationType) {
+                SlidesDetailViewModel.SelectedSegmentationSettings.ODC -> {
+                    layoutOdcConfig.visibility = View.VISIBLE
+                }
+
+                SlidesDetailViewModel.SelectedSegmentationSettings.ODM -> {
+                    layoutOdmConfig.visibility = View.VISIBLE
+                }
+
+                SlidesDetailViewModel.SelectedSegmentationSettings.OCM -> {
+                    layoutOcmConfig.visibility = View.VISIBLE
+                }
+
+                SlidesDetailViewModel.SelectedSegmentationSettings.FC -> {
+                    layoutFcConfig.visibility = View.VISIBLE
+                }
+
+                SlidesDetailViewModel.SelectedSegmentationSettings.MM -> {
+                    layoutMmConfig.visibility = View.VISIBLE
+                }
+            }
+        }
+    }
+
+    companion object {
+        const val EXTRA_PATIENT = "extra_patient"
     }
 }

@@ -219,11 +219,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header_layout">
 
+        <!-- ImageView to Display Image -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!-- ImageView untuk Menampilkan Gambar -->
             <com.example.thunderscope_frontend.ui.slidesdetail.customview.ZoomImageView
                 android:id="@+id/iv_base_image"
                 android:layout_width="match_parent"
@@ -233,6 +233,14 @@
                 android:scaleType="fitCenter" />
 
         </FrameLayout>
+
+        <ImageView
+            android:id="@+id/iv_dummy_segmentation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/asset_dummy_segmentation"
+            android:visibility="gone" />
 
         <!-- Left Menu -->
         <LinearLayout
@@ -898,6 +906,954 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <!-- Right Menu -->
+        <ScrollView
+            android:layout_width="350dp"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- View Settings Accordion-->
+                <com.example.thunderscope_frontend.ui.slidesdetail.customview.AccordionView
+                    android:id="@+id/accordion_view_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:textColor="@android:color/white"
+                    app:textSize="16sp"
+                    app:title="View Settings"
+                    app:titleColor="@android:color/white"
+                    app:titleIcon="@drawable/ic_eye"
+                    app:titleSize="10sp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/gray_opacity_80" />
+
+                        <RadioGroup
+                            android:id="@+id/rg_view_settings"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checkedButton="@id/rb_view_settings_original"
+                            android:padding="16dp">
+
+                            <RadioButton
+                                android:id="@+id/rb_view_settings_original"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Original View"
+                                android:textColor="@color/white"
+                                app:buttonTint="@color/blue_lines" />
+
+                            <RadioButton
+                                android:id="@+id/rb_view_settings_segmentation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Segmentation View"
+                                android:textColor="@color/white"
+                                app:buttonTint="@color/blue_lines" />
+                        </RadioGroup>
+
+                        <LinearLayout
+                            android:id="@+id/layout_segmentation_settings"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <!-- Separator -->
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/gray_opacity_80"
+                                android:paddingHorizontal="8dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="16dp"
+                                android:layout_marginVertical="12dp"
+                                android:text="Overlay: 100%"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+
+                            <!-- Separator -->
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/gray_opacity_80"
+                                android:paddingHorizontal="8dp" />
+
+                            <RadioGroup
+                                android:id="@+id/rg_segmentation_settings"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checkedButton="@id/rb_st_optic_disc_mask"
+                                android:padding="16dp">
+
+                                <RadioButton
+                                    android:id="@+id/rb_st_optic_disc_mask"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Optic Disk Mask"
+                                    android:textColor="@color/white"
+                                    app:buttonTint="@color/blue_lines" />
+
+                                <!-- ODM Config-->
+                                <LinearLayout
+                                    android:id="@+id/layout_odm_config"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_rounded_dialog_gray"
+                                    android:orientation="vertical"
+                                    android:padding="8dp"
+                                    android:visibility="gone"
+                                    tools:visibility="visible">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Landmark"
+                                        android:textColor="@color/white" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="8dp"
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/bg_rounded_dialog"
+                                            android:backgroundTint="#5A5C64"
+                                            android:gravity="center"
+                                            android:orientation="horizontal"
+                                            android:padding="8dp">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:text="X"
+                                                android:textColor="@color/gray_bg"
+                                                android:textSize="16sp" />
+
+                                            <EditText
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:background="@android:color/transparent"
+                                                android:hint="Input value"
+                                                android:inputType="numberDecimal"
+                                                android:paddingStart="8dp"
+                                                android:textColor="@color/white"
+                                                android:textColorHint="@color/gray_opacity_80" />
+                                        </LinearLayout>
+
+                                        <Space
+                                            android:layout_width="12dp"
+                                            android:layout_height="wrap_content" />
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/bg_rounded_dialog"
+                                            android:backgroundTint="#5A5C64"
+                                            android:orientation="horizontal"
+                                            android:padding="8dp">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:text="Y"
+                                                android:textColor="@color/gray_bg"
+                                                android:textSize="16sp" />
+
+                                            <EditText
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:background="@android:color/transparent"
+                                                android:hint="Input value"
+                                                android:inputType="numberDecimal"
+                                                android:paddingStart="8dp"
+                                                android:textColor="@color/white"
+                                                android:textColorHint="@color/gray_opacity_80" />
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <com.google.android.material.button.MaterialButton
+                                        android:id="@+id/btn_take_optic_disc_mask"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="8dp"
+                                        android:backgroundTint="@color/white"
+                                        android:text="Take"
+                                        android:textColor="@color/black"
+                                        app:cornerRadius="8dp" />
+
+
+                                </LinearLayout>
+
+                                <RadioButton
+                                    android:id="@+id/rb_st_optic_cup_mask"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Optic Cup Mask"
+                                    android:textColor="@color/white"
+                                    app:buttonTint="@color/blue_lines" />
+
+                                <!-- OCM Config-->
+                                <LinearLayout
+                                    android:id="@+id/layout_ocm_config"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_rounded_dialog_gray"
+                                    android:orientation="vertical"
+                                    android:padding="8dp"
+                                    android:visibility="gone">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Landmark"
+                                        android:textColor="@color/white" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="8dp"
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/bg_rounded_dialog"
+                                            android:backgroundTint="#5A5C64"
+                                            android:gravity="center"
+                                            android:orientation="horizontal"
+                                            android:padding="8dp">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:text="X"
+                                                android:textColor="@color/gray_bg"
+                                                android:textSize="16sp" />
+
+                                            <EditText
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:background="@android:color/transparent"
+                                                android:hint="Input value"
+                                                android:inputType="numberDecimal"
+                                                android:paddingStart="8dp"
+                                                android:textColor="@color/white"
+                                                android:textColorHint="@color/gray_opacity_80" />
+                                        </LinearLayout>
+
+                                        <Space
+                                            android:layout_width="12dp"
+                                            android:layout_height="wrap_content" />
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/bg_rounded_dialog"
+                                            android:backgroundTint="#5A5C64"
+                                            android:orientation="horizontal"
+                                            android:padding="8dp">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:text="Y"
+                                                android:textColor="@color/gray_bg"
+                                                android:textSize="16sp" />
+
+                                            <EditText
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:background="@android:color/transparent"
+                                                android:hint="Input value"
+                                                android:inputType="numberDecimal"
+                                                android:paddingStart="8dp"
+                                                android:textColor="@color/white"
+                                                android:textColorHint="@color/gray_opacity_80" />
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <com.google.android.material.button.MaterialButton
+                                        android:id="@+id/btn_take_optic_cup_mask"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="8dp"
+                                        android:backgroundTint="@color/white"
+                                        android:text="Take"
+                                        android:textColor="@color/black"
+                                        app:cornerRadius="8dp" />
+
+
+                                </LinearLayout>
+
+                                <RadioButton
+                                    android:id="@+id/rb_st_optic_disc_centroid"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Optic Disk Centroid"
+                                    android:textColor="@color/white"
+                                    app:buttonTint="@color/blue_lines" />
+
+                                <!-- ODC Config-->
+                                <LinearLayout
+                                    android:id="@+id/layout_odc_config"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_rounded_dialog_gray"
+                                    android:orientation="vertical"
+                                    android:padding="8dp"
+                                    android:visibility="gone">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Landmark"
+                                        android:textColor="@color/white" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="8dp"
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/bg_rounded_dialog"
+                                            android:backgroundTint="#5A5C64"
+                                            android:gravity="center"
+                                            android:orientation="horizontal"
+                                            android:padding="8dp">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:text="X"
+                                                android:textColor="@color/gray_bg"
+                                                android:textSize="16sp" />
+
+                                            <EditText
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:background="@android:color/transparent"
+                                                android:hint="Input value"
+                                                android:inputType="numberDecimal"
+                                                android:paddingStart="8dp"
+                                                android:textColor="@color/white"
+                                                android:textColorHint="@color/gray_opacity_80" />
+                                        </LinearLayout>
+
+                                        <Space
+                                            android:layout_width="12dp"
+                                            android:layout_height="wrap_content" />
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/bg_rounded_dialog"
+                                            android:backgroundTint="#5A5C64"
+                                            android:orientation="horizontal"
+                                            android:padding="8dp">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:text="Y"
+                                                android:textColor="@color/gray_bg"
+                                                android:textSize="16sp" />
+
+                                            <EditText
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:background="@android:color/transparent"
+                                                android:hint="Input value"
+                                                android:inputType="numberDecimal"
+                                                android:paddingStart="8dp"
+                                                android:textColor="@color/white"
+                                                android:textColorHint="@color/gray_opacity_80" />
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <com.google.android.material.button.MaterialButton
+                                        android:id="@+id/btn_take_optic_disc_centroid"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="8dp"
+                                        android:backgroundTint="@color/white"
+                                        android:text="Take"
+                                        android:textColor="@color/black"
+                                        app:cornerRadius="8dp" />
+
+
+                                </LinearLayout>
+
+                                <RadioButton
+                                    android:id="@+id/rb_st_fovea_centroid"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Fovea Centroid"
+                                    android:textColor="@color/white"
+                                    app:buttonTint="@color/blue_lines" />
+
+                                <!-- FC Config-->
+                                <LinearLayout
+                                    android:id="@+id/layout_fc_config"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_rounded_dialog_gray"
+                                    android:orientation="vertical"
+                                    android:padding="8dp"
+                                    android:visibility="gone">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Landmark"
+                                        android:textColor="@color/white" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="8dp"
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/bg_rounded_dialog"
+                                            android:backgroundTint="#5A5C64"
+                                            android:gravity="center"
+                                            android:orientation="horizontal"
+                                            android:padding="8dp">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:text="X"
+                                                android:textColor="@color/gray_bg"
+                                                android:textSize="16sp" />
+
+                                            <EditText
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:background="@android:color/transparent"
+                                                android:hint="Input value"
+                                                android:inputType="numberDecimal"
+                                                android:paddingStart="8dp"
+                                                android:textColor="@color/white"
+                                                android:textColorHint="@color/gray_opacity_80" />
+                                        </LinearLayout>
+
+                                        <Space
+                                            android:layout_width="12dp"
+                                            android:layout_height="wrap_content" />
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/bg_rounded_dialog"
+                                            android:backgroundTint="#5A5C64"
+                                            android:orientation="horizontal"
+                                            android:padding="8dp">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:text="Y"
+                                                android:textColor="@color/gray_bg"
+                                                android:textSize="16sp" />
+
+                                            <EditText
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:background="@android:color/transparent"
+                                                android:hint="Input value"
+                                                android:inputType="numberDecimal"
+                                                android:paddingStart="8dp"
+                                                android:textColor="@color/white"
+                                                android:textColorHint="@color/gray_opacity_80" />
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <com.google.android.material.button.MaterialButton
+                                        android:id="@+id/btn_take_fovea_centroid"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="8dp"
+                                        android:backgroundTint="@color/white"
+                                        android:text="Take"
+                                        android:textColor="@color/black"
+                                        app:cornerRadius="8dp" />
+
+
+                                </LinearLayout>
+
+                                <RadioButton
+                                    android:id="@+id/rb_st_morphological_measurement"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Morphological Measurement"
+                                    android:textColor="@color/white"
+                                    app:buttonTint="@color/blue_lines" />
+
+                                <!-- MM Config-->
+                                <LinearLayout
+                                    android:id="@+id/layout_mm_config"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_rounded_dialog_gray"
+                                    android:orientation="vertical"
+                                    android:padding="8dp"
+                                    android:visibility="gone">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Landmark"
+                                        android:textColor="@color/white" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="8dp"
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/bg_rounded_dialog"
+                                            android:backgroundTint="#5A5C64"
+                                            android:gravity="center"
+                                            android:orientation="horizontal"
+                                            android:padding="8dp">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:text="X"
+                                                android:textColor="@color/gray_bg"
+                                                android:textSize="16sp" />
+
+                                            <EditText
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:background="@android:color/transparent"
+                                                android:hint="Input value"
+                                                android:inputType="numberDecimal"
+                                                android:paddingStart="8dp"
+                                                android:textColor="@color/white"
+                                                android:textColorHint="@color/gray_opacity_80" />
+                                        </LinearLayout>
+
+                                        <Space
+                                            android:layout_width="12dp"
+                                            android:layout_height="wrap_content" />
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="1"
+                                            android:background="@drawable/bg_rounded_dialog"
+                                            android:backgroundTint="#5A5C64"
+                                            android:orientation="horizontal"
+                                            android:padding="8dp">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:text="Y"
+                                                android:textColor="@color/gray_bg"
+                                                android:textSize="16sp" />
+
+                                            <EditText
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:background="@android:color/transparent"
+                                                android:hint="Input value"
+                                                android:inputType="numberDecimal"
+                                                android:paddingStart="8dp"
+                                                android:textColor="@color/white"
+                                                android:textColorHint="@color/gray_opacity_80" />
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <com.google.android.material.button.MaterialButton
+                                        android:id="@+id/btn_take_morphological_measurement"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="8dp"
+                                        android:backgroundTint="@color/white"
+                                        android:text="Take"
+                                        android:textColor="@color/black"
+                                        app:cornerRadius="8dp" />
+
+
+                                </LinearLayout>
+                            </RadioGroup>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </com.example.thunderscope_frontend.ui.slidesdetail.customview.AccordionView>
+
+                <!-- AI Insights Accordion-->
+                <com.example.thunderscope_frontend.ui.slidesdetail.customview.AccordionView
+                    android:id="@+id/accordion_ai_insights"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    app:textColor="@android:color/white"
+                    app:textSize="16sp"
+                    app:title="AI Insights"
+                    app:titleColor="@android:color/white"
+                    app:titleIcon="@drawable/ic_ai_insights"
+                    app:titleSize="10sp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="16dp"
+                        android:paddingBottom="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Microscopic Description"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Right eye: Normal fundus examination.\nLeft eye:  Borderline cup-to-disc ratio.  Possible drusen noted in the superior temporal quadrant.  Recommend follow-up examination in 6 months to monitor for any changes"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Infectious Disease"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="The results of a fundus examination can help your doctor diagnose and monitor a variety of eye conditions."
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+
+                </com.example.thunderscope_frontend.ui.slidesdetail.customview.AccordionView>
+
+                <!-- Diagnostic Accordion-->
+                <com.example.thunderscope_frontend.ui.slidesdetail.customview.AccordionView
+                    android:id="@+id/accordion_diagnostics"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    app:textColor="@android:color/white"
+                    app:textSize="16sp"
+                    app:title="Diagnostic"
+                    app:titleColor="@android:color/white"
+                    app:titleIcon="@drawable/ic_list"
+                    app:titleSize="10sp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="16dp"
+                        android:paddingBottom="16dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|start"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_ai_insights" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:text="Diagnostic by AI"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="Need to edit this diagnostic before completed"
+                            android:textColor="@color/gray_opacity_80"
+                            android:textStyle="italic" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/bg_rounded_dialog_form"
+                            android:padding="12dp"
+                            android:text="Right eye: Normal fundus examination.\nLeft eye:  Borderline cup-to-disc ratio.  Possible drusen noted in the superior temporal quadrant.  Recommend follow-up examination in 6 months to monitor for any changes."
+                            android:textColor="@color/white" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_edit_diagnostics"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:backgroundTint="#51A3EF"
+                            android:text="Edit"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            app:cornerRadius="8dp" />
+
+                    </LinearLayout>
+
+
+                </com.example.thunderscope_frontend.ui.slidesdetail.customview.AccordionView>
+
+                <!-- Patient Detail Accordion-->
+                <com.example.thunderscope_frontend.ui.slidesdetail.customview.AccordionView
+                    android:id="@+id/accordion_patient_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    app:textColor="@android:color/white"
+                    app:textSize="16sp"
+                    app:title="Patient Detail"
+                    app:titleColor="@android:color/white"
+                    app:titleIcon="@drawable/ic_person"
+                    app:titleSize="10sp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="16dp"
+                        android:paddingBottom="16dp"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Patient Name"
+                                    android:textColor="@color/gray_opacity_80"
+                                    android:textSize="18sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_patient_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white"
+                                    android:textSize="18sp"
+                                    tools:text="Patient Name" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Patient ID"
+                                    android:textColor="@color/gray_opacity_80"
+                                    android:textSize="18sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_patient_id"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white"
+                                    android:textSize="18sp"
+                                    tools:text="1" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Date of Birth"
+                                    android:textColor="@color/gray_opacity_80"
+                                    android:textSize="18sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_patient_dob"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white"
+                                    android:textSize="18sp"
+                                    tools:text="01/23/12 (21yo)" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Gender"
+                                    android:textColor="@color/gray_opacity_80"
+                                    android:textSize="18sp" />
+
+                                <TextView
+                                    android:id="@+id/tv_patient_gender"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white"
+                                    android:textSize="18sp"
+                                    tools:text="Male" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <!-- Separator -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginVertical="12dp"
+                            android:background="@color/gray_opacity_80" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Site of Collection"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Left Eye"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Clinical Data"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nodular BCC, 173.51"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                </com.example.thunderscope_frontend.ui.slidesdetail.customview.AccordionView>
+
+            </LinearLayout>
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

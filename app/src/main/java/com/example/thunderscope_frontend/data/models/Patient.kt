@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 data class Patient(
 
 	@field:SerializedName("imageBase64")
-	val imageBase64: String? = null,
+	var imageBase64: String? = null,
 
 	@field:SerializedName("address")
 	val address: String? = null,
@@ -17,19 +17,19 @@ data class Patient(
 	val phoneNumber: String? = null,
 
 	@field:SerializedName("gender")
-	val gender: String? = null,
+	var gender: String? = null,
 
 	@field:SerializedName("name")
-	val name: String? = null,
+	var name: String? = null,
 
 	@field:SerializedName("dateOfBirth")
-	val dateOfBirth: String? = null,
+	var dateOfBirth: String? = null,
 
 	@field:SerializedName("id")
-	val id: Long? = null,
+	var id: Long? = null,
 
 	@field:SerializedName("age")
-	val age: String? = null,
+	var age: String? = null,
 
 	@field:SerializedName("email")
 	val email: String? = null

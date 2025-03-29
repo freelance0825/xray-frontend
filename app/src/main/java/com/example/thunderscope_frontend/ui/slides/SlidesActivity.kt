@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.thunderscope_frontend.R
+import com.example.thunderscope_frontend.data.models.Patient
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.databinding.ActivitySlidesBinding
 import com.example.thunderscope_frontend.ui.slides.adapters.AnnotationAdapter
@@ -187,7 +188,18 @@ class SlidesActivity : AppCompatActivity() {
                 } else {
                     slidesViewModel.insertSlides(activeSlidesList)
 
+                    val patient = Patient()
+
+                    caseRecord?.let {
+                        patient.id = it.patientId.toLong()
+                        patient.age = it.patientAge
+                        patient.name = it.patientName
+                        patient.gender = it.patientGender
+                        patient.dateOfBirth = it.patientBirthdate
+                    }
+
                     val iDetail = Intent(this@SlidesActivity, SlidesDetailActivity::class.java)
+                    iDetail.putExtra(SlidesDetailActivity.EXTRA_PATIENT, patient)
                     startActivity(iDetail)
                 }
             }

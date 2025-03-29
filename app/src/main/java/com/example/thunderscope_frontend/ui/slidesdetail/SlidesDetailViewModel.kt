@@ -32,6 +32,9 @@ class SlidesDetailViewModel(
     val selectedAnnotationShape = MutableLiveData(ShapeType.RECTANGLE)
     val selectedPaintColor = MutableLiveData(0)
 
+    val selectedViewSettings = MutableLiveData(SelectedViewSettings.ORIGINAL)
+    val selectedSegmentationSettings = MutableLiveData(SelectedSegmentationSettings.ODM)
+
     // IMAGE SETTINGS OPTIONS
     val gamma = MutableLiveData(1.0)
     val brightness = MutableLiveData(0.0)
@@ -82,6 +85,19 @@ class SlidesDetailViewModel(
         ANNOTATE,
         ANNOTATE_COLOR,
         IMAGE_SETTINGS
+    }
+
+    enum class SelectedViewSettings {
+        ORIGINAL,
+        SEGMENTATION,
+    }
+
+    enum class SelectedSegmentationSettings {
+        ODM,
+        OCM,
+        ODC,
+        FC,
+        MM
     }
 
     @Suppress("UNCHECKED_CAST")

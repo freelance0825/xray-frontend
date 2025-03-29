@@ -7,4 +7,17 @@
     <style name="Theme.Thunderscopefrontend.Material3" parent="Theme.Material3.DayNight.NoActionBar" >
         <item name="android:statusBarColor">@color/black</item>
     </style>
+
+    <declare-styleable name="Accordion">
+        <attr name="titleIcon" format="reference" />
+
+        <attr name="title" format="reference|string" />
+        <attr name="text" format="reference|string" />
+
+        <attr name="titleColor" format="reference|color" />
+        <attr name="textColor" format="reference|color" />
+
+        <attr name="titleSize" format="reference|dimension"/>
+        <attr name="textSize" format="reference|dimension"/>
+    </declare-styleable>
 </resources>
