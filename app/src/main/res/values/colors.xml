@@ -11,6 +11,7 @@
     <color name="border_gray">#EDEDED</color>
     <color name="gray_opacity_80">#CC8D8D8D</color>
 
+    <color name="active_menu_color">#52F5D7</color>
 
     <color name="night_blue_start_gradient">#0E214F</color>
     <color name="night_blue_end_gradient">#204CB5</color>

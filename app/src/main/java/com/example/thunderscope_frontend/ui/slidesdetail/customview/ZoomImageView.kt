@@ -414,7 +414,6 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         super.onDraw(canvas)
 
         canvas.save()
-        Log.e("FTEST", "onDraw: checker #1", )
         canvas.concat(zoomMatrix)
 
         shapes.forEach { shape ->
@@ -427,15 +426,11 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
 //            drawBoundingBox(canvas, it)
         }
 
-        // Menampilkan label di samping kanan setiap shape yang sudah memiliki label
         mappedFixedAnnotationLabel.forEach { (shape, label) ->
-            Log.e("FTEST", "onDraw: checker #2", )
-
             val boundingBox = getBoundingBox(shape)
             val textX = boundingBox.right + 25f
             val textY = boundingBox.centerY()
 
-            // Make the layout with the canvas here
             drawAnnotationLabel(canvas, label, textX, textY)
         }
 

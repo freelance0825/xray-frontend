@@ -1,23 +1,27 @@
 package com.example.thunderscope_frontend.ui.slidesdetail
 
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.SeekBar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.createBitmap
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.databinding.ActivitySlidesDetailBinding
-import com.example.thunderscope_frontend.ui.utils.Base64Helper
+import com.example.thunderscope_frontend.ui.slidesdetail.customview.ShapeType
+import com.example.thunderscope_frontend.ui.slidesdetail.customview.ZoomImageView
+import com.skydoves.colorpickerview.ColorEnvelope
+import com.skydoves.colorpickerview.ColorPickerDialog
+import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
 import org.opencv.android.OpenCVLoader
+import org.opencv.core.Core
 import org.opencv.core.CvType
 import org.opencv.core.Mat
-import org.opencv.core.Size
-import org.opencv.imgproc.Imgproc
-import androidx.core.graphics.createBitmap
-import com.example.thunderscope_frontend.ui.slidesdetail.customview.ZoomImageView
-import org.opencv.core.Core
 import org.opencv.core.Scalar
 import java.nio.ByteBuffer
 
@@ -27,13 +31,6 @@ class SlidesDetailActivity : AppCompatActivity() {
     private val slidesDetailViewModel by viewModels<SlidesDetailViewModel> {
         SlidesDetailViewModel.Factory(this)
     }
-
-    private var gamma = 1.0
-    private var brightness = 0.0
-    private var contrast = 1.0
-    private var redAdjust = 1.0
-    private var greenAdjust = 1.0
-    private var blueAdjust = 1.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,60 +60,218 @@ class SlidesDetailActivity : AppCompatActivity() {
                     handleSpinner(selectedSlides, slideList)
                 }
             }
+
+            selectedPaintColor.observe(this@SlidesDetailActivity) {
+                if (it != 0) {
+                    binding.ivBaseImage.setPaintColor(it)
+                    binding.cvPaintColorFlag.setCardBackgroundColor(it)
+                }
+            }
+
+            selectedAnnotationShape.observe(this@SlidesDetailActivity) { annotationShape ->
+                annotationShape?.let {
+                    when (annotationShape) {
+                        ShapeType.RECTANGLE -> {
+                            binding.ivFlagAnnotateShape.setImageResource(R.drawable.ic_rectangle)
+
+                            binding.ivBaseImage.enableDrawing(true)
+                            binding.ivBaseImage.setDrawMode(ZoomImageView.DrawMode.RECTANGLE)
+                        }
+
+                        ShapeType.CIRCLE -> {
+                            binding.ivFlagAnnotateShape.setImageResource(R.drawable.ic_circle)
+
+                            binding.ivBaseImage.enableDrawing(true)
+                            binding.ivBaseImage.setDrawMode(ZoomImageView.DrawMode.CIRCLE)
+                        }
+
+                        ShapeType.FREE_DRAW -> {
+                            binding.ivFlagAnnotateShape.setImageResource(R.drawable.ic_point)
+
+                            binding.ivBaseImage.enableDrawing(true)
+                            binding.ivBaseImage.setDrawMode(ZoomImageView.DrawMode.FREE_DRAW)
+                        }
+                    }
+                }
+            }
+
+            selectedMenuOptions.observe(this@SlidesDetailActivity) { menu ->
+                resetSelectedMenuActiveColorState()
+
+                when (menu) {
+                    SlidesDetailViewModel.SelectedMenu.SELECT -> {
+                        binding.apply {
+                            ivSelect.setImageTintList(ColorStateList.valueOf(getColor(R.color.active_menu_color)))
+                            tvSelect.setTextColor(getColor(R.color.active_menu_color))
+                        }
+
+                        binding.ivBaseImage.enableDrawing(false)
+                        openLeftMenuSettings(false, menu)
+                    }
+
+                    SlidesDetailViewModel.SelectedMenu.ANNOTATE -> {
+                        binding.apply {
+                            ivFlagAnnotateShape.setImageTintList(ColorStateList.valueOf(getColor(R.color.active_menu_color)))
+                            ivFlagAnnotateDropdown.setImageTintList(
+                                ColorStateList.valueOf(
+                                    getColor(
+                                        R.color.active_menu_color
+                                    )
+                                )
+                            )
+                            tvAnnotate.setTextColor(getColor(R.color.active_menu_color))
+                        }
+
+                        binding.tvMenuContentsTitle.text = StringBuilder("Annotation Shape")
+                        binding.btnClose.setOnClickListener {
+                            selectedMenuOptions.value = SlidesDetailViewModel.SelectedMenu.SELECT
+                        }
+
+                        openLeftMenuSettings(true, menu)
+                    }
+
+                    SlidesDetailViewModel.SelectedMenu.ANNOTATE_COLOR -> {
+                        ColorPickerDialog.Builder(this@SlidesDetailActivity)
+                            .setTitle("Pick Annotation Line Color")
+                            .setPreferenceName("annotation_line_color")
+                            .setPositiveButton(
+                                "Confirm",
+                                object : ColorEnvelopeListener {
+                                    override fun onColorSelected(
+                                        envelope: ColorEnvelope?,
+                                        fromUser: Boolean
+                                    ) {
+                                        selectedPaintColor.value =
+                                            envelope?.color ?: getColor(R.color.blue_lines)
+                                    }
+                                })
+                            .setNegativeButton(
+                                "Cancel"
+                            ) { dialogInterface, _ -> dialogInterface.dismiss() }
+                            .attachAlphaSlideBar(true)
+                            .attachBrightnessSlideBar(true)
+                            .setBottomSpace(12)
+                            .show()
+                    }
+
+                    SlidesDetailViewModel.SelectedMenu.IMAGE_SETTINGS -> {
+                        binding.apply {
+                            ivImageSettings.setImageTintList(ColorStateList.valueOf(getColor(R.color.active_menu_color)))
+                            tvImageSettings.setTextColor(getColor(R.color.active_menu_color))
+                        }
+
+                        binding.tvMenuContentsTitle.text = StringBuilder("Image Settings")
+                        binding.btnClose.setOnClickListener {
+                            openLeftMenuSettings(false, menu)
+                        }
+
+                        openLeftMenuSettings(true, menu)
+                    }
+
+                    else -> {}
+                }
+            }
+
+            gamma.observe(this@SlidesDetailActivity) { value ->
+                binding.tvGammaCount.text = String.format("%.1f", value)
+            }
+
+            brightness.observe(this@SlidesDetailActivity) { value ->
+                binding.tvBrightnessCount.text = "${value.toInt()}%"
+            }
+
+            contrast.observe(this@SlidesDetailActivity) { value ->
+                binding.tvContrastCount.text = "${(value * 100).toInt() - 100}%"
+            }
+
+            redAdjust.observe(this@SlidesDetailActivity) { value ->
+                binding.tvRedCount.text = "${(value * 100).toInt() - 100}%"
+            }
+
+            greenAdjust.observe(this@SlidesDetailActivity) { value ->
+                binding.tvGreenCount.text = "${(value * 100).toInt() - 100}%"
+            }
+
+            blueAdjust.observe(this@SlidesDetailActivity) { value ->
+                binding.tvBlueCount.text = "${(value * 100).toInt() - 100}%"
+            }
         }
     }
 
     private fun setListeners() {
         binding.apply {
-//            btnRectangle.setOnClickListener {
-//                ivBaseImage.enableDrawing(true)
-//                ivBaseImage.setDrawMode(ZoomImageView.DrawMode.RECTANGLE)
-//            }
-//            btnCircle.setOnClickListener {
-//                ivBaseImage.enableDrawing(true)
-//                ivBaseImage.setDrawMode(ZoomImageView.DrawMode.CIRCLE)
-//            }
-//            btnFreeDraw.setOnClickListener {
-//                ivBaseImage.enableDrawing(true)
-//                ivBaseImage.setDrawMode(ZoomImageView.DrawMode.FREE_DRAW)
-//            }
-//
-//            btnClear.setOnClickListener {
-//                ivBaseImage.clearLastDrawing()
-//                ivBaseImage.enableDrawing(false)
-//            }
+            // Left Menu Configuration
+            btnSelect.setOnClickListener {
+                slidesDetailViewModel.selectedMenuOptions.value =
+                    SlidesDetailViewModel.SelectedMenu.SELECT
+            }
 
-//            binding.seekGamma.setOnSeekBarChangeListener(seekBarChangeListener { value ->
-//                gamma = 0.1 + (value / 10.0)
-//            })
-//
-//            binding.seekBrightness.setOnSeekBarChangeListener(seekBarChangeListener { value ->
-//                brightness = value - 100.0
-//            })
-//
-//            binding.seekContrast.setOnSeekBarChangeListener(seekBarChangeListener { value ->
-//                contrast = 0.5 + (value / 100.0)
-//            })
-//
-//            binding.seekRed.setOnSeekBarChangeListener(seekBarChangeListener { value ->
-//                redAdjust = value / 100.0
-//            })
-//
-//            binding.seekGreen.setOnSeekBarChangeListener(seekBarChangeListener { value ->
-//                greenAdjust = value / 100.0
-//            })
-//
-//            binding.seekBlue.setOnSeekBarChangeListener(seekBarChangeListener { value ->
-//                blueAdjust = value / 100.0
-//            })
-//
-//            binding.btnApplyFilter.setOnClickListener {
-//                val originalBitmap = slidesDetailViewModel.currentlySelectedSlides.value?.bitmapImage
-//                if (originalBitmap != null) {
-//                    val filteredBitmap = applyFilter(originalBitmap)
-//                    binding.ivBaseImage.setImageBitmap(filteredBitmap)
-//                }
-//            }
+            btnAnnotate.setOnClickListener {
+                slidesDetailViewModel.selectedMenuOptions.value =
+                    SlidesDetailViewModel.SelectedMenu.ANNOTATE
+            }
+
+            btnAnnotateColor.setOnClickListener {
+                slidesDetailViewModel.selectedMenuOptions.value =
+                    SlidesDetailViewModel.SelectedMenu.ANNOTATE_COLOR
+            }
+
+            btnImageSettings.setOnClickListener {
+                slidesDetailViewModel.selectedMenuOptions.value =
+                    SlidesDetailViewModel.SelectedMenu.IMAGE_SETTINGS
+            }
+
+
+            // Annotate Shape Configuration
+            btnAnnotateRectangle.setOnClickListener {
+                slidesDetailViewModel.selectedAnnotationShape.value = ShapeType.RECTANGLE
+                openLeftMenuSettings(false, SlidesDetailViewModel.SelectedMenu.ANNOTATE)
+            }
+
+            btnAnnotateCircle.setOnClickListener {
+                slidesDetailViewModel.selectedAnnotationShape.value = ShapeType.CIRCLE
+                openLeftMenuSettings(false, SlidesDetailViewModel.SelectedMenu.ANNOTATE)
+            }
+
+            btnAnnotateFreeDraw.setOnClickListener {
+                slidesDetailViewModel.selectedAnnotationShape.value = ShapeType.FREE_DRAW
+                openLeftMenuSettings(false, SlidesDetailViewModel.SelectedMenu.ANNOTATE)
+            }
+
+
+            // Image Settings Configurations
+            seekGamma.setOnSeekBarChangeListener(seekBarChangeListener { value ->
+                slidesDetailViewModel.updateGamma(value)
+            })
+
+            seekBrightness.setOnSeekBarChangeListener(seekBarChangeListener { value ->
+                slidesDetailViewModel.updateBrightness(value)
+            })
+
+            seekContrast.setOnSeekBarChangeListener(seekBarChangeListener { value ->
+                slidesDetailViewModel.updateContrast(value)
+            })
+
+            seekRed.setOnSeekBarChangeListener(seekBarChangeListener { value ->
+                slidesDetailViewModel.updateRed(value)
+            })
+
+            seekGreen.setOnSeekBarChangeListener(seekBarChangeListener { value ->
+                slidesDetailViewModel.updateGreen(value)
+            })
+
+            seekBlue.setOnSeekBarChangeListener(seekBarChangeListener { value ->
+                slidesDetailViewModel.updateBlue(value)
+            })
+
+            btnApplyFilter.setOnClickListener {
+                processFilter()
+            }
+
+            btnCancelFilter.setOnClickListener {
+                resetFilters()
+                processFilter()
+            }
 
             btnBack.setOnClickListener {
                 finish()
@@ -124,7 +279,23 @@ class SlidesDetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun processFilter() {
+        val originalBitmap =
+            slidesDetailViewModel.currentlySelectedSlides.value?.bitmapImage
+        if (originalBitmap != null) {
+            val filteredBitmap = applyFilter(originalBitmap)
+            binding.ivBaseImage.setImageBitmap(filteredBitmap)
+        }
+    }
+
     private fun applyFilter(bitmap: Bitmap): Bitmap {
+        val gamma = slidesDetailViewModel.gamma.value ?: 1.0
+        val brightness = slidesDetailViewModel.brightness.value ?: 0.0
+        val contrast = slidesDetailViewModel.contrast.value ?: 1.0
+        val redAdjust = slidesDetailViewModel.redAdjust.value ?: 1.0
+        val greenAdjust = slidesDetailViewModel.greenAdjust.value ?: 1.0
+        val blueAdjust = slidesDetailViewModel.blueAdjust.value ?: 1.0
+
         val srcMat = Mat()
         val outputMat = Mat()
 
@@ -147,9 +318,9 @@ class SlidesDetailActivity : AppCompatActivity() {
         val channels = ArrayList<Mat>(3)
         Core.split(outputMat, channels)
 
-        Core.multiply(channels[0], Scalar(blueAdjust), channels[0])
+        Core.multiply(channels[0], Scalar(redAdjust), channels[0])
         Core.multiply(channels[1], Scalar(greenAdjust), channels[1])
-        Core.multiply(channels[2], Scalar(redAdjust), channels[2])
+        Core.multiply(channels[2], Scalar(blueAdjust), channels[2])
 
         Core.merge(channels, outputMat)
 
@@ -164,6 +335,19 @@ class SlidesDetailActivity : AppCompatActivity() {
         }
 
         return resultBitmap
+    }
+
+    private fun resetFilters() {
+        binding.apply {
+            seekGamma.progress = 10
+            seekBrightness.progress = 100
+            seekContrast.progress = 100
+            seekRed.progress = 100
+            seekGreen.progress = 100
+            seekBlue.progress = 100
+        }
+
+        slidesDetailViewModel.resetFilters()
     }
 
     private fun seekBarChangeListener(action: (Int) -> Unit): SeekBar.OnSeekBarChangeListener {
@@ -196,13 +380,53 @@ class SlidesDetailActivity : AppCompatActivity() {
         }
 
         binding.spinnerSlides.setOnItemClickListener { _, _, position, _ ->
-//            binding.ivBaseImage.resetZoomManually()
+            resetFilters()
+
+            binding.ivBaseImage.clearCanvas()
+            binding.ivBaseImage.resetZoomManually()
+
             val selectedSlide = slideList[position]
             slidesDetailViewModel.updateSelectedSlide(selectedSlide)
         }
 
         binding.spinnerSlides.setOnClickListener {
             binding.spinnerSlides.showDropDown()
+        }
+    }
+
+    private fun openLeftMenuSettings(
+        isOpening: Boolean,
+        menuType: SlidesDetailViewModel.SelectedMenu
+    ) {
+        binding.apply {
+            if (isOpening) {
+                if (menuType == SlidesDetailViewModel.SelectedMenu.ANNOTATE) {
+                    layoutImageSettings.visibility = View.GONE
+                    layoutAnnotateShapeMenu.visibility = View.VISIBLE
+                } else if (menuType == SlidesDetailViewModel.SelectedMenu.IMAGE_SETTINGS) {
+                    layoutAnnotateShapeMenu.visibility = View.GONE
+                    layoutImageSettings.visibility = View.VISIBLE
+                }
+            } else {
+                layoutAnnotateShapeMenu.visibility = View.GONE
+                layoutImageSettings.visibility = View.GONE
+            }
+
+            layoutMenuContents.visibility = if (isOpening) View.VISIBLE else View.GONE
+        }
+    }
+
+    private fun resetSelectedMenuActiveColorState() {
+        binding.apply {
+            ivSelect.setImageTintList(ColorStateList.valueOf(Color.WHITE))
+            tvSelect.setTextColor(Color.WHITE)
+
+            ivFlagAnnotateShape.setImageTintList(ColorStateList.valueOf(Color.WHITE))
+            ivFlagAnnotateDropdown.setImageTintList(ColorStateList.valueOf(Color.WHITE))
+            tvAnnotate.setTextColor(Color.WHITE)
+
+            ivImageSettings.setImageTintList(ColorStateList.valueOf(Color.WHITE))
+            tvImageSettings.setTextColor(Color.WHITE)
         }
     }
 }

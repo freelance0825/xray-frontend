@@ -107,6 +107,9 @@ dependencies {
     // OpenCV from QuickBird
     implementation(libs.opencv.contrib)
 
+    // ColorPicker
+    implementation(libs.colorpickerview)
+
     // Testing dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
