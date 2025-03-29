@@ -33,10 +33,10 @@ class CaseRecordViewModel(application: Application) : AndroidViewModel(applicati
         val authToken = sharedPreferences.getString("token", null)
 
         // If token is missing, post an error message
-//        if (authToken.isNullOrEmpty()) {
-//            postError("Authentication token is missing. Please log in again.")
-//            return
-//        }
+        if (authToken.isNullOrEmpty()) {
+            postError("Authentication token is missing. Please log in again.")
+            return
+        }
 
         // Create an HTTP request to fetch case records
         val request = Request.Builder()

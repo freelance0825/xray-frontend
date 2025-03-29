@@ -14,6 +14,7 @@ import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.data.repo.ThunderscopeRepository
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.Shape
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.ShapeType
+import java.io.File
 
 class SlidesDetailViewModel(
     private val thunderscopeRepository: ThunderscopeRepository
@@ -29,6 +30,8 @@ class SlidesDetailViewModel(
             }
         }
     }
+
+    val signatureImageFile = MutableLiveData<File>(null)
 
     val selectedMenuOptions = MutableLiveData(SelectedMenu.SELECT)
     val selectedAnnotationShape = MutableLiveData(ShapeType.RECTANGLE)

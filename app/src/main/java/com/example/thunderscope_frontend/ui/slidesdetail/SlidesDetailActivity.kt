@@ -1,25 +1,37 @@
 package com.example.thunderscope_frontend.ui.slidesdetail
 
+import android.app.Dialog
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
+import android.view.ViewGroup.LayoutParams
+import android.view.Window
 import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.SeekBar
+import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.createBitmap
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.data.models.Patient
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.databinding.ActivitySlidesDetailBinding
-import com.example.thunderscope_frontend.ui.slides.SlidesViewModel
 import com.example.thunderscope_frontend.ui.slidesdetail.adapters.SavedAnnotationAdapter
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.ShapeType
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.ZoomImageView
+import com.google.android.material.button.MaterialButton
 import com.skydoves.colorpickerview.ColorEnvelope
 import com.skydoves.colorpickerview.ColorPickerDialog
 import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
@@ -28,7 +40,13 @@ import org.opencv.core.Core
 import org.opencv.core.CvType
 import org.opencv.core.Mat
 import org.opencv.core.Scalar
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 import java.nio.ByteBuffer
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class SlidesDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySlidesDetailBinding
@@ -43,6 +61,16 @@ class SlidesDetailActivity : AppCompatActivity() {
         } else {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra(EXTRA_PATIENT)
+        }
+    }
+
+    private val galleryLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            (result.data?.data as Uri).let { uri ->
+                slidesDetailViewModel.signatureImageFile.postValue(reduceFileSize(uri.toFile()))
+            }
         }
     }
 
@@ -244,6 +272,11 @@ class SlidesDetailActivity : AppCompatActivity() {
 
     private fun setListeners() {
         binding.apply {
+            btnCompleteReview.setOnClickListener {
+                openPostTestReviewDialog()
+            }
+
+
             // Left Menu Configuration
             btnSelect.setOnClickListener {
                 slidesDetailViewModel.selectedMenuOptions.value =
@@ -559,6 +592,117 @@ class SlidesDetailActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun Uri.toFile(): File {
+        val tempFile = File.createTempFile(
+            "TS_SIGNATURE_${System.currentTimeMillis()}_",
+            ".jpg",
+            getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        )
+
+        contentResolver.openInputStream(this)?.use { input ->
+            FileOutputStream(tempFile).use { output ->
+                input.copyTo(output)
+            }
+        }
+
+        return tempFile
+    }
+
+    private fun reduceFileSize(file: File): File {
+        val bitmap = BitmapFactory.decodeFile(file.path)
+        var compressQuality = 100
+        var streamLength: Int
+
+        do {
+            val bmpStream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
+            val bmpPicByteArray = bmpStream.toByteArray()
+            streamLength = bmpPicByteArray.size
+            compressQuality -= 5
+        } while (streamLength > 1000000)
+
+        bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
+        return file
+    }
+
+    private fun openPostTestReviewDialog() {
+        val inflater = layoutInflater
+        val dialogView = inflater.inflate(R.layout.dialog_post_test_review, null)
+
+        val dialog = Dialog(this)
+        dialog.setContentView(dialogView)
+        dialog.setCancelable(false)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        // Bind Views
+        val btnClose = dialogView.findViewById<ImageView>(R.id.btn_close)
+        val tvPatientName = dialogView.findViewById<TextView>(R.id.tv_patient_name)
+        val tvPatientGenderAge = dialogView.findViewById<TextView>(R.id.tv_patient_gender_age)
+        val tvDateNow = dialogView.findViewById<TextView>(R.id.tv_date_now)
+        val tvTimeNow = dialogView.findViewById<TextView>(R.id.tv_time_now)
+        val tvDateTimeCombined = dialogView.findViewById<TextView>(R.id.tv_date_time_combined_now)
+        val btnGetSignature = dialogView.findViewById<LinearLayout>(R.id.btn_get_signature)
+        val ivSignature = dialogView.findViewById<ImageView>(R.id.iv_signature)
+        val ivGender = dialogView.findViewById<ImageView>(R.id.iv_gender)
+        val layoutPlaceholderSignature = dialogView.findViewById<LinearLayout>(R.id.layout_placeholder_signature)
+        val layoutSignatureView = dialogView.findViewById<LinearLayout>(R.id.layout_signature_view)
+        val btnSubmit = dialogView.findViewById<MaterialButton>(R.id.btn_submit)
+
+        // Set current date & time
+        val now = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH)
+        val timeFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+
+        val currentDate = dateFormat.format(now.time)
+        val currentTime = timeFormat.format(now.time)
+
+        tvPatientName.text = patientData?.name
+        tvPatientGenderAge.text = StringBuilder("${patientData?.gender} • ${patientData?.age} years old")
+        tvDateNow.text = currentDate
+        tvTimeNow.text = currentTime
+        tvDateTimeCombined.text = StringBuilder("$currentDate • $currentTime")
+
+        if (patientData?.gender?.lowercase().equals("female")) {
+            ivGender.setImageDrawable(ContextCompat.getDrawable(this@SlidesDetailActivity, R.drawable.ic_female))
+        } else {
+            ivGender.setImageDrawable(ContextCompat.getDrawable(this@SlidesDetailActivity, R.drawable.ic_male))
+        }
+
+        slidesDetailViewModel.signatureImageFile.observe(this@SlidesDetailActivity) {
+            it?.let {
+                ivSignature.setImageBitmap(BitmapFactory.decodeFile(it.path))
+            }
+
+            layoutPlaceholderSignature.visibility = if (it != null) View.GONE else View.VISIBLE
+            layoutSignatureView.visibility = if (it == null) View.GONE else View.VISIBLE
+        }
+
+        // Close dialog
+        btnClose.setOnClickListener {
+            slidesDetailViewModel.signatureImageFile.value = null
+            dialog.dismiss()
+        }
+
+        btnSubmit.setOnClickListener {
+            slidesDetailViewModel.signatureImageFile.value = null
+            dialog.dismiss()
+        }
+
+        // Open Gallery to Pick Signature
+        btnGetSignature.setOnClickListener {
+            val intent = Intent()
+            intent.action = Intent.ACTION_GET_CONTENT
+            intent.type = "image/*"
+            val chooser = Intent.createChooser(intent, "")
+            galleryLauncher.launch(chooser)
+        }
+
+        dialog.show()
+        val window = dialog.window
+        window?.setLayout((resources.displayMetrics.widthPixels * 0.9).toInt(), LayoutParams.WRAP_CONTENT)
+    }
+
 
     companion object {
         const val EXTRA_PATIENT = "extra_patient"
