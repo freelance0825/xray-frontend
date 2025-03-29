@@ -11,10 +11,13 @@ import android.widget.SeekBar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.createBitmap
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.data.models.Patient
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.databinding.ActivitySlidesDetailBinding
+import com.example.thunderscope_frontend.ui.slides.SlidesViewModel
+import com.example.thunderscope_frontend.ui.slidesdetail.adapters.SavedAnnotationAdapter
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.ShapeType
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.ZoomImageView
 import com.skydoves.colorpickerview.ColorEnvelope
@@ -42,6 +45,8 @@ class SlidesDetailActivity : AppCompatActivity() {
             intent.getParcelableExtra(EXTRA_PATIENT)
         }
     }
+
+    private val savedAnnotationAdapter = SavedAnnotationAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -358,6 +363,13 @@ class SlidesDetailActivity : AppCompatActivity() {
 
             btnBack.setOnClickListener {
                 finish()
+            }
+
+            rvSavedAnnotation.apply {
+                savedAnnotationAdapter.submitList(slidesDetailViewModel.generateDummyAnnotationItem())
+                adapter = savedAnnotationAdapter
+                layoutManager =
+                    LinearLayoutManager(this@SlidesDetailActivity, LinearLayoutManager.HORIZONTAL, false)
             }
         }
     }

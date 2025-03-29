@@ -8,6 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import com.example.thunderscope_frontend.R
+import com.example.thunderscope_frontend.data.models.AnnotationItem
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.data.repo.ThunderscopeRepository
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.Shape
@@ -99,6 +101,21 @@ class SlidesDetailViewModel(
         FC,
         MM
     }
+
+    fun generateDummyAnnotationItem() = mutableListOf(
+        AnnotationItem(
+            id = 1,
+            label = "Annotation 1",
+            date = "10/03/2025",
+            dummyImageRes = R.drawable.asset_image_annotate_1
+        ),
+        AnnotationItem(
+            id = 2,
+            label = "Annotation 2",
+            date = "11/03/2025",
+            dummyImageRes = R.drawable.asset_image_annotate_2
+        )
+    )
 
     @Suppress("UNCHECKED_CAST")
     class Factory(
