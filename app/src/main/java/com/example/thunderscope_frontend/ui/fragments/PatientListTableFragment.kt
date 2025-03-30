@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.ui.slides.SlidesActivity
+import com.example.thunderscope_frontend.ui.utils.Base64Helper
 import com.example.thunderscope_frontend.viewmodel.CaseRecordUI
 import com.example.thunderscope_frontend.viewmodel.CaseRecordViewModel
 import com.example.thunderscope_frontend.viewmodel.SlidesRecordUI
@@ -359,20 +360,19 @@ class PatientListTableFragment : Fragment() {
 
             // Load images properly if available
             if (slideImages.isNotEmpty()) {
-                Glide.with(requireContext()).load(slideImages.getOrNull(0))
-                    .placeholder(R.drawable.placeholder_image)
-                    .error(R.drawable.placeholder_image)
-                    .into(image1)
+                Log.e("FTEST", "updateFilteredTable: ${slideImages.getOrNull(0)}", )
 
-                Glide.with(requireContext()).load(slideImages.getOrNull(1))
-                    .placeholder(R.drawable.placeholder_image)
-                    .error(R.drawable.placeholder_image)
-                    .into(image2)
+                slideImages.getOrNull(0)?.let {
+                    image1.setImageBitmap(Base64Helper.convertToBitmap(it))
+                }
 
-                Glide.with(requireContext()).load(slideImages.getOrNull(2))
-                    .placeholder(R.drawable.placeholder_image)
-                    .error(R.drawable.placeholder_image)
-                    .into(image3)
+                slideImages.getOrNull(1)?.let {
+                    image2.setImageBitmap(Base64Helper.convertToBitmap(it))
+                }
+
+                slideImages.getOrNull(2)?.let {
+                    image3.setImageBitmap(Base64Helper.convertToBitmap(it))
+                }
             }
 
             //Show extra image count
@@ -387,7 +387,7 @@ class PatientListTableFragment : Fragment() {
             // Click Listener to Open SlidesActivity.kt
             val openSlidesActivity = View.OnClickListener {
                 val intent = Intent(requireContext(), SlidesActivity::class.java)
-                intent.putExtra("caseRecordId", record.caseRecordId) // Pass the case record ID
+                intent.putExtra(SlidesActivity.EXTRA_CASE_RECORD, record) // Pass the case record ID
                 startActivity(intent)
             }
 

@@ -2,6 +2,7 @@ package com.example.thunderscope_frontend.data.repo
 
 import android.content.Context
 import com.example.thunderscope_frontend.data.local.SlidesDatabase
+import com.example.thunderscope_frontend.data.models.SlidesEntity
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.data.remote.ApiConfig
 import com.example.thunderscope_frontend.data.utils.SlidesMapper
@@ -16,7 +17,7 @@ import kotlinx.coroutines.runBlocking
 class ThunderscopeRepository(
     context: Context
 ) {
-    private val apiService = ApiConfig.getApiService()
+    private val apiService = ApiConfig.getApiService(context)
     private val slidesDao = SlidesDatabase.getDatabase(context).slidesDao()
 
     fun getAllSlides(caseId: Int) = flow {
@@ -41,5 +42,11 @@ class ThunderscopeRepository(
 
     suspend fun clearSlides() {
         slidesDao.clearAllSlides()
+    }
+
+    // DUMMY SLIDES FOR CREATE NEW TEST PURPOSE!!!
+
+    suspend fun generateDummySlidesToDatabaseForMVPPurpose() {
+        insertSlides(slidesList)
     }
 }

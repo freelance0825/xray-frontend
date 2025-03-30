@@ -1,5 +1,4 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -53,7 +52,6 @@
             android:scaleType="centerCrop"
             android:src="@drawable/microscope_image"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.542"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -80,66 +78,73 @@
 
     <!-- Details Section -->
 
-    <TextView
-        android:id="@+id/tvStepsHeader"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="244dp"
         android:layout_marginTop="20dp"
-        android:text="Steps to set up"
-        android:textColor="@android:color/black"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/imageContainer"
-        app:layout_constraintTop_toBottomOf="@id/imageContainer" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/detailsContainer"
-        android:layout_width="710dp"
-        android:layout_height="115dp"
-        android:layout_marginStart="228dp"
-        android:layout_marginTop="8dp"
-        android:padding="24dp"
-        app:layout_constraintStart_toStartOf="@id/imageContainer"
-        app:layout_constraintTop_toBottomOf="@id/tvStepsHeader">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageContainer">
 
         <TextView
-            android:id="@+id/tvStep1"
+            android:id="@+id/tvStepsHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="1. Connect the microscope"
+            android:text="Steps to set up"
             android:textColor="@android:color/black"
-            android:textSize="14sp"
+            android:textSize="22sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvStep2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="2. Press the start button on the device"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvStep1" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/detailsContainer"
+            android:layout_width="710dp"
+            android:layout_height="115dp"
+            android:layout_marginTop="8dp"
+            android:paddingVertical="24dp"
+            app:layout_constraintStart_toStartOf="@id/tvStepsHeader"
+            app:layout_constraintTop_toBottomOf="@id/tvStepsHeader">
 
-        <!-- Connect Button (Aligned Right) -->
-        <Button
-            android:id="@+id/btnConnect"
-            android:layout_width="163dp"
-            android:layout_height="49dp"
-            android:layout_marginEnd="52dp"
-            android:layout_marginBottom="8dp"
-            android:backgroundTint="@color/btn_dark_blue"
-            android:clipToOutline="true"
-            android:outlineProvider="background"
-            android:text="Connect"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <TextView
+                android:id="@+id/tvStep1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="1. Connect the microscope"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvStep2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="2. Press the start button on the device"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvStep1" />
+
+            <!-- Connect Button (Aligned Right) -->
+            <Button
+                android:id="@+id/btnConnect"
+                android:layout_width="163dp"
+                android:layout_height="49dp"
+                android:layout_marginEnd="52dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/btn_dark_blue"
+                android:clipToOutline="true"
+                android:outlineProvider="background"
+                android:text="Connect"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

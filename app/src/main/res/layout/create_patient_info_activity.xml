@@ -129,7 +129,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/sidebar"
         android:layout_width="239dp"
-        android:layout_height="729dp"
+        android:layout_height="0dp"
         android:background="@color/dark_gray"
         android:paddingVertical="20dp"
         android:paddingStart="16dp"

@@ -10,13 +10,13 @@ import kotlinx.parcelize.RawValue
 @Parcelize
 data class SlidesItem(
 
-	@field:SerializedName("mainImage")
+	@field:SerializedName("main_image")
 	val mainImage: String? = null,
 
-	@field:SerializedName("qrCode")
+	@field:SerializedName("qr_code")
 	val qrCode: String? = null,
 
-	@field:SerializedName("reportId")
+	@field:SerializedName("report_id")
 	val reportId: String? = null,
 
 	@field:SerializedName("diagnosis")
@@ -25,25 +25,25 @@ data class SlidesItem(
 	@field:SerializedName("id")
 	val id: Long? = null,
 
-	@field:SerializedName("specimenType")
+	@field:SerializedName("specimen_type")
 	val specimenType: String? = null,
 
-	@field:SerializedName("caseRecord")
+	@field:SerializedName("case_record")
 	val caseRecord: CaseRecord? = null,
 
-	@field:SerializedName("aiInsights")
+	@field:SerializedName("ai_insights")
 	val aiInsights: String? = null,
 
-	@field:SerializedName("collectionSite")
+	@field:SerializedName("collection_site")
 	val collectionSite: String? = null,
 
-	@field:SerializedName("clinicalData")
+	@field:SerializedName("clinical_data")
 	val clinicalData: String? = null,
 
 	var isActive: Boolean = false,
 	var isCurrentlySelected: Boolean = false,
 
-	@Transient // Hindari serialisasi dalam Parcelable
+	@Transient
 	private var _bitmapImage: Bitmap? = null
 ) : Parcelable {
 

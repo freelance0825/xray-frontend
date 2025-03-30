@@ -126,10 +126,11 @@
 
 
     <!-- Sidebar Section -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:id="@+id/sidebar"
         android:layout_width="239dp"
-        android:layout_height="729dp"
+        android:layout_height="0dp"
         android:background="@color/dark_gray"
         android:paddingVertical="20dp"
         android:paddingStart="16dp"
@@ -137,61 +138,64 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header_layout">
 
-        <!-- Setup Device Option (Selected) -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/setup_device_container"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout
+            android:id="@+id/layout_setup_device"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_soft_gray"
+            android:gravity="center_vertical">
 
-            <RadioButton
-                android:id="@+id/radio_setup_device"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:buttonTint="@color/blue"
+            <CheckBox
+                android:id="@+id/cb_setup"
                 android:checked="true"
-                android:gravity="center_vertical"
-                android:paddingStart="8dp"
-                android:text="Setup Device"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <!-- Patient Info Option -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/patient_info_container"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/setup_device_container">
-
-            <RadioButton
-                android:id="@+id/radio_patient_info"
+                android:buttonTint="#009FCF"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:buttonTint="@color/blue"
-                android:gravity="center_vertical"
-                android:paddingStart="8dp"
-                android:text="Patient Info"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox"
+                android:scaleX="0.8"
+                android:scaleY="0.8" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tv_setup_device"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Setup Device"
+                android:textSize="18sp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-medium"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_patient_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical">
+
+            <CheckBox
+                android:id="@+id/cb_info"
+                android:buttonTint="#009FCF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/custom_checkbox"
+                android:scaleX="0.8"
+                android:scaleY="0.8" />
+
+            <TextView
+                android:id="@+id/tv_patient_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Patient Info"
+                android:textSize="18sp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/black"
+                android:fontFamily="sans-serif-medium"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
 
     <!-- Fragment Container for dynamic content -->
     <androidx.fragment.app.FragmentContainerView
@@ -204,9 +208,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout="@layout/create_new_test_activity_fragment"/>
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
