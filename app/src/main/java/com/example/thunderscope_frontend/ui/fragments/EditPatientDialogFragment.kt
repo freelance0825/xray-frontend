@@ -267,7 +267,6 @@ class EditPatientDialogFragment : DialogFragment() {
             .url("http://10.0.2.2:8080/api/patients/$patientId")
             .put(requestBody)
             .addHeader("Authorization", "Bearer $token")
-            .addHeader("Content-Type", "application/json")
             .build()
 
         client.newCall(request).enqueue(object : Callback {
