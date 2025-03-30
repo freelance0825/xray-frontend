@@ -175,7 +175,7 @@
 
     <!-- Data: Assessments -->
     <LinearLayout
-        android:id="@+id/assessment"
+        android:id="@+id/assessmentImageContainer"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="3"
@@ -184,6 +184,7 @@
         android:paddingEnd="8dp">
 
         <ImageView
+            android:id="@+id/assessmentImage1"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
@@ -192,6 +193,7 @@
             android:src="@drawable/sample_image1" />
 
         <ImageView
+            android:id="@+id/assessmentImage2"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
@@ -200,6 +202,7 @@
             android:src="@drawable/sample_image2" />
 
         <ImageView
+            android:id="@+id/assessmentImage3"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
@@ -208,6 +211,7 @@
             android:src="@drawable/sample_image3" />
 
         <TextView
+            android:id="@+id/assessmentImageCount"
             android:layout_width="50dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
