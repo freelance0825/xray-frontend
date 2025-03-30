@@ -3,6 +3,7 @@ package com.example.thunderscope_frontend.ui.user
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.StrictMode
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
@@ -59,6 +60,10 @@ class SignupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.signup_activity)
+
+        // POLICY WORKAROUND - Refactor Later with MVVM Architecture
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
 
         // Initialize UI components
         emailEditText = findViewById(R.id.etEmail)

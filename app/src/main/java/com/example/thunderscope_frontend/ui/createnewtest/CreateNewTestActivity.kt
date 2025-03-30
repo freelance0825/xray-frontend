@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.os.StrictMode
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +27,11 @@ class CreateNewTestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = CreateNewTestActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        // POLICY WORKAROUND - Refactor Later with MVVM Architecture
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, CreateNewTestActivityFragment())
