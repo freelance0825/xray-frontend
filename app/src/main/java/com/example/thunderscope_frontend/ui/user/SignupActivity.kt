@@ -311,28 +311,30 @@ class SignupActivity : AppCompatActivity() {
     private fun setPasswordPlaceholder() {
         val placeholder = "Enter your password"
         passwordEditText.setText(placeholder)
-        passwordEditText.inputType =
-            EditorInfo.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD // Ensure text is visible
+        passwordEditText.inputType = EditorInfo.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD // Ensure text is visible initially
 
         passwordEditText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus && passwordEditText.text.toString() == placeholder) {
                 passwordEditText.setText("")
-                passwordEditText.inputType =
-                    EditorInfo.TYPE_CLASS_TEXT or EditorInfo.TYPE_TEXT_VARIATION_PASSWORD
+                passwordEditText.inputType = EditorInfo.TYPE_CLASS_TEXT or EditorInfo.TYPE_TEXT_VARIATION_PASSWORD
             } else if (!hasFocus && passwordEditText.text.isNullOrEmpty()) {
                 passwordEditText.setText(placeholder)
-                passwordEditText.inputType =
-                    EditorInfo.TYPE_CLASS_TEXT or EditorInfo.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                passwordEditText.inputType = EditorInfo.TYPE_CLASS_TEXT or EditorInfo.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
             }
         }
 
-        // Detect when the eye icon is toggled
+        // Handle the eye icon toggle for password visibility
         passwordInputLayout.setEndIconOnClickListener {
-            if (passwordEditText.text.toString().isEmpty()) {
-                passwordEditText.setText(placeholder)
-                passwordEditText.inputType =
-                    EditorInfo.TYPE_CLASS_TEXT or EditorInfo.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            val inputType = passwordEditText.inputType
+            if (inputType == (EditorInfo.TYPE_CLASS_TEXT or EditorInfo.TYPE_TEXT_VARIATION_PASSWORD)) {
+                // If currently hidden, show the password
+                passwordEditText.inputType = EditorInfo.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            } else {
+                // If currently visible, hide the password
+                passwordEditText.inputType = EditorInfo.TYPE_CLASS_TEXT or EditorInfo.TYPE_TEXT_VARIATION_PASSWORD
             }
+            // Move cursor to the end after toggling
+            passwordEditText.setSelection(passwordEditText.text?.length ?: 0)
         }
     }
 
