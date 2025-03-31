@@ -305,8 +305,7 @@ class PatientListTableFragment : Fragment() {
             ) as TableRow
 
             newRow.findViewById<TextView>(R.id.caseRecordId).text = record.caseRecordId.toString()
-            newRow.findViewById<TextView>(R.id.caseRecordPatientId).text =
-                record.patientId.toString()
+            newRow.findViewById<TextView>(R.id.caseRecordPatientId).text = record.patientId.toString()
             newRow.findViewById<TextView>(R.id.physicianName).text = record.physicianName
             newRow.findViewById<TextView>(R.id.patientName).text = record.patientName
             newRow.findViewById<TextView>(R.id.patientBirthdate).text = record.patientBirthdate
@@ -331,9 +330,10 @@ class PatientListTableFragment : Fragment() {
                 )
             }
 
+            newRow.findViewById<TextView>(R.id.type).text = record.type.trim()
+
             // Get all slide records matching the current caseRecordId
-            val matchingSlideRecords =
-                slidesRecords.filter { it.caseRecordId == record.caseRecordId }
+            val matchingSlideRecords = slidesRecords.filter { it.caseRecordId == record.caseRecordId }
 
             // Extract all image URLs from the matching records
             val slideImages = matchingSlideRecords
@@ -341,10 +341,7 @@ class PatientListTableFragment : Fragment() {
                 .map { it.trim() }                   // Trim spaces
                 .filter { it.isNotEmpty() }          // Remove empty strings
 
-            Log.d(
-                "SlidesDebug",
-                "CaseRecordId: ${record.caseRecordId}, Found ${matchingSlideRecords.size} records"
-            )
+            Log.d("SlidesDebug", "CaseRecordId: ${record.caseRecordId}, Found ${matchingSlideRecords.size} records")
             Log.d("SlidesDebug", "Extracted Images: $slideImages")
 
             // Image views
