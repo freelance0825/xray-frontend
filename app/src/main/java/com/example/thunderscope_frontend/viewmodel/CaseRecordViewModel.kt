@@ -118,7 +118,8 @@ class CaseRecordViewModel(application: Application) : AndroidViewModel(applicati
                 caseRecordsList.add(caseRecord)
             }
         }
-        return caseRecordsList
+        // Sort the list by time in descending order before returning
+        return caseRecordsList.sortedByDescending { it.lastUpdateTime }
     }
 
     // Function to post error messages to errorLiveData
