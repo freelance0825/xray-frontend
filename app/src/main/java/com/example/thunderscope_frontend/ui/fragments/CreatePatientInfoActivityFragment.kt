@@ -291,13 +291,15 @@ class CreatePatientInfoActivityFragment : Fragment() {
                         }, 100L) // 1 second delay
 
                     } else {
-                        Log.e("FTEST", "onResponse: ${response.message}", )
-                        Log.e("FTEST", "onResponse: ${response}", )
-                        Toast.makeText(
-                            requireContext(),
-                            String.format(Locale.getDefault(), "Error: %s", response.message),
-                            Toast.LENGTH_SHORT
-                        ).show()
+
+                        sendPatientData()
+//                        Log.e("FTEST", "onResponse: ${response.message}", )
+//                        Log.e("FTEST", "onResponse: ${response}", )
+//                        Toast.makeText(
+//                            requireContext(),
+//                            String.format(Locale.getDefault(), "Error: %s", response.message),
+//                            Toast.LENGTH_SHORT
+//                        ).show()
                     }
                 }
             }

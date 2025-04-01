@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         passwordEditText.typeface = Typeface.MONOSPACE
 
         // Toggle password visibility when clicking the button
+        // HANDLE PASSWORD VISIBILITY IN THE XML, NOT ON THE KOTLIN LOGIC
         togglePasswordButton.setOnClickListener { togglePasswordVisibility() }
 
         // Handle login button click

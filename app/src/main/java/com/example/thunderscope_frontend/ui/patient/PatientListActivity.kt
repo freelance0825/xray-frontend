@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.ui.createnewtest.CreateNewTestActivity
 import com.example.thunderscope_frontend.viewmodel.CaseRecordViewModel
+import com.google.android.material.button.MaterialButton
 
 class PatientListActivity : AppCompatActivity() {
 
@@ -20,7 +21,7 @@ class PatientListActivity : AppCompatActivity() {
     private lateinit var menuInPreparations: TextView
     private lateinit var menuForReview: TextView
     private lateinit var menuFinished: TextView
-    private lateinit var startNewTest: Button
+    private lateinit var startNewTest: MaterialButton
     private lateinit var patientModule: TextView
 
     // Case Record ViewModel (properly initialized)
@@ -49,7 +50,7 @@ class PatientListActivity : AppCompatActivity() {
             val completedCount = caseList.count { it.status == "Completed" }
 
             // Update UI
-            allCasesCount.text = totalCases.toString()
+            allCasesCount.text = StringBuilder("($totalCases)")
             menuAllCasesCount.text = totalCases.toString()
             menuHighPriorityCount.text = highPriorityCount.toString()
             menuInPreparations.text = inPreparationsCount.toString()

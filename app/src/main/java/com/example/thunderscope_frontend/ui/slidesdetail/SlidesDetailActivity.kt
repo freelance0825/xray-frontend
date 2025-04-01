@@ -28,6 +28,7 @@ import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.data.models.Patient
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.databinding.ActivitySlidesDetailBinding
+import com.example.thunderscope_frontend.ui.report.ReportActivity
 import com.example.thunderscope_frontend.ui.slidesdetail.adapters.SavedAnnotationAdapter
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.ShapeType
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.ZoomImageView
@@ -687,6 +688,8 @@ class SlidesDetailActivity : AppCompatActivity() {
         btnSubmit.setOnClickListener {
             slidesDetailViewModel.signatureImageFile.value = null
             dialog.dismiss()
+
+//            startActivity(Intent(this@SlidesDetailActivity, ReportActivity::class.java))
         }
 
         // Open Gallery to Pick Signature

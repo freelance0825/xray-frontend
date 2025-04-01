@@ -77,11 +77,12 @@ class SignupActivity : AppCompatActivity() {
         linkLogin = findViewById(R.id.linkLogin)
 
         // Set Input Field Placeholders
-        setPlaceholder(emailEditText, "Enter email")
-        setPlaceholder(birthDateEditText as TextInputEditText, "MM-DD-YYYY")
-        setPasswordPlaceholder()
-        setPlaceholder(nameEditText, "Enter name")
-        setPlaceholder(phoneNumberEditText, "Enter phone number")
+        // PLACEHOLDER IS CONFIGURED FROM THE ATTR OF XML VIEW
+//        setPlaceholder(emailEditText, "Enter email")
+//        setPlaceholder(birthDateEditText as TextInputEditText, "MM-DD-YYYY")
+//        setPasswordPlaceholder()
+//        setPlaceholder(nameEditText, "Enter name")
+//        setPlaceholder(phoneNumberEditText, "Enter phone number")
 
 
         /*  <----- START OF SPECIALIST LOGIC ------> */
@@ -240,13 +241,21 @@ class SignupActivity : AppCompatActivity() {
                             }, 1500)
 
                         } catch (e: JSONException) {
-                            Toast.makeText(this@SignupActivity, "Invalid response format: ${e.message}", Toast.LENGTH_SHORT
-                            ).show()
+                            // CURRENT WORKAROUND FOR ERROR, PLEASE CHANGE IT LATER
+
+                            performRegistration()
+
+//                            Toast.makeText(this@SignupActivity, "Invalid response format: ${e.message}", Toast.LENGTH_SHORT
+//                            ).show()
                         }
                     } else {
-                        val errorBody = responseBody ?: ERROR_REGISTER_FAILED
-                        Toast.makeText(this@SignupActivity, "Error: $errorBody", Toast.LENGTH_SHORT)
-                            .show()
+                        // CURRENT WORKAROUND FOR ERROR, PLEASE CHANGE IT LATER
+
+                        performRegistration()
+
+//                        val errorBody = responseBody ?: ERROR_REGISTER_FAILED
+//                        Toast.makeText(this@SignupActivity, "Error: $errorBody", Toast.LENGTH_SHORT)
+//                            .show()
                     }
                 }
             }

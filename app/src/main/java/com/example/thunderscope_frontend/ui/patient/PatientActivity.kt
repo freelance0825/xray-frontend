@@ -12,6 +12,7 @@ import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.ui.createnewtest.CreateNewTestActivity
 import com.example.thunderscope_frontend.ui.createnewtest.CreatePatientInfoActivity
 import com.example.thunderscope_frontend.viewmodel.PatientRecordViewModel
+import com.google.android.material.button.MaterialButton
 
 class PatientActivity : AppCompatActivity() {
 
@@ -21,7 +22,7 @@ class PatientActivity : AppCompatActivity() {
     private lateinit var menuNotStartedCount: TextView
     private lateinit var menuOnProgress: TextView
     private lateinit var menuFinished: TextView
-    private lateinit var addNewPatientButton: Button
+    private lateinit var addNewPatientButton: MaterialButton
     private lateinit var backButton: ImageView
 
     // Patient Record ViewModel (properly initialized)

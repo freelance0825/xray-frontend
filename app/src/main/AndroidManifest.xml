@@ -20,13 +20,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.slidesdetail.SlidesDetailActivity"
-            android:theme="@style/Theme.Thunderscopefrontend.Material3"
+            android:name=".ui.report.ReportActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.slidesdetail.SlidesDetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Thunderscopefrontend.Material3" />
+        <activity
             android:name=".ui.slides.SlidesActivity"
-            android:theme="@style/Theme.Thunderscopefrontend.Material3"
-            android:exported="false" /> <!-- Main Activity - Forced Landscape Mode -->
+            android:exported="false"
+            android:theme="@style/Theme.Thunderscopefrontend.Material3" /> <!-- Main Activity - Forced Landscape Mode -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -41,10 +44,12 @@
         </activity>
         <activity
             android:name=".ui.user.SignupActivity"
-            android:exported="true" /> <!-- Sign Up Activity -->
+            android:exported="true"
+            android:theme="@style/Theme.Thunderscopefrontend.Material3" /> <!-- Sign Up Activity -->
         <activity
             android:name=".ui.patient.PatientListActivity"
-            android:exported="true"/> <!-- Patient List Activity -->
+            android:exported="true"
+            android:theme="@style/Theme.Thunderscopefrontend.Material3" /> <!-- Patient List Activity -->
         <activity
             android:name=".ui.todolist.TodoList"
             android:exported="true" /> <!-- To Do List Activity -->
@@ -56,11 +61,11 @@
             android:exported="true" /> <!-- Create Patient Info Activity -->
         <activity
             android:name=".ui.createnewtest.LoadingPrepareTestActivity"
-            android:exported="true" /><!-- Loading Prepare Test Activity -->
+            android:exported="true" /> <!-- Loading Prepare Test Activity -->
         <activity
             android:name=".ui.patient.PatientActivity"
-            android:exported="true" /><!-- Patient Activity -->
-
+            android:exported="true"
+            android:theme="@style/Theme.Thunderscopefrontend.Material3" /> <!-- Patient Activity -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.thunderscope"
