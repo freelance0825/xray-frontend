@@ -11,7 +11,7 @@ import kotlinx.parcelize.RawValue
 data class SlidesItem(
 
 	@field:SerializedName("main_image")
-	val mainImage: String? = null,
+	var mainImage: String? = null,
 
 	@field:SerializedName("qr_code")
 	val qrCode: String? = null,
@@ -39,6 +39,9 @@ data class SlidesItem(
 
 	@field:SerializedName("clinical_data")
 	val clinicalData: String? = null,
+
+	@field:SerializedName("microscopic_dc")
+	val microscopicDc: String? = null,
 
 	var isActive: Boolean = false,
 	var isCurrentlySelected: Boolean = false,

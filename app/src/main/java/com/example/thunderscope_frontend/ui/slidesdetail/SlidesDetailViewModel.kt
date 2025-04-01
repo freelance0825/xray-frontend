@@ -10,10 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.data.models.AnnotationItem
+import com.example.thunderscope_frontend.data.models.PostTestReviewPayload
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.data.repo.ThunderscopeRepository
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.Shape
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.ShapeType
+import com.example.thunderscope_frontend.ui.utils.Result
+import kotlinx.coroutines.flow.Flow
 import java.io.File
 
 class SlidesDetailViewModel(
@@ -47,6 +50,10 @@ class SlidesDetailViewModel(
     val redAdjust = MutableLiveData(1.0)
     val greenAdjust = MutableLiveData(1.0)
     val blueAdjust = MutableLiveData(1.0)
+
+    fun updateSlide(id: Long, payload: PostTestReviewPayload): Flow<Result<SlidesItem>> {
+        return thunderscopeRepository.updateSlide(id, payload)
+    }
 
     fun updateSelectedSlide(slide: SlidesItem?) {
         currentlySelectedSlides.value = slide

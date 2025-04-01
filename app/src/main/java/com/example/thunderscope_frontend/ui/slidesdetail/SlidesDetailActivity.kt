@@ -10,32 +10,40 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup.LayoutParams
 import android.view.Window
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.createBitmap
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.data.models.Patient
+import com.example.thunderscope_frontend.data.models.PostTestReviewPayload
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.databinding.ActivitySlidesDetailBinding
 import com.example.thunderscope_frontend.ui.report.ReportActivity
+import com.example.thunderscope_frontend.ui.report.ReportActivity.Companion.EXTRA_SLIDE_ID
 import com.example.thunderscope_frontend.ui.slidesdetail.adapters.SavedAnnotationAdapter
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.ShapeType
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.ZoomImageView
+import com.example.thunderscope_frontend.ui.utils.Result
 import com.google.android.material.button.MaterialButton
 import com.skydoves.colorpickerview.ColorEnvelope
 import com.skydoves.colorpickerview.ColorPickerDialog
 import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
+import kotlinx.coroutines.launch
 import org.opencv.android.OpenCVLoader
 import org.opencv.core.Core
 import org.opencv.core.CvType
@@ -47,6 +55,7 @@ import java.io.FileOutputStream
 import java.nio.ByteBuffer
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class SlidesDetailActivity : AppCompatActivity() {
@@ -54,6 +63,10 @@ class SlidesDetailActivity : AppCompatActivity() {
 
     private val slidesDetailViewModel by viewModels<SlidesDetailViewModel> {
         SlidesDetailViewModel.Factory(this)
+    }
+
+    private val caseId by lazy {
+        intent.getLongExtra(EXTRA_CASE_ID, 0)
     }
 
     private val patientData: Patient? by lazy {
@@ -260,12 +273,16 @@ class SlidesDetailActivity : AppCompatActivity() {
                 }
             }
 
-            selectedSegmentationSettings.observe(this@SlidesDetailActivity, ::showSegmentationConfigurationLayout)
+            selectedSegmentationSettings.observe(
+                this@SlidesDetailActivity,
+                ::showSegmentationConfigurationLayout
+            )
 
             patientData?.let { patient ->
                 binding.tvPatientName.text = patient.name
                 binding.tvPatientId.text = patient.id.toString()
-                binding.tvPatientDob.text = StringBuilder("${patient.dateOfBirth} (${patient.age} yo)")
+                binding.tvPatientDob.text =
+                    StringBuilder("${patient.dateOfBirth} (${patient.age} yo)")
                 binding.tvPatientGender.text = patient.gender
             }
         }
@@ -403,7 +420,11 @@ class SlidesDetailActivity : AppCompatActivity() {
                 savedAnnotationAdapter.submitList(slidesDetailViewModel.generateDummyAnnotationItem())
                 adapter = savedAnnotationAdapter
                 layoutManager =
-                    LinearLayoutManager(this@SlidesDetailActivity, LinearLayoutManager.HORIZONTAL, false)
+                    LinearLayoutManager(
+                        this@SlidesDetailActivity,
+                        LinearLayoutManager.HORIZONTAL,
+                        false
+                    )
             }
         }
     }
@@ -513,7 +534,8 @@ class SlidesDetailActivity : AppCompatActivity() {
             resetFilters()
 
             binding.rbViewSettingsOriginal.isChecked = true
-            slidesDetailViewModel.selectedViewSettings.value = SlidesDetailViewModel.SelectedViewSettings.ORIGINAL
+            slidesDetailViewModel.selectedViewSettings.value =
+                SlidesDetailViewModel.SelectedViewSettings.ORIGINAL
             binding.ivBaseImage.clearCanvas()
             binding.ivBaseImage.resetZoomManually()
 
@@ -646,7 +668,10 @@ class SlidesDetailActivity : AppCompatActivity() {
         val btnGetSignature = dialogView.findViewById<LinearLayout>(R.id.btn_get_signature)
         val ivSignature = dialogView.findViewById<ImageView>(R.id.iv_signature)
         val ivGender = dialogView.findViewById<ImageView>(R.id.iv_gender)
-        val layoutPlaceholderSignature = dialogView.findViewById<LinearLayout>(R.id.layout_placeholder_signature)
+        val edMicroscopic = dialogView.findViewById<EditText>(R.id.ed_microscopic_description)
+        val edDiagnosis = dialogView.findViewById<EditText>(R.id.ed_possible_diagnosis)
+        val layoutPlaceholderSignature =
+            dialogView.findViewById<LinearLayout>(R.id.layout_placeholder_signature)
         val layoutSignatureView = dialogView.findViewById<LinearLayout>(R.id.layout_signature_view)
         val btnSubmit = dialogView.findViewById<MaterialButton>(R.id.btn_submit)
 
@@ -654,20 +679,32 @@ class SlidesDetailActivity : AppCompatActivity() {
         val now = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.ENGLISH)
         val timeFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+        val currentFromattedDate = getCurrentFormattedDate()
 
         val currentDate = dateFormat.format(now.time)
         val currentTime = timeFormat.format(now.time)
 
         tvPatientName.text = patientData?.name
-        tvPatientGenderAge.text = StringBuilder("${patientData?.gender} • ${patientData?.age} years old")
+        tvPatientGenderAge.text =
+            StringBuilder("${patientData?.gender} • ${patientData?.age} years old")
         tvDateNow.text = currentDate
         tvTimeNow.text = currentTime
         tvDateTimeCombined.text = StringBuilder("$currentDate • $currentTime")
 
         if (patientData?.gender?.lowercase().equals("female")) {
-            ivGender.setImageDrawable(ContextCompat.getDrawable(this@SlidesDetailActivity, R.drawable.ic_female))
+            ivGender.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this@SlidesDetailActivity,
+                    R.drawable.ic_female
+                )
+            )
         } else {
-            ivGender.setImageDrawable(ContextCompat.getDrawable(this@SlidesDetailActivity, R.drawable.ic_male))
+            ivGender.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this@SlidesDetailActivity,
+                    R.drawable.ic_male
+                )
+            )
         }
 
         slidesDetailViewModel.signatureImageFile.observe(this@SlidesDetailActivity) {
@@ -686,10 +723,58 @@ class SlidesDetailActivity : AppCompatActivity() {
         }
 
         btnSubmit.setOnClickListener {
-            slidesDetailViewModel.signatureImageFile.value = null
-            dialog.dismiss()
+            if (edMicroscopic.text.isNullOrEmpty() || edDiagnosis.text.isNullOrEmpty() || slidesDetailViewModel.signatureImageFile.value == null) {
+                Toast.makeText(
+                    this@SlidesDetailActivity,
+                    "Please fill all fields",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            } else {
+                dialog.dismiss()
 
-//            startActivity(Intent(this@SlidesDetailActivity, ReportActivity::class.java))
+                Log.e("FTEST", "slidesdetail caseID: ${caseId}", )
+
+                val payload = PostTestReviewPayload(
+                    caseRecordId = caseId,
+//                    caseRecordId = slidesDetailViewModel.currentlySelectedSlides.value?.id?.toInt(),
+                    microscopicDc = edMicroscopic.text.toString(),
+                    dateAndTime = currentFromattedDate,
+                    diagnosis = edDiagnosis.text.toString(),
+                    doctorSignature = slidesDetailViewModel.signatureImageFile.value,
+                )
+
+                lifecycleScope.launch {
+                    slidesDetailViewModel.updateSlide(
+                        slidesDetailViewModel.currentlySelectedSlides.value?.id ?: 0L,
+                        payload
+                    ).collect { result ->
+                        when (result) {
+                            is Result.Loading -> {
+
+                            }
+
+                            is Result.Success -> {
+                                Log.e("FTEST", "slidesdetail slidesId: ${slidesDetailViewModel.currentlySelectedSlides.value?.id}", )
+
+                                val iReport =
+                                    Intent(this@SlidesDetailActivity, ReportActivity::class.java)
+                                iReport.putExtra(ReportActivity.EXTRA_PATIENT, patientData)
+                                iReport.putExtra(
+                                    ReportActivity.EXTRA_SLIDE_ID,
+                                    slidesDetailViewModel.currentlySelectedSlides.value?.id
+                                )
+                                finish()
+                                startActivity(iReport)
+                            }
+
+                            is Result.Error -> {
+                                Log.e("FTEST", "openPostTestReviewDialog: ${result.error}")
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         // Open Gallery to Pick Signature
@@ -703,11 +788,19 @@ class SlidesDetailActivity : AppCompatActivity() {
 
         dialog.show()
         val window = dialog.window
-        window?.setLayout((resources.displayMetrics.widthPixels * 0.9).toInt(), LayoutParams.WRAP_CONTENT)
+        window?.setLayout(
+            (resources.displayMetrics.widthPixels * 0.9).toInt(),
+            LayoutParams.WRAP_CONTENT
+        )
     }
 
+    private fun getCurrentFormattedDate(): String {
+        val dateFormat = SimpleDateFormat("MM-dd-yyyy hh:mma", Locale.US)
+        return dateFormat.format(Date())
+    }
 
     companion object {
         const val EXTRA_PATIENT = "extra_patient"
+        const val EXTRA_CASE_ID = "extra_case_id"
     }
 }

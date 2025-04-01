@@ -11,10 +11,13 @@ data class Doctor(
 	val password: String? = null,
 
 	@field:SerializedName("signature")
-	val signature: String? = null,
+	var signature: String? = null,
 
 	@field:SerializedName("name")
 	val name: String? = null,
+
+	@field:SerializedName("specialist")
+	val specialist: String? = null,
 
 	@field:SerializedName("id")
 	val id: Long? = null,

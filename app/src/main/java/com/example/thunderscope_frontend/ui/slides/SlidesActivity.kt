@@ -198,8 +198,11 @@ class SlidesActivity : AppCompatActivity() {
                         patient.dateOfBirth = it.patientBirthdate
                     }
 
+                    Log.e("FTEST", "slides: ${caseRecord?.caseRecordId}", )
+
                     val iDetail = Intent(this@SlidesActivity, SlidesDetailActivity::class.java)
                     iDetail.putExtra(SlidesDetailActivity.EXTRA_PATIENT, patient)
+                    iDetail.putExtra(SlidesDetailActivity.EXTRA_CASE_ID, caseRecord?.caseRecordId?.toLong())
                     startActivity(iDetail)
                 }
             }
