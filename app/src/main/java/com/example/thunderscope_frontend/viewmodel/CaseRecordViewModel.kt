@@ -113,7 +113,8 @@ class CaseRecordViewModel(application: Application) : AndroidViewModel(applicati
                     lastUpdateDate = jsonObject.optString("date", "N/A"),
                     lastUpdateTime = jsonObject.optString("time", "N/A"),
                     status = jsonObject.optString("status", "N/A"),
-                    type = jsonObject.optString("type", "N/A")
+                    type = jsonObject.optString("type", "N/A"),
+                    todo = jsonObject.optString("todo", "N/A"),
                 )
                 caseRecordsList.add(caseRecord)
             }

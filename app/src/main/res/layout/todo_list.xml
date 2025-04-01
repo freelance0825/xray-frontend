@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_gray"
-    tools:context=".ui.todolist.TodoList">
+    tools:context=".ui.todolist.TodoListActivity">
 
     <!-- Header Layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,17 +19,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!-- Back Navigation Button -->
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_back"
+            android:contentDescription="Back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:tint="@android:color/white" />
+
+        <!-- Divider Line before Title -->
+        <View
+            android:id="@+id/title_divider"
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:background="@android:color/white"
+            app:layout_constraintStart_toEndOf="@id/back_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Header Title -->
         <TextView
             android:id="@+id/header_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingStart="20dp"
             android:text="CASES"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/title_divider"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <!-- Status Indicator -->
         <View
@@ -163,7 +188,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <!-- All List -->
+            <!-- All Cases -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -171,27 +196,27 @@
                 android:paddingVertical="8dp">
 
                 <TextView
-                    android:id="@+id/menu_all_list_label"
+                    android:id="@+id/menu_all_cases_label"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="All List"
+                    android:text="All Cases"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/menu_all_list_count"
+                    android:id="@+id/menu_all_cases_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/sidebar_divider"
                     android:gravity="end"
-                    android:text="26"
+                    android:text="27"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Not Started -->
+            <!-- High Priority -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -199,48 +224,75 @@
                 android:paddingVertical="8dp">
 
                 <TextView
-                    android:id="@+id/menu_not_started_label"
+                    android:id="@+id/menu_high_priority_label"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Not Started"
+                    android:text="High Priority"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/menu_not_started_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/sidebar_divider"
-                    android:gravity="end"
-                    android:text="25"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <!-- On Progress -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="8dp">
-
-                <TextView
-                    android:id="@+id/menu_on_progress_label"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="On Progress"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/menu_on_progress_count"
+                    android:id="@+id/menu_high_priority_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/sidebar_divider"
                     android:gravity="end"
                     android:text="0"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- In Preparations -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp">
+
+                <TextView
+                    android:id="@+id/menu_in_preparations_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="In Preparations"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/menu_in_preparations_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/sidebar_divider"
+                    android:gravity="end"
+                    android:text="1"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- For Review -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp">
+
+                <TextView
+                    android:id="@+id/menu_for_review_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="For Review"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/menu_for_review_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/sidebar_divider"
+                    android:gravity="end"
+                    android:text="1"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -257,7 +309,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Finised"
+                    android:text="Finished"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
 
@@ -267,7 +319,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/sidebar_divider"
                     android:gravity="end"
-                    android:text="1"
+                    android:text="0"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -281,7 +333,7 @@
     <!-- Fragment Container for Dynamic Content -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
-        android:name="com.example.thunderscope_frontend.ui.fragments.TodoListFragment"
+        android:name="com.example.thunderscope_frontend.ui.fragments.TodoListActivityFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
@@ -291,7 +343,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/sidebar"
         app:layout_constraintTop_toBottomOf="@id/section_layout"
-        tools:layout="@layout/todo_list_fragment" />
+        tools:layout="@layout/todo_list_activity_fragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

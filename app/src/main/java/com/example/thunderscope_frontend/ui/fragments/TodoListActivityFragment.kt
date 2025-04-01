@@ -17,7 +17,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.ui.slides.SlidesActivity
 import com.example.thunderscope_frontend.ui.utils.Base64Helper
@@ -30,7 +29,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class PatientListTableFragment : Fragment() {
+class TodoListActivityFragment : Fragment() {
 
     // UI Components for Filter Section
     private lateinit var timePeriodFilter: Spinner
@@ -40,6 +39,7 @@ class PatientListTableFragment : Fragment() {
     private lateinit var ageFilter: Spinner
 
     // UI Components for Pagination Section
+    private lateinit var todoCount: TextView
     private lateinit var textPagination: TextView
     private lateinit var btnNextPage: ImageButton
     private lateinit var btnPrevPage: ImageButton
@@ -58,17 +58,19 @@ class PatientListTableFragment : Fragment() {
 
     // Pagination variables
     private var currentPage = 0
-    private val recordsPerPage = 7
+    private val recordsPerPage = 5
     private var totalRecords = 0
     private var caseRecords: List<CaseRecordUI> = emptyList()
     private var filteredRecords: List<CaseRecordUI> = emptyList()
     private var slidesRecords: List<SlidesRecordUI> = emptyList()
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.patient_list_table_fragment, container, false)
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.todo_list_activity_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,7 +83,8 @@ class PatientListTableFragment : Fragment() {
         genderFilter = view.findViewById(R.id.spinnerGender)
         ageFilter = view.findViewById(R.id.spinnerAge)
 
-        // Initialize UI components For Pagination Section
+        // Initialize UI components For Pagination Section + Count
+        todoCount = view.findViewById(R.id.todo_count)
         textPagination = view.findViewById(R.id.textPagination)
         btnNextPage = view.findViewById(R.id.btnNextPage)
         btnPrevPage = view.findViewById(R.id.btnPrevPage)
@@ -268,13 +271,16 @@ class PatientListTableFragment : Fragment() {
     }
 
     private fun updateFilteredTable() {
-        val tableLayout = view?.findViewById<TableLayout>(R.id.tableLayoutHeader) ?: return
+        val tableLayout = view?.findViewById<TableLayout>(R.id.tableTodoLayoutHeader) ?: return
         Log.d("Filter", "Updating table with ${filteredRecords.size} records")
 
         // Clear old rows (keep header)
         if (tableLayout.childCount > 1) {
             tableLayout.removeViews(1, tableLayout.childCount - 1)
         }
+
+        // Update the total case record count in the UI
+        todoCount.text = "$totalRecords"
 
         if (filteredRecords.isEmpty()) {
             textPagination.text = "No records found"
@@ -289,14 +295,14 @@ class PatientListTableFragment : Fragment() {
         for (record in paginatedRecords) {
             val inflater = LayoutInflater.from(requireContext())
             val newRow = inflater.inflate(
-                R.layout.patient_list_table_data_row,
+                R.layout.todolist_activity_data_row,
                 tableLayout,
                 false
             ) as TableRow
 
             newRow.findViewById<TextView>(R.id.caseRecordId).text = record.caseRecordId.toString()
             newRow.findViewById<TextView>(R.id.caseRecordPatientId).text = record.patientId.toString()
-            newRow.findViewById<TextView>(R.id.physicianName).text = record.physicianName
+            newRow.findViewById<TextView>(R.id.todo).text = record.todo
             newRow.findViewById<TextView>(R.id.patientName).text = record.patientName
             newRow.findViewById<TextView>(R.id.patientBirthdate).text = record.patientBirthdate
             newRow.findViewById<TextView>(R.id.patientAge).text = "(${record.patientAge}yo)"
@@ -319,8 +325,6 @@ class PatientListTableFragment : Fragment() {
                     }
                 )
             }
-
-            newRow.findViewById<TextView>(R.id.type).text = record.type.trim()
 
             // Get all slide records matching the current caseRecordId
             val matchingSlideRecords = slidesRecords.filter { it.caseRecordId == record.caseRecordId }
@@ -392,7 +396,6 @@ class PatientListTableFragment : Fragment() {
         btnPrevPage.isEnabled = currentPage > 0
         btnNextPage.isEnabled = end < totalRecords
     }
-
 
     private fun filterByTime(
         recordDate: String,

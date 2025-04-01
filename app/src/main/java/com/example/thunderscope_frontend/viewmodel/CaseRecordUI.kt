@@ -29,4 +29,6 @@ data class CaseRecordUI(
     val status: String,
 
     val type: String,
+
+    val todo: String,
 ): Serializable

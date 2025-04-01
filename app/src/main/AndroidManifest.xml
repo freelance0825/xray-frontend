@@ -51,7 +51,7 @@
             android:exported="true"
             android:theme="@style/Theme.Thunderscopefrontend.Material3" /> <!-- Patient List Activity -->
         <activity
-            android:name=".ui.todolist.TodoList"
+            android:name=".ui.todolist.TodoListActivity"
             android:exported="true" /> <!-- To Do List Activity -->
         <activity
             android:name=".ui.createnewtest.CreateNewTestActivity"
