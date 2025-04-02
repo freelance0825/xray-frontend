@@ -49,7 +49,7 @@ class TodoListActivity : AppCompatActivity() {
             val completedCount = caseList.count { it.status == "Completed" }
 
             // Update UI
-            todoCount.text = totalTodo.toString()
+            todoCount.text = StringBuilder("($totalTodo)")
             menuAllCasesCount.text = totalTodo.toString()
             menuHighPriorityCount.text = highPriorityCount.toString()
             menuInPreparations.text = inPreparationsCount.toString()

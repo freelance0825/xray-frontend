@@ -11,6 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:gravity="center_vertical"
         android:orientation="vertical"
         android:padding="8dp">
 
@@ -18,7 +19,8 @@
             android:id="@+id/caseRecordId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="T121210-EU" />
+            android:text="T121210-EU"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/caseRecordPatientId"
@@ -30,13 +32,18 @@
     </LinearLayout>
 
     <!-- Data: To do -->
-    <TextView
-        android:id="@+id/todo"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="2.7"
-        android:gravity="start"
-        android:padding="10dp"
-        android:text="Examine....." />
+        android:gravity="center_vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/todo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Examine..." />
+    </LinearLayout>
 
     <!-- Data: Patient -->
     <LinearLayout
@@ -66,7 +73,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2.2"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -102,7 +110,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1.5"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/lastUpdateDate"
@@ -124,8 +133,9 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2.5"
-        android:gravity="start"
+        android:gravity="top"
         android:orientation="vertical"
+        android:paddingVertical="4dp"
         android:padding="8dp">
 
         <TextView

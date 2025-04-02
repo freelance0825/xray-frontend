@@ -51,7 +51,7 @@ class PatientActivity : AppCompatActivity() {
             val completedCount = caseList.count { it.patientStatus == "Completed" }
 
             // Update UI
-            allPatientCount.text = totalCases.toString()
+            allPatientCount.text = StringBuilder("($totalCases)")
             menuAllPatientCount.text = totalCases.toString()
             menuNotStartedCount.text = notStartedCount.toString()
             menuOnProgress.text = onProgressCount.toString()
