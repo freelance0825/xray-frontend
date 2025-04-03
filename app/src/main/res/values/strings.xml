@@ -10,6 +10,10 @@
     <!--- Activity Slides Detail Resource -->
     <string name="activity_slides_detail_slides_selected">Slide %1s of %1s</string>
 
+    <!--- Report Detail Resource -->
+    <string name="activity_report_mob_no">Mob. No: (%1s)</string>
+    <string name="activity_report_patient_id">ID: (%1s)</string>
+
     <!--- Spinner Specialist -->
     <string-array name="specialist_options">
         <item>Pathologist</item>
@@ -21,7 +25,6 @@
     <string-array name="gender_options">
         <item>Male</item>
         <item>Female</item>
-        <item>Other</item>
     </string-array>
 
     <!--- Spinner State -->

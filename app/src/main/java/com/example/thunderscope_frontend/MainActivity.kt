@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.os.StrictMode
 import android.text.InputType
 import android.util.Log
 import android.util.Patterns
@@ -45,6 +46,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
+        // POLICY WORKAROUND - Refactor Later with MVVM Architecture
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+
         // Initialize UI components
         emailEditText = findViewById(R.id.etEmail)
         passwordEditText = findViewById(R.id.etPassword)
@@ -56,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         passwordEditText.typeface = Typeface.MONOSPACE
 
         // Toggle password visibility when clicking the button
+        // HANDLE PASSWORD VISIBILITY IN THE XML, NOT ON THE KOTLIN LOGIC
         togglePasswordButton.setOnClickListener { togglePasswordVisibility() }
 
         // Handle login button click

@@ -67,6 +67,7 @@
                 android:gravity="start"
                 android:paddingBottom="24dp"
                 android:text="SIGNUP"
+                android:textColor="@color/black"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
@@ -92,12 +93,15 @@
                         android:layout_height="wrap_content"
                         android:text="Email"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         app:boxBackgroundMode="none"
+                        app:hintEnabled="false"
                         app:startIconDrawable="@drawable/ic_email">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -105,8 +109,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/input_bg"
-                            android:padding="18dp"
-                            android:inputType="textEmailAddress" />
+                            android:hint="Enter email"
+                            android:inputType="textEmailAddress"
+                            android:padding="18dp" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
@@ -123,15 +128,17 @@
                         android:layout_height="wrap_content"
                         android:text="Password"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/passwordInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         app:boxBackgroundMode="none"
                         app:endIconMode="password_toggle"
-
+                        app:hintEnabled="false"
                         app:startIconDrawable="@drawable/ic_lock">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -139,9 +146,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/input_bg"
-                            android:padding="18dp"
-                            android:inputType="textPassword" />
+                            android:hint="Enter your password"
+                            android:inputType="textPassword"
+                            android:padding="18dp" />
                     </com.google.android.material.textfield.TextInputLayout>
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -167,20 +176,24 @@
                         android:layout_height="wrap_content"
                         android:text="Name"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:boxBackgroundMode="none">
+                        android:layout_marginTop="4dp"
+                        app:boxBackgroundMode="none"
+                        app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="18dp"
                             android:background="@drawable/input_bg"
-                            android:inputType="textPersonName" />
+                            android:hint="Enter name"
+                            android:inputType="textPersonName"
+                            android:padding="18dp" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
@@ -197,20 +210,24 @@
                         android:layout_height="wrap_content"
                         android:text="Phone Number"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:boxBackgroundMode="none">
+                        android:layout_marginTop="4dp"
+                        app:boxBackgroundMode="none"
+                        app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etPhoneNumber"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="18dp"
                             android:background="@drawable/input_bg"
-                            android:inputType="phone" />
+                            android:hint="Enter phone number"
+                            android:inputType="phone"
+                            android:padding="18dp" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -236,20 +253,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Specialist"
-                        android:paddingBottom="9dp"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         app:boxBackgroundMode="none">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:background="@drawable/input_bg">
+                            android:background="@drawable/input_bg"
+                            app:hintEnabled="false">
 
                             <!-- Spinner (Dropdown) -->
                             <androidx.appcompat.widget.AppCompatSpinner
@@ -270,10 +288,10 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="16dp"
-                                android:src="@drawable/ic_dropdown"
+                                android:clickable="false"
                                 android:contentDescription="Dropdown icon"
                                 android:focusable="false"
-                                android:clickable="false"/>
+                                android:src="@drawable/ic_dropdown" />
                         </RelativeLayout>
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -292,20 +310,24 @@
                         android:layout_height="wrap_content"
                         android:text="Birthdate"
                         android:textColor="@android:color/black"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:boxBackgroundMode="none">
+                        android:layout_marginTop="4dp"
+                        app:boxBackgroundMode="none"
+                        app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etBirthDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/input_bg"
-                            android:padding="18dp"
-                            android:inputType="none" />
+                            android:hint="MM-DD-YYYY"
+                            android:inputType="none"
+                            android:padding="18dp" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -318,9 +340,10 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:backgroundTint="@color/blue_dark"
-                android:drawableEnd="@drawable/ic_arrow_right"
+                android:drawableEnd="@drawable/ic_drawable_arrow_right"
                 android:gravity="start|center_vertical"
                 android:text="Create Account"
+                android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="14sp" />
 
@@ -339,7 +362,7 @@
                     android:layout_gravity="start|center_vertical"
                     android:layout_marginTop="28dp"
                     android:layout_marginBottom="30dp"
-                    android:text="Have Account: "
+                    android:text="Have Account?"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -348,12 +371,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start|center_vertical"
-                    android:layout_marginStart="1dp"
+                    android:layout_marginStart="6dp"
                     android:layout_marginTop="28dp"
                     android:layout_marginBottom="30dp"
-                    android:text="Login"
+                    android:text="Login Now"
                     android:textColor="@color/blue"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 

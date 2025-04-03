@@ -63,7 +63,8 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
 
     private fun saveAnnotation() {
         val shape = selectedShape ?: return
-        val edAnnotationName = annotationCreateView?.findViewById<EditText>(R.id.ed_annotation_name) ?: return
+        val edAnnotationName =
+            annotationCreateView?.findViewById<EditText>(R.id.ed_annotation_name) ?: return
         val labelName = edAnnotationName.text.toString()
 
         if (labelName.isNotEmpty()) {
@@ -91,7 +92,6 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         annotationCreateView?.visibility = View.GONE
         clearLastDrawing()
     }
-
 
 
     private val textPaint = Paint()
@@ -322,6 +322,26 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         updateMatrix(drawMatrix)
     }
 
+    fun setZoom(scale: Float) {
+        val drawable = drawable ?: return
+        val intrinsicHeight = drawable.intrinsicHeight.toFloat()
+        val viewHeight = height.toFloat()
+
+        // Pastikan kita zoom ke bagian atas gambar
+        val x = width / 2f  // Zoom tetap di tengah horizontal
+        val y = (viewHeight / intrinsicHeight) * 0f  // Atas gambar
+
+        zoomMatrix.postScale(scale, scale, x, y)
+
+        lastScale = scale
+        lastX = x
+        lastY = y
+
+        setBounds()
+        updateMatrix(drawMatrix)
+    }
+
+
     private fun updateMatrix(drawMatrix: Matrix) {
         logText = "tX: $currentTransX tY: $currentTransY"
         logText += " Scale: $currentScale"
@@ -448,7 +468,12 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         }
     }
 
-    private fun drawAnnotationLabel(canvas: Canvas, label: String, overlayX: Float, overlayY: Float) {
+    private fun drawAnnotationLabel(
+        canvas: Canvas,
+        label: String,
+        overlayX: Float,
+        overlayY: Float
+    ) {
         val cornerRadius = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP, 8f, resources.displayMetrics
         )
@@ -507,7 +532,12 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         canvas.drawText("Label", textStartX, textCenterY, textPaintLabel)
 
         // Draw annotation text (below "Label")
-        canvas.drawText(label, textStartX, textCenterY + labelHeight + textMargin, textPaintAnnotation)
+        canvas.drawText(
+            label,
+            textStartX,
+            textCenterY + labelHeight + textMargin,
+            textPaintAnnotation
+        )
     }
 
     fun enableDrawing(enable: Boolean) {

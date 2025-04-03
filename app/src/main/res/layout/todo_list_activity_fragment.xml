@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".ui.fragments.TodoListFragment">
+    tools:context=".ui.fragments.TodoListActivityFragment">
 
     <!-- Filter Section -->
     <androidx.cardview.widget.CardView
@@ -22,9 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:weightSum="6">
+            android:orientation="horizontal">
 
             <!-- Time Period -->
             <LinearLayout
@@ -38,139 +36,132 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Time period"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
+                    android:textColor="@android:color/darker_gray" />
 
                 <Spinner
                     android:id="@+id/spinnerTimePeriod"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:paddingVertical="8dp" />
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
             <!-- Divider -->
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@android:color/darker_gray" />
+                android:background="@color/gray_opacity_70" />
 
             <!-- Status -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
+                android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp">
+                android:padding="8dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:text="Status"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
+                    android:textColor="@android:color/darker_gray"/>
 
                 <Spinner
                     android:id="@+id/spinnerStatus"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:paddingVertical="8dp" />
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
             <!-- Divider -->
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@android:color/darker_gray" />
+                android:background="@color/gray_opacity_70" />
 
             <!-- Type -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
+                android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp">
+                android:padding="8dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:text="Type"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
+                    android:textColor="@android:color/darker_gray"/>
 
                 <Spinner
                     android:id="@+id/spinnerType"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:paddingVertical="8dp" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <!-- Divider -->
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@android:color/darker_gray" />
+                android:background="@color/gray_opacity_70" />
 
             <!-- Gender -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
+                android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp">
+                android:padding="8dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:text="Gender"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
+                    android:textColor="@android:color/darker_gray" />
 
                 <Spinner
                     android:id="@+id/spinnerGender"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:paddingVertical="8dp" />
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
             <!-- Divider -->
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@android:color/darker_gray" />
+                android:background="@color/gray_opacity_70" />
 
             <!-- Age (Now has spacing) -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
+                android:layout_weight="1"
                 android:orientation="vertical"
                 android:paddingStart="8dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:text="Age"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
+                    android:textColor="@android:color/darker_gray" />
 
                 <Spinner
                     android:id="@+id/spinnerAge"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:paddingVertical="8dp" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <View
+        android:id="@+id/filter_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_opacity_70"
+        app:layout_constraintTop_toBottomOf="@id/filterSection" />
 
     <!-- Second Section (Text + Pagination) -->
     <androidx.cardview.widget.CardView
@@ -180,7 +171,7 @@
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/filterSection">
+        app:layout_constraintTop_toBottomOf="@id/filter_divider">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -202,10 +193,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="12dp"
                     android:text="26"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <!-- "To Do List" Text -->
                 <TextView
@@ -213,10 +203,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:layout_marginTop="12dp"
                     android:text="To Do List"
                     android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -228,10 +217,11 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/txtPagination"
+                    android:id="@+id/textPagination"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:textStyle="bold"
                     android:padding="8dp"
                     android:text="1-10 of 20"
                     android:textColor="@android:color/black"
@@ -264,6 +254,7 @@
 
     <!-- Table Section -->
     <TableLayout
+        android:id="@+id/tableTodoLayoutHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -282,7 +273,7 @@
             <!-- Header: Case -->
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1.5"
+                android:layout_weight="1"
                 android:gravity="start"
                 android:padding="8dp"
                 android:text="Case"
@@ -291,7 +282,7 @@
             <!-- Header: To do -->
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="2.5"
+                android:layout_weight="2.7"
                 android:gravity="start"
                 android:padding="10dp"
                 android:text="To Do"
@@ -300,7 +291,7 @@
             <!-- Header: Patient -->
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1.5"
+                android:layout_weight="1.6"
                 android:gravity="start"
                 android:padding="8dp"
                 android:text="Patient"
@@ -318,7 +309,7 @@
             <!-- Header: Last Update -->
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1.8"
+                android:layout_weight="1.5"
                 android:gravity="start"
                 android:padding="8dp"
                 android:text="Last Update"
@@ -342,140 +333,6 @@
                 android:padding="8dp"
                 android:text="Assessments"
                 android:textStyle="bold" />
-        </TableRow>
-
-        <!-- Table Data Row -->
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:minHeight="48dp"
-            android:paddingBottom="8dp">
-
-            <!-- Data: Case -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="T121210-EU" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="P-9890200"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <!-- Data: To do -->
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="2.5"
-                android:gravity="start"
-                android:padding="10dp"
-                android:text="Examine prepared slides under the microscope at various magnifications" />
-
-            <!-- Data: Patient -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cedar Pete" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="P-9890200"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <!-- Data: Birthdate & Gender -->
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="2.2"
-                android:gravity="start"
-                android:padding="8dp"
-                android:text="24 Nov, 1990 (26yo)\nMale" />
-
-            <!-- Data: Last Update -->
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1.8"
-                android:gravity="start"
-                android:padding="8dp"
-                android:text="10 Nov, 2024\n10:00 AM" />
-
-            <!-- Data: Status -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2.5"
-                android:gravity="start"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <TextView
-                    android:layout_width="135dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_status_completed"
-                    android:gravity="center"
-                    android:padding="4dp"
-                    android:text="COMPLETED"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-
-            <!-- Data: Assessments -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:gravity="start"
-                android:orientation="horizontal"
-                android:paddingEnd="12dp">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="4dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/sample_image1" />
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="4dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/sample_image2" />
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="15dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/sample_image3" />
-
-                <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="40dp"
-                    android:background="@color/light_gray"
-                    android:gravity="center"
-                    android:text="+2"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-            </LinearLayout>
         </TableRow>
 
         <!-- Divider Line -->

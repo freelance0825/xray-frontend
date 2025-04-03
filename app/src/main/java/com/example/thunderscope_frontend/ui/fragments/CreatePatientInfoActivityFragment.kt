@@ -8,6 +8,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.StrictMode
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +25,12 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.thunderscope_frontend.R
+import com.example.thunderscope_frontend.data.models.Patient
+import com.example.thunderscope_frontend.ui.createnewtest.CreateNewTestActivity
+import com.example.thunderscope_frontend.ui.createnewtest.CreateNewTestViewModel
 import com.example.thunderscope_frontend.ui.createnewtest.LoadingPrepareTestActivity
+import com.example.thunderscope_frontend.ui.slidesdetail.SlidesDetailActivity
+import com.example.thunderscope_frontend.viewmodel.CaseRecordUI
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -55,6 +62,8 @@ class CreatePatientInfoActivityFragment : Fragment() {
 
     private val client = OkHttpClient()
 
+    private var viewModel: CreateNewTestViewModel? = null
+
     // Image Picker Launcher
     private val pickImageLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -79,6 +88,12 @@ class CreatePatientInfoActivityFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // POLICY WORKAROUND - Refactor Later with MVVM Architecture
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+
+        viewModel = (requireActivity() as CreateNewTestActivity).viewModel
 
         // Initialize UI components
         imgProfile = view.findViewById(R.id.imgProfile)
@@ -214,6 +229,14 @@ class CreatePatientInfoActivityFragment : Fragment() {
             return
         }
 
+        val patient = Patient()
+
+        patient.id = 1990
+        patient.age = age.text.toString()
+        patient.name = editPatientName.text.toString()
+        patient.gender = spinnerGender.selectedItem.toString()
+        patient.dateOfBirth = birthDate.text.toString()
+
         val requestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
             .addFormDataPart("name", editPatientName.text.toString())
             .addFormDataPart("address", address.text.toString())
@@ -251,21 +274,32 @@ class CreatePatientInfoActivityFragment : Fragment() {
             override fun onResponse(call: Call, response: Response) {
                 requireActivity().runOnUiThread {
                     if (response.isSuccessful) {
-                        Toast.makeText(requireContext(), "Patient record is added successfully",
-                            Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(), "Patient record is added successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        viewModel?.generateDummySlidesToDatabaseForMVPPurpose()
 
                         // Delay the navigation slightly for better UX
                         Handler(Looper.getMainLooper()).postDelayed({
-                            startActivity(
-                                Intent(requireContext(), LoadingPrepareTestActivity::class.java)
-                            )
-                        }, 1000L) // 1 second delay
+                            requireActivity().finish()
+                            val iDetail =
+                                Intent(requireActivity(), SlidesDetailActivity::class.java)
+                            iDetail.putExtra(SlidesDetailActivity.EXTRA_PATIENT, patient)
+                            startActivity(iDetail)
+                        }, 100L) // 1 second delay
 
                     } else {
-                        Toast.makeText(
-                            requireContext(),
-                            String.format(Locale.getDefault(), "Error: %s", response.message),
-                            Toast.LENGTH_SHORT).show()
+
+                        sendPatientData()
+//                        Log.e("FTEST", "onResponse: ${response.message}", )
+//                        Log.e("FTEST", "onResponse: ${response}", )
+//                        Toast.makeText(
+//                            requireContext(),
+//                            String.format(Locale.getDefault(), "Error: %s", response.message),
+//                            Toast.LENGTH_SHORT
+//                        ).show()
                     }
                 }
             }

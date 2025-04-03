@@ -9,18 +9,22 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.ui.slides.SlidesActivity
+import com.example.thunderscope_frontend.ui.utils.Base64Helper
 import com.example.thunderscope_frontend.viewmodel.CaseRecordUI
 import com.example.thunderscope_frontend.viewmodel.CaseRecordViewModel
+import com.example.thunderscope_frontend.viewmodel.SlidesRecordUI
+import com.example.thunderscope_frontend.viewmodel.SlidesRecordViewModel
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -40,8 +44,17 @@ class PatientListTableFragment : Fragment() {
     private lateinit var btnNextPage: ImageButton
     private lateinit var btnPrevPage: ImageButton
 
+    // UI Components for Assessment Images & Count
+    private lateinit var assessmentImage1: ImageView
+    private lateinit var assessmentImage2: ImageView
+    private lateinit var assessmentImage3: ImageView
+    private lateinit var assessmentImageCount: TextView
+
     // Case Record View Model
     private lateinit var caseRecordViewModel: CaseRecordViewModel
+
+    // Slide Record View Model
+    private lateinit var slidesRecordViewModel: SlidesRecordViewModel
 
     // Pagination variables
     private var currentPage = 0
@@ -49,6 +62,7 @@ class PatientListTableFragment : Fragment() {
     private var totalRecords = 0
     private var caseRecords: List<CaseRecordUI> = emptyList()
     private var filteredRecords: List<CaseRecordUI> = emptyList()
+    private var slidesRecords: List<SlidesRecordUI> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,11 +86,17 @@ class PatientListTableFragment : Fragment() {
         btnNextPage = view.findViewById(R.id.btnNextPage)
         btnPrevPage = view.findViewById(R.id.btnPrevPage)
 
-        // Initialize ViewModel Manually
-        caseRecordViewModel =
-            ViewModelProvider(requireActivity()).get(CaseRecordViewModel::class.java)
+        // Initialize UI components for Assessment Images & Count
+        assessmentImage1 = view.findViewById(R.id.assessmentImage1)
+        assessmentImage2 = view.findViewById(R.id.assessmentImage2)
+        assessmentImage3 = view.findViewById(R.id.assessmentImage3)
+        assessmentImageCount = view.findViewById(R.id.assessmentImageCount)
 
-        // Observe case records data
+        // Initialize ViewModels at the start
+        caseRecordViewModel = ViewModelProvider(requireActivity()).get(CaseRecordViewModel::class.java)
+        slidesRecordViewModel = ViewModelProvider(requireActivity()).get(SlidesRecordViewModel::class.java)
+
+        // Observe case records
         caseRecordViewModel.caseRecordsLiveData.observe(viewLifecycleOwner) { records ->
             if (records.isNullOrEmpty()) {
                 Log.d("FilterDebug", "No case records available. Skipping filter.")
@@ -84,19 +104,32 @@ class PatientListTableFragment : Fragment() {
             }
 
             Log.d("FilterDebug", "Case records loaded: ${records.size}")
+            caseRecords = records
+            applyFilters()
 
-            caseRecords = records // Only set non-null data
-            applyFilters() //Apply filters only if records exist
+            // Fetch slides for each caseRecordId
+            caseRecords.forEach { record ->
+                Log.d("SlidesDebug", "Fetching slides for caseRecordId: ${record.caseRecordId}")
+                slidesRecordViewModel.fetchSlidesRecords(record.caseRecordId)
+            }
         }
 
+        // Observe slides records
+        slidesRecordViewModel.slidesRecordsLiveData.observe(viewLifecycleOwner) { slides ->
+            if (slides.isNullOrEmpty()) {
+                Log.d("SlidesDebug", "No slides available.")
+                return@observe
+            }
+
+            Log.d("SlidesDebug", "Slides loaded: ${slides.size}")
+            slidesRecords = slides
+            updateFilteredTable() // Refresh the table to show slides
+        }
 
         // Observe error messages
-        caseRecordViewModel.errorLiveData.observe(viewLifecycleOwner, Observer { errorMessage ->
+        caseRecordViewModel.errorLiveData.observe(viewLifecycleOwner) { errorMessage ->
             Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_LONG).show()
-        })
-
-        // Fetch case records when the fragment is created
-        caseRecordViewModel.fetchCaseRecords()
+        }
 
         // Pagination button listeners
         btnNextPage.setOnClickListener {
@@ -135,36 +168,31 @@ class PatientListTableFragment : Fragment() {
 
         // Time Period Spinner Setup
         val timePeriodOptions = resources.getStringArray(R.array.time_period_options)
-        val timePeriodAdapter =
-            ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, timePeriodOptions)
+        val timePeriodAdapter = ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, timePeriodOptions)
         timePeriodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         timePeriodFilter.adapter = timePeriodAdapter
 
         // Case Record Status Spinner Setup
         val statusOptions = resources.getStringArray(R.array.case_record_status_options)
-        val statusAdapter =
-            ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, statusOptions)
+        val statusAdapter = ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, statusOptions)
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         statusFilter.adapter = statusAdapter
 
         // Type Spinner Setup
         val typeOptions = resources.getStringArray(R.array.type_options)
-        val typeAdapter =
-            ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, typeOptions)
+        val typeAdapter = ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, typeOptions)
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         typeFilter.adapter = typeAdapter
 
         // Gender Spinner Setup
         val genderOptions = resources.getStringArray(R.array.gender_filter_options)
-        val genderAdapter =
-            ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, genderOptions)
+        val genderAdapter = ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, genderOptions)
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         genderFilter.adapter = genderAdapter
 
         // Age Spinner Setup
         val ageOptions = resources.getStringArray(R.array.age_options)
-        val ageAdapter =
-            ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, ageOptions)
+        val ageAdapter = ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, ageOptions)
         ageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         ageFilter.adapter = ageAdapter
 
@@ -176,13 +204,10 @@ class PatientListTableFragment : Fragment() {
             return // Avoid applying filters on empty data
         }
 
-        val selectedStatus =
-            statusFilter.selectedItem?.toString()?.trim()?.lowercase() ?: "all status"
-        val selectedTimePeriod =
-            timePeriodFilter.selectedItem?.toString()?.trim()?.lowercase() ?: "all time"
+        val selectedStatus = statusFilter.selectedItem?.toString()?.trim()?.lowercase() ?: "all status"
+        val selectedTimePeriod = timePeriodFilter.selectedItem?.toString()?.trim()?.lowercase() ?: "all time"
         val selectedType = typeFilter.selectedItem?.toString()?.trim()?.lowercase() ?: "all type"
-        val selectedGender =
-            genderFilter.selectedItem?.toString()?.trim()?.lowercase() ?: "all gender"
+        val selectedGender = genderFilter.selectedItem?.toString()?.trim()?.lowercase() ?: "all gender"
         val selectedAge = ageFilter.selectedItem?.toString()?.trim()?.lowercase() ?: "all age"
 
         filteredRecords = caseRecords.filter { record ->
@@ -242,7 +267,6 @@ class PatientListTableFragment : Fragment() {
         updateFilteredTable()
     }
 
-
     private fun updateFilteredTable() {
         val tableLayout = view?.findViewById<TableLayout>(R.id.tableLayoutHeader) ?: return
         Log.d("Filter", "Updating table with ${filteredRecords.size} records")
@@ -270,57 +294,105 @@ class PatientListTableFragment : Fragment() {
                 false
             ) as TableRow
 
-            // Bind data to views
             newRow.findViewById<TextView>(R.id.caseRecordId).text = record.caseRecordId.toString()
-            newRow.findViewById<TextView>(R.id.caseRecordPatientId).text =
-                record.patientId.toString()
+            newRow.findViewById<TextView>(R.id.caseRecordPatientId).text = record.patientId.toString()
             newRow.findViewById<TextView>(R.id.physicianName).text = record.physicianName
             newRow.findViewById<TextView>(R.id.patientName).text = record.patientName
-            newRow.findViewById<TextView>(R.id.patientId).text = record.patientId.toString()
             newRow.findViewById<TextView>(R.id.patientBirthdate).text = record.patientBirthdate
-            newRow.findViewById<TextView>(R.id.patientAge).text = "(${record.patientAge})"
+            newRow.findViewById<TextView>(R.id.patientAge).text = "(${record.patientAge}yo)"
             newRow.findViewById<TextView>(R.id.patientGender).text = record.patientGender
             newRow.findViewById<TextView>(R.id.lastUpdateDate).text = record.lastUpdateDate
             newRow.findViewById<TextView>(R.id.lastUpdateTime).text = record.lastUpdateTime
 
             newRow.findViewById<TextView>(R.id.status).apply {
-                text = record.status.uppercase() // Display in uppercase
-
-                // Change background based on status (case-insensitive)
+                text = record.status.uppercase()
                 background = when (record.status.lowercase().trim()) {
                     "completed" -> resources.getDrawable(R.drawable.bg_status_completed, null)
                     "for review" -> resources.getDrawable(R.drawable.bg_status_for_review, null)
                     else -> resources.getDrawable(R.drawable.bg_status_default, null)
                 }
-
-                // Change text color based on status
                 setTextColor(
                     when (record.status.lowercase().trim()) {
                         "completed" -> resources.getColor(R.color.white, null)
-                        else -> resources.getColor(R.color.blue, null)
+                        "for review" -> resources.getColor(R.color.blue_text, null)
+                        else -> resources.getColor(R.color.blue_text, null)
                     }
                 )
             }
 
-            newRow.findViewById<TextView>(R.id.type).apply {
-                text = record.type.replace(" & ", "\n") // Force line break
-                isSingleLine = false
-                maxLines = 2
+            newRow.findViewById<TextView>(R.id.type).text = record.type.trim()
+
+            // Get all slide records matching the current caseRecordId
+            val matchingSlideRecords = slidesRecords.filter { it.caseRecordId == record.caseRecordId }
+
+            // Extract all image URLs from the matching records
+            val slideImages = matchingSlideRecords
+                .flatMap { it.mainImage.split(",") } // Split each record's mainImage by comma
+                .map { it.trim() }                   // Trim spaces
+                .filter { it.isNotEmpty() }          // Remove empty strings
+
+            Log.d("SlidesDebug", "CaseRecordId: ${record.caseRecordId}, Found ${matchingSlideRecords.size} records")
+            Log.d("SlidesDebug", "Extracted Images: $slideImages")
+
+            // Image views
+            val image1 = newRow.findViewById<ImageView>(R.id.assessmentImage1)
+            val image2 = newRow.findViewById<ImageView>(R.id.assessmentImage2)
+            val image3 = newRow.findViewById<ImageView>(R.id.assessmentImage3)
+            val imageCountText = newRow.findViewById<TextView>(R.id.assessmentImageCount)
+
+            // Always reset images before loading new ones
+            image1.setImageResource(R.drawable.placeholder_image)
+            image2.setImageResource(R.drawable.placeholder_image)
+            image3.setImageResource(R.drawable.placeholder_image)
+
+            // Load images properly if available
+            if (slideImages.isNotEmpty()) {
+                Log.e("FTEST", "updateFilteredTable: ${slideImages.getOrNull(0)}", )
+
+                slideImages.getOrNull(0)?.let {
+                    image1.setImageBitmap(Base64Helper.convertToBitmap(it))
+                }
+
+                slideImages.getOrNull(1)?.let {
+                    image2.setImageBitmap(Base64Helper.convertToBitmap(it))
+                }
+
+                slideImages.getOrNull(2)?.let {
+                    image3.setImageBitmap(Base64Helper.convertToBitmap(it))
+                }
             }
 
-            newRow.setOnClickListener {
+            //Show extra image count
+            imageCountText.text = when {
+                slideImages.isEmpty() -> "0" // No images
+                slideImages.size <= 3 -> slideImages.size.toString() // Show total if 3 or less
+                else -> "+${slideImages.size - 3}" // Show "+extra count" if more than 3
+            }
+            Log.d("ImageDebug", "Total images: ${slideImages.size}")
+            Log.d("ImageDebug", "imageCountText: ${imageCountText.text}")
+
+            // Click Listener to Open SlidesActivity.kt
+            val openSlidesActivity = View.OnClickListener {
                 val intent = Intent(requireContext(), SlidesActivity::class.java)
-                intent.putExtra(SlidesActivity.EXTRA_CASE_RECORD, record)
+                intent.putExtra(SlidesActivity.EXTRA_CASE_RECORD, record) // Pass the case record ID
                 startActivity(intent)
             }
+
+            // Set click listeners for all images and count
+            image1.setOnClickListener(openSlidesActivity)
+            image2.setOnClickListener(openSlidesActivity)
+            image3.setOnClickListener(openSlidesActivity)
+            imageCountText.setOnClickListener(openSlidesActivity)
 
             tableLayout.addView(newRow)
         }
 
+        // Update pagination text and button states
         textPagination.text = "${start + 1}-$end of $totalRecords"
         btnPrevPage.isEnabled = currentPage > 0
         btnNextPage.isEnabled = end < totalRecords
     }
+
 
     private fun filterByTime(
         recordDate: String,

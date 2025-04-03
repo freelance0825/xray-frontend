@@ -105,20 +105,22 @@ class CaseRecordViewModel(application: Application) : AndroidViewModel(applicati
                     physicianName = doctor.optString("name", "N/A"),
                     patientName = patient.optString("name", "N/A"),
                     patientId = patient.optInt("id", -1),  // Ensure ID is not null (-1 as fallback)
-                    patientImage = patient.optString("imageBase64", "N/A"), // Dont Use Snake Case, Otherwise It Will Be Null
-                    patientPhoneNumber = patient.optString("phoneNumber", "N/A"), // Dont Use Snake Case, Otherwise It Will Be Null
-                    patientBirthdate = patient.optString("dateOfBirth", "N/A"), // Dont Use Snake Case, Otherwise It Will Be Null
+                    patientImage = patient.optString("image_base64", "N/A"),
+                    patientPhoneNumber = patient.optString("phone_number", "N/A"),
+                    patientBirthdate = patient.optString("date_of_birth", "N/A"),
                     patientAge = patient.optString("age", "N/A"),
                     patientGender = patient.optString("gender", "N/A"),
                     lastUpdateDate = jsonObject.optString("date", "N/A"),
                     lastUpdateTime = jsonObject.optString("time", "N/A"),
                     status = jsonObject.optString("status", "N/A"),
-                    type = jsonObject.optString("type", "N/A")
+                    type = jsonObject.optString("type", "N/A"),
+                    todo = jsonObject.optString("todo", "N/A"),
                 )
                 caseRecordsList.add(caseRecord)
             }
         }
-        return caseRecordsList
+        // Sort the list by time in descending order before returning
+        return caseRecordsList.sortedByDescending { it.lastUpdateTime }
     }
 
     // Function to post error messages to errorLiveData

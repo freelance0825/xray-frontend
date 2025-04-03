@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@drawable/bg_rounded_dialog"
+    android:backgroundTint="@color/white"
     tools:context=".ui.fragments.PatientListTableFragment">
 
     <!-- Filter Section -->
@@ -22,68 +23,61 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:weightSum="6">
+            android:orientation="horizontal">
 
             <!-- Time Period -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.2"
+                android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingEnd="8dp">
+                android:padding="8dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:text="Time period"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
+                    android:textColor="@android:color/darker_gray" />
 
                 <Spinner
                     android:id="@+id/spinnerTimePeriod"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:paddingVertical="8dp" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <!-- Divider -->
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@android:color/darker_gray" />
+                android:background="@color/gray_opacity_70" />
 
             <!-- Status -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.2"
+                android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp">
+                android:padding="8dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:text="Status"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
+                    android:textColor="@android:color/darker_gray" />
 
                 <Spinner
                     android:id="@+id/spinnerStatus"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:paddingVertical="8dp" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <!-- Divider -->
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@android:color/darker_gray" />
+                android:background="@color/gray_opacity_70" />
 
             <!-- Type -->
             <LinearLayout
@@ -91,29 +85,26 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp">
+                android:padding="8dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:text="Type"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
+                    android:textColor="@android:color/darker_gray" />
 
                 <Spinner
                     android:id="@+id/spinnerType"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:paddingVertical="8dp" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <!-- Divider -->
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@android:color/darker_gray" />
+                android:background="@color/gray_opacity_70" />
 
             <!-- Gender -->
             <LinearLayout
@@ -121,56 +112,58 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp">
+                android:padding="8dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:text="Gender"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
+                    android:textColor="@android:color/darker_gray" />
 
                 <Spinner
                     android:id="@+id/spinnerGender"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:paddingVertical="8dp" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <!-- Divider -->
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@android:color/darker_gray" />
+                android:background="@color/gray_opacity_70" />
 
             <!-- Age (Now has spacing) -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.2"
+                android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingStart="8dp">
+                android:padding="8dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:text="Age"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp" />
+                    android:textColor="@android:color/darker_gray" />
 
                 <Spinner
                     android:id="@+id/spinnerAge"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:paddingVertical="8dp" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <View
+        android:id="@+id/filter_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_opacity_70"
+        app:layout_constraintTop_toBottomOf="@id/filterSection" />
 
     <!-- Second Section (Buttons + Pagination) -->
     <androidx.cardview.widget.CardView
@@ -180,7 +173,7 @@
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/filterSection">
+        app:layout_constraintTop_toBottomOf="@id/filter_divider">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -196,37 +189,37 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnOpenViewer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/header_blue"
                     android:drawableLeft="@drawable/ic_viewer"
-                    android:padding="8dp"
                     android:text="Open in viewer"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    app:cornerRadius="4dp" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnApplyTags"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:backgroundTint="@color/header_blue"
                     android:drawableLeft="@drawable/ic_tags"
-                    android:padding="8dp"
                     android:text="Apply tags"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    app:cornerRadius="4dp" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnExport"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:backgroundTint="@color/header_blue"
                     android:drawableLeft="@drawable/ic_export"
-                    android:padding="8dp"
                     android:text="Export"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"
+                    app:cornerRadius="4dp" />
             </LinearLayout>
 
             <!-- Right Section (Pagination) -->
@@ -244,7 +237,8 @@
                     android:padding="8dp"
                     android:text="1-10 of 20"
                     android:textColor="@android:color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <ImageButton
                     android:id="@+id/btnPrevPage"
@@ -351,6 +345,6 @@
                 android:layout_weight="3"
                 android:text="Assessments"
                 android:textStyle="bold" />
-    </TableRow>
+        </TableRow>
     </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,11 +30,12 @@ import com.example.thunderscope_frontend.viewmodel.PatientRecordViewModel
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
-import org.json.JSONObject
 import java.io.IOException
 import java.util.Calendar
 
@@ -57,6 +59,7 @@ class EditPatientDialogFragment : DialogFragment() {
 
     private var selectedImageUri: Uri? = null
     private var patientId: String? = null
+    private var currentPatient: PatientRecordUI? = null // Store the patient object
     private val client = OkHttpClient()
 
     companion object {
@@ -97,6 +100,7 @@ class EditPatientDialogFragment : DialogFragment() {
 
         // Retrieve patientId from arguments
         patientId = arguments?.getString(ARG_PATIENT_ID)
+        Log.d("EditPatient", "Patient ID: $patientId")
 
         // Initialize UI components
         imgProfile = view.findViewById(R.id.imgProfile)
@@ -112,9 +116,6 @@ class EditPatientDialogFragment : DialogFragment() {
         btnSubmit = view.findViewById(R.id.btnSubmit)
         closeButton = view.findViewById(R.id.btnClose)
 
-        // Retrieve patientId from arguments
-        patientId = arguments?.getString(ARG_PATIENT_ID)
-
         // Initialize ViewModel
         patientRecordViewModel =
             ViewModelProvider(requireActivity()).get(PatientRecordViewModel::class.java)
@@ -127,6 +128,7 @@ class EditPatientDialogFragment : DialogFragment() {
             val patient = records.find { it.patientId == patientId?.toIntOrNull() }
 
             if (patient != null) {
+                currentPatient = patient // Store the patient object
                 populateFields(patient)
             } else {
                 Toast.makeText(requireContext(), "Patient not found", Toast.LENGTH_SHORT).show()
@@ -161,7 +163,6 @@ class EditPatientDialogFragment : DialogFragment() {
         birthDate.setOnClickListener { showDatePicker() }
         btnSubmit.setOnClickListener { updatePatientData() }
     }
-
 
     // Populate UI Fields
     private fun populateFields(patient: PatientRecordUI) {
@@ -229,51 +230,61 @@ class EditPatientDialogFragment : DialogFragment() {
 
     // Update Patient Data
     private fun updatePatientData() {
-        val sharedPreferences =
-            requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val sharedPreferences = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("token", "") ?: ""
-
-        if (selectedImageUri == null) {
-            Toast.makeText(requireContext(), "Please select an image", Toast.LENGTH_SHORT).show()
+        if (token.isEmpty()) {
+            Toast.makeText(requireContext(), "Token is missing", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val imageBase64 = getImageBase64(selectedImageUri!!)
-        if (imageBase64 == null) {
-            Toast.makeText(requireContext(), "Failed to process image", Toast.LENGTH_SHORT).show()
+        if (patientId == null) {
+            Toast.makeText(requireContext(), "Patient ID is missing", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Create JSON object
-        val jsonObject = JSONObject().apply {
-            put("name", editPatientName.text.toString())
-            put("address", address.text.toString())
-            put("gender", spinnerGender.selectedItem.toString())
-            put("email", email.text.toString())
-            put("state", spinnerState.selectedItem.toString())
-            put("age", age.text.toString())
-            put("dob", birthDate.text.toString())
-            put("phoneNumber", phoneNumber.text.toString())
-            put("image_base64", imageBase64) // Send image as Base64 string
+        var imageRequestBody: RequestBody? = null
+
+        if (selectedImageUri != null) {
+            // Only process the image if the user selects a new one.
+            imageRequestBody = getImageRequestBody(selectedImageUri!!)
+            if (imageRequestBody == null) {
+                Toast.makeText(requireContext(), "Failed to process image", Toast.LENGTH_SHORT).show()
+                return
+            }
+        } else {
+            // If the image was not updated, use the existing patient's image
+            val imageBase64 = currentPatient?.patientImage // Use the stored patient object here
+            if (imageBase64 != null) {
+                val decodedImage = Base64.decode(imageBase64, Base64.DEFAULT)
+                imageRequestBody = decodedImage.toRequestBody("image/*".toMediaTypeOrNull())
+            }
         }
 
-        val requestBody = jsonObject.toString().toRequestBody("application/json".toMediaTypeOrNull())
+        val requestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+            .addFormDataPart("name", editPatientName.text.toString())
+            .addFormDataPart("address", address.text.toString())
+            .addFormDataPart("gender", spinnerGender.selectedItem.toString())
+            .addFormDataPart("email", email.text.toString())
+            .addFormDataPart("state", spinnerState.selectedItem.toString())
+            .addFormDataPart("age", age.text.toString())
+            .addFormDataPart("dob", birthDate.text.toString())
+            .addFormDataPart("phoneNumber", phoneNumber.text.toString())
+
+        if (imageRequestBody != null) {
+            // Add the new or existing image to the request
+            requestBody.addFormDataPart("image", "profile.jpg", imageRequestBody)
+        }
 
         val request = Request.Builder()
             .url("http://10.0.2.2:8080/api/patients/$patientId")
-            .put(requestBody)
+            .put(requestBody.build())
             .addHeader("Authorization", "Bearer $token")
-            .addHeader("Content-Type", "application/json")
             .build()
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 requireActivity().runOnUiThread {
-                    Toast.makeText(
-                        requireContext(),
-                        "Failed to send data: ${e.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(requireContext(), "Failed to send data: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -282,15 +293,28 @@ class EditPatientDialogFragment : DialogFragment() {
                     if (response.isSuccessful) {
                         Toast.makeText(requireContext(), "Patient updated successfully!", Toast.LENGTH_LONG).show()
                     } else {
-                        Toast.makeText(
-                            requireContext(),
-                            "Error: ${response.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        try {
+                            val errorResponse = response.body?.string() ?: "No error message"
+                            Log.e("API Error", "Error Code: ${response.code}, Response: $errorResponse")
+                            Toast.makeText(
+                                requireContext(),
+                                "Error: ${response.message} (Code: ${response.code})",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } catch (e: Exception) {
+                            Log.e("API Error", "Error reading response body", e)
+                        }
                     }
                 }
             }
         })
+    }
+
+    // Get InputStream from selectedImageUri
+    private fun getImageRequestBody(uri: Uri): RequestBody? {
+        return requireContext().contentResolver.openInputStream(uri)?.use { inputStream ->
+            inputStream.readBytes().toRequestBody("image/*".toMediaTypeOrNull())
+        }
     }
 
     // Convert image to Base64 string
@@ -306,15 +330,8 @@ class EditPatientDialogFragment : DialogFragment() {
         }
     }
 
-
-
-
-
-
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(1800, 1300) // Force dialog to match XML size
     }
-
-
 }

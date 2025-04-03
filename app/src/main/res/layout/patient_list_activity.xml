@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_gray"
+    android:background="@color/dark_gray"
     tools:context=".ui.patient.PatientListActivity">
 
     <!-- Header Layout -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/header_blue"
+        android:layout_height="?actionBarSize"
+        android:background="@drawable/bg_blue_gradient"
+        android:gravity="center|start"
         android:paddingHorizontal="20dp"
-        android:paddingVertical="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -25,79 +25,88 @@
             android:layout_height="wrap_content"
             android:text="CASES"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Status Indicator -->
-        <View
-            android:id="@+id/status_indicator"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/circle_green"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/device_status"
-            app:layout_constraintTop_toTopOf="parent" />
+        <!-- Connectors -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="end|center"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/device_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:text="DEVICE CONNECTED"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/divider"
-            app:layout_constraintTop_toTopOf="parent" />
+            <!-- Status Indicator -->
+            <View
+                android:id="@+id/status_indicator"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/circle_green"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/device_status"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Divider Line -->
-        <View
-            android:id="@+id/divider"
-            android:layout_width="1dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="16dp"
-            android:background="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/powered_by_logo"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/device_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DEVICE CONNECTED"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/divider"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/powered_by_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_poweredby"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/settings_icon"
-            app:layout_constraintTop_toTopOf="parent" />
+            <!-- Divider Line -->
+            <View
+                android:id="@+id/divider"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="16dp"
+                android:background="@color/gray_opacity_80"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/powered_by_logo"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Divider Line -->
-        <View
-            android:id="@+id/settingDivider"
-            android:layout_width="1dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="16dp"
-            android:background="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/settings_icon"
-            app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/powered_by_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_poweredby"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/settings_icon"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/settings_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="32dp"
-            android:src="@drawable/ic_settings"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@android:color/white" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <!-- Divider Line -->
+            <View
+                android:id="@+id/settingDivider"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="16dp"
+                android:background="@color/gray_opacity_80"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/settings_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/settings_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="4dp"
+                android:src="@drawable/ic_settings"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@android:color/white" />
+
+        </LinearLayout>
+    </LinearLayout>
 
     <!-- White Background for the Second Section -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -117,11 +126,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="12dp"
             android:text="All Cases"
             android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -133,26 +141,24 @@
             android:layout_marginStart="4dp"
             android:text="(27)"
             android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:textSize="20sp"
             app:layout_constraintBaseline_toBaselineOf="@id/all_cases_label"
             app:layout_constraintStart_toEndOf="@id/all_cases_label" />
 
         <!-- Start New Test Button -->
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/start_new_test_button"
-            android:layout_width="149dp"
-            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="92dp"
             android:backgroundTint="@color/header_blue"
-            android:drawableStart="@drawable/ic_add"
-            android:minHeight="48dp"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp"
-            android:paddingEnd="20dp"
+            android:drawableLeft="@drawable/ic_drawable_add"
             android:text="Start New Test"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:cornerRadius="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -163,10 +169,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/sidebar"
         android:layout_width="199dp"
-        android:layout_height="662dp"
-        android:background="@color/light_gray"
+        android:layout_height="0dp"
+        android:paddingHorizontal="16dp"
         android:paddingVertical="20dp"
-        android:paddingStart="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/section_layout">
@@ -174,10 +179,11 @@
         <!-- Sidebar Menu List (Now starts at the top) -->
         <LinearLayout
             android:id="@+id/sidebar_menu"
-            android:layout_width="137dp"
-            android:layout_height="300dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -320,7 +326,7 @@
             <!-- Shortened Divider -->
             <View
                 android:id="@+id/sidebar_divider"
-                android:layout_width="140dp"
+                android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginVertical="12dp"
                 android:background="@android:color/darker_gray" />
@@ -328,41 +334,48 @@
             <!-- To Do List Icon and Text -->
             <LinearLayout
                 android:id="@+id/menu_todo_list"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingVertical="8dp">
 
                 <ImageView
                     android:id="@+id/todo_icon"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/ic_todo_list" />
 
                 <TextView
+                    android:id="@+id/etTodo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
                     android:text="To Do List"
                     android:textColor="@android:color/black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <!-- Patient Icon and Text -->
             <LinearLayout
                 android:id="@+id/menu_patient_module"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingVertical="8dp">
 
                 <ImageView
                     android:id="@+id/patient_icon"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/ic_patient" />
 
@@ -370,10 +383,10 @@
                     android:id="@+id/etPatient"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
                     android:text="Patient"
                     android:textColor="@android:color/black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
         </LinearLayout>
