@@ -197,6 +197,8 @@
                     android:drawableLeft="@drawable/ic_viewer"
                     android:text="Open in viewer"
                     android:textAllCaps="false"
+
+                    android:visibility="gone"
                     app:cornerRadius="4dp" />
 
                 <com.google.android.material.button.MaterialButton
@@ -208,6 +210,7 @@
                     android:drawableLeft="@drawable/ic_tags"
                     android:text="Apply tags"
                     android:textAllCaps="false"
+                    android:visibility="gone"
                     app:cornerRadius="4dp" />
 
                 <com.google.android.material.button.MaterialButton
@@ -219,6 +222,7 @@
                     android:drawableLeft="@drawable/ic_export"
                     android:text="Export"
                     android:textAllCaps="false"
+                    android:visibility="gone"
                     app:cornerRadius="4dp" />
             </LinearLayout>
 

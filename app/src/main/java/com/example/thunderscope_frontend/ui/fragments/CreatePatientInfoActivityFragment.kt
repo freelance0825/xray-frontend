@@ -142,7 +142,6 @@ class CreatePatientInfoActivityFragment : Fragment() {
         pickImageLauncher.launch(intent)
     }
 
-    // Date Picker
     private fun showDatePicker() {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -156,8 +155,11 @@ class CreatePatientInfoActivityFragment : Fragment() {
                 val selectedDate =
                     String.format("%02d-%02d-%04d", selectedMonth + 1, selectedDay, selectedYear)
                 birthDate.setText(selectedDate)
+                age.setText((year - selectedYear).toString())
             }, year, month, day
         )
+
+        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
 
         datePickerDialog.show()
     }

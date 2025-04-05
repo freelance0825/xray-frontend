@@ -300,7 +300,10 @@
                     android:layout_height="48dp"
                     android:background="@drawable/input_background"
                     android:hint="Age"
-                    android:inputType="number"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:inputType="none"
                     android:paddingStart="8dp" />
             </LinearLayout>
 
