@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var passwordEditText: EditText
     private lateinit var togglePasswordButton: TextView
     private lateinit var loginButton: Button
+    private lateinit var linkSignup: TextView
 
     // HTTP client for making network requests
     private val client = OkHttpClient()
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         passwordEditText = findViewById(R.id.etPassword)
         togglePasswordButton = findViewById(R.id.tvShowPassword)
         loginButton = findViewById(R.id.btnLogin)
+        linkSignup = findViewById(R.id.linkSignup)
 
         // Apply default password masking
         passwordEditText.transformationMethod = AsteriskPasswordTransformation()
@@ -63,6 +65,13 @@ class MainActivity : AppCompatActivity() {
         // Toggle password visibility when clicking the button
         // HANDLE PASSWORD VISIBILITY IN THE XML, NOT ON THE KOTLIN LOGIC
         togglePasswordButton.setOnClickListener { togglePasswordVisibility() }
+
+        // On click listener for Signup
+        linkSignup.setOnClickListener {
+            val intent = Intent(this, SignupActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         // Handle login button click
         loginButton.setOnClickListener { if (validateInputs()) attemptLogin() }
