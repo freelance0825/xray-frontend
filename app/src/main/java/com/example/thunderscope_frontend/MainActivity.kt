@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         private const val BASE_URL = "http://10.0.2.2:8080/api"
         private const val LOGIN_URL = "$BASE_URL/doctors/login"
         private const val ERROR_LOGIN_FAILED = "Login failed. Please try again."
-        private const val ERROR_USER_NOT_FOUND = "User not found. Redirecting to registration."
+        private const val ERROR_USER_NOT_FOUND = "User not found."
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -172,7 +172,6 @@ class MainActivity : AppCompatActivity() {
             } else {
                 runOnUiThread {
                     showErrorToast(ERROR_USER_NOT_FOUND)
-                    redirectToActivity(SignupActivity::class.java)
                 }
             }
         } ?: runOnUiThread { showErrorToast("Unexpected error. Please try again.") }
@@ -185,9 +184,6 @@ class MainActivity : AppCompatActivity() {
 
         runOnUiThread {
             showErrorToast(errorMessage)
-            if (response.code == 404) {
-                redirectToActivity(SignupActivity::class.java)
-            }
         }
     }
 
