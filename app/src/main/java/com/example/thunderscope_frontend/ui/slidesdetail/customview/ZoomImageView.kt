@@ -40,6 +40,8 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
 
     private val mappedFixedAnnotationLabel = mutableMapOf<Shape, String>()
 
+    var isDrawingActive = false
+
     @SuppressLint("ClickableViewAccessibility")
     private fun showAnnotationOverlay() {
         val shape = selectedShape ?: return removeAnnotationOverlay()
@@ -53,6 +55,7 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
             }
             annotationCreateView?.apply {
                 visibility = View.VISIBLE
+                isDrawingActive = true
                 findViewById<MaterialButton>(R.id.btn_save).setOnClickListener { saveAnnotation() }
                 findViewById<MaterialButton>(R.id.btn_cancel).setOnClickListener { removeAnnotationOverlay() }
                 findViewById<ImageView>(R.id.btn_close).setOnClickListener { removeAnnotationOverlay() }
@@ -71,6 +74,7 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
             mappedFixedAnnotationLabel[shape] = labelName
             annotationCreateView?.visibility = View.GONE
             edAnnotationName.text.clear()
+            isDrawingActive = false
             invalidate()
         } else {
             Toast.makeText(context, "Label cannot be empty", Toast.LENGTH_SHORT).show()
@@ -88,7 +92,8 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         }
     }
 
-    private fun removeAnnotationOverlay() {
+    fun removeAnnotationOverlay() {
+        isDrawingActive = false
         annotationCreateView?.visibility = View.GONE
         clearLastDrawing()
     }

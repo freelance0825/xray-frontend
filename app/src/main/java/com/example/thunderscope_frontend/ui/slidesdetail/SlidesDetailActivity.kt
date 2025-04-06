@@ -163,6 +163,10 @@ class SlidesDetailActivity : AppCompatActivity() {
                             tvSelect.setTextColor(getColor(R.color.active_menu_color))
                         }
 
+                        if (binding.ivBaseImage.isDrawingActive) {
+                            binding.ivBaseImage.removeAnnotationOverlay()
+                        }
+
                         binding.ivBaseImage.enableDrawing(false)
                         openLeftMenuSettings(false, menu)
                     }
