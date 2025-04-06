@@ -160,7 +160,6 @@ class CreatePatientInfoActivityFragment : Fragment() {
         )
 
         datePickerDialog.datePicker.maxDate = calendar.timeInMillis
-
         datePickerDialog.show()
     }
 

@@ -311,6 +311,97 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         return tapDetector.onTouchEvent(event!!) || return scaleDetector.onTouchEvent(event) || return true
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private fun handleDrawing(event: MotionEvent?): Boolean {
+        event ?: return false
+        val (x, y) = mapTouchToImage(event.x, event.y)
+
+        if (annotationCreateView?.visibility == View.VISIBLE) {
+            removeAnnotationOverlay()
+            return true // Prevent new shape creation
+        }
+
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                selectedShape = findSelectedShape(x, y)
+
+                selectedShape?.let {
+                    resizeCornerIndex = getTouchedCornerIndex(it, x, y)
+                    isResizing = resizeCornerIndex != -1
+                    isMoving = !isResizing
+                    lastTouchX = x
+                    lastTouchY = y
+                } ?: run {
+                    when (currentMode) {
+                        DrawMode.RECTANGLE -> {
+                            currentShape = Shape(RectF(x, y, x, y), ShapeType.RECTANGLE)
+                        }
+
+                        DrawMode.CIRCLE -> {
+                            currentShape = Shape(RectF(x, y, x, y), ShapeType.CIRCLE)
+                        }
+
+                        DrawMode.FREE_DRAW -> {
+                            path.moveTo(x, y)
+                            currentShape = Shape(
+                                RectF(x, y, x, y),
+                                ShapeType.FREE_DRAW,
+                                mutableListOf(PointF(x, y))
+                            )
+                        }
+                    }
+                }
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                if (isResizing && selectedShape != null) {
+                    resizeShape(selectedShape!!, x, y)
+                } else if (isMoving && selectedShape != null) {
+                    moveShape(selectedShape!!, x - lastTouchX, y - lastTouchY)
+                    lastTouchX = x
+                    lastTouchY = y
+                } else {
+                    currentShape?.let {
+                        if (it.type == ShapeType.FREE_DRAW) {
+                            it.path?.add(PointF(x, y))
+                            updateFreeDrawBoundingBox(it)
+                            path.quadTo(
+                                lastTouchX,
+                                lastTouchY,
+                                (x + lastTouchX) / 2,
+                                (y + lastTouchY) / 2
+                            )
+                        } else {
+                            it.rect.right = x
+                            it.rect.bottom = y
+                        }
+                    }
+                }
+            }
+
+            MotionEvent.ACTION_UP -> {
+                if (selectedShape == null) {
+                    currentShape?.let {
+                        shapes.add(it)
+                        if (it.type == ShapeType.FREE_DRAW) {
+                            drawPaths.add(Pair(Path(path), Paint(paint)))
+                            path.reset()
+                        }
+                    }
+                    selectedShape = currentShape
+                    currentShape = null
+                }
+
+                isResizing = false
+                isMoving = false
+                resizeCornerIndex = -1
+            }
+        }
+        invalidate()
+        return true
+    }
+
+
     private fun setZoom(scale: Float, x: Float, y: Float) {
         zoomMatrix.postScale(scale, scale, x, y)
 
@@ -704,96 +795,6 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
 
     override fun setOnLongClickListener(l: OnLongClickListener?) {
         this.onLongClickListener = l
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    private fun handleDrawing(event: MotionEvent?): Boolean {
-        event ?: return false
-        val (x, y) = mapTouchToImage(event.x, event.y)
-
-        if (annotationCreateView?.visibility == View.VISIBLE) {
-            removeAnnotationOverlay()
-            return true // Prevent new shape creation
-        }
-
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                selectedShape = findSelectedShape(x, y)
-
-                selectedShape?.let {
-                    resizeCornerIndex = getTouchedCornerIndex(it, x, y)
-                    isResizing = resizeCornerIndex != -1
-                    isMoving = !isResizing
-                    lastTouchX = x
-                    lastTouchY = y
-                } ?: run {
-                    when (currentMode) {
-                        DrawMode.RECTANGLE -> {
-                            currentShape = Shape(RectF(x, y, x, y), ShapeType.RECTANGLE)
-                        }
-
-                        DrawMode.CIRCLE -> {
-                            currentShape = Shape(RectF(x, y, x, y), ShapeType.CIRCLE)
-                        }
-
-                        DrawMode.FREE_DRAW -> {
-                            path.moveTo(x, y)
-                            currentShape = Shape(
-                                RectF(x, y, x, y),
-                                ShapeType.FREE_DRAW,
-                                mutableListOf(PointF(x, y))
-                            )
-                        }
-                    }
-                }
-            }
-
-            MotionEvent.ACTION_MOVE -> {
-                if (isResizing && selectedShape != null) {
-                    resizeShape(selectedShape!!, x, y)
-                } else if (isMoving && selectedShape != null) {
-                    moveShape(selectedShape!!, x - lastTouchX, y - lastTouchY)
-                    lastTouchX = x
-                    lastTouchY = y
-                } else {
-                    currentShape?.let {
-                        if (it.type == ShapeType.FREE_DRAW) {
-                            it.path?.add(PointF(x, y))
-                            updateFreeDrawBoundingBox(it)
-                            path.quadTo(
-                                lastTouchX,
-                                lastTouchY,
-                                (x + lastTouchX) / 2,
-                                (y + lastTouchY) / 2
-                            )
-                        } else {
-                            it.rect.right = x
-                            it.rect.bottom = y
-                        }
-                    }
-                }
-            }
-
-            MotionEvent.ACTION_UP -> {
-                if (selectedShape == null) {
-                    currentShape?.let {
-                        shapes.add(it)
-                        if (it.type == ShapeType.FREE_DRAW) {
-                            drawPaths.add(Pair(Path(path), Paint(paint)))
-                            path.reset()
-                        }
-                    }
-                    selectedShape = currentShape
-                    currentShape = null
-                }
-
-                isResizing = false
-                isMoving = false
-                resizeCornerIndex = -1
-            }
-        }
-        invalidate()
-        return true
     }
 
     private val shapes = mutableListOf<Shape>()

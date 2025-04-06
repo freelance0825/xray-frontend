@@ -223,6 +223,7 @@ class SlidesDetailActivity : AppCompatActivity() {
                             openLeftMenuSettings(false, menu)
                         }
 
+                        binding.ivBaseImage.enableDrawing(false)
                         openLeftMenuSettings(true, menu)
                     }
 
