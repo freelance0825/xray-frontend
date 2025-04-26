@@ -19,9 +19,7 @@ import com.example.thunderscope_frontend.ui.utils.Result
 import kotlinx.coroutines.flow.Flow
 import java.io.File
 
-class SlidesDetailViewModel(
-    private val thunderscopeRepository: ThunderscopeRepository
-) : ViewModel() {
+class SlidesDetailViewModel(private val thunderscopeRepository: ThunderscopeRepository) : ViewModel() {
     val slideItems: LiveData<List<SlidesItem>> by lazy {
         thunderscopeRepository.getAllSlidesFromDB().asLiveData()
     }

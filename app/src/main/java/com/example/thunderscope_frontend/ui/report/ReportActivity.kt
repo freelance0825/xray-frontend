@@ -70,7 +70,7 @@ class ReportActivity : AppCompatActivity() {
                     tvSubmissionConclusion.text = slide.microscopicDc
                     tvSubmissionDiagnosis.text = slide.diagnosis
 
-                    slide.caseRecord?.doctor.let {
+                    slide.caseRecord?.doctorResponse.let {
                         ivSignature.setImageBitmap(Base64Helper.convertToBitmap(it?.signature))
                         tvDoctorName.text = it?.name
                         tvOccupation.text = it?.specialist

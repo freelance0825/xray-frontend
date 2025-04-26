@@ -3,16 +3,17 @@ package com.example.thunderscope_frontend.data.repo
 import android.content.Context
 import android.util.Log
 import com.example.thunderscope_frontend.data.local.SlidesDatabase
+import com.example.thunderscope_frontend.data.models.DoctorRequest
+import com.example.thunderscope_frontend.data.models.DoctorResponse
 import com.example.thunderscope_frontend.data.models.PostTestReviewPayload
-import com.example.thunderscope_frontend.data.models.SlidesEntity
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.data.remote.ApiConfig
 import com.example.thunderscope_frontend.data.utils.SlidesMapper
+import com.example.thunderscope_frontend.ui.utils.Result
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import com.example.thunderscope_frontend.ui.utils.Result
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -21,8 +22,6 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.HttpException
 import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class ThunderscopeRepository(
     context: Context
@@ -123,4 +122,14 @@ class ThunderscopeRepository(
     suspend fun generateDummySlidesToDatabaseForMVPPurpose() {
         insertSlides(slidesList)
     }
+
+    suspend fun registerDoctor(doctorRequest: DoctorRequest)= flow {
+        emit(Result.Loading)
+        try {
+            val storyResponse = apiService.registerDoctor(doctorRequest)
+            emit(Result.Success(storyResponse))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
 }
