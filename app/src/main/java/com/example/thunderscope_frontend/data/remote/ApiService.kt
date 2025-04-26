@@ -1,5 +1,7 @@
 package com.example.thunderscope_frontend.data.remote
 
+import com.example.thunderscope_frontend.data.models.DoctorRequest
+import com.example.thunderscope_frontend.data.models.DoctorResponse
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -19,4 +21,10 @@ interface ApiService {
         @PartMap data: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part doctorSignature: MultipartBody.Part? = null
     ): SlidesItem
+
+
+    @POST("/api/doctors/add")
+    @Headers("Authorization: ")
+    suspend fun registerDoctor(@Body doctorRequest: DoctorRequest): DoctorResponse
+
 }

@@ -7,27 +7,27 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class CaseRecord(
 
-	@field:SerializedName("doctor")
-	val doctor: Doctor? = null,
+    @field:SerializedName("doctor")
+	val doctorResponse: DoctorResponse? = null,
 
-	@field:SerializedName("date")
+    @field:SerializedName("date")
 	val date: String? = null,
 
-	@field:SerializedName("year")
+    @field:SerializedName("year")
 	val year: String? = null,
 
-	@field:SerializedName("patient")
+    @field:SerializedName("patient")
 	val patient: Patient? = null,
 
-	@field:SerializedName("id")
+    @field:SerializedName("id")
 	val id: Long? = null,
 
-	@field:SerializedName("time")
+    @field:SerializedName("time")
 	val time: String? = null,
 
-	@field:SerializedName("type")
+    @field:SerializedName("type")
 	val type: String? = null,
 
-	@field:SerializedName("status")
+    @field:SerializedName("status")
 	val status: String? = null
 ): Parcelable
