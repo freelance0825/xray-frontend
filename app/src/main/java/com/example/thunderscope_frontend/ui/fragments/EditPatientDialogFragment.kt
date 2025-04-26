@@ -245,7 +245,7 @@ class EditPatientDialogFragment : DialogFragment() {
         var imageRequestBody: RequestBody? = null
 
         if (selectedImageUri != null) {
-            // Only process the image if the user selects a new one.
+            // Only process the image if the signup selects a new one.
             imageRequestBody = getImageRequestBody(selectedImageUri!!)
             if (imageRequestBody == null) {
                 Toast.makeText(requireContext(), "Failed to process image", Toast.LENGTH_SHORT).show()

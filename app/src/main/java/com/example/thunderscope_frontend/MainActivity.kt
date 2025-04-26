@@ -14,7 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.thunderscope_frontend.ui.patient.PatientListActivity
-import com.example.thunderscope_frontend.ui.user.SignUpActivity
+import com.example.thunderscope_frontend.ui.signup.SignUpActivity
 import com.example.thunderscope_frontend.ui.utils.AsteriskPasswordTransformation
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Validates user inputs before sending the login request.
+     * Validates signup inputs before sending the login request.
      * Ensures email and password fields are not empty and properly formatted.
      */
     private fun validateInputs(): Boolean {

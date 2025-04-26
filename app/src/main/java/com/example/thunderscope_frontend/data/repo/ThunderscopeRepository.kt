@@ -123,7 +123,13 @@ class ThunderscopeRepository(
         insertSlides(slidesList)
     }
 
-    suspend fun registerDoctor(doctorRequest: DoctorRequest): DoctorResponse {
-        return apiService.registerDoctor(doctorRequest)
-    }
+    suspend fun registerDoctor(doctorRequest: DoctorRequest)= flow {
+        emit(Result.Loading)
+        try {
+            val storyResponse = apiService.registerDoctor(doctorRequest)
+            emit(Result.Success(storyResponse))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
 }

@@ -43,7 +43,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.user.SignUpActivity"
+            android:name=".ui.signup.SignUpActivity"
             android:exported="true"
             android:theme="@style/Theme.Thunderscopefrontend.Material3" /> <!-- Sign Up Activity -->
         <activity

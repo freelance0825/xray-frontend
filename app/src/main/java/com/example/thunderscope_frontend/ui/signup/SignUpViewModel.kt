@@ -1,4 +1,4 @@
-package com.example.thunderscope_frontend.ui.user
+package com.example.thunderscope_frontend.ui.signup
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,19 +9,35 @@ import com.example.thunderscope_frontend.data.models.DoctorRequest
 import com.example.thunderscope_frontend.data.models.DoctorResponse
 import com.example.thunderscope_frontend.data.repo.ThunderscopeRepository
 import kotlinx.coroutines.launch
+import com.example.thunderscope_frontend.ui.utils.Result
 
 class SignUpViewModel(private val thunderscopeRepository: ThunderscopeRepository) : ViewModel() {
 
-    private val _registrationResult = MutableLiveData<Result<DoctorResponse>>()
-    val registrationResult: LiveData<Result<DoctorResponse>> get() = _registrationResult
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
+    private val _registrationResult = MutableLiveData<DoctorResponse>(null)
+    val registrationResult: LiveData<DoctorResponse> get() = _registrationResult
+
+    private val _errorMessage = MutableLiveData("")
+    val errorMessage: LiveData<String> get() = _errorMessage
 
     fun registerDoctor(doctorRequest: DoctorRequest) {
         viewModelScope.launch {
-            try {
-                val response = thunderscopeRepository.registerDoctor(doctorRequest)
-                _registrationResult.value = Result.success(response)
-            } catch (e: Exception) {
-                _registrationResult.value = Result.failure(e)
+            thunderscopeRepository.registerDoctor(doctorRequest).collect { result ->
+                when (result) {
+                    is Result.Loading -> {
+                        _isLoading.value = true
+                    }
+                    is Result.Success -> {
+                        _isLoading.value = false
+                        _registrationResult.value = result.data
+                    }
+                    is Result.Error -> {
+                        _isLoading.value = false
+                        _errorMessage.value = result.error
+                    }
+                }
             }
         }
     }

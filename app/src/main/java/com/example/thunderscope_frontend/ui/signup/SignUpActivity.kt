@@ -1,4 +1,4 @@
-package com.example.thunderscope_frontend.ui.user
+package com.example.thunderscope_frontend.ui.signup
 
 import android.content.Intent
 import android.os.Bundle
@@ -28,32 +28,39 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
         observeViewModel()
 
-        setViews();
+        setViews()
         setListeners()
 
     }
 
     private fun observeViewModel() {
-        signUpViewModel.registrationResult.observe(this) { result ->
-            result.onSuccess { message ->
-                Toast.makeText(this, "Registration Successful!", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, PatientListActivity::class.java))
-                finish()
+        signUpViewModel.apply {
+            registrationResult.observe(this@SignUpActivity) { result ->
+                if (result != null) {
+                    Toast.makeText(this@SignUpActivity, "Registration Successful!", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@SignUpActivity, PatientListActivity::class.java))
+                    finishAffinity()
+                }
             }
-            result.onFailure { error ->
-                Toast.makeText(this, "Error: ${error.localizedMessage}", Toast.LENGTH_SHORT).show()
+
+            isLoading.observe(this@SignUpActivity) {
+                // observe is it loading or not like show/hide progressbar
+            }
+
+            errorMessage.observe(this@SignUpActivity) {
+                if (!it.isNullOrEmpty()) {
+                    Toast.makeText(this@SignUpActivity, it, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
 
     private fun setViews() {
-
         // Set Specialist Dropdown (Kotlin Version)
         val specialistOptions = resources.getStringArray(R.array.specialist_options)
         val specialistAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, specialistOptions)
 
         binding.spinnerSpecialist.adapter = specialistAdapter
-
     }
 
     private fun setListeners() {
@@ -118,5 +125,4 @@ class SignUpActivity : AppCompatActivity() {
         // Pass the Doctor object to the ViewModel for registration
         signUpViewModel.registerDoctor(doctorRequest)
     }
-
 }
