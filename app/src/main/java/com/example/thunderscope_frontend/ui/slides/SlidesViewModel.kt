@@ -17,11 +17,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SlidesViewModel(
-    private val caseRecord: CaseRecordResponse?,
+    private val caseRecordId: Int,
     private val thunderscopeRepository: ThunderscopeRepository
 ) : ViewModel() {
 
     val slidesItem = MutableLiveData<MutableList<SlidesItem>>(mutableListOf())
+    val caseRecordResponse = MutableLiveData<CaseRecordResponse>(null)
     val activeSlidesItem = MutableLiveData<MutableList<SlidesItem>>(mutableListOf())
     val currentlySelectedSlide = MutableLiveData<SlidesItem?>(null)
 
@@ -34,12 +35,33 @@ class SlidesViewModel(
     var isDraggingPhotos = false
 
     init {
+        getCaseById()
         getAllSlides()
+    }
+
+    fun getCaseById() {
+        viewModelScope.launch {
+            thunderscopeRepository.getCaseById(caseRecordId).collect { result ->
+                when (result) {
+                    is Result.Loading -> {
+                        // Handle loading here
+                    }
+
+                    is Result.Success -> {
+                        caseRecordResponse.value = result.data
+                    }
+
+                    is Result.Error -> {
+                        // Handle error here
+                    }
+                }
+            }
+        }
     }
 
     private fun getAllSlides() {
         viewModelScope.launch {
-            thunderscopeRepository.getAllSlides(caseRecord?.id ?: 1).collect { result ->
+            thunderscopeRepository.getAllSlides(caseRecordId).collect { result ->
                 when (result) {
                     is Result.Loading -> {
                         // Handle loading here
@@ -146,12 +168,12 @@ class SlidesViewModel(
 
     @Suppress("UNCHECKED_CAST")
     class Factory(
-        private val caseRecord: CaseRecordResponse?,
+        private val caseRecordId: Int,
         private val context: Context
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(SlidesViewModel::class.java)) {
-                return SlidesViewModel(caseRecord, ThunderscopeRepository(context)) as T
+                return SlidesViewModel(caseRecordId, ThunderscopeRepository(context)) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

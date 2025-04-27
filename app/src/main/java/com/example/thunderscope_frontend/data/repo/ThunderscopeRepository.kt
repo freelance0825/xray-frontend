@@ -189,6 +189,16 @@ class ThunderscopeRepository(
         }
     }.flowOn(Dispatchers.IO)
 
+    fun getCaseById(caseId: Int) = flow {
+        emit(Result.Loading)
+        try {
+            val caseRecordResponse = apiService.getCaseById(caseId)
+            emit(Result.Success(caseRecordResponse))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
     fun getAllSlides(caseId: Int) = flow {
         emit(Result.Loading)
         try {

@@ -137,11 +137,8 @@ class CaseDashboardActivity : AppCompatActivity() {
             setupPaginationButtons()
 
             caseAdapter.onItemClick = { caseRecord ->
-                val recordToBeSent = caseRecord.copy()
-                recordToBeSent.slides = mutableListOf()
-
                 val intent = Intent(this@CaseDashboardActivity, SlidesActivity::class.java)
-                intent.putExtra(SlidesActivity.EXTRA_CASE_RECORD, recordToBeSent)
+                intent.putExtra(SlidesActivity.EXTRA_CASE_RECORD_ID, caseRecord.id)
                 startActivity(intent)
             }
 
