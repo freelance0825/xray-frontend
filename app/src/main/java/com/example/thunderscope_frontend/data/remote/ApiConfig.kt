@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiConfig {
     fun getApiService(authDataStore: AuthDataStore): ApiService {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
+            level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.HEADERS
             else HttpLoggingInterceptor.Level.NONE
         }
 

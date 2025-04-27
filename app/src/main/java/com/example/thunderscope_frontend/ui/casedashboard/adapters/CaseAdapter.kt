@@ -65,20 +65,24 @@ class CaseAdapter : ListAdapter<CaseRecordResponse, CaseAdapter.CaseViewHolder>(
 
                 // Load images properly if available
                 if (record.slides.isNotEmpty()) {
-                    record.slides.getOrNull(0)?.let {
-                        assessmentImage1.setImageBitmap(Base64Helper.convertToBitmap(it.mainImage))
+                    record.slides.getOrNull(0)?.mainImage?.let {
+                        assessmentImage1.setImageBitmap(Base64Helper.convertToBitmap(it))
                     }
 
-                    record.slides.getOrNull(1)?.let {
-                        assessmentImage2.setImageBitmap(Base64Helper.convertToBitmap(it.mainImage))
+                    record.slides.getOrNull(1)?.mainImage?.let {
+                        assessmentImage2.setImageBitmap(Base64Helper.convertToBitmap(it))
                     }
 
-                    record.slides.getOrNull(2)?.let {
-                        assessmentImage3.setImageBitmap(Base64Helper.convertToBitmap(it.mainImage))
+                    record.slides.getOrNull(2)?.mainImage?.let {
+                        assessmentImage3.setImageBitmap(Base64Helper.convertToBitmap(it))
                     }
                 }
 
-                assessmentImageCount.text = StringBuilder("+${record.slides.size}")
+                assessmentImageCount.text = when {
+                    record.slides.isEmpty() -> "0" // No images
+                    record.slides.size <= 3 -> record.slides.size.toString() // Show total if 3 or less
+                    else -> "+${record.slides.size - 3}" // Show "+extra count" if more than 3
+                }
 
                 assessmentImageContainer.setOnClickListener {
                     onItemClick?.invoke(record)

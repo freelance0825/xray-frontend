@@ -61,7 +61,8 @@ class PatientDashboardViewModel(
                     }
                     is Result.Success -> {
                         _isLoading.value = false
-                        _patientRecordsLiveData.value = result.data
+                        val sortedPatientByLatestUpdate = result.data.sortedByDescending { it.updatedAt }
+                        _patientRecordsLiveData.value = sortedPatientByLatestUpdate
                     }
                     is Result.Error -> {
                         _isLoading.value = false
@@ -131,7 +132,7 @@ class PatientDashboardViewModel(
             val recordStatus = record.status?.trim()?.lowercase()
             val statusMatch = when (selectedStatus) {
                 "All Status" -> true
-                else -> recordStatus?.lowercase()?.trim() == selectedStatus.lowercase()?.trim()
+                else -> recordStatus?.lowercase()?.trim() == selectedStatus.lowercase().trim()
             }
 
             // Time Period Filter

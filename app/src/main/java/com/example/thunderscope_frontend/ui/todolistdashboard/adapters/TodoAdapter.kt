@@ -78,7 +78,11 @@ class TodoAdapter : ListAdapter<CaseRecordResponse, TodoAdapter.CaseViewHolder>(
                     }
                 }
 
-                assessmentImageCount.text = StringBuilder("+${record.slides.size}")
+                assessmentImageCount.text = when {
+                    record.slides.isEmpty() -> "0" // No images
+                    record.slides.size <= 3 -> record.slides.size.toString() // Show total if 3 or less
+                    else -> "+${record.slides.size - 3}" // Show "+extra count" if more than 3
+                }
 
                 assessmentImageContainer.setOnClickListener {
                     onItemClick?.invoke(record)

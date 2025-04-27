@@ -46,16 +46,16 @@ class PatientDashboardActivity : AppCompatActivity() {
             patientRecordsLiveData.observe(this@PatientDashboardActivity) { patientList ->
                 val totalPatients = patientList.size
 
-//                val notStartedCount = patientList.count { it.patientStatus == "Not Started" }
-//                val onProgressCount = patientList.count { it.patientStatus == "On Progress" }
-//                val completedCount = patientList.count { it.patientStatus == "Completed" }
+                val notStartedCount = patientList.count { it.status == "Not Started" }
+                val onProgressCount = patientList.count { it.status == "On Progress" }
+                val completedCount = patientList.count { it.status == "Completed" }
 
                 // Update UI
                 binding.allPatientNumber.text = StringBuilder("($totalPatients)")
                 binding.menuAllPatientCount.text = totalPatients.toString()
-//                binding.menuNotStartedCount.text = notStartedCount.toString()
-//                binding.menuOnProgressCount.text = onProgressCount.toString()
-//                binding.menuFinishedCount.text = completedCount.toString()
+                binding.menuNotStartedCount.text = notStartedCount.toString()
+                binding.menuOnProgressCount.text = onProgressCount.toString()
+                binding.menuFinishedCount.text = completedCount.toString()
 
                 applyFilters(
                     binding.spinnerStatus.selectedItem.toString(),
@@ -152,7 +152,7 @@ class PatientDashboardActivity : AppCompatActivity() {
 
     private fun setupFilterSpinners() {
         setupSpinner(binding.spinnerTimePeriod, R.array.time_period_options)
-        setupSpinner(binding.spinnerStatus, R.array.case_record_status_options)
+        setupSpinner(binding.spinnerStatus, R.array.patient_status_options)
         setupSpinner(binding.spinnerType, R.array.type_options)
         setupSpinner(binding.spinnerGender, R.array.gender_filter_options)
         setupSpinner(binding.spinnerAge, R.array.age_options)
