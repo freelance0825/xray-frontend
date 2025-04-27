@@ -7,12 +7,7 @@ import android.util.Log
 
 object Base64Helper {
     fun convertToBitmap(encodedImage: String?): Bitmap {
-        Log.e("FTEST", "  -> cvB 1: ${encodedImage}", )
-
         val decodedString = Base64.decode(encodedImage, Base64.DEFAULT)
-
-        Log.e("FTEST", "  -> cvB 2: ${decodedString}", )
-
         return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
     }
 }

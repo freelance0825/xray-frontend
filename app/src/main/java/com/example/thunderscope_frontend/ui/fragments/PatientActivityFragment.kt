@@ -1,6 +1,5 @@
 package com.example.thunderscope_frontend.ui.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -42,8 +41,8 @@ class PatientActivityFragment : Fragment() {
     private lateinit var btnNextPage: ImageButton
     private lateinit var btnPrevPage: ImageButton
 
-    // Patient Record View Model
-    private lateinit var patientRecordViewModel: PatientRecordViewModel
+    // PatientResponse Record View Model
+    private lateinit var patientResponseRecordViewModel: PatientRecordViewModel
 
     // Pagination variables
     private var currentPage = 0
@@ -77,12 +76,12 @@ class PatientActivityFragment : Fragment() {
         btnPrevPage = view.findViewById(R.id.btnPrevPage)
 
         // Initialize ViewModel Manually
-        patientRecordViewModel =
+        patientResponseRecordViewModel =
             ViewModelProvider(requireActivity()).get(PatientRecordViewModel::class.java)
 
 
         // Observe case records data
-        patientRecordViewModel.patientRecordsLiveData.observe(viewLifecycleOwner) { records ->
+        patientResponseRecordViewModel.patientRecordsLiveData.observe(viewLifecycleOwner) { records ->
             if (records.isNullOrEmpty()) {
                 Log.d("FilterDebug", "No case records available. Skipping filter.")
                 return@observe
@@ -95,12 +94,12 @@ class PatientActivityFragment : Fragment() {
         }
 
         // Observe error messages
-        patientRecordViewModel.errorLiveData.observe(viewLifecycleOwner, Observer { errorMessage ->
+        patientResponseRecordViewModel.errorLiveData.observe(viewLifecycleOwner, Observer { errorMessage ->
             Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_LONG).show()
         })
 
         // Fetch case records when the fragment is created
-        patientRecordViewModel.fetchCaseRecords()
+        patientResponseRecordViewModel.fetchCaseRecords()
 
         // Pagination button listeners
         btnNextPage.setOnClickListener {
@@ -143,7 +142,7 @@ class PatientActivityFragment : Fragment() {
         timePeriodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         timePeriodFilter.adapter = timePeriodAdapter
 
-        // Patient Status Spinner Setup
+        // PatientResponse Status Spinner Setup
         val statusOptions = resources.getStringArray(R.array.patient_status_options)
         val statusAdapter =
             ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, statusOptions)
@@ -250,7 +249,7 @@ class PatientActivityFragment : Fragment() {
             tableLayout.removeViews(1, tableLayout.childCount - 1)
         }
 
-        // Update the total patient count in the UI
+        // Update the total casedashboard count in the UI
         patientAllCount.text = "$totalRecords"
 
         if (filteredRecords.isEmpty()) {
@@ -349,11 +348,11 @@ class PatientActivityFragment : Fragment() {
 
     private fun confirmDeletePatient(patientId: Int) {
         val builder = android.app.AlertDialog.Builder(requireContext())
-        builder.setTitle("Delete Patient")
-        builder.setMessage("Are you sure you want to delete this patient record? This action cannot be undone.")
+        builder.setTitle("Delete PatientResponse")
+        builder.setMessage("Are you sure you want to delete this casedashboard record? This action cannot be undone.")
 
         builder.setPositiveButton("Delete") { _, _ ->
-            patientRecordViewModel.deletePatient(patientId)
+            patientResponseRecordViewModel.deletePatient(patientId)
         }
 
         builder.setNegativeButton("Cancel") { dialog, _ ->

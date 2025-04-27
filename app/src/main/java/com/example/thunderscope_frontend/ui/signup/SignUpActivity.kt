@@ -7,12 +7,12 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.thunderscope_frontend.MainActivity
+import com.example.thunderscope_frontend.ui.login.LoginActivity
 import com.example.thunderscope_frontend.R
-import com.example.thunderscope_frontend.data.models.DoctorRequest
+import com.example.thunderscope_frontend.data.models.AuthDoctorRequest
 import com.example.thunderscope_frontend.data.repo.ThunderscopeRepository
 import com.example.thunderscope_frontend.databinding.ActivitySignUpBinding
-import com.example.thunderscope_frontend.ui.patient.PatientListActivity
+import com.example.thunderscope_frontend.ui.casedashboard.CaseDashboardActivity
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -38,7 +38,7 @@ class SignUpActivity : AppCompatActivity() {
             registrationResult.observe(this@SignUpActivity) { result ->
                 if (result != null) {
                     Toast.makeText(this@SignUpActivity, "Registration Successful!", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@SignUpActivity, PatientListActivity::class.java))
+                    startActivity(Intent(this@SignUpActivity, CaseDashboardActivity::class.java))
                     finishAffinity()
                 }
             }
@@ -71,7 +71,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         binding.linkLogin.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
     }
@@ -113,7 +113,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun performRegistration() {
         // Create a Doctor object from the input fields
-        val doctorRequest = DoctorRequest(
+        val authDoctorRequest = AuthDoctorRequest(
             name = binding.etName.text.toString().trim(),
             email = binding.etEmail.text.toString().trim(),
             password = binding.etPassword.text.toString().trim(),
@@ -123,6 +123,6 @@ class SignUpActivity : AppCompatActivity() {
         )
 
         // Pass the Doctor object to the ViewModel for registration
-        signUpViewModel.registerDoctor(doctorRequest)
+        signUpViewModel.registerDoctor(authDoctorRequest)
     }
 }

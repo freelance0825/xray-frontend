@@ -1696,7 +1696,7 @@
 
                 </com.example.thunderscope_frontend.ui.slidesdetail.customview.AccordionView>
 
-                <!-- Patient Detail Accordion-->
+                <!-- PatientResponse Detail Accordion-->
                 <com.example.thunderscope_frontend.ui.slidesdetail.customview.AccordionView
                     android:id="@+id/accordion_patient_detail"
                     android:layout_width="match_parent"

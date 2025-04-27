@@ -3,25 +3,27 @@ package com.example.thunderscope_frontend.data.remote
 import android.app.Application
 import android.content.Context
 import com.example.thunderscope_frontend.BuildConfig
+import com.example.thunderscope_frontend.data.local.datastore.AuthDataStore
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiConfig {
-    fun getApiService(context: Context): ApiService {
+    fun getApiService(authDataStore: AuthDataStore): ApiService {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
             level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
             else HttpLoggingInterceptor.Level.NONE
         }
 
-        val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        val authToken = sharedPreferences.getString("token", null)
+        val authToken = runBlocking { authDataStore.getToken().first().toString() }
 
         val clientBuilder = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
 
-        if (!authToken.isNullOrEmpty()) {
+        if (authToken != AuthDataStore.preferencesDefaultValue) {
             clientBuilder.addInterceptor { chain ->
                 val request = chain.request().newBuilder()
                     .addHeader("Authorization", "Bearer $authToken")

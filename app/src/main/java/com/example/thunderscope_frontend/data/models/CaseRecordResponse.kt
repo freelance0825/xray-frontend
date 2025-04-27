@@ -1,14 +1,15 @@
 package com.example.thunderscope_frontend.data.models
 
 import android.os.Parcelable
+import android.transition.Slide
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class CaseRecord(
+data class CaseRecordResponse(
 
     @field:SerializedName("doctor")
-	val doctorResponse: DoctorResponse? = null,
+	val doctor: AuthDoctorResponse? = null,
 
     @field:SerializedName("date")
 	val date: String? = null,
@@ -17,10 +18,10 @@ data class CaseRecord(
 	val year: String? = null,
 
     @field:SerializedName("patient")
-	val patient: Patient? = null,
+	val patient: PatientResponse? = null,
 
     @field:SerializedName("id")
-	val id: Long? = null,
+	val id: Int? = null,
 
     @field:SerializedName("time")
 	val time: String? = null,
@@ -28,6 +29,11 @@ data class CaseRecord(
     @field:SerializedName("type")
 	val type: String? = null,
 
+    @field:SerializedName("todo")
+    val todo: String? = null,
+
     @field:SerializedName("status")
-	val status: String? = null
+	val status: String? = null,
+
+    var slides: MutableList<SlidesItem> = mutableListOf(),
 ): Parcelable

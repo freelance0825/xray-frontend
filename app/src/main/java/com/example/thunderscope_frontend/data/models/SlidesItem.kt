@@ -5,7 +5,6 @@ import android.os.Parcelable
 import com.example.thunderscope_frontend.ui.utils.Base64Helper
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
-import kotlinx.parcelize.RawValue
 
 @Parcelize
 data class SlidesItem(
@@ -29,7 +28,7 @@ data class SlidesItem(
 	val specimenType: String? = null,
 
 	@field:SerializedName("case_record")
-	val caseRecord: CaseRecord? = null,
+	val caseRecordResponse: CaseRecordResponse? = null,
 
 	@field:SerializedName("ai_insights")
 	val aiInsights: String? = null,

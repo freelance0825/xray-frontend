@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Patient(
+data class PatientResponse(
 
 	@field:SerializedName("image_base64")
 	var imageBase64: String? = null,
@@ -30,6 +30,18 @@ data class Patient(
 
 	@field:SerializedName("age")
 	var age: String? = null,
+
+	@field:SerializedName("updated_at")
+	var updatedAt: String? = null,
+
+	@field:SerializedName("status")
+	var status: String? = null,
+
+	@field:SerializedName("state")
+	var state: String? = null,
+
+	@field:SerializedName("type")
+	var type: String? = null,
 
 	@field:SerializedName("email")
 	val email: String? = null

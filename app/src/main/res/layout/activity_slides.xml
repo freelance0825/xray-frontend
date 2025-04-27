@@ -163,7 +163,7 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- Patient Data -->
+            <!-- PatientResponse Data -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -171,7 +171,7 @@
                 android:orientation="horizontal"
                 android:padding="16dp">
 
-                <!-- Patient Info -->
+                <!-- PatientResponse Info -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -211,14 +211,14 @@
 
                 </LinearLayout>
 
-                <!-- Patient All Data -->
+                <!-- PatientResponse All Data -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|end">
 
-                    <!-- Patient Number -->
+                    <!-- PatientResponse Number -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -247,7 +247,7 @@
                         android:layout_marginHorizontal="12dp"
                         android:background="@color/gray_opacity_80" />
 
-                    <!-- Patient Number -->
+                    <!-- PatientResponse Number -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -276,7 +276,7 @@
                         android:layout_marginHorizontal="12dp"
                         android:background="@color/gray_opacity_80" />
 
-                    <!-- Patient Number -->
+                    <!-- PatientResponse Number -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -305,7 +305,7 @@
                         android:layout_marginHorizontal="12dp"
                         android:background="@color/gray_opacity_80" />
 
-                    <!-- Patient Number -->
+                    <!-- PatientResponse Number -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -336,7 +336,7 @@
 
                 </LinearLayout>
 
-                <!-- Patient Diopters -->
+                <!-- PatientResponse Diopters -->
                 <LinearLayout
                     android:id="@+id/layout_diopters"
                     android:layout_width="wrap_content"

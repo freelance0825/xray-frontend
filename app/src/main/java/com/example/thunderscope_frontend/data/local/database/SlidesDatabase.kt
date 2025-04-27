@@ -1,4 +1,4 @@
-package com.example.thunderscope_frontend.data.local
+package com.example.thunderscope_frontend.data.local.database
 
 import android.content.Context
 import androidx.room.Database

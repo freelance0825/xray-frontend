@@ -1,17 +1,14 @@
-package com.example.thunderscope_frontend.ui.fragments
+package com.example.thunderscope_frontend.ui.createnewtest.screens
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.ui.createnewtest.CreateNewTestActivity
 import com.example.thunderscope_frontend.ui.createnewtest.CreateNewTestViewModel
-import com.example.thunderscope_frontend.ui.createnewtest.CreatePatientInfoActivity
 
 class CreateNewTestActivityFragment : Fragment() {
 

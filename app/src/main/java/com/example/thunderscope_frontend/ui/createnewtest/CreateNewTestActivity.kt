@@ -1,19 +1,14 @@
 package com.example.thunderscope_frontend.ui.createnewtest
 
-import android.app.Activity
-import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.StrictMode
-import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.databinding.CreateNewTestActivityBinding
-import com.example.thunderscope_frontend.ui.fragments.CreateNewTestActivityFragment
-import com.example.thunderscope_frontend.ui.fragments.CreatePatientInfoActivityFragment
-import com.example.thunderscope_frontend.ui.patient.PatientListActivity
+import com.example.thunderscope_frontend.ui.createnewtest.screens.CreateNewTestActivityFragment
+import com.example.thunderscope_frontend.ui.createnewtest.screens.CreatePatientInfoActivityFragment
 
 class CreateNewTestActivity : AppCompatActivity() {
 

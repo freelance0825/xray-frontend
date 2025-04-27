@@ -17,7 +17,7 @@ class CaseRecordViewModel(application: Application) : AndroidViewModel(applicati
     val caseRecordsLiveData = MutableLiveData<List<CaseRecordUI>>()
 
     // LiveData to store the count of case records
-    val caseCountLiveData = MutableLiveData<Int>()  // Holds the total count of cases
+    val caseCountLiveData = MutableLiveData<Int>()  // Holds the total count of casedashboard
 
     // LiveData to store any error messages
     val errorLiveData = MutableLiveData<String>()
@@ -96,9 +96,9 @@ class CaseRecordViewModel(application: Application) : AndroidViewModel(applicati
             val jsonObject = jsonArray.getJSONObject(i)
 
             val doctor = jsonObject.optJSONObject("doctor")
-            val patient = jsonObject.optJSONObject("patient")
+            val patient = jsonObject.optJSONObject("casedashboard")
 
-            // Ensure both doctor and patient objects exist before proceeding
+            // Ensure both doctor and casedashboard objects exist before proceeding
             if (doctor != null && patient != null) {
                 val caseRecord = CaseRecordUI(
                     caseRecordId = jsonObject.optInt("id"),

@@ -288,7 +288,7 @@
                 android:text="To Do"
                 android:textStyle="bold" />
 
-            <!-- Header: Patient -->
+            <!-- Header: PatientResponse -->
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1.6"

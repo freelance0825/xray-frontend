@@ -2,6 +2,7 @@ package com.example.thunderscope_frontend.viewmodel
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -21,7 +22,7 @@ class PatientRecordViewModel(application: Application) : AndroidViewModel(applic
     val patientRecordsLiveData = MutableLiveData<List<PatientRecordUI>>()
 
     // LiveData to store the count of case records
-    val patientCountLiveData = MutableLiveData<Int>()  // Holds the total count of cases
+    val patientCountLiveData = MutableLiveData<Int>()  // Holds the total count of casedashboard
 
     // LiveData to store any error messages
     val errorLiveData = MutableLiveData<String>()
@@ -153,7 +154,7 @@ class PatientRecordViewModel(application: Application) : AndroidViewModel(applic
             override fun onResponse(call: Call, response: Response) {
                 response.use { res ->
                     if (!res.isSuccessful) {
-                        postError("Failed to delete patient: ${res.code} - ${res.message}")
+                        postError("Failed to delete casedashboard: ${res.code} - ${res.message}")
                         return
                     }
 
