@@ -2,7 +2,7 @@ package com.example.thunderscope_frontend.data.models
 
 import com.google.gson.annotations.SerializedName
 
-data class DoctorRequest(
+data class AuthDoctorRequest(
 
 	@field:SerializedName("password")
 	val password: String? = null,

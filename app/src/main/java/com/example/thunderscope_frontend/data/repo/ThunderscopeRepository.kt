@@ -2,11 +2,13 @@ package com.example.thunderscope_frontend.data.repo
 
 import android.content.Context
 import android.util.Log
-import com.example.thunderscope_frontend.data.local.SlidesDatabase
-import com.example.thunderscope_frontend.data.models.DoctorRequest
-import com.example.thunderscope_frontend.data.models.DoctorResponse
+import com.example.thunderscope_frontend.data.local.database.SlidesDatabase
+import com.example.thunderscope_frontend.data.local.datastore.AuthDataStore
+import com.example.thunderscope_frontend.data.models.AuthDoctorRequest
+import com.example.thunderscope_frontend.data.models.CaseRecordFilterRequest
 import com.example.thunderscope_frontend.data.models.PostTestReviewPayload
 import com.example.thunderscope_frontend.data.models.SlidesItem
+import com.example.thunderscope_frontend.data.models.UpdatePatientRequest
 import com.example.thunderscope_frontend.data.remote.ApiConfig
 import com.example.thunderscope_frontend.data.utils.SlidesMapper
 import com.example.thunderscope_frontend.ui.utils.Result
@@ -26,8 +28,166 @@ import java.io.IOException
 class ThunderscopeRepository(
     context: Context
 ) {
-    private val apiService = ApiConfig.getApiService(context)
+    private val authDataStore = AuthDataStore.getInstance(context)
+    private val apiService = ApiConfig.getApiService(authDataStore)
     private val slidesDao = SlidesDatabase.getDatabase(context).slidesDao()
+
+    fun loginDoctor(email: String, password: String) = flow {
+        emit(Result.Loading)
+        try {
+            val loginRequest = AuthDoctorRequest(email = email, password = password)
+            val loginResponse = apiService.loginDoctor(loginRequest)
+
+            // SAVE TOKEN TO DATASTORE
+            runBlocking { authDataStore.saveToken(loginResponse.token.toString()) }
+
+            emit(Result.Success(loginResponse))
+        } catch (e: Exception) {
+            if (e.message?.contains("404") == true) {
+                emit(Result.Error("User not found"))
+            } else {
+                emit(Result.Error("Login Failed, Please try again!"))
+            }
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun registerDoctor(authDoctorRequest: AuthDoctorRequest) = flow {
+        emit(Result.Loading)
+        try {
+            val registerResponse = apiService.registerDoctor(authDoctorRequest)
+
+            // SAVE TOKEN TO DATASTORE
+            runBlocking { authDataStore.saveToken(registerResponse.token.toString()) }
+
+            emit(Result.Success(registerResponse))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    suspend fun getToken() = authDataStore.getToken()
+
+    suspend fun logout() {
+        authDataStore.clearPreferences()
+    }
+
+    fun getAllCases() = flow {
+        emit(Result.Loading)
+        try {
+            val caseRecordResponse = apiService.getCaseRecords()
+            emit(Result.Success(caseRecordResponse))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun getAllCasesFilterId(patientId: Int? = null, doctorId: Int? = null) = flow {
+        emit(Result.Loading)
+        try {
+            val caseRecordFilterRequest =
+                CaseRecordFilterRequest(patientId = patientId, doctorId = doctorId)
+            val caseRecordResponse = apiService.getCaseRecordsFilterId(caseRecordFilterRequest)
+            emit(Result.Success(caseRecordResponse))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun getAllPatients() = flow {
+        emit(Result.Loading)
+        try {
+            val patientResponse = apiService.getPatientRecords()
+            emit(Result.Success(patientResponse))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun deletePatient(patientId: Int) = flow {
+        emit(Result.Loading)
+        try {
+            val patientResponse = apiService.deletePatient(patientId)
+            emit(Result.Success(patientResponse))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun updatePatient(patientId: Int, patientRequest: UpdatePatientRequest) = flow {
+        emit(Result.Loading)
+        try {
+            val formData = mutableMapOf<String, RequestBody>()
+            patientRequest.name?.let { formData["name"] = it.toRequestBody() }
+            patientRequest.email?.let { formData["email"] = it.toRequestBody() }
+            patientRequest.phoneNumber?.let { formData["phoneNumber"] = it.toRequestBody() }
+            patientRequest.dob?.let { formData["dob"] = it.toRequestBody() }
+            patientRequest.age?.let { formData["age"] = it.toRequestBody() }
+            patientRequest.address?.let { formData["address"] = it.toRequestBody() }
+            patientRequest.gender?.let { formData["gender"] = it.toRequestBody() }
+            patientRequest.state?.let { formData["state"] = it.toRequestBody() }
+            patientRequest.type?.let { formData["type"] = it.toRequestBody() }
+            patientRequest.status?.let { formData["status"] = it.toRequestBody() }
+
+            val payloadImage = patientRequest.image
+
+            val patientImagePart =
+                payloadImage?.asRequestBody("image/*".toMediaTypeOrNull())?.let {
+                    MultipartBody.Part.createFormData(
+                        "image",
+                        payloadImage.name,
+                        it
+                    )
+                }
+
+            val response = apiService.updatePatient(patientId, formData, patientImagePart)
+            emit(Result.Success(response))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun addPatient(patientRequest: UpdatePatientRequest) = flow {
+        emit(Result.Loading)
+        try {
+            val formData = mutableMapOf<String, RequestBody>()
+            patientRequest.name?.let { formData["name"] = it.toRequestBody() }
+            patientRequest.email?.let { formData["email"] = it.toRequestBody() }
+            patientRequest.phoneNumber?.let { formData["phoneNumber"] = it.toRequestBody() }
+            patientRequest.dob?.let { formData["dob"] = it.toRequestBody() }
+            patientRequest.age?.let { formData["age"] = it.toRequestBody() }
+            patientRequest.address?.let { formData["address"] = it.toRequestBody() }
+            patientRequest.gender?.let { formData["gender"] = it.toRequestBody() }
+            patientRequest.state?.let { formData["state"] = it.toRequestBody() }
+            patientRequest.type?.let { formData["type"] = it.toRequestBody() }
+            patientRequest.status?.let { formData["status"] = it.toRequestBody() }
+
+            val payloadImage = patientRequest.image
+
+            val patientImagePart =
+                payloadImage?.asRequestBody("image/*".toMediaTypeOrNull())?.let {
+                    MultipartBody.Part.createFormData(
+                        "image",
+                        payloadImage.name,
+                        it
+                    )
+                }
+
+            val response = apiService.addPatient(formData, patientImagePart)
+            emit(Result.Success(response))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun getAllDoctors() = flow {
+        emit(Result.Loading)
+        try {
+            val doctorResponse = apiService.getDoctorRecords()
+            emit(Result.Success(doctorResponse))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
 
     fun getAllSlides(caseId: Int) = flow {
         emit(Result.Loading)
@@ -59,7 +219,7 @@ class ThunderscopeRepository(
             payload.microscopicDc?.let { formData["microscopicDc"] = it.toRequestBody() }
             payload.diagnosis?.let { formData["diagnosis"] = it.toRequestBody() }
 
-            Log.e("FTEST", "updateSlide: ${payload.caseRecordId}", )
+            Log.e("FTEST", "updateSlide: ${payload.caseRecordId}")
 
             val payloadSign = payload.doctorSignature
 
@@ -118,18 +278,7 @@ class ThunderscopeRepository(
     }
 
     // DUMMY SLIDES FOR CREATE NEW TEST PURPOSE!!!
-
     suspend fun generateDummySlidesToDatabaseForMVPPurpose() {
         insertSlides(slidesList)
     }
-
-    suspend fun registerDoctor(doctorRequest: DoctorRequest)= flow {
-        emit(Result.Loading)
-        try {
-            val storyResponse = apiService.registerDoctor(doctorRequest)
-            emit(Result.Success(storyResponse))
-        } catch (e: Exception) {
-            emit(Result.Error(e.message.toString()))
-        }
-    }.flowOn(Dispatchers.IO)
 }

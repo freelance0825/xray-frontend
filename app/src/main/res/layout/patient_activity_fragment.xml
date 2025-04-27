@@ -198,7 +198,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="18sp" />
 
-                <!-- "Patient" Text -->
+                <!-- "PatientResponse" Text -->
                 <TextView
                     android:id="@+id/todo_label"
                     android:layout_width="wrap_content"
@@ -271,7 +271,7 @@
             android:minHeight="48dp"
             android:paddingBottom="8dp">
 
-            <!-- Header: Patient ID -->
+            <!-- Header: PatientResponse ID -->
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -281,7 +281,7 @@
                 android:text="Patient ID"
                 android:textStyle="bold" />
 
-            <!-- Header: Patient Name -->
+            <!-- Header: PatientResponse Name -->
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

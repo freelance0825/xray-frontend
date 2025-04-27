@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.transition.Slide
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -16,27 +15,26 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.thunderscope_frontend.R
-import com.example.thunderscope_frontend.data.models.Patient
-import com.example.thunderscope_frontend.data.models.SlidesItem
+import com.example.thunderscope_frontend.data.models.CaseRecordResponse
+import com.example.thunderscope_frontend.data.models.PatientResponse
 import com.example.thunderscope_frontend.databinding.ActivitySlidesBinding
 import com.example.thunderscope_frontend.ui.slides.adapters.AnnotationAdapter
 import com.example.thunderscope_frontend.ui.slides.adapters.MenuSlidesAdapter
 import com.example.thunderscope_frontend.ui.slides.adapters.PhotoAdapter
 import com.example.thunderscope_frontend.ui.slides.adapters.SlidesAdapter
 import com.example.thunderscope_frontend.ui.slidesdetail.SlidesDetailActivity
-import com.example.thunderscope_frontend.ui.slidesdetail.SlidesDetailViewModel
 import com.example.thunderscope_frontend.ui.utils.Base64Helper
 import com.example.thunderscope_frontend.viewmodel.CaseRecordUI
 
 class SlidesActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySlidesBinding
 
-    private val caseRecord: CaseRecordUI? by lazy {
+    private val caseRecord: CaseRecordResponse? by lazy {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getSerializableExtra(EXTRA_CASE_RECORD, CaseRecordUI::class.java)
+            intent.getParcelableExtra(EXTRA_CASE_RECORD, CaseRecordResponse::class.java)
         } else {
             @Suppress("DEPRECATION")
-            intent.getSerializableExtra(EXTRA_CASE_RECORD) as? CaseRecordUI
+            intent.getParcelableExtra(EXTRA_CASE_RECORD) as? CaseRecordResponse
         }
     }
 
@@ -99,19 +97,19 @@ class SlidesActivity : AppCompatActivity() {
     private fun setViews() {
         binding.apply {
             caseRecord?.let {
-                ivPatient.setImageBitmap(Base64Helper.convertToBitmap(it.patientImage))
+                ivPatient.setImageBitmap(Base64Helper.convertToBitmap(it.patient?.imageBase64))
 
-                tvCaseId.text = it.caseRecordId.toString()
+                tvCaseId.text = it.id.toString()
                 tvCaseStatus.text = it.status
-                tvPatientId.text = it.patientId.toString()
-                tvPatientName.text = it.patientName
-                tvPatientNumber.text = it.patientPhoneNumber
-                tvPatientBirthdate.text = it.patientBirthdate
-                tvPatientGender.text = it.patientGender
-                tvPatientAge.text = it.patientAge
-                tvDoctorName.text = it.physicianName
-                tvDoctorNameMenu.text = it.physicianName
-                tvDoctorInitial.text = generateInitials(it.physicianName)
+                tvPatientId.text = it.patient?.id.toString()
+                tvPatientName.text = it.patient?.name
+                tvPatientNumber.text = it.patient?.phoneNumber
+                tvPatientBirthdate.text = it.patient?.dateOfBirth
+                tvPatientGender.text = it.patient?.gender
+                tvPatientAge.text = it.patient?.age
+                tvDoctorName.text = it.doctor?.name
+                tvDoctorNameMenu.text = it.doctor?.name
+                tvDoctorInitial.text = generateInitials(it.doctor?.name.toString())
             }
 
             rvSlides.apply {
@@ -188,21 +186,21 @@ class SlidesActivity : AppCompatActivity() {
                 } else {
                     slidesViewModel.insertSlides(activeSlidesList)
 
-                    val patient = Patient()
+                    val patientResponse = PatientResponse()
 
                     caseRecord?.let {
-                        patient.id = it.patientId.toLong()
-                        patient.age = it.patientAge
-                        patient.name = it.patientName
-                        patient.gender = it.patientGender
-                        patient.dateOfBirth = it.patientBirthdate
+                        patientResponse.id = it.patient?.id
+                        patientResponse.age = it.patient?.age
+                        patientResponse.name = it.patient?.name
+                        patientResponse.gender = it.patient?.gender
+                        patientResponse.dateOfBirth = it.patient?.dateOfBirth
                     }
 
-                    Log.e("FTEST", "slides: ${caseRecord?.caseRecordId}", )
+                    Log.e("FTEST", "slides: ${caseRecord?.id}", )
 
                     val iDetail = Intent(this@SlidesActivity, SlidesDetailActivity::class.java)
-                    iDetail.putExtra(SlidesDetailActivity.EXTRA_PATIENT, patient)
-                    iDetail.putExtra(SlidesDetailActivity.EXTRA_CASE_ID, caseRecord?.caseRecordId?.toLong())
+                    iDetail.putExtra(SlidesDetailActivity.EXTRA_PATIENT, patientResponse)
+                    iDetail.putExtra(SlidesDetailActivity.EXTRA_CASE_ID, caseRecord?.id?.toLong())
                     startActivity(iDetail)
                 }
             }

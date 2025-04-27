@@ -13,7 +13,6 @@ import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup.LayoutParams
-import android.view.Window
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ImageView
@@ -29,12 +28,11 @@ import androidx.core.graphics.createBitmap
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.thunderscope_frontend.R
-import com.example.thunderscope_frontend.data.models.Patient
+import com.example.thunderscope_frontend.data.models.PatientResponse
 import com.example.thunderscope_frontend.data.models.PostTestReviewPayload
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.databinding.ActivitySlidesDetailBinding
 import com.example.thunderscope_frontend.ui.report.ReportActivity
-import com.example.thunderscope_frontend.ui.report.ReportActivity.Companion.EXTRA_SLIDE_ID
 import com.example.thunderscope_frontend.ui.slidesdetail.adapters.SavedAnnotationAdapter
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.ShapeType
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.ZoomImageView
@@ -69,9 +67,9 @@ class SlidesDetailActivity : AppCompatActivity() {
         intent.getLongExtra(EXTRA_CASE_ID, 0)
     }
 
-    private val patientData: Patient? by lazy {
+    private val patientResponseData: PatientResponse? by lazy {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(EXTRA_PATIENT, Patient::class.java)
+            intent.getParcelableExtra(EXTRA_PATIENT, PatientResponse::class.java)
         } else {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra(EXTRA_PATIENT)
@@ -105,7 +103,7 @@ class SlidesDetailActivity : AppCompatActivity() {
         slidesDetailViewModel.apply {
             slideItems.observe(this@SlidesDetailActivity) { slideList ->
                 currentlySelectedSlides.observe(this@SlidesDetailActivity) { selectedSlides ->
-                    binding.tvCaseId.text = selectedSlides?.caseRecord?.id.toString()
+                    binding.tvCaseId.text = selectedSlides?.caseRecordResponse?.id.toString()
 
                     binding.ivBaseImage.setImageBitmap(selectedSlides?.bitmapImage)
 
@@ -283,7 +281,7 @@ class SlidesDetailActivity : AppCompatActivity() {
                 ::showSegmentationConfigurationLayout
             )
 
-            patientData?.let { patient ->
+            patientResponseData?.let { patient ->
                 binding.tvPatientName.text = patient.name
                 binding.tvPatientId.text = patient.id.toString()
                 binding.tvPatientDob.text =
@@ -689,14 +687,14 @@ class SlidesDetailActivity : AppCompatActivity() {
         val currentDate = dateFormat.format(now.time)
         val currentTime = timeFormat.format(now.time)
 
-        tvPatientName.text = patientData?.name
+        tvPatientName.text = patientResponseData?.name
         tvPatientGenderAge.text =
-            StringBuilder("${patientData?.gender} • ${patientData?.age} years old")
+            StringBuilder("${patientResponseData?.gender} • ${patientResponseData?.age} years old")
         tvDateNow.text = currentDate
         tvTimeNow.text = currentTime
         tvDateTimeCombined.text = StringBuilder("$currentDate • $currentTime")
 
-        if (patientData?.gender?.lowercase().equals("female")) {
+        if (patientResponseData?.gender?.lowercase().equals("female")) {
             ivGender.setImageDrawable(
                 ContextCompat.getDrawable(
                     this@SlidesDetailActivity,
@@ -764,7 +762,7 @@ class SlidesDetailActivity : AppCompatActivity() {
 
                                 val iReport =
                                     Intent(this@SlidesDetailActivity, ReportActivity::class.java)
-                                iReport.putExtra(ReportActivity.EXTRA_PATIENT, patientData)
+                                iReport.putExtra(ReportActivity.EXTRA_PATIENT, patientResponseData)
                                 iReport.putExtra(
                                     ReportActivity.EXTRA_SLIDE_ID,
                                     slidesDetailViewModel.currentlySelectedSlides.value?.id

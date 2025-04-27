@@ -24,7 +24,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.thunderscope_frontend.R
-import com.example.thunderscope_frontend.ui.patient.PatientActivity
+import com.example.thunderscope_frontend.ui.patientdashboard.PatientDashboardActivity
 import com.example.thunderscope_frontend.viewmodel.PatientRecordUI
 import com.example.thunderscope_frontend.viewmodel.PatientRecordViewModel
 import okhttp3.Call
@@ -54,12 +54,12 @@ class EditPatientDialogFragment : DialogFragment() {
     private lateinit var btnSubmit: Button
     private lateinit var closeButton: ImageView
 
-    // Patient Record View Model
-    private lateinit var patientRecordViewModel: PatientRecordViewModel
+    // PatientResponse Record View Model
+    private lateinit var patientResponseRecordViewModel: PatientRecordViewModel
 
     private var selectedImageUri: Uri? = null
     private var patientId: String? = null
-    private var currentPatient: PatientRecordUI? = null // Store the patient object
+    private var currentPatient: PatientRecordUI? = null // Store the casedashboard object
     private val client = OkHttpClient()
 
     companion object {
@@ -100,7 +100,7 @@ class EditPatientDialogFragment : DialogFragment() {
 
         // Retrieve patientId from arguments
         patientId = arguments?.getString(ARG_PATIENT_ID)
-        Log.d("EditPatient", "Patient ID: $patientId")
+        Log.d("EditPatient", "PatientResponse ID: $patientId")
 
         // Initialize UI components
         imgProfile = view.findViewById(R.id.imgProfile)
@@ -117,27 +117,27 @@ class EditPatientDialogFragment : DialogFragment() {
         closeButton = view.findViewById(R.id.btnClose)
 
         // Initialize ViewModel
-        patientRecordViewModel =
+        patientResponseRecordViewModel =
             ViewModelProvider(requireActivity()).get(PatientRecordViewModel::class.java)
 
         // Fetch records to populate LiveData
-        patientRecordViewModel.fetchCaseRecords()
+        patientResponseRecordViewModel.fetchCaseRecords()
 
         // Observe LiveData correctly
-        patientRecordViewModel.patientRecordsLiveData.observe(viewLifecycleOwner) { records ->
+        patientResponseRecordViewModel.patientRecordsLiveData.observe(viewLifecycleOwner) { records ->
             val patient = records.find { it.patientId == patientId?.toIntOrNull() }
 
             if (patient != null) {
-                currentPatient = patient // Store the patient object
+                currentPatient = patient // Store the casedashboard object
                 populateFields(patient)
             } else {
-                Toast.makeText(requireContext(), "Patient not found", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "PatientResponse not found", Toast.LENGTH_SHORT).show()
             }
         }
 
         // On click listener for close button
         closeButton.setOnClickListener {
-            val intent = Intent(requireContext(), PatientActivity::class.java)
+            val intent = Intent(requireContext(), PatientDashboardActivity::class.java)
             startActivity(intent)
             dismiss() // Close the dialog
         }
@@ -228,7 +228,7 @@ class EditPatientDialogFragment : DialogFragment() {
         datePickerDialog.show()
     }
 
-    // Update Patient Data
+    // Update PatientResponse Data
     private fun updatePatientData() {
         val sharedPreferences = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         val token = sharedPreferences.getString("token", "") ?: ""
@@ -238,7 +238,7 @@ class EditPatientDialogFragment : DialogFragment() {
         }
 
         if (patientId == null) {
-            Toast.makeText(requireContext(), "Patient ID is missing", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "PatientResponse ID is missing", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -252,8 +252,8 @@ class EditPatientDialogFragment : DialogFragment() {
                 return
             }
         } else {
-            // If the image was not updated, use the existing patient's image
-            val imageBase64 = currentPatient?.patientImage // Use the stored patient object here
+            // If the image was not updated, use the existing casedashboard's image
+            val imageBase64 = currentPatient?.patientImage // Use the stored casedashboard object here
             if (imageBase64 != null) {
                 val decodedImage = Base64.decode(imageBase64, Base64.DEFAULT)
                 imageRequestBody = decodedImage.toRequestBody("image/*".toMediaTypeOrNull())
@@ -291,7 +291,7 @@ class EditPatientDialogFragment : DialogFragment() {
             override fun onResponse(call: Call, response: Response) {
                 requireActivity().runOnUiThread {
                     if (response.isSuccessful) {
-                        Toast.makeText(requireContext(), "Patient updated successfully!", Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(), "PatientResponse updated successfully!", Toast.LENGTH_LONG).show()
                     } else {
                         try {
                             val errorResponse = response.body?.string() ?: "No error message"

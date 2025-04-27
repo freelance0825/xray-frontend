@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.data.models.AnnotationItem
+import com.example.thunderscope_frontend.data.models.CaseRecordResponse
 import com.example.thunderscope_frontend.data.models.PhotoItem
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.data.repo.ThunderscopeRepository
@@ -16,7 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SlidesViewModel(
-    private val caseRecord: CaseRecordUI?,
+    private val caseRecord: CaseRecordResponse?,
     private val thunderscopeRepository: ThunderscopeRepository
 ) : ViewModel() {
 
@@ -38,7 +39,7 @@ class SlidesViewModel(
 
     private fun getAllSlides() {
         viewModelScope.launch {
-            thunderscopeRepository.getAllSlides(caseRecord?.caseRecordId ?: 1).collect { result ->
+            thunderscopeRepository.getAllSlides(caseRecord?.id ?: 1).collect { result ->
                 when (result) {
                     is Result.Loading -> {
                         // Handle loading here
@@ -145,7 +146,7 @@ class SlidesViewModel(
 
     @Suppress("UNCHECKED_CAST")
     class Factory(
-        private val caseRecord: CaseRecordUI?,
+        private val caseRecord: CaseRecordResponse?,
         private val context: Context
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

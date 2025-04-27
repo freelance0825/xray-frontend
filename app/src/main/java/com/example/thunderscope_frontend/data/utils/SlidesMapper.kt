@@ -1,13 +1,13 @@
 package com.example.thunderscope_frontend.data.utils
 
-import com.example.thunderscope_frontend.data.models.CaseRecord
+import com.example.thunderscope_frontend.data.models.CaseRecordResponse
 import com.example.thunderscope_frontend.data.models.SlidesEntity
 import com.example.thunderscope_frontend.data.models.SlidesItem
 
 object SlidesMapper {
     fun toEntity(slidesItem: SlidesItem) = SlidesEntity(
         id = slidesItem.id ?: 0L,
-        caseId = slidesItem.caseRecord?.id ?: 0L,
+        caseId = slidesItem.caseRecordResponse?.id?.toLong() ?: 0L,
         mainImage = slidesItem.mainImage,
         qrCode = slidesItem.qrCode,
         reportId = slidesItem.reportId,
@@ -22,7 +22,7 @@ object SlidesMapper {
 
     fun toDomain(slidesEntity: SlidesEntity) = SlidesItem(
         id = slidesEntity.id,
-        caseRecord = CaseRecord(id = slidesEntity.caseId),
+        caseRecordResponse = CaseRecordResponse(id = slidesEntity.caseId.toInt()),
         mainImage = slidesEntity.mainImage,
         qrCode = slidesEntity.qrCode,
         reportId = slidesEntity.reportId,

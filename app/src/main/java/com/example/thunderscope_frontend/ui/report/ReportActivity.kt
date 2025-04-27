@@ -13,7 +13,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.example.thunderscope_frontend.R
-import com.example.thunderscope_frontend.data.models.Patient
+import com.example.thunderscope_frontend.data.models.PatientResponse
 import com.example.thunderscope_frontend.databinding.ActivityReportBinding
 import com.example.thunderscope_frontend.ui.utils.Base64Helper
 import java.io.File
@@ -27,9 +27,9 @@ class ReportActivity : AppCompatActivity() {
         intent.getLongExtra(EXTRA_SLIDE_ID, 0)
     }
 
-    private val patientData: Patient? by lazy {
+    private val patientResponseData: PatientResponse? by lazy {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(EXTRA_PATIENT, Patient::class.java)
+            intent.getParcelableExtra(EXTRA_PATIENT, PatientResponse::class.java)
         } else {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra(EXTRA_PATIENT)
@@ -57,10 +57,10 @@ class ReportActivity : AppCompatActivity() {
         reportViewModel.currentlySelectedSlide.observe(this) { slide ->
             slide?.let {
                 binding.apply {
-                    slide.caseRecord?.patient?.let {
+                    slide.caseRecordResponse?.patient?.let {
                         val patientPrefix = if (it.gender?.lowercase().equals("female")) "Mrs." else "Mr."
                         tvPatientName.text = StringBuilder("$patientPrefix ${it.name}")
-                        tvPatientGenderAge.text = StringBuilder("${patientData?.gender} • ${patientData?.age} years old")
+                        tvPatientGenderAge.text = StringBuilder("${patientResponseData?.gender} • ${patientResponseData?.age} years old")
                         tvPatientMobileNumber.text = getString(R.string.activity_report_mob_no, it.phoneNumber.toString())
                         tvPatientId.text = getString(R.string.activity_report_patient_id, it.id.toString())
                         tvPatientAddress.text = it.address
@@ -70,7 +70,7 @@ class ReportActivity : AppCompatActivity() {
                     tvSubmissionConclusion.text = slide.microscopicDc
                     tvSubmissionDiagnosis.text = slide.diagnosis
 
-                    slide.caseRecord?.doctorResponse.let {
+                    slide.caseRecordResponse?.doctor.let {
                         ivSignature.setImageBitmap(Base64Helper.convertToBitmap(it?.signature))
                         tvDoctorName.text = it?.name
                         tvOccupation.text = it?.specialist
@@ -82,10 +82,10 @@ class ReportActivity : AppCompatActivity() {
 
     private fun setViews() {
         binding.apply {
-            patientData?.let {
+            patientResponseData?.let {
                 val patientPrefix = if (it.gender?.lowercase().equals("female")) "Mrs." else "Mr."
                 tvPatientName.text = StringBuilder("$patientPrefix ${it.name}")
-                tvPatientGenderAge.text = StringBuilder("${patientData?.gender} • ${patientData?.age} years old")
+                tvPatientGenderAge.text = StringBuilder("${patientResponseData?.gender} • ${patientResponseData?.age} years old")
                 tvPatientMobileNumber.text = getString(R.string.activity_report_mob_no, it.phoneNumber.toString())
                 tvPatientId.text = getString(R.string.activity_report_patient_id, it.id.toString())
                 tvPatientAddress.text = it.address

@@ -7,7 +7,7 @@
     android:minHeight="48dp"
     android:paddingBottom="8dp">
 
-    <!-- Data: Patient ID -->
+    <!-- Data: PatientResponse ID -->
     <TextView
         android:id="@+id/patientId"
         android:layout_width="0dp"
@@ -16,7 +16,7 @@
         android:padding="8dp"
         android:text="P-9890200" />
 
-    <!-- Data: Patient Name -->
+    <!-- Data: PatientResponse Name -->
     <TextView
         android:id="@+id/patientName"
         android:layout_width="0dp"

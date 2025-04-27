@@ -60,6 +60,9 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
 
+    // DataStore
+    implementation(libs.androidx.datastore.preferences)
+
     // AndroidX AppCompat for AppCompatActivity
     implementation("androidx.appcompat:appcompat:1.6.1")
 
@@ -86,7 +89,8 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
 
     // View Models
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+    implementation("androidx.fragment:fragment-ktx:1.8.6")
 
     // Glide for image loading and caching
     implementation("com.github.bumptech.glide:glide:4.16.0")

@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.thunderscope_frontend.data.models.DoctorRequest
-import com.example.thunderscope_frontend.data.models.DoctorResponse
+import com.example.thunderscope_frontend.data.models.AuthDoctorRequest
+import com.example.thunderscope_frontend.data.models.AuthDoctorResponse
 import com.example.thunderscope_frontend.data.repo.ThunderscopeRepository
 import kotlinx.coroutines.launch
 import com.example.thunderscope_frontend.ui.utils.Result
@@ -16,15 +16,15 @@ class SignUpViewModel(private val thunderscopeRepository: ThunderscopeRepository
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    private val _registrationResult = MutableLiveData<DoctorResponse>(null)
-    val registrationResult: LiveData<DoctorResponse> get() = _registrationResult
+    private val _registrationResult = MutableLiveData<AuthDoctorResponse>(null)
+    val registrationResult: LiveData<AuthDoctorResponse> get() = _registrationResult
 
     private val _errorMessage = MutableLiveData("")
     val errorMessage: LiveData<String> get() = _errorMessage
 
-    fun registerDoctor(doctorRequest: DoctorRequest) {
+    fun registerDoctor(authDoctorRequest: AuthDoctorRequest) {
         viewModelScope.launch {
-            thunderscopeRepository.registerDoctor(doctorRequest).collect { result ->
+            thunderscopeRepository.registerDoctor(authDoctorRequest).collect { result ->
                 when (result) {
                     is Result.Loading -> {
                         _isLoading.value = true

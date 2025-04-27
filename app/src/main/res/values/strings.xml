@@ -79,7 +79,7 @@
     </string-array>
 
 
-    <!--- Spinner Patient Status -->
+    <!--- Spinner PatientResponse Status -->
     <string-array name="patient_status_options">
         <item>All Status</item>
         <item>Not Started</item>
