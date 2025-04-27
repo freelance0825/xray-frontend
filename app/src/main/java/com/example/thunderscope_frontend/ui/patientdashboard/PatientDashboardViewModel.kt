@@ -61,7 +61,8 @@ class PatientDashboardViewModel(
                     }
                     is Result.Success -> {
                         _isLoading.value = false
-                        _patientRecordsLiveData.value = result.data
+                        val sortedPatientByLatestUpdate = result.data.sortedByDescending { it.updatedAt }
+                        _patientRecordsLiveData.value = sortedPatientByLatestUpdate
                     }
                     is Result.Error -> {
                         _isLoading.value = false
