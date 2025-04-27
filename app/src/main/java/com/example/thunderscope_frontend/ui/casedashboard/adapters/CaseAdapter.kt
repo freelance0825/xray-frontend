@@ -65,16 +65,16 @@ class CaseAdapter : ListAdapter<CaseRecordResponse, CaseAdapter.CaseViewHolder>(
 
                 // Load images properly if available
                 if (record.slides.isNotEmpty()) {
-                    record.slides.getOrNull(0)?.let {
-                        assessmentImage1.setImageBitmap(Base64Helper.convertToBitmap(it.mainImage))
+                    record.slides.getOrNull(0)?.mainImage?.let {
+                        assessmentImage1.setImageBitmap(Base64Helper.convertToBitmap(it))
                     }
 
-                    record.slides.getOrNull(1)?.let {
-                        assessmentImage2.setImageBitmap(Base64Helper.convertToBitmap(it.mainImage))
+                    record.slides.getOrNull(1)?.mainImage?.let {
+                        assessmentImage2.setImageBitmap(Base64Helper.convertToBitmap(it))
                     }
 
-                    record.slides.getOrNull(2)?.let {
-                        assessmentImage3.setImageBitmap(Base64Helper.convertToBitmap(it.mainImage))
+                    record.slides.getOrNull(2)?.mainImage?.let {
+                        assessmentImage3.setImageBitmap(Base64Helper.convertToBitmap(it))
                     }
                 }
 
