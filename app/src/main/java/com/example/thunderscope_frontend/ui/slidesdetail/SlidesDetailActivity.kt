@@ -384,31 +384,33 @@ class SlidesDetailActivity : AppCompatActivity() {
             // Image Settings Configurations
             seekGamma.setOnSeekBarChangeListener(seekBarChangeListener { value ->
                 slidesDetailViewModel.updateGamma(value)
+                processFilter()
             })
 
             seekBrightness.setOnSeekBarChangeListener(seekBarChangeListener { value ->
                 slidesDetailViewModel.updateBrightness(value)
+                processFilter()
             })
 
             seekContrast.setOnSeekBarChangeListener(seekBarChangeListener { value ->
                 slidesDetailViewModel.updateContrast(value)
+                processFilter()
             })
 
             seekRed.setOnSeekBarChangeListener(seekBarChangeListener { value ->
                 slidesDetailViewModel.updateRed(value)
+                processFilter()
             })
 
             seekGreen.setOnSeekBarChangeListener(seekBarChangeListener { value ->
                 slidesDetailViewModel.updateGreen(value)
+                processFilter()
             })
 
             seekBlue.setOnSeekBarChangeListener(seekBarChangeListener { value ->
                 slidesDetailViewModel.updateBlue(value)
-            })
-
-            btnApplyFilter.setOnClickListener {
                 processFilter()
-            }
+            })
 
             btnCancelFilter.setOnClickListener {
                 resetFilters()

@@ -295,6 +295,20 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         }
     }
 
+    override fun setImageBitmap(bm: Bitmap?) {
+        super.setImageBitmap(bm)
+
+        // Reset zooming and translation when setting a new bitmap
+        resetZoomAndPan()
+    }
+
+
+    private fun resetZoomAndPan() {
+        setBounds()
+        updateMatrix(drawMatrix)  // Apply the reset matrix
+    }
+
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if (drawingEnabled) {
