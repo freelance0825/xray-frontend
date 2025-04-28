@@ -219,6 +219,26 @@ class ThunderscopeRepository(
         }
     }.flowOn(Dispatchers.IO)
 
+    fun getAnnotationsBySlidesId(slideId: Long) = flow {
+        emit(Result.Loading)
+        try {
+            val storyResponse = apiService.getAnnotationsBySlidesId(slideId)
+            emit(Result.Success(storyResponse))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun getSlidesWithAnnotations(slideId: Long) = flow {
+        emit(Result.Loading)
+        try {
+            val storyResponse = apiService.getSlidesWithAnnotations(slideId)
+            emit(Result.Success(storyResponse))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
     fun updateSlide(id: Long, payload: PostTestReviewPayload): Flow<Result<SlidesItem>> = flow {
         emit(Result.Loading)
 

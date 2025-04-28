@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.thunderscope_frontend.R
+import com.example.thunderscope_frontend.data.models.AnnotationResponse
 import com.example.thunderscope_frontend.data.models.CaseRecordResponse
 import com.example.thunderscope_frontend.data.models.PatientResponse
 import com.example.thunderscope_frontend.databinding.ActivitySlidesBinding
@@ -28,15 +29,6 @@ import com.example.thunderscope_frontend.viewmodel.CaseRecordUI
 
 class SlidesActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySlidesBinding
-
-//    private val caseRecord: CaseRecordResponse? by lazy {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//            intent.getParcelableExtra(EXTRA_CASE_RECORD, CaseRecordResponse::class.java)
-//        } else {
-//            @Suppress("DEPRECATION")
-//            intent.getParcelableExtra(EXTRA_CASE_RECORD) as? CaseRecordResponse
-//        }
-//    }
 
     private val caseRecordId: Int? by lazy {
         intent.getIntExtra(EXTRA_CASE_RECORD_ID, -1)
@@ -62,6 +54,12 @@ class SlidesActivity : AppCompatActivity() {
 
     private fun observeViews() {
         slidesViewModel.apply {
+            currentlySelectedSlide.observe(this@SlidesActivity) {
+                it?.let { slide ->
+                    binding.tvAiInsights.text = slide.aiInsights
+                }
+            }
+
             caseRecordResponse.observe(this@SlidesActivity) { caseRecord ->
                 caseRecord?.let {
                     setViews(it)
@@ -92,7 +90,7 @@ class SlidesActivity : AppCompatActivity() {
                 photoAdapter.submitList(it)
             }
 
-            annotationItems.observe(this@SlidesActivity) {
+            selectedAnnotationListByActiveSlides.observe(this@SlidesActivity) {
                 binding.tvAnnotationCount.text =
                     getString(R.string.activity_slides_annotation_count, it.size.toString())
                 annotationAdapter.submitList(it)

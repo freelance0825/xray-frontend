@@ -1,25 +1,14 @@
 package com.example.thunderscope_frontend.ui.report
 
 import android.content.Context
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.thunderscope_frontend.R
-import com.example.thunderscope_frontend.data.models.AnnotationItem
-import com.example.thunderscope_frontend.data.models.PostTestReviewPayload
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.data.repo.ThunderscopeRepository
-import com.example.thunderscope_frontend.ui.slidesdetail.customview.Shape
-import com.example.thunderscope_frontend.ui.slidesdetail.customview.ShapeType
 import com.example.thunderscope_frontend.ui.utils.Result
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import java.io.File
 
 class ReportViewModel(
     private val slideId: Long,

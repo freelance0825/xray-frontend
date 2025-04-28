@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.data.models.AnnotationItem
+import com.example.thunderscope_frontend.data.models.AnnotationResponse
 import com.example.thunderscope_frontend.data.models.CaseRecordResponse
 import com.example.thunderscope_frontend.data.models.PhotoItem
 import com.example.thunderscope_frontend.data.models.SlidesItem
@@ -26,8 +27,9 @@ class SlidesViewModel(
     val activeSlidesItem = MutableLiveData<MutableList<SlidesItem>>(mutableListOf())
     val currentlySelectedSlide = MutableLiveData<SlidesItem?>(null)
 
+    val selectedAnnotationListByActiveSlides = MutableLiveData<MutableList<AnnotationResponse>>(mutableListOf())
+
     val photoGalleryItems = MutableLiveData(this.getDummyPhotos())
-    val annotationItems = MutableLiveData(this.generateDummyAnnotationItem())
 
     val isOpeningRightMenu = MutableLiveData(false)
 
@@ -80,6 +82,8 @@ class SlidesViewModel(
     }
 
     fun toggleSlidesItem(slideItem: SlidesItem, isFromRightMenu: Boolean = false) {
+        getAnnotationsBySlidesId(slideItem.id)
+
         val updatedList = slidesItem.value?.map { item ->
             if (item.id == slideItem.id) {
                 item.copy(
@@ -103,6 +107,26 @@ class SlidesViewModel(
         activeSlidesItem.value = finalList.toMutableList()
         currentlySelectedSlide.value =
             finalList.find { it.isCurrentlySelected } ?: finalList.firstOrNull()
+    }
+
+    private fun getAnnotationsBySlidesId(slidesId: Long?) {
+        viewModelScope.launch {
+            thunderscopeRepository.getAnnotationsBySlidesId(slidesId ?: 0).collect { result ->
+                when (result) {
+                    is Result.Loading -> {
+                        // Handle loading here
+                    }
+
+                    is Result.Success -> {
+                        selectedAnnotationListByActiveSlides.value = result.data.slidesAnnotationList
+                    }
+
+                    is Result.Error -> {
+                        // Handle error here
+                    }
+                }
+            }
+        }
     }
 
     // DUMMY DATA - CHANGE LATER
