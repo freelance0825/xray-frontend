@@ -1577,32 +1577,10 @@
                         android:paddingBottom="16dp">
 
                         <TextView
+                            android:id="@+id/tv_ai_insights"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Microscopic Description"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Right eye: Normal fundus examination.\nLeft eye:  Borderline cup-to-disc ratio.  Possible drusen noted in the superior temporal quadrant.  Recommend follow-up examination in 6 months to monitor for any changes"
-                            android:textColor="@color/white" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
-                            android:text="Infectious Disease"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="The results of a fundus examination can help your doctor diagnose and monitor a variety of eye conditions."
+                            tools:text="Right eye: Normal fundus examination.\nLeft eye:  Borderline cup-to-disc ratio.  Possible drusen noted in the superior temporal quadrant.  Recommend follow-up examination in 6 months to monitor for any changes"
                             android:textColor="@color/white" />
 
                     </LinearLayout>
@@ -1660,13 +1638,16 @@
                             android:textColor="@color/gray_opacity_80"
                             android:textStyle="italic" />
 
-                        <TextView
+                        <EditText
+                            android:id="@+id/ed_diagnostics"
+                            android:hint="Fill diagnostics here..."
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:background="@drawable/bg_rounded_dialog_form"
                             android:padding="12dp"
-                            android:text="Right eye: Normal fundus examination.\nLeft eye:  Borderline cup-to-disc ratio.  Possible drusen noted in the superior temporal quadrant.  Recommend follow-up examination in 6 months to monitor for any changes."
+                            android:inputType="text"
+                            tools:text="Right eye: Normal fundus examination.\nLeft eye:  Borderline cup-to-disc ratio.  Possible drusen noted in the superior temporal quadrant.  Recommend follow-up examination in 6 months to monitor for any changes."
                             android:textColor="@color/white" />
 
                         <com.google.android.material.button.MaterialButton
@@ -1679,6 +1660,37 @@
                             android:textColor="@color/white"
                             android:textStyle="bold"
                             app:cornerRadius="8dp" />
+
+                        <LinearLayout
+                            android:id="@+id/layout_btn_diagnostics_confirmation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_marginTop="12dp"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_save_diagnostics"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="#51A3EF"
+                                android:text="Save"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                app:cornerRadius="8dp" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_cancel_diagnostics"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="#51A3EF"
+                                android:text="Cancel"
+                                android:layout_marginStart="12dp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                app:cornerRadius="8dp" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 

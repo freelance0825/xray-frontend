@@ -19,7 +19,7 @@ data class SlidesItemWithAnnotationResponse(
 	val reportId: String? = null,
 
 	@field:SerializedName("diagnosis")
-	val diagnosis: String? = null,
+	var diagnosis: String? = null,
 
 	@field:SerializedName("id")
 	val id: Long? = null,

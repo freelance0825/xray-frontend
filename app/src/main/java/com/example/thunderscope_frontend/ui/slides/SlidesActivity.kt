@@ -18,6 +18,7 @@ import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.data.models.AnnotationResponse
 import com.example.thunderscope_frontend.data.models.CaseRecordResponse
 import com.example.thunderscope_frontend.data.models.PatientResponse
+import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.databinding.ActivitySlidesBinding
 import com.example.thunderscope_frontend.ui.slides.adapters.AnnotationAdapter
 import com.example.thunderscope_frontend.ui.slides.adapters.MenuSlidesAdapter
@@ -185,8 +186,8 @@ class SlidesActivity : AppCompatActivity() {
     private fun setListeners() {
         binding.apply {
             btnOpenViewer.setOnClickListener {
-                val activeSlidesList = slidesViewModel.activeSlidesItem.value
-                    ?: mutableListOf()
+                val activeSlidesList = arrayListOf<SlidesItem>()
+                activeSlidesList.addAll((slidesViewModel.activeSlidesItem.value ?: mutableListOf()).map { SlidesItem(id = it.id) })
 
                 if (activeSlidesList.isEmpty()) {
                     Toast.makeText(this@SlidesActivity, "Select Slides First!", Toast.LENGTH_SHORT)
@@ -207,6 +208,7 @@ class SlidesActivity : AppCompatActivity() {
                     val iDetail = Intent(this@SlidesActivity, SlidesDetailActivity::class.java)
                     iDetail.putExtra(SlidesDetailActivity.EXTRA_PATIENT, patientResponse)
                     iDetail.putExtra(SlidesDetailActivity.EXTRA_CASE_ID, caseRecordId?.toLong())
+                    iDetail.putParcelableArrayListExtra(SlidesDetailActivity.EXTRA_SLIDE_ID_LIST, activeSlidesList)
                     startActivity(iDetail)
                 }
             }

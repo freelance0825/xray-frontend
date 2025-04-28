@@ -6,9 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.thunderscope_frontend.data.models.AnnotationItem
+import com.example.thunderscope_frontend.data.models.AnnotationResponse
 import com.example.thunderscope_frontend.databinding.ItemImageProcessingAnnotationBinding
+import com.example.thunderscope_frontend.ui.utils.Base64Helper
 
-class SavedAnnotationAdapter : ListAdapter<AnnotationItem, SavedAnnotationAdapter.SavedAnnotationViewHolder>(DIFF_CALLBACK) {
+class SavedAnnotationAdapter : ListAdapter<AnnotationResponse, SavedAnnotationAdapter.SavedAnnotationViewHolder>(DIFF_CALLBACK) {
+
+    val onImageClick: ((annotationImageBase64: String) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedAnnotationViewHolder {
         val binding = ItemImageProcessingAnnotationBinding.inflate(
@@ -27,24 +31,28 @@ class SavedAnnotationAdapter : ListAdapter<AnnotationItem, SavedAnnotationAdapte
     inner class SavedAnnotationViewHolder(private val binding: ItemImageProcessingAnnotationBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: AnnotationItem) {
-            binding.ivAnnotation.setImageResource(item.dummyImageRes)
+        fun bind(item: AnnotationResponse) {
+            binding.ivAnnotation.setImageBitmap(Base64Helper.convertToBitmap(item.annotatedImage))
             binding.tvAnnotationName.text = item.label
+
+            binding.root.setOnClickListener {
+                onImageClick?.invoke(item.annotatedImage ?: "")
+            }
         }
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<AnnotationItem>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<AnnotationResponse>() {
             override fun areItemsTheSame(
-                oldItem: AnnotationItem,
-                newItem: AnnotationItem
+                oldItem: AnnotationResponse,
+                newItem: AnnotationResponse
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: AnnotationItem,
-                newItem: AnnotationItem
+                oldItem: AnnotationResponse,
+                newItem: AnnotationResponse
             ): Boolean {
                 return oldItem == newItem
             }
