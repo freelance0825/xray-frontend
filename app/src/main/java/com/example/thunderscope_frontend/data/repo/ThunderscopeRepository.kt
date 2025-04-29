@@ -1,16 +1,19 @@
 package com.example.thunderscope_frontend.data.repo
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.Log
 import com.example.thunderscope_frontend.data.local.database.SlidesDatabase
 import com.example.thunderscope_frontend.data.local.datastore.AuthDataStore
 import com.example.thunderscope_frontend.data.models.AuthDoctorRequest
+import com.example.thunderscope_frontend.data.models.BatchAnnotationResponse
 import com.example.thunderscope_frontend.data.models.CaseRecordFilterRequest
 import com.example.thunderscope_frontend.data.models.PostTestReviewPayload
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.data.models.UpdatePatientRequest
 import com.example.thunderscope_frontend.data.remote.ApiConfig
 import com.example.thunderscope_frontend.data.utils.SlidesMapper
+import com.example.thunderscope_frontend.ui.utils.Base64Helper
 import com.example.thunderscope_frontend.ui.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -23,6 +26,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.HttpException
+import java.io.File
 import java.io.IOException
 
 class ThunderscopeRepository(
@@ -239,6 +243,39 @@ class ThunderscopeRepository(
         }
     }.flowOn(Dispatchers.IO)
 
+    fun uploadAnnotationBatch(
+        slideId: Long,
+        imagesBase64List: List<String>,
+        labels: List<String>
+    ): Flow<Result<List<BatchAnnotationResponse>>> = flow {
+        emit(Result.Loading)
+        try {
+            val slideIdPart = slideId.toString().toRequestBody()
+
+            val imageParts = imagesBase64List.mapIndexed { index, base64 ->
+                val bitmap = Base64Helper.convertToBitmap(base64)
+                val file = bitmapToFile(bitmap, "image_$index.jpg")
+                MultipartBody.Part.createFormData(
+                    "annotationData[0].annotatedImage[]", file.name, file
+                        .asRequestBody("image/jpeg".toMediaTypeOrNull())
+                )
+            }
+
+            val labelParts = labels.map { label ->
+                MultipartBody.Part.createFormData("annotationData[0].label[]", label)
+            }
+
+            val response = apiService.uploadAnnotationsBatch(slideIdPart, imageParts, labelParts)
+            emit(Result.Success(response))
+        } catch (e: HttpException) {
+            emit(Result.Error("Server error: ${e.message}"))
+        } catch (e: IOException) {
+            emit(Result.Error("Network error: ${e.message}"))
+        } catch (e: Exception) {
+            emit(Result.Error("Unexpected error: ${e.message}"))
+        }
+    }.flowOn(Dispatchers.IO)
+
     fun updateSlide(id: Long, payload: PostTestReviewPayload): Flow<Result<SlidesItem>> = flow {
         emit(Result.Loading)
 
@@ -310,5 +347,13 @@ class ThunderscopeRepository(
     // DUMMY SLIDES FOR CREATE NEW TEST PURPOSE!!!
     suspend fun generateDummySlidesToDatabaseForMVPPurpose() {
         insertSlides(slidesList)
+    }
+
+    private fun bitmapToFile(bitmap: Bitmap, filename: String): File {
+        val file = File.createTempFile(filename, null)
+        file.outputStream().use { out ->
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+        }
+        return file
     }
 }

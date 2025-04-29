@@ -27,7 +27,8 @@ class SlidesViewModel(
     val activeSlidesItem = MutableLiveData<MutableList<SlidesItem>>(mutableListOf())
     val currentlySelectedSlide = MutableLiveData<SlidesItem?>(null)
 
-    val selectedAnnotationListByActiveSlides = MutableLiveData<MutableList<AnnotationResponse>>(mutableListOf())
+    val selectedAnnotationListByActiveSlides =
+        MutableLiveData<MutableList<AnnotationResponse>>(mutableListOf())
 
     val photoGalleryItems = MutableLiveData(this.getDummyPhotos())
 
@@ -61,7 +62,7 @@ class SlidesViewModel(
         }
     }
 
-    private fun getAllSlides() {
+    fun getAllSlides() {
         viewModelScope.launch {
             thunderscopeRepository.getAllSlides(caseRecordId).collect { result ->
                 when (result) {
@@ -109,7 +110,7 @@ class SlidesViewModel(
             finalList.find { it.isCurrentlySelected } ?: finalList.firstOrNull()
     }
 
-    private fun getAnnotationsBySlidesId(slidesId: Long?) {
+    fun getAnnotationsBySlidesId(slidesId: Long?) {
         viewModelScope.launch {
             thunderscopeRepository.getAnnotationsBySlidesId(slidesId ?: 0).collect { result ->
                 when (result) {
@@ -118,7 +119,8 @@ class SlidesViewModel(
                     }
 
                     is Result.Success -> {
-                        selectedAnnotationListByActiveSlides.value = result.data.slidesAnnotationList
+                        selectedAnnotationListByActiveSlides.value =
+                            result.data.slidesAnnotationList
                     }
 
                     is Result.Error -> {

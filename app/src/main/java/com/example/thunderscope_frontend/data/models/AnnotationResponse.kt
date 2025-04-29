@@ -14,7 +14,7 @@ data class AnnotationResponse(
 	val slideId: Int? = null,
 
 	@field:SerializedName("annotatedImage")
-	val annotatedImage: String? = null,
+	var annotatedImage: String? = null,
 
 	@field:SerializedName("caseRecordStatus")
 	val caseRecordStatus: Int? = null,
@@ -23,5 +23,5 @@ data class AnnotationResponse(
 	val id: Int? = null,
 
 	@field:SerializedName("label")
-	val label: String? = null
+	var label: String? = null
 ) : Parcelable

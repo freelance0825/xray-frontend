@@ -1,13 +1,12 @@
 package com.example.thunderscope_frontend.ui.slidesdetail
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.data.models.AnnotationItem
@@ -16,8 +15,8 @@ import com.example.thunderscope_frontend.data.models.PostTestReviewPayload
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.data.models.SlidesItemWithAnnotationResponse
 import com.example.thunderscope_frontend.data.repo.ThunderscopeRepository
-import com.example.thunderscope_frontend.ui.slidesdetail.customview.Shape
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.ShapeType
+import com.example.thunderscope_frontend.ui.utils.Base64Helper
 import com.example.thunderscope_frontend.ui.utils.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -27,6 +26,11 @@ class SlidesDetailViewModel(
     private val thunderscopeRepository: ThunderscopeRepository,
     val slideIdList: MutableList<Long> = arrayListOf()
 ) : ViewModel() {
+    val isLoading = MutableLiveData(false)
+    val isSuccessfullySavingAnnotation = MutableLiveData(false)
+    val errorMessage = MutableLiveData("")
+    val annotationSuccessMessage = MutableLiveData("")
+
     //    val slideItems: LiveData<List<SlidesItem>> by lazy {
 //        thunderscopeRepository.getAllSlidesFromDB().asLiveData()
 //    }
@@ -86,16 +90,58 @@ class SlidesDetailViewModel(
             thunderscopeRepository.getSlidesWithAnnotations(slidesId ?: 0).collect { result ->
                 when (result) {
                     is Result.Loading -> {
+                        errorMessage.value = ""
                         // Handle loading here
                     }
 
                     is Result.Success -> {
+                        errorMessage.value = ""
                         currentlySelectedSlidesItemWithAnnotationResponse.value = result.data
                         networkAnnotationList.value = result.data.slidesAnnotationList
                     }
 
                     is Result.Error -> {
+                        errorMessage.value = result.error
                         // Handle error here
+                    }
+                }
+            }
+        }
+    }
+
+    fun saveLocalAnnotationToNetwork() {
+        if (localAnnotationList.value.isNullOrEmpty()) {
+            return
+        }
+
+        val mappedAnnotationImages = localAnnotationList.value?.map { it.annotatedImage ?: "" } ?: listOf()
+        val mappedAnnotationLabels = localAnnotationList.value?.map { it.label ?: " "} ?: listOf()
+
+        viewModelScope.launch {
+            thunderscopeRepository.uploadAnnotationBatch(
+                currentlySelectedSlidesId.value ?: 0,
+                mappedAnnotationImages,
+                mappedAnnotationLabels
+                ).collect { result ->
+                when (result) {
+                    is Result.Loading -> {
+                        // Handle loading here
+                        Log.d("SlidesDetailViewModel", "Saving annotation: Loading")
+                        errorMessage.value = ""
+                        annotationSuccessMessage.value = ""
+                    }
+                    is Result.Success -> {
+                        // Handle success here
+                        Log.d("SlidesDetailViewModel", "Saving annotation: Success ${result.data}")
+                        errorMessage.value = ""
+                        annotationSuccessMessage.value = "Successfully Saving Local Annotations!"
+                        isSuccessfullySavingAnnotation.value = true
+                    }
+                    is Result.Error -> {
+                        // Handle error here
+                        Log.d("SlidesDetailViewModel", "Saving annotation: Error ${result.error}")
+                        annotationSuccessMessage.value = ""
+                        errorMessage.value = result.error
                     }
                 }
             }
@@ -107,10 +153,24 @@ class SlidesDetailViewModel(
     }
 
     fun updateSelectedSlide(slideId: Long) {
-//        currentlySelectedSlides.value = slide
+        localAnnotationList.value?.clear()
         selectedMenuOptions.value = SelectedMenu.SELECT
         isEditingDiagnosis.value = false
         currentlySelectedSlidesId.value = slideId
+    }
+
+    fun storeNewLocalAnnotation(bitmap: Bitmap, label: String) {
+        val newLocalAnnotation = AnnotationResponse().apply {
+            this.label = label
+            this.annotatedImage = Base64Helper.bitmapToBase64(bitmap)
+        }
+
+        val updatedList = mutableListOf<AnnotationResponse>().apply {
+            add(newLocalAnnotation)
+            localAnnotationList.value?.let { addAll(it) }
+        }
+
+        localAnnotationList.value = updatedList
     }
 
     fun updateGamma(value: Int) {

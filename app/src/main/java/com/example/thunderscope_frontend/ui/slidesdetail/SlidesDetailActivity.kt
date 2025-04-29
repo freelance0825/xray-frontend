@@ -10,6 +10,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
+import android.os.Looper
 import android.text.InputType
 import android.util.Log
 import android.view.View
@@ -33,10 +35,12 @@ import com.example.thunderscope_frontend.data.models.PatientResponse
 import com.example.thunderscope_frontend.data.models.PostTestReviewPayload
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.databinding.ActivitySlidesDetailBinding
+import com.example.thunderscope_frontend.ui.customview.ImagePreviewDialogFragment
 import com.example.thunderscope_frontend.ui.report.ReportActivity
 import com.example.thunderscope_frontend.ui.slidesdetail.adapters.SavedAnnotationAdapter
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.ShapeType
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.ZoomImageView
+import com.example.thunderscope_frontend.ui.utils.Base64Helper
 import com.example.thunderscope_frontend.ui.utils.Result
 import com.google.android.material.button.MaterialButton
 import com.skydoves.colorpickerview.ColorEnvelope
@@ -111,6 +115,12 @@ class SlidesDetailActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         slidesDetailViewModel.apply {
+            annotationSuccessMessage.observe(this@SlidesDetailActivity) {
+                if (!it.isNullOrEmpty()) {
+                    Toast.makeText(this@SlidesDetailActivity, "Successfully Saved Annotations!", Toast.LENGTH_SHORT).show()
+                }
+            }
+
             isEditingDiagnosis.observe(this@SlidesDetailActivity) {
                 binding.apply {
                     edDiagnostics.isEnabled = it
@@ -321,8 +331,29 @@ class SlidesDetailActivity : AppCompatActivity() {
 
     private fun setListeners() {
         binding.apply {
+            savedAnnotationAdapter.onImageClick = {
+                val bitmap = Base64Helper.convertToBitmap(it)
+                val dialog = ImagePreviewDialogFragment.newInstance(bitmap)
+                dialog.show(supportFragmentManager, "ImagePreviewDialog")
+            }
+
+            ivBaseImage.onAnnotationImageSaved = { bitmap, label ->
+                val dialog = ImagePreviewDialogFragment.newInstance(bitmap)
+                dialog.show(supportFragmentManager, "ImagePreviewDialog")
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    dialog.dismiss()
+                }, 700)
+
+                slidesDetailViewModel.storeNewLocalAnnotation(bitmap, label)
+            }
+
             btnCompleteReview.setOnClickListener {
                 openPostTestReviewDialog()
+            }
+
+            btnSave.setOnClickListener {
+                slidesDetailViewModel.saveLocalAnnotationToNetwork()
             }
 
             // Diagnosis Editing Configuration

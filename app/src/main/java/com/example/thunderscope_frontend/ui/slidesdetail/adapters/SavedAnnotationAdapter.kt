@@ -12,7 +12,7 @@ import com.example.thunderscope_frontend.ui.utils.Base64Helper
 
 class SavedAnnotationAdapter : ListAdapter<AnnotationResponse, SavedAnnotationAdapter.SavedAnnotationViewHolder>(DIFF_CALLBACK) {
 
-    val onImageClick: ((annotationImageBase64: String) -> Unit)? = null
+    var onImageClick: ((annotationImageBase64: String) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedAnnotationViewHolder {
         val binding = ItemImageProcessingAnnotationBinding.inflate(

@@ -2,6 +2,7 @@ package com.example.thunderscope_frontend.data.remote
 
 import com.example.thunderscope_frontend.data.models.AuthDoctorRequest
 import com.example.thunderscope_frontend.data.models.AuthDoctorResponse
+import com.example.thunderscope_frontend.data.models.BatchAnnotationResponse
 import com.example.thunderscope_frontend.data.models.CaseRecordFilterRequest
 import com.example.thunderscope_frontend.data.models.CaseRecordResponse
 import com.example.thunderscope_frontend.data.models.PatientResponse
@@ -37,6 +38,14 @@ interface ApiService {
     suspend fun getSlidesWithAnnotations(@Path("id") slidesId: Long): SlidesItemWithAnnotationResponse
 
     @Multipart
+    @POST("/api/slides/annotations/batch")
+    suspend fun uploadAnnotationsBatch(
+        @Part("slideId") slideId: RequestBody,
+        @Part annotatedImages: List<MultipartBody.Part>,
+        @Part labels: List<MultipartBody.Part>
+    ): List<BatchAnnotationResponse>
+
+    @Multipart
     @PUT("slides/{id}")
     suspend fun updateSlide(
         @Path("id") id: Long,
@@ -57,7 +66,6 @@ interface ApiService {
 
     @GET("doctors")
     suspend fun getDoctorRecords(): List<AuthDoctorResponse>
-
 
     @DELETE("patients/{id}")
     suspend fun deletePatient(

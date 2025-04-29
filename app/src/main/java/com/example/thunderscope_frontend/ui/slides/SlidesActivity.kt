@@ -412,6 +412,16 @@ class SlidesActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        slidesViewModel.apply {
+            getAllSlides()
+
+            currentlySelectedSlide.value?.let {
+                getAnnotationsBySlidesId(it.id)
+            }
+        }
+    }
 
     companion object {
         const val EXTRA_CASE_RECORD = "extra_case_record"

@@ -117,6 +117,9 @@ dependencies {
     // ThreeTenABP for backward-compatible date/time handling
     implementation(libs.threetenabp)
 
+    // ZoomImageView
+    implementation("com.github.sheetalkumar105:ZoomImageView-android:1.02")
+
     // Testing dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
