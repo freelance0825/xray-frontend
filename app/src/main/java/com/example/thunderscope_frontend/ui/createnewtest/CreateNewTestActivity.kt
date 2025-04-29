@@ -14,8 +14,10 @@ class CreateNewTestActivity : AppCompatActivity() {
 
     private lateinit var binding: CreateNewTestActivityBinding
 
+    private val doctorId: Long by lazy { intent.getLongExtra(EXTRA_DOCTOR_ID, 0) }
+
     val viewModel by viewModels<CreateNewTestViewModel> {
-        CreateNewTestViewModel.Factory(this)
+        CreateNewTestViewModel.Factory(this, doctorId.toInt())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,5 +77,9 @@ class CreateNewTestActivity : AppCompatActivity() {
                 tvSetupDevice.setTypeface(null, Typeface.BOLD)
             }
         }
+    }
+
+    companion object {
+        const val EXTRA_DOCTOR_ID = "extra_doctor_id"
     }
 }

@@ -15,7 +15,9 @@ import com.example.thunderscope_frontend.ui.login.LoginViewModel
 import com.example.thunderscope_frontend.ui.utils.Result
 import com.example.thunderscope_frontend.viewmodel.SlidesRecordUI
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -24,6 +26,7 @@ import java.util.Locale
 class CaseDashboardViewModel(
     private val repository: ThunderscopeRepository
 ) : ViewModel() {
+    val doctorId = runBlocking { repository.getDoctorId().first() }
 
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading

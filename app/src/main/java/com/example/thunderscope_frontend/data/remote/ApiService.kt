@@ -4,8 +4,10 @@ import com.example.thunderscope_frontend.data.models.AuthDoctorRequest
 import com.example.thunderscope_frontend.data.models.AuthDoctorResponse
 import com.example.thunderscope_frontend.data.models.BatchAnnotationResponse
 import com.example.thunderscope_frontend.data.models.CaseRecordFilterRequest
+import com.example.thunderscope_frontend.data.models.CaseRecordRequest
 import com.example.thunderscope_frontend.data.models.CaseRecordResponse
 import com.example.thunderscope_frontend.data.models.PatientResponse
+import com.example.thunderscope_frontend.data.models.SlideRequest
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.data.models.SlidesItemWithAnnotationResponse
 import com.example.thunderscope_frontend.data.models.SlidesOnlyWithAnnotationResponse
@@ -24,6 +26,16 @@ interface ApiService {
 
     @GET("case/{id}")
     suspend fun getCaseById(@Path("id") caseId: Int): CaseRecordResponse
+
+    @POST("case")
+    suspend fun addCaseRecord(@Body caseRecordRequest: CaseRecordRequest): CaseRecordResponse
+
+    @Multipart
+    @POST("slides")
+    suspend fun addSlideItem(
+        @PartMap data: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part mainImage: MultipartBody.Part? = null
+    ): SlidesItem
 
     @GET("slides/case/{id}")
     suspend fun getAllSlides(@Path("id") caseId: Int): List<SlidesItem>

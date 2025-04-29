@@ -143,7 +143,9 @@ class CaseDashboardActivity : AppCompatActivity() {
             }
 
             startNewTestButton.setOnClickListener {
-                startActivity(Intent(this@CaseDashboardActivity, CreateNewTestActivity::class.java))
+                val iNewTest = Intent(this@CaseDashboardActivity, CreateNewTestActivity::class.java)
+                iNewTest.putExtra(CreateNewTestActivity.EXTRA_DOCTOR_ID, caseDashboardViewModel.doctorId.toLong())
+                startActivity(iNewTest)
             }
 
             menuTodoList.setOnClickListener {

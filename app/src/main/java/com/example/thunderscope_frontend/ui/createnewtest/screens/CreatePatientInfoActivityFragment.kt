@@ -15,6 +15,7 @@ import android.os.Looper
 import android.os.StrictMode
 import android.provider.OpenableColumns
 import android.util.Base64
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +29,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.data.models.PatientResponse
+import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.data.models.UpdatePatientRequest
 import com.example.thunderscope_frontend.databinding.CreatePatientInfoActivityFragmentBinding
 import com.example.thunderscope_frontend.ui.createnewtest.CreateNewTestActivity
@@ -83,28 +85,40 @@ class CreatePatientInfoActivityFragment : Fragment() {
         viewModel = (requireActivity() as CreateNewTestActivity).viewModel
 
         viewModel?.apply {
+            caseRecordResponse.observe(viewLifecycleOwner) {
+                it?.let { caseRecord ->
+                    Toast.makeText(
+                        requireContext(),
+                        "Patient record is successfully added",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    val activeSlidesList = arrayListOf<SlidesItem>()
+                    activeSlidesList.addAll(caseRecord.slides.map { slideItem -> SlidesItem(id = slideItem.id) })
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        requireActivity().finish()
+                        val iDetail =
+                            Intent(requireActivity(), SlidesDetailActivity::class.java)
+                        iDetail.putExtra(SlidesDetailActivity.EXTRA_PATIENT, viewModel?.selectedPatient?.value)
+                        iDetail.putExtra(SlidesDetailActivity.EXTRA_CASE_ID, caseRecord.id?.toLong())
+                        iDetail.putParcelableArrayListExtra(SlidesDetailActivity.EXTRA_SLIDE_ID_LIST, activeSlidesList)
+                        startActivity(iDetail)
+                    }, 100L)
+                }
+            }
+
+            successfullySubmittedPatient.observe(viewLifecycleOwner) {
+                if (it) {
+                    Log.e("FTEST", "submitted", )
+                    viewModel?.addCaseRecord()
+                }
+            }
+
             selectedPatient.observe(viewLifecycleOwner) { patientResponse ->
                 if (patientResponse != null) {
-                    if (isCreatingNewPatient.value == true) {
-                        Toast.makeText(
-                            requireContext(),
-                            "Patient record is successfully added",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                        viewModel?.generateDummySlidesToDatabaseForMVPPurpose()
-
-                        // Delay the navigation slightly for better UX
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            requireActivity().finish()
-                            val iDetail =
-                                Intent(requireActivity(), SlidesDetailActivity::class.java)
-                            iDetail.putExtra(SlidesDetailActivity.EXTRA_PATIENT, patientResponse)
-                            startActivity(iDetail)
-                        }, 100L) // 1 second delay
-                    } else {
-                        populateFields(patientResponse)
-                    }
+                    Log.e("FTEST", "pasien beganti: ${patientResponse.name}", )
+                    populateFields(patientResponse)
                 }
             }
 
@@ -182,24 +196,12 @@ class CreatePatientInfoActivityFragment : Fragment() {
         binding.btnEditProfile.setOnClickListener { openImagePicker() }
         binding.etBirthDate.setOnClickListener { showDatePicker() }
         binding.btnSubmit.setOnClickListener {
-            if (viewModel?.isCreatingNewPatient?.value == true) {
-                if (validateInputs()) {
+            if (validateInputs()) {
+                if (viewModel?.isCreatingNewPatient?.value == true) {
                     addPatientData()
+                } else {
+                    viewModel?.successfullySubmittedPatient?.value = true
                 }
-            } else {
-                viewModel?.generateDummySlidesToDatabaseForMVPPurpose()
-
-                // Delay the navigation slightly for better UX
-                Handler(Looper.getMainLooper()).postDelayed({
-                    requireActivity().finish()
-                    val iDetail =
-                        Intent(requireActivity(), SlidesDetailActivity::class.java)
-                    iDetail.putExtra(
-                        SlidesDetailActivity.EXTRA_PATIENT,
-                        viewModel?.selectedPatient?.value
-                    )
-                    startActivity(iDetail)
-                }, 100L) // 1 second delay
             }
         }
     }
@@ -421,6 +423,10 @@ class CreatePatientInfoActivityFragment : Fragment() {
             // Clear the profile image
             imgProfile.setImageResource(R.drawable.ic_default_profile) // Reset to default image
         }
+    }
+
+    private fun handleNavigationToImageEditing() {
+
     }
 
     override fun onDestroyView() {

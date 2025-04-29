@@ -2,13 +2,17 @@ package com.example.thunderscope_frontend.data.repo
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Log
+import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.data.local.database.SlidesDatabase
 import com.example.thunderscope_frontend.data.local.datastore.AuthDataStore
 import com.example.thunderscope_frontend.data.models.AuthDoctorRequest
 import com.example.thunderscope_frontend.data.models.BatchAnnotationResponse
 import com.example.thunderscope_frontend.data.models.CaseRecordFilterRequest
+import com.example.thunderscope_frontend.data.models.CaseRecordRequest
 import com.example.thunderscope_frontend.data.models.PostTestReviewPayload
+import com.example.thunderscope_frontend.data.models.SlideRequest
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.data.models.UpdatePatientRequest
 import com.example.thunderscope_frontend.data.remote.ApiConfig
@@ -27,10 +31,14 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.HttpException
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class ThunderscopeRepository(
-    context: Context
+    private val context: Context
 ) {
     private val authDataStore = AuthDataStore.getInstance(context)
     private val apiService = ApiConfig.getApiService(authDataStore)
@@ -43,7 +51,11 @@ class ThunderscopeRepository(
             val loginResponse = apiService.loginDoctor(loginRequest)
 
             // SAVE TOKEN TO DATASTORE
-            runBlocking { authDataStore.saveToken(loginResponse.token.toString()) }
+            runBlocking {
+                authDataStore.saveToken(loginResponse.token.toString())
+                Log.e("FTEST", "loginDoctor: ${loginResponse.id}")
+                authDataStore.saveDoctorId(loginResponse.id?.toInt() ?: 0)
+            }
 
             emit(Result.Success(loginResponse))
         } catch (e: Exception) {
@@ -61,7 +73,10 @@ class ThunderscopeRepository(
             val registerResponse = apiService.registerDoctor(authDoctorRequest)
 
             // SAVE TOKEN TO DATASTORE
-            runBlocking { authDataStore.saveToken(registerResponse.token.toString()) }
+            runBlocking {
+                authDataStore.saveToken(registerResponse.token.toString())
+                authDataStore.saveDoctorId(registerResponse.id?.toInt() ?: 0)
+            }
 
             emit(Result.Success(registerResponse))
         } catch (e: Exception) {
@@ -198,6 +213,90 @@ class ThunderscopeRepository(
         try {
             val caseRecordResponse = apiService.getCaseById(caseId)
             emit(Result.Success(caseRecordResponse))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun addCaseRecord(caseRecordRequest: CaseRecordRequest) = flow {
+        emit(Result.Loading)
+        try {
+            val registerResponse = apiService.addCaseRecord(caseRecordRequest)
+
+
+            emit(Result.Success(registerResponse))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    // Later we'll fetch the slides from the device
+    fun addCaseRecordWithDummySlides(caseRecordRequest: CaseRecordRequest) = flow {
+        emit(Result.Loading)
+        try {
+            val caseRecordResponse = apiService.addCaseRecord(caseRecordRequest)
+
+            caseRecordResponse.id?.let { caseId ->
+                val dateFormat = SimpleDateFormat("MM-dd-yyyy hh:mma", Locale.getDefault())
+
+                val slideRequest = SlideRequest().apply {
+                    caseRecordId = caseId
+                    mainImage = getFileFromDrawable(context, R.drawable.asset_image_annotate_4)
+                    qrCode = "QR1121231"
+                    microscopicDc = "Test microscopic diagnosis and test"
+                    specimenType = "Test Speciment"
+                    collectionSite = "Siloam Hospital"
+                    reportId = "REP-1000"
+                    clinicalData = "Test Clinical Data"
+                    dateAndTime = dateFormat.format(Date())
+                }
+
+                Log.e("FTEST", "addCaseRecordWithDummySlides: ${slideRequest.toString()}")
+
+                // Collect slide upload result and ensure it's successful
+                addSlideItem(slideRequest).collect { result ->
+                    if (result is Result.Success) {
+                        caseRecordResponse.slides.add(result.data)
+                        emit(Result.Success(caseRecordResponse)) // only emit success if slide added
+                    } else if (result is Result.Error) {
+                        Log.e("FTEST", "Slide upload failed: ${result.error}" )
+                        emit(Result.Error("Slide upload failed: ${result.error}"))
+                    }
+                }
+            } ?: run {
+                emit(Result.Error("Case record ID is null"))
+            }
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+
+    fun addSlideItem(slideRequest: SlideRequest) = flow {
+        emit(Result.Loading)
+        try {
+            val formData = mutableMapOf<String, RequestBody>()
+            slideRequest.caseRecordId?.let { formData["caseRecordId"] = it.toString().toRequestBody() }
+            slideRequest.dateAndTime?.let { formData["dateAndTime"] = it.toRequestBody() }
+            slideRequest.microscopicDc?.let { formData["microscopicDc"] = it.toRequestBody() }
+            slideRequest.specimenType?.let { formData["specimenType"] = it.toRequestBody() }
+            slideRequest.clinicalData?.let { formData["clinicalData"] = it.toRequestBody() }
+            slideRequest.collectionSite?.let { formData["collectionSite"] = it.toRequestBody() }
+            slideRequest.reportId?.let { formData["reportId"] = it.toRequestBody() }
+
+            val payloadImage = slideRequest.mainImage
+
+            val mainImagePart =
+                payloadImage?.asRequestBody("image/*".toMediaTypeOrNull())?.let {
+                    MultipartBody.Part.createFormData(
+                        "mainImage",
+                        payloadImage.name,
+                        it
+                    )
+                }
+
+            val slideResponse = apiService.addSlideItem(formData, mainImagePart)
+            emit(Result.Success(slideResponse))
         } catch (e: Exception) {
             emit(Result.Error(e.message.toString()))
         }
@@ -344,6 +443,8 @@ class ThunderscopeRepository(
         slidesDao.clearAllSlides()
     }
 
+    suspend fun getDoctorId() = authDataStore.getDoctorId()
+
     // DUMMY SLIDES FOR CREATE NEW TEST PURPOSE!!!
     suspend fun generateDummySlidesToDatabaseForMVPPurpose() {
         insertSlides(slidesList)
@@ -353,6 +454,17 @@ class ThunderscopeRepository(
         val file = File.createTempFile(filename, null)
         file.outputStream().use { out ->
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+        }
+        return file
+    }
+
+    private fun getFileFromDrawable(context: Context, drawableId: Int): File {
+        val bitmap = BitmapFactory.decodeResource(context.resources, drawableId)
+        val file = File(context.cacheDir, "temp_image.jpg")
+
+        FileOutputStream(file).use { out ->
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+            out.flush()
         }
         return file
     }
