@@ -343,9 +343,8 @@ class SlidesDetailActivity : AppCompatActivity() {
 
                 Handler(Looper.getMainLooper()).postDelayed({
                     dialog.dismiss()
+                    slidesDetailViewModel.storeNewLocalAnnotation(bitmap, label)
                 }, 700)
-
-                slidesDetailViewModel.storeNewLocalAnnotation(bitmap, label)
             }
 
             btnCompleteReview.setOnClickListener {
