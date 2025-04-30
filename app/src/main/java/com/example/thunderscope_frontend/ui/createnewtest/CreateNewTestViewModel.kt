@@ -24,12 +24,15 @@ class CreateNewTestViewModel(
     private val thunderscopeRepository: ThunderscopeRepository,
     private val doctorId: Int
 ) : ViewModel() {
-    val isStateChanged = MutableLiveData(false)
+    val isStateChanged = MutableLiveData(true)
     val isCreatingNewPatient = MutableLiveData(true)
     val successfullySubmittedPatient = MutableLiveData(false)
 
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _isLoadingPreparingTest = MutableLiveData(false)
+    val isLoadingPreparingTest: LiveData<Boolean> = _isLoadingPreparingTest
 
     private val _isSuccessAddingPatient = MutableLiveData(false)
     val isSuccessAddingPatient: LiveData<Boolean> = _isSuccessAddingPatient
@@ -107,14 +110,14 @@ class CreateNewTestViewModel(
             thunderscopeRepository.addCaseRecordWithDummySlides(caseRecordRequest).collect { result ->
                 when (result) {
                     is Result.Loading -> {
-                        _isLoading.value = true
+                        _isLoadingPreparingTest.value = true
                     }
                     is Result.Success -> {
-                        _isLoading.value = false
+                        _isLoadingPreparingTest.value = false
                         _caseRecordResponse.value = result.data
                     }
                     is Result.Error -> {
-                        _isLoading.value = false
+                        _isLoadingPreparingTest.value = false
                         _errorMessage.value = result.error
                     }
                 }

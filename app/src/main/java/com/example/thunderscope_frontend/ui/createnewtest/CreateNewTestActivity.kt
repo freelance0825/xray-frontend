@@ -35,6 +35,10 @@ class CreateNewTestActivity : AppCompatActivity() {
             .addToBackStack(null)
             .commit()
 
+        viewModel.isLoadingPreparingTest.observe(this) {
+            binding.loadingContainer.visibility = if (it) android.view.View.VISIBLE else android.view.View.GONE
+        }
+
         viewModel.isStateChanged.observe(this) {
             toggleIsStateChanged(it)
 

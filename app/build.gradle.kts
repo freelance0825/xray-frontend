@@ -118,7 +118,10 @@ dependencies {
     implementation(libs.threetenabp)
 
     // ZoomImageView
-    implementation("com.github.sheetalkumar105:ZoomImageView-android:1.02")
+    implementation(libs.zoomimageview.android)
+
+    // Lottie
+    implementation(libs.lottie)
 
     // Testing dependencies
     testImplementation(libs.junit)
