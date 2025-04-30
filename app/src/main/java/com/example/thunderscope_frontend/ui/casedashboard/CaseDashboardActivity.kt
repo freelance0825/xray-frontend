@@ -10,6 +10,9 @@ import android.widget.PopupMenu
 import android.widget.SearchView
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,6 +37,20 @@ class CaseDashboardActivity : AppCompatActivity() {
         CaseDashboardViewModel.Factory(ThunderscopeRepository(this))
     }
 
+    private val activityLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult: ActivityResult ->
+            if (activityResult.resultCode == RESULT_OK) {
+                binding.spinnerGender.setSelection(0)
+                binding.spinnerAge.setSelection(0)
+                binding.spinnerStatus.setSelection(0)
+                binding.spinnerType.setSelection(0)
+                binding.spinnerTimePeriod.setSelection(0)
+                binding.svPatient.setQuery("", false)
+                binding.svDoctor.setQuery("", false)
+                binding.svPatient.clearFocus()
+                binding.svDoctor.clearFocus()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,7 +138,7 @@ class CaseDashboardActivity : AppCompatActivity() {
             startNewTestButton.setOnClickListener {
                 val iNewTest = Intent(this@CaseDashboardActivity, CreateNewTestActivity::class.java)
                 iNewTest.putExtra(CreateNewTestActivity.EXTRA_DOCTOR_ID, caseDashboardViewModel.doctorId.toLong())
-                startActivity(iNewTest)
+                activityLauncher.launch(iNewTest)
             }
 
             menuTodoList.setOnClickListener {

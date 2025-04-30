@@ -1,5 +1,6 @@
 package com.example.thunderscope_frontend.ui.createnewtest
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.StrictMode
@@ -34,6 +35,13 @@ class CreateNewTestActivity : AppCompatActivity() {
             .replace(R.id.fragment_container, CreateNewTestActivityFragment())
             .addToBackStack(null)
             .commit()
+
+        viewModel.caseRecordResponse.observe(this) {
+            if (it != null) {
+                val intent = Intent()
+                setResult(RESULT_OK, intent)
+            }
+        }
 
         viewModel.isLoadingPreparingTest.observe(this) {
             binding.loadingContainer.visibility = if (it) android.view.View.VISIBLE else android.view.View.GONE

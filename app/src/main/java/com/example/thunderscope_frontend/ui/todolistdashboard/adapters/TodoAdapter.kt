@@ -37,7 +37,6 @@ class TodoAdapter : ListAdapter<CaseRecordResponse, TodoAdapter.CaseViewHolder>(
             binding.apply {
                 caseRecordId.text = record.id.toString()
                 caseRecordPatientId.text = record.patient?.id.toString()
-                todo.text = record.todo.toString()
                 patientName.text = record.patient?.name.toString()
                 patientBirthdate.text = record.patient?.dateOfBirth.toString()
                 patientAge.text = StringBuilder("(${record.patient?.age} yo)")
