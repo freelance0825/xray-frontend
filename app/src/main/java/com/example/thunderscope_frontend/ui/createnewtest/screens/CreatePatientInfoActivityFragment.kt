@@ -22,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -85,6 +86,12 @@ class CreatePatientInfoActivityFragment : Fragment() {
         viewModel = (requireActivity() as CreateNewTestActivity).viewModel
 
         viewModel?.apply {
+            isCreatingNewPatient.observe(viewLifecycleOwner) {
+                if (it != null) {
+                    enableFields(it)
+                }
+            }
+
             caseRecordResponse.observe(viewLifecycleOwner) {
                 it?.let { caseRecord ->
                     Toast.makeText(
@@ -119,32 +126,21 @@ class CreatePatientInfoActivityFragment : Fragment() {
                     populateFields(patientResponse)
                 }
             }
-
-            patientRecordsLiveData.observe(viewLifecycleOwner) { patientList ->
-                val patientStringArray = patientList.map { "${it.id} - ${it.name}" }
-
-                val adapter = ArrayAdapter(
-                    requireContext(),
-                    R.layout.custom_spinner_dropdown,
-                    patientStringArray
-                )
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                binding.spinnerPatientID.adapter = adapter
-            }
         }
 
         // Handle RadioGroup Option Selection
         binding.rgPatientOption.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.rb_create_patient -> {
+                    viewModel?.selectPatient(null)
                     clearFields()
                     viewModel?.isCreatingNewPatient?.value = true
                     binding.layoutPatientSpinner.visibility = View.GONE
                 }
 
                 R.id.rb_select_existing_patient -> {
+                    clearFields()
                     viewModel?.isCreatingNewPatient?.value = false
-                    binding.spinnerPatientID.setSelection(0)
                     binding.layoutPatientSpinner.visibility = View.VISIBLE
                 }
 
@@ -154,23 +150,23 @@ class CreatePatientInfoActivityFragment : Fragment() {
             }
         }
 
-        binding.spinnerPatientID.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    viewModel?.selectPatient(
-                        viewModel?.patientRecordsLiveData?.value?.get(
-                            position
-                        )
-                    )
+        binding.svPatient.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(keyword: String): Boolean {
+                if (viewModel?.searchPatient(keyword.trim().toInt()) == true) {
+                    viewModel?.selectPatient(keyword.trim().toInt())
+                } else {
+                    Toast.makeText(requireContext(), "Patient with ID:$keyword not found!", Toast.LENGTH_LONG).show()
                 }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
+                return true
             }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrEmpty()) {
+                    viewModel?.selectPatient(null)
+                }
+                return false
+            }
+        })
 
         // Gender Spinner Setup
         val genderOptions = resources.getStringArray(R.array.gender_options)
@@ -423,8 +419,18 @@ class CreatePatientInfoActivityFragment : Fragment() {
         }
     }
 
-    private fun handleNavigationToImageEditing() {
-
+    private fun enableFields(isCreatingNewPatients: Boolean) {
+        binding.apply {
+            etPatientName.isEnabled = isCreatingNewPatients
+            etEmail.isEnabled = isCreatingNewPatients
+            etPhoneNumber.isEnabled = isCreatingNewPatients
+            etBirthDate.isEnabled = isCreatingNewPatients
+            etAge.isEnabled = isCreatingNewPatients
+            spinnerGender.isEnabled = isCreatingNewPatients
+            spinnerState.isEnabled = isCreatingNewPatients
+            etAddress.isEnabled = isCreatingNewPatients
+            btnEditProfile.isEnabled = isCreatingNewPatients
+        }
     }
 
     override fun onDestroyView() {

@@ -330,6 +330,10 @@ class TodoListDashboardViewModel(
         }
     }
 
+    fun searchPatient(patientId: Int): Boolean {
+        return _patientRecordsLiveData.value?.any { it.id?.toInt() == patientId } ?: false
+    }
+
     @Suppress("UNCHECKED_CAST")
     class Factory(private val repository: ThunderscopeRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

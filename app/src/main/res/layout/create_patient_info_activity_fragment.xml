@@ -103,10 +103,14 @@
                         android:visibility="gone"
                         tools:visibility="visible">
 
-                        <Spinner
-                            android:id="@+id/spinnerPatientID"
+                        <android.widget.SearchView
+                            android:id="@+id/sv_patient"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:iconifiedByDefault="false"
+                            android:inputType="number"
+                            android:queryBackground="@android:color/transparent"
+                            android:queryHint="Search Patient ID" />
 
                     </LinearLayout>
 

@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.PopupMenu
+import android.widget.SearchView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -53,32 +54,6 @@ class CaseDashboardActivity : AppCompatActivity() {
 
             selectedDoctorId.observe(this@CaseDashboardActivity) { doctorId ->
                 fetchCaseRecordsFilterId(selectedPatientId.value, doctorId)
-            }
-
-            patientRecordsLiveData.observe(this@CaseDashboardActivity) { patientList ->
-                val patientStringArray = mutableListOf("All Patients")
-                patientStringArray.addAll(patientList.map { "${it.id} - ${it.name}" })
-
-                val adapter = ArrayAdapter(
-                    this@CaseDashboardActivity,
-                    R.layout.custom_spinner_dropdown,
-                    patientStringArray
-                )
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                binding.spinnerPatientID.adapter = adapter
-            }
-
-            doctorRecordsLiveData.observe(this@CaseDashboardActivity) { doctorList ->
-                val doctorStringArray = mutableListOf("All Doctors")
-                doctorStringArray.addAll(doctorList.map { "${it.id} - ${it.name}" })
-
-                val adapter = ArrayAdapter(
-                    this@CaseDashboardActivity,
-                    R.layout.custom_spinner_dropdown,
-                    doctorStringArray
-                )
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                binding.spinnerDoctorID.adapter = adapter
             }
 
             caseRecordsLiveData.observe(this@CaseDashboardActivity) { caseList ->
@@ -231,41 +206,41 @@ class CaseDashboardActivity : AppCompatActivity() {
         binding.spinnerGender.onItemSelectedListener = filterListener
         binding.spinnerAge.onItemSelectedListener = filterListener
 
-        binding.spinnerPatientID.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    if (position == 0) {
-                        caseDashboardViewModel.selectedPatientId.value = null
-                    } else {
-                        caseDashboardViewModel.selectedPatientId.value = caseDashboardViewModel.patientRecordsLiveData.value?.get(position - 1)?.id?.toInt()
-                    }
+        binding.svPatient.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(keyword: String): Boolean {
+                if (caseDashboardViewModel.searchPatient(keyword.trim().toInt())) {
+                    caseDashboardViewModel.selectedPatientId.value = keyword.trim().toInt()
+                } else {
+                    Toast.makeText(this@CaseDashboardActivity, "Patient with ID:$keyword not found!", Toast.LENGTH_LONG).show()
                 }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
+                return true
             }
 
-        binding.spinnerDoctorID.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    if (position == 0) {
-                        caseDashboardViewModel.selectedDoctorId.value = null
-                    } else {
-                        caseDashboardViewModel.selectedDoctorId.value = caseDashboardViewModel.doctorRecordsLiveData.value?.get(position - 1)?.id?.toInt()
-                    }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrEmpty()) {
+                    caseDashboardViewModel.selectedPatientId.value = null
                 }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
+                return false
             }
+        })
+
+        binding.svDoctor.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(keyword: String): Boolean {
+                if (caseDashboardViewModel.searchDoctor(keyword.trim().toInt())) {
+                    caseDashboardViewModel.selectedDoctorId.value = keyword.trim().toInt()
+                } else {
+                    Toast.makeText(this@CaseDashboardActivity, "Doctor with ID:$keyword not found!", Toast.LENGTH_LONG).show()
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrEmpty()) {
+                    caseDashboardViewModel.selectedDoctorId.value = null
+                }
+                return false
+            }
+        })
     }
 
     private fun setupPaginationButtons() {

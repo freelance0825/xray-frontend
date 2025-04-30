@@ -69,6 +69,7 @@ class CreateNewTestViewModel(
                     is Result.Loading -> {
                         _isLoading.value = true
                     }
+
                     is Result.Success -> {
                         _isLoading.value = false
                         _selectedPatient.value = null
@@ -76,6 +77,7 @@ class CreateNewTestViewModel(
 
                         successfullySubmittedPatient.value = true
                     }
+
                     is Result.Error -> {
                         _isLoading.value = false
                         _errorMessage.value = result.error
@@ -107,21 +109,24 @@ class CreateNewTestViewModel(
         viewModelScope.launch {
 
             // Later don't use DUMMY SLIDES
-            thunderscopeRepository.addCaseRecordWithDummySlides(caseRecordRequest).collect { result ->
-                when (result) {
-                    is Result.Loading -> {
-                        _isLoadingPreparingTest.value = true
-                    }
-                    is Result.Success -> {
-                        _isLoadingPreparingTest.value = false
-                        _caseRecordResponse.value = result.data
-                    }
-                    is Result.Error -> {
-                        _isLoadingPreparingTest.value = false
-                        _errorMessage.value = result.error
+            thunderscopeRepository.addCaseRecordWithDummySlides(caseRecordRequest)
+                .collect { result ->
+                    when (result) {
+                        is Result.Loading -> {
+                            _isLoadingPreparingTest.value = true
+                        }
+
+                        is Result.Success -> {
+                            _isLoadingPreparingTest.value = false
+                            _caseRecordResponse.value = result.data
+                        }
+
+                        is Result.Error -> {
+                            _isLoadingPreparingTest.value = false
+                            _errorMessage.value = result.error
+                        }
                     }
                 }
-            }
         }
     }
 
@@ -151,8 +156,14 @@ class CreateNewTestViewModel(
         }
     }
 
-    fun selectPatient(patient: PatientResponse?) {
+    fun selectPatient(patientId: Int? = null) {
+        val patient =
+            if (patientId == null) null else _patientRecordsLiveData.value?.find { it.id?.toInt() == patientId }
         _selectedPatient.value = patient
+    }
+
+    fun searchPatient(patientId: Int): Boolean {
+        return _patientRecordsLiveData.value?.any { it.id?.toInt() == patientId } ?: false
     }
 
     @Suppress("UNCHECKED_CAST")

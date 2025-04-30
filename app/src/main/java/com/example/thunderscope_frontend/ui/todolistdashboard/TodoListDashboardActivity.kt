@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.PopupMenu
+import android.widget.SearchView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -49,19 +50,6 @@ class TodoListDashboardActivity : AppCompatActivity() {
 
             selectedDoctorId.observe(this@TodoListDashboardActivity) { doctorId ->
                 fetchCaseRecordsFilterId(selectedPatientId.value, doctorId)
-            }
-
-            patientRecordsLiveData.observe(this@TodoListDashboardActivity) { patientList ->
-                val patientStringArray = mutableListOf("All Patients")
-                patientStringArray.addAll(patientList.map { "${it.id} - ${it.name}" })
-
-                val adapter = ArrayAdapter(
-                    this@TodoListDashboardActivity,
-                    R.layout.custom_spinner_dropdown,
-                    patientStringArray
-                )
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                binding.spinnerPatientID.adapter = adapter
             }
 
             caseRecordsLiveData.observe(this@TodoListDashboardActivity) { caseList ->
@@ -205,24 +193,23 @@ class TodoListDashboardActivity : AppCompatActivity() {
         binding.spinnerGender.onItemSelectedListener = filterListener
         binding.spinnerAge.onItemSelectedListener = filterListener
 
-        binding.spinnerPatientID.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    if (position == 0) {
-                        todoListDashboardViewModel.selectedPatientId.value = null
-                    } else {
-                        todoListDashboardViewModel.selectedPatientId.value =
-                            todoListDashboardViewModel.patientRecordsLiveData.value?.get(position - 1)?.id?.toInt()
-                    }
+        binding.svPatient.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(keyword: String): Boolean {
+                if (todoListDashboardViewModel.searchPatient(keyword.trim().toInt())) {
+                    todoListDashboardViewModel.selectedPatientId.value = keyword.trim().toInt()
+                } else {
+                    Toast.makeText(this@TodoListDashboardActivity, "Patient with ID:$keyword not found!", Toast.LENGTH_LONG).show()
                 }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
+                return true
             }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrEmpty()) {
+                    todoListDashboardViewModel.selectedPatientId.value = null
+                }
+                return false
+            }
+        })
     }
 
     private fun setupPaginationButtons() {

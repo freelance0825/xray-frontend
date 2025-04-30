@@ -359,6 +359,14 @@ class CaseDashboardViewModel(
         }
     }
 
+    fun searchPatient(patientId: Int): Boolean {
+        return _patientRecordsLiveData.value?.any { it.id?.toInt() == patientId } ?: false
+    }
+
+    fun searchDoctor(doctorId: Int): Boolean {
+        return _doctorRecordsLiveData.value?.any { it.id?.toInt() == doctorId } ?: false
+    }
+
     @Suppress("UNCHECKED_CAST")
     class Factory(private val repository: ThunderscopeRepository) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
