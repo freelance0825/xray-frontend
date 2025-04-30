@@ -12,4 +12,15 @@ enum class PatientStatus {
             COMPLETED -> "Completed"
         }
     }
+
+    companion object {
+        fun getTranslatedStringValue(value: String): String {
+            return when (value) {
+                NOT_STARTED.name -> "Not Started"
+                ON_PROGRESS.name -> "On Progress"
+                COMPLETED.name -> "Completed"
+                else -> "Completed"
+            }
+        }
+    }
 }

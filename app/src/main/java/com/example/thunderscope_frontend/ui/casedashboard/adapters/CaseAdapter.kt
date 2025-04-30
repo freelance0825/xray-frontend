@@ -13,6 +13,7 @@ import com.example.thunderscope_frontend.data.models.CaseRecordResponse
 import com.example.thunderscope_frontend.databinding.ItemCaseRecordRowBinding
 import com.example.thunderscope_frontend.ui.slides.SlidesActivity
 import com.example.thunderscope_frontend.ui.utils.Base64Helper
+import com.example.thunderscope_frontend.ui.utils.CaseRecordStatus
 
 class CaseAdapter : ListAdapter<CaseRecordResponse, CaseAdapter.CaseViewHolder>(DIFF_CALLBACK) {
 
@@ -35,6 +36,7 @@ class CaseAdapter : ListAdapter<CaseRecordResponse, CaseAdapter.CaseViewHolder>(
             binding.apply {
                 caseRecordId.text = record.id.toString()
                 caseRecordPatientId.text = record.patient?.id.toString()
+                patientId.text = record.patient?.id.toString()
                 physicianName.text = record.doctor?.name.toString()
                 patientName.text = record.patient?.name.toString()
                 patientBirthdate.text = record.patient?.dateOfBirth.toString()
@@ -44,15 +46,15 @@ class CaseAdapter : ListAdapter<CaseRecordResponse, CaseAdapter.CaseViewHolder>(
                 lastUpdateTime.text = record.time
 
                 status.apply {
-                    text = record.status?.uppercase()
-                    background = when (record.status?.lowercase()?.trim()) {
-                        "completed" -> resources.getDrawable(R.drawable.bg_status_completed, null)
-                        "for review" -> resources.getDrawable(R.drawable.bg_status_for_review, null)
+                    text = CaseRecordStatus.getTranslatedStringValue(record.status ?: "").uppercase()
+                    background = when (record.status?.trim()) {
+                        CaseRecordStatus.COMPLETED.name -> resources.getDrawable(R.drawable.bg_status_completed, null)
+                        CaseRecordStatus.FOR_REVIEW.name -> resources.getDrawable(R.drawable.bg_status_for_review, null)
                         else -> resources.getDrawable(R.drawable.bg_status_default, null)
                     }
                     setTextColor(
-                        when (record.status?.lowercase()?.trim()) {
-                            "completed" -> resources.getColor(R.color.white, null)
+                        when (record.status?.trim()) {
+                            CaseRecordStatus.COMPLETED.name -> resources.getColor(R.color.white, null)
                             else -> resources.getColor(R.color.blue_text, null)
                         }
                     )

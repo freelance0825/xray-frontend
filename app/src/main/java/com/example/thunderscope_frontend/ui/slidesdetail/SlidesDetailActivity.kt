@@ -819,11 +819,8 @@ class SlidesDetailActivity : AppCompatActivity() {
             } else {
                 dialog.dismiss()
 
-                Log.e("FTEST", "slidesdetail caseID: ${caseId}")
-
                 val payload = PostTestReviewPayload(
                     caseRecordId = caseId,
-//                    caseRecordId = slidesDetailViewModel.currentlySelectedSlides.value?.id?.toInt(),
                     microscopicDc = edMicroscopic.text.toString(),
                     dateAndTime = currentFromattedDate,
                     diagnosis = edDiagnosis.text.toString(),
@@ -841,11 +838,6 @@ class SlidesDetailActivity : AppCompatActivity() {
                             }
 
                             is Result.Success -> {
-                                Log.e(
-                                    "FTEST",
-                                    "slidesdetail slidesId: ${slidesDetailViewModel.currentlySelectedSlides.value?.id}",
-                                )
-
                                 val iReport =
                                     Intent(this@SlidesDetailActivity, ReportActivity::class.java)
                                 iReport.putExtra(ReportActivity.EXTRA_PATIENT, patientResponseData)

@@ -179,8 +179,6 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
 
             originalBitmap = croppedBitmap
 
-            Log.e("FTEST", "updateOriginalBitmapWithAnnotations: width=${originalBitmap?.width} - height=${originalBitmap?.height}")
-
             onAnnotationImageSaved?.invoke(croppedBitmap, firstLabel)
 
             clearCanvas(tempBitmap)
@@ -955,8 +953,6 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         when (shape.type) {
             ShapeType.RECTANGLE -> canvas.drawRect(shape.rect, paint)
             ShapeType.CIRCLE -> {
-                Log.e("FTEST", "drawShape: centerXCircle=${shape.rect?.centerX()}")
-
                 val radius = getRadius(shape.rect)
                 canvas.drawCircle(shape.rect.centerX(), shape.rect.centerY(), radius, paint)
             }

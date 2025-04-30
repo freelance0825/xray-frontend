@@ -18,6 +18,7 @@ import com.example.thunderscope_frontend.databinding.ActivityTodoListDashboardBi
 import com.example.thunderscope_frontend.ui.login.LoginActivity
 import com.example.thunderscope_frontend.ui.slides.SlidesActivity
 import com.example.thunderscope_frontend.ui.todolistdashboard.adapters.TodoAdapter
+import com.example.thunderscope_frontend.ui.utils.CaseRecordStatus
 
 class TodoListDashboardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTodoListDashboardBinding
@@ -65,10 +66,10 @@ class TodoListDashboardActivity : AppCompatActivity() {
 
             caseRecordsLiveData.observe(this@TodoListDashboardActivity) { caseList ->
                 val totalCases = caseList.size
-                val highPriorityCount = caseList.count { it.status == "High Priority" }
-                val inPreparationsCount = caseList.count { it.status == "In Preparations" }
-                val forReviewCount = caseList.count { it.status == "For Review" }
-                val completedCount = caseList.count { it.status == "Completed" }
+                val highPriorityCount = caseList.count { it.status == CaseRecordStatus.HIGH_PRIORITY.name }
+                val inPreparationsCount = caseList.count { it.status == CaseRecordStatus.IN_PREPARATIONS.name }
+                val forReviewCount = caseList.count { it.status == CaseRecordStatus.FOR_REVIEW.name }
+                val completedCount = caseList.count { it.status == CaseRecordStatus.COMPLETED.name }
 
                 binding.apply {
                     todoListCount.text = StringBuilder("($totalCases)")

@@ -12,6 +12,7 @@ import com.example.thunderscope_frontend.data.models.PatientResponse
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.data.repo.ThunderscopeRepository
 import com.example.thunderscope_frontend.ui.login.LoginViewModel
+import com.example.thunderscope_frontend.ui.utils.CaseRecordStatus
 import com.example.thunderscope_frontend.ui.utils.Result
 import com.example.thunderscope_frontend.viewmodel.SlidesRecordUI
 import kotlinx.coroutines.Dispatchers
@@ -157,7 +158,6 @@ class CaseDashboardViewModel(
                 when (result) {
                     is Result.Loading -> {
                         _isLoading.value = true
-                        Log.e("FTEST", "fetchCaseRecordsFilterId: LOADING")
                     }
 
                     is Result.Success -> {
@@ -172,10 +172,8 @@ class CaseDashboardViewModel(
                     is Result.Error -> {
                         _isLoading.value = false
                         _errorLiveData.value = result.error
-                        Log.e("FTEST", "fetchCaseRecordsFilterId: ERROR ${result.error}")
                     }
                 }
-                Log.e("FTEST", "fetchCaseRecordsFilterId: FINISH")
             }
         }
     }
@@ -231,8 +229,12 @@ class CaseDashboardViewModel(
             // Same filter logic like you already have
             val statusMatch = when (selectedStatus.trim().lowercase()) {
                 "all status" -> true
-                "finished" -> record.status?.trim()?.lowercase() == "completed"
-                else -> record.status?.trim()?.lowercase() == selectedStatus.trim().lowercase()
+                "finished" -> record.status?.trim()
+                    ?.lowercase() == CaseRecordStatus.COMPLETED.name.lowercase()
+
+                else -> CaseRecordStatus.getTranslatedStringValue(
+                    record.status?.trim() ?: ""
+                ).lowercase() == selectedStatus.trim().lowercase()
             }
 
             val typeMatch = selectedType.trim().lowercase() == "all type" || record.type?.trim()

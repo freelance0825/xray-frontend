@@ -1646,7 +1646,9 @@
                             android:layout_marginTop="8dp"
                             android:background="@drawable/bg_rounded_dialog_form"
                             android:padding="12dp"
-                            android:inputType="text"
+                            android:minLines="4"
+                            android:gravity="top|start"
+                            android:inputType="textMultiLine"
                             tools:text="Right eye: Normal fundus examination.\nLeft eye:  Borderline cup-to-disc ratio.  Possible drusen noted in the superior temporal quadrant.  Recommend follow-up examination in 6 months to monitor for any changes."
                             android:textColor="@color/white" />
 

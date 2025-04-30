@@ -43,11 +43,7 @@ class ImagePreviewDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         bitmap?.let {
-            Log.e("FTEST", "aa1: $bitmap" )
-
             binding.ivPreview.setImageBitmap(bitmap)
-        } ?: {
-            Log.e("FTEST", "aa2: $bitmap" )
         }
 
         binding.btnClose.setOnClickListener {

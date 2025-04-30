@@ -1,6 +1,7 @@
 package com.example.thunderscope_frontend.ui.slides
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

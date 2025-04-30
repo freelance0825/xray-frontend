@@ -53,7 +53,6 @@ class ThunderscopeRepository(
             // SAVE TOKEN TO DATASTORE
             runBlocking {
                 authDataStore.saveToken(loginResponse.token.toString())
-                Log.e("FTEST", "loginDoctor: ${loginResponse.id}")
                 authDataStore.saveDoctorId(loginResponse.id?.toInt() ?: 0)
             }
 

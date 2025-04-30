@@ -187,7 +187,9 @@ class SlidesActivity : AppCompatActivity() {
         binding.apply {
             btnOpenViewer.setOnClickListener {
                 val activeSlidesList = arrayListOf<SlidesItem>()
-                activeSlidesList.addAll((slidesViewModel.activeSlidesItem.value ?: mutableListOf()).map { SlidesItem(id = it.id) })
+                activeSlidesList.addAll(
+                    (slidesViewModel.activeSlidesItem.value
+                        ?: mutableListOf()).map { SlidesItem(id = it.id) })
 
                 if (activeSlidesList.isEmpty()) {
                     Toast.makeText(this@SlidesActivity, "Select Slides First!", Toast.LENGTH_SHORT)
@@ -208,7 +210,11 @@ class SlidesActivity : AppCompatActivity() {
                     val iDetail = Intent(this@SlidesActivity, SlidesDetailActivity::class.java)
                     iDetail.putExtra(SlidesDetailActivity.EXTRA_PATIENT, patientResponse)
                     iDetail.putExtra(SlidesDetailActivity.EXTRA_CASE_ID, caseRecordId?.toLong())
-                    iDetail.putParcelableArrayListExtra(SlidesDetailActivity.EXTRA_SLIDE_ID_LIST, activeSlidesList)
+                    iDetail.putParcelableArrayListExtra(
+                        SlidesDetailActivity.EXTRA_SLIDE_ID_LIST,
+                        activeSlidesList
+                    )
+                    slidesViewModel.isOpeningRightMenu.value = false
                     startActivity(iDetail)
                 }
             }
@@ -414,13 +420,7 @@ class SlidesActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        slidesViewModel.apply {
-            getAllSlides()
-
-            currentlySelectedSlide.value?.let {
-                getAnnotationsBySlidesId(it.id)
-            }
-        }
+        slidesViewModel.getAllSlides()
     }
 
     companion object {

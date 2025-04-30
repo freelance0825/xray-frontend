@@ -17,7 +17,7 @@ data class AnnotationResponse(
 	var annotatedImage: String? = null,
 
 	@field:SerializedName("caseRecordStatus")
-	val caseRecordStatus: Int? = null,
+	val caseRecordStatus: String? = null,
 
 	@field:SerializedName("id")
 	val id: Int? = null,

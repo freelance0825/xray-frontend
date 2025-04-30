@@ -110,14 +110,12 @@ class CreatePatientInfoActivityFragment : Fragment() {
 
             successfullySubmittedPatient.observe(viewLifecycleOwner) {
                 if (it) {
-                    Log.e("FTEST", "submitted", )
                     viewModel?.addCaseRecord()
                 }
             }
 
             selectedPatient.observe(viewLifecycleOwner) { patientResponse ->
                 if (patientResponse != null) {
-                    Log.e("FTEST", "pasien beganti: ${patientResponse.name}", )
                     populateFields(patientResponse)
                 }
             }
