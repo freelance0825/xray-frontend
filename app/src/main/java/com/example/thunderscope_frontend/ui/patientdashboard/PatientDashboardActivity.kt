@@ -19,6 +19,7 @@ import com.example.thunderscope_frontend.ui.fragments.EditPatientDialogFragment
 import com.example.thunderscope_frontend.ui.login.LoginActivity
 import com.example.thunderscope_frontend.ui.patientdashboard.adapters.PatientAdapter
 import com.example.thunderscope_frontend.ui.patientdashboard.screens.EditPatientFragment
+import com.example.thunderscope_frontend.ui.utils.PatientStatus
 
 class PatientDashboardActivity : AppCompatActivity() {
 
@@ -46,9 +47,9 @@ class PatientDashboardActivity : AppCompatActivity() {
             patientRecordsLiveData.observe(this@PatientDashboardActivity) { patientList ->
                 val totalPatients = patientList.size
 
-                val notStartedCount = patientList.count { it.status == "Not Started" }
-                val onProgressCount = patientList.count { it.status == "On Progress" }
-                val completedCount = patientList.count { it.status == "Completed" }
+                val notStartedCount = patientList.count { it.status == PatientStatus.NOT_STARTED.name }
+                val onProgressCount = patientList.count { it.status == PatientStatus.ON_PROGRESS.name }
+                val completedCount = patientList.count { it.status == PatientStatus.COMPLETED.name }
 
                 // Update UI
                 binding.allPatientNumber.text = StringBuilder("($totalPatients)")

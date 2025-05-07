@@ -18,7 +18,7 @@ class AccordionView(context: Context, attributeSet: AttributeSet) :
     LinearLayout(context, attributeSet) {
 
     // variables
-    private var isOpen = false
+    var isOpen = false
     private var isClicked = false
 
     // UI elements
@@ -161,7 +161,7 @@ class AccordionView(context: Context, attributeSet: AttributeSet) :
     }
 
     // open/close the accordion on title press
-    private fun handleAccordion() {
+    fun handleAccordion() {
         if (!isClicked) {
             isClicked = true
 

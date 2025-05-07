@@ -15,12 +15,14 @@ import android.os.Looper
 import android.os.StrictMode
 import android.provider.OpenableColumns
 import android.util.Base64
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -28,6 +30,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.data.models.PatientResponse
+import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.data.models.UpdatePatientRequest
 import com.example.thunderscope_frontend.databinding.CreatePatientInfoActivityFragmentBinding
 import com.example.thunderscope_frontend.ui.createnewtest.CreateNewTestActivity
@@ -83,41 +86,45 @@ class CreatePatientInfoActivityFragment : Fragment() {
         viewModel = (requireActivity() as CreateNewTestActivity).viewModel
 
         viewModel?.apply {
-            selectedPatient.observe(viewLifecycleOwner) { patientResponse ->
-                if (patientResponse != null) {
-                    if (isCreatingNewPatient.value == true) {
-                        Toast.makeText(
-                            requireContext(),
-                            "Patient record is successfully added",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                        viewModel?.generateDummySlidesToDatabaseForMVPPurpose()
-
-                        // Delay the navigation slightly for better UX
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            requireActivity().finish()
-                            val iDetail =
-                                Intent(requireActivity(), SlidesDetailActivity::class.java)
-                            iDetail.putExtra(SlidesDetailActivity.EXTRA_PATIENT, patientResponse)
-                            startActivity(iDetail)
-                        }, 100L) // 1 second delay
-                    } else {
-                        populateFields(patientResponse)
-                    }
+            isCreatingNewPatient.observe(viewLifecycleOwner) {
+                if (it != null) {
+                    enableFields(it)
                 }
             }
 
-            patientRecordsLiveData.observe(viewLifecycleOwner) { patientList ->
-                val patientStringArray = patientList.map { "${it.id} - ${it.name}" }
+            caseRecordResponse.observe(viewLifecycleOwner) {
+                it?.let { caseRecord ->
+                    Toast.makeText(
+                        requireContext(),
+                        "Patient record is successfully added",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
-                val adapter = ArrayAdapter(
-                    requireContext(),
-                    R.layout.custom_spinner_dropdown,
-                    patientStringArray
-                )
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                binding.spinnerPatientID.adapter = adapter
+                    val activeSlidesList = arrayListOf<SlidesItem>()
+                    activeSlidesList.addAll(caseRecord.slides.map { slideItem -> SlidesItem(id = slideItem.id) })
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        requireActivity().finish()
+                        val iDetail =
+                            Intent(requireActivity(), SlidesDetailActivity::class.java)
+                        iDetail.putExtra(SlidesDetailActivity.EXTRA_PATIENT, viewModel?.selectedPatient?.value)
+                        iDetail.putExtra(SlidesDetailActivity.EXTRA_CASE_ID, caseRecord.id?.toLong())
+                        iDetail.putParcelableArrayListExtra(SlidesDetailActivity.EXTRA_SLIDE_ID_LIST, activeSlidesList)
+                        startActivity(iDetail)
+                    }, 100L)
+                }
+            }
+
+            successfullySubmittedPatient.observe(viewLifecycleOwner) {
+                if (it) {
+                    viewModel?.addCaseRecord()
+                }
+            }
+
+            selectedPatient.observe(viewLifecycleOwner) { patientResponse ->
+                if (patientResponse != null) {
+                    populateFields(patientResponse)
+                }
             }
         }
 
@@ -125,14 +132,15 @@ class CreatePatientInfoActivityFragment : Fragment() {
         binding.rgPatientOption.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.rb_create_patient -> {
+                    viewModel?.selectPatient(null)
                     clearFields()
                     viewModel?.isCreatingNewPatient?.value = true
                     binding.layoutPatientSpinner.visibility = View.GONE
                 }
 
                 R.id.rb_select_existing_patient -> {
+                    clearFields()
                     viewModel?.isCreatingNewPatient?.value = false
-                    binding.spinnerPatientID.setSelection(0)
                     binding.layoutPatientSpinner.visibility = View.VISIBLE
                 }
 
@@ -142,23 +150,23 @@ class CreatePatientInfoActivityFragment : Fragment() {
             }
         }
 
-        binding.spinnerPatientID.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    viewModel?.selectPatient(
-                        viewModel?.patientRecordsLiveData?.value?.get(
-                            position
-                        )
-                    )
+        binding.svPatient.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(keyword: String): Boolean {
+                if (viewModel?.searchPatient(keyword.trim().toInt()) == true) {
+                    viewModel?.selectPatient(keyword.trim().toInt())
+                } else {
+                    Toast.makeText(requireContext(), "Patient with ID:$keyword not found!", Toast.LENGTH_LONG).show()
                 }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
+                return true
             }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrEmpty()) {
+                    viewModel?.selectPatient(null)
+                }
+                return false
+            }
+        })
 
         // Gender Spinner Setup
         val genderOptions = resources.getStringArray(R.array.gender_options)
@@ -182,24 +190,12 @@ class CreatePatientInfoActivityFragment : Fragment() {
         binding.btnEditProfile.setOnClickListener { openImagePicker() }
         binding.etBirthDate.setOnClickListener { showDatePicker() }
         binding.btnSubmit.setOnClickListener {
-            if (viewModel?.isCreatingNewPatient?.value == true) {
-                if (validateInputs()) {
+            if (validateInputs()) {
+                if (viewModel?.isCreatingNewPatient?.value == true) {
                     addPatientData()
+                } else {
+                    viewModel?.successfullySubmittedPatient?.value = true
                 }
-            } else {
-                viewModel?.generateDummySlidesToDatabaseForMVPPurpose()
-
-                // Delay the navigation slightly for better UX
-                Handler(Looper.getMainLooper()).postDelayed({
-                    requireActivity().finish()
-                    val iDetail =
-                        Intent(requireActivity(), SlidesDetailActivity::class.java)
-                    iDetail.putExtra(
-                        SlidesDetailActivity.EXTRA_PATIENT,
-                        viewModel?.selectedPatient?.value
-                    )
-                    startActivity(iDetail)
-                }, 100L) // 1 second delay
             }
         }
     }
@@ -420,6 +416,20 @@ class CreatePatientInfoActivityFragment : Fragment() {
 
             // Clear the profile image
             imgProfile.setImageResource(R.drawable.ic_default_profile) // Reset to default image
+        }
+    }
+
+    private fun enableFields(isCreatingNewPatients: Boolean) {
+        binding.apply {
+            etPatientName.isEnabled = isCreatingNewPatients
+            etEmail.isEnabled = isCreatingNewPatients
+            etPhoneNumber.isEnabled = isCreatingNewPatients
+            etBirthDate.isEnabled = isCreatingNewPatients
+            etAge.isEnabled = isCreatingNewPatients
+            spinnerGender.isEnabled = isCreatingNewPatients
+            spinnerState.isEnabled = isCreatingNewPatients
+            etAddress.isEnabled = isCreatingNewPatients
+            btnEditProfile.isEnabled = isCreatingNewPatients
         }
     }
 

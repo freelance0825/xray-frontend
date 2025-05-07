@@ -42,7 +42,7 @@
             android:id="@+id/todo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Examine..." />
+            android:text="Examine prepared slides under the microscope at various magnifications." />
     </LinearLayout>
 
     <!-- Data: PatientResponse -->

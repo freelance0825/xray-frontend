@@ -10,6 +10,7 @@ import com.example.thunderscope_frontend.data.models.CaseRecordResponse
 import com.example.thunderscope_frontend.data.models.PatientResponse
 import com.example.thunderscope_frontend.data.models.UpdatePatientRequest
 import com.example.thunderscope_frontend.data.repo.ThunderscopeRepository
+import com.example.thunderscope_frontend.ui.utils.PatientStatus
 import com.example.thunderscope_frontend.ui.utils.Result
 import kotlinx.coroutines.launch
 import java.io.File
@@ -59,11 +60,14 @@ class PatientDashboardViewModel(
                     is Result.Loading -> {
                         _isLoading.value = true
                     }
+
                     is Result.Success -> {
                         _isLoading.value = false
-                        val sortedPatientByLatestUpdate = result.data.sortedByDescending { it.updatedAt }
+                        val sortedPatientByLatestUpdate =
+                            result.data.sortedByDescending { it.updatedAt }
                         _patientRecordsLiveData.value = sortedPatientByLatestUpdate
                     }
+
                     is Result.Error -> {
                         _isLoading.value = false
                         _errorMessage.value = result.error
@@ -81,8 +85,10 @@ class PatientDashboardViewModel(
                     is Result.Success -> {
                         _isLoading.value = false
                         // Remove deleted patientResponse from current list
-                        _patientRecordsLiveData.value = _patientRecordsLiveData.value?.filter { it.id?.toInt() != patientId }
+                        _patientRecordsLiveData.value =
+                            _patientRecordsLiveData.value?.filter { it.id?.toInt() != patientId }
                     }
+
                     is Result.Error -> {
                         _isLoading.value = false
                         _errorMessage.value = result.error
@@ -94,25 +100,28 @@ class PatientDashboardViewModel(
 
     fun updatePatient(patientId: Int, updatePatientRequest: UpdatePatientRequest) {
         viewModelScope.launch {
-            thunderscopeRepository.updatePatient(patientId, updatePatientRequest).collect { result ->
-                when (result) {
-                    is Result.Loading -> {
-                        _isLoading.value = true
-                        isUpdatePatientSuccessful.value = false
-                    }
-                    is Result.Success -> {
-                        _isLoading.value = false
-                        isUpdatePatientSuccessful.value = true
-                        fetchPatientRecords() // Refresh the list after update
-                        isUpdatePatientSuccessful.value = false // Reset flag
-                    }
-                    is Result.Error -> {
-                        isUpdatePatientSuccessful.value = false
-                        _isLoading.value = false
-                        _errorMessage.value = result.error
+            thunderscopeRepository.updatePatient(patientId, updatePatientRequest)
+                .collect { result ->
+                    when (result) {
+                        is Result.Loading -> {
+                            _isLoading.value = true
+                            isUpdatePatientSuccessful.value = false
+                        }
+
+                        is Result.Success -> {
+                            _isLoading.value = false
+                            isUpdatePatientSuccessful.value = true
+                            fetchPatientRecords() // Refresh the list after update
+                            isUpdatePatientSuccessful.value = false // Reset flag
+                        }
+
+                        is Result.Error -> {
+                            isUpdatePatientSuccessful.value = false
+                            _isLoading.value = false
+                            _errorMessage.value = result.error
+                        }
                     }
                 }
-            }
         }
     }
 
@@ -132,7 +141,8 @@ class PatientDashboardViewModel(
             val recordStatus = record.status?.trim()?.lowercase()
             val statusMatch = when (selectedStatus) {
                 "All Status" -> true
-                else -> recordStatus?.lowercase()?.trim() == selectedStatus.lowercase().trim()
+                else -> PatientStatus.getTranslatedStringValue(recordStatus ?: "")
+                    .lowercase().trim() == selectedStatus.lowercase().trim()
             }
 
             // Time Period Filter
@@ -222,7 +232,8 @@ class PatientDashboardViewModel(
 
             when (selectedTimePeriod.lowercase()) {
                 "last 24 hours" -> {
-                    val last24Hours = Calendar.getInstance().apply { add(Calendar.HOUR_OF_DAY, -24) }
+                    val last24Hours =
+                        Calendar.getInstance().apply { add(Calendar.HOUR_OF_DAY, -24) }
                     recordDateTime.after(last24Hours.time)
                 }
 

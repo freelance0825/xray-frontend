@@ -1,12 +1,14 @@
 package com.example.thunderscope_frontend.ui.slides
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.data.models.AnnotationItem
+import com.example.thunderscope_frontend.data.models.AnnotationResponse
 import com.example.thunderscope_frontend.data.models.CaseRecordResponse
 import com.example.thunderscope_frontend.data.models.PhotoItem
 import com.example.thunderscope_frontend.data.models.SlidesItem
@@ -17,16 +19,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SlidesViewModel(
-    private val caseRecord: CaseRecordResponse?,
+    private val caseRecordId: Int,
     private val thunderscopeRepository: ThunderscopeRepository
 ) : ViewModel() {
 
     val slidesItem = MutableLiveData<MutableList<SlidesItem>>(mutableListOf())
+    val caseRecordResponse = MutableLiveData<CaseRecordResponse>(null)
     val activeSlidesItem = MutableLiveData<MutableList<SlidesItem>>(mutableListOf())
     val currentlySelectedSlide = MutableLiveData<SlidesItem?>(null)
 
+    val selectedAnnotationListByActiveSlides =
+        MutableLiveData<MutableList<AnnotationResponse>>(mutableListOf())
+
     val photoGalleryItems = MutableLiveData(this.getDummyPhotos())
-    val annotationItems = MutableLiveData(this.generateDummyAnnotationItem())
 
     val isOpeningRightMenu = MutableLiveData(false)
 
@@ -34,12 +39,33 @@ class SlidesViewModel(
     var isDraggingPhotos = false
 
     init {
+        getCaseById()
         getAllSlides()
     }
 
-    private fun getAllSlides() {
+    fun getCaseById() {
         viewModelScope.launch {
-            thunderscopeRepository.getAllSlides(caseRecord?.id ?: 1).collect { result ->
+            thunderscopeRepository.getCaseById(caseRecordId).collect { result ->
+                when (result) {
+                    is Result.Loading -> {
+                        // Handle loading here
+                    }
+
+                    is Result.Success -> {
+                        caseRecordResponse.value = result.data
+                    }
+
+                    is Result.Error -> {
+                        // Handle error here
+                    }
+                }
+            }
+        }
+    }
+
+    fun getAllSlides() {
+        viewModelScope.launch {
+            thunderscopeRepository.getAllSlides(caseRecordId).collect { result ->
                 when (result) {
                     is Result.Loading -> {
                         // Handle loading here
@@ -58,6 +84,8 @@ class SlidesViewModel(
     }
 
     fun toggleSlidesItem(slideItem: SlidesItem, isFromRightMenu: Boolean = false) {
+        getAnnotationsBySlidesId(slideItem.id)
+
         val updatedList = slidesItem.value?.map { item ->
             if (item.id == slideItem.id) {
                 item.copy(
@@ -81,6 +109,27 @@ class SlidesViewModel(
         activeSlidesItem.value = finalList.toMutableList()
         currentlySelectedSlide.value =
             finalList.find { it.isCurrentlySelected } ?: finalList.firstOrNull()
+    }
+
+    fun getAnnotationsBySlidesId(slidesId: Long?) {
+        viewModelScope.launch {
+            thunderscopeRepository.getAnnotationsBySlidesId(slidesId ?: 0).collect { result ->
+                when (result) {
+                    is Result.Loading -> {
+                        // Handle loading here
+                    }
+
+                    is Result.Success -> {
+                        selectedAnnotationListByActiveSlides.value =
+                            result.data.slidesAnnotationList
+                    }
+
+                    is Result.Error -> {
+                        // Handle error here
+                    }
+                }
+            }
+        }
     }
 
     // DUMMY DATA - CHANGE LATER
@@ -146,12 +195,12 @@ class SlidesViewModel(
 
     @Suppress("UNCHECKED_CAST")
     class Factory(
-        private val caseRecord: CaseRecordResponse?,
+        private val caseRecordId: Int,
         private val context: Context
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(SlidesViewModel::class.java)) {
-                return SlidesViewModel(caseRecord, ThunderscopeRepository(context)) as T
+                return SlidesViewModel(caseRecordId, ThunderscopeRepository(context)) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

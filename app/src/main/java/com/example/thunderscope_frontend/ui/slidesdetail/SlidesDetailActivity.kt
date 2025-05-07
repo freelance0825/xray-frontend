@@ -10,6 +10,9 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
+import android.os.Looper
+import android.text.InputType
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup.LayoutParams
@@ -32,10 +35,12 @@ import com.example.thunderscope_frontend.data.models.PatientResponse
 import com.example.thunderscope_frontend.data.models.PostTestReviewPayload
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.databinding.ActivitySlidesDetailBinding
+import com.example.thunderscope_frontend.ui.customview.ImagePreviewDialogFragment
 import com.example.thunderscope_frontend.ui.report.ReportActivity
 import com.example.thunderscope_frontend.ui.slidesdetail.adapters.SavedAnnotationAdapter
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.ShapeType
 import com.example.thunderscope_frontend.ui.slidesdetail.customview.ZoomImageView
+import com.example.thunderscope_frontend.ui.utils.Base64Helper
 import com.example.thunderscope_frontend.ui.utils.Result
 import com.google.android.material.button.MaterialButton
 import com.skydoves.colorpickerview.ColorEnvelope
@@ -59,10 +64,6 @@ import java.util.Locale
 class SlidesDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySlidesDetailBinding
 
-    private val slidesDetailViewModel by viewModels<SlidesDetailViewModel> {
-        SlidesDetailViewModel.Factory(this)
-    }
-
     private val caseId by lazy {
         intent.getLongExtra(EXTRA_CASE_ID, 0)
     }
@@ -74,6 +75,19 @@ class SlidesDetailActivity : AppCompatActivity() {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra(EXTRA_PATIENT)
         }
+    }
+
+    private val slideIdList: ArrayList<SlidesItem>? by lazy {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableArrayListExtra(EXTRA_SLIDE_ID_LIST, SlidesItem::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getParcelableArrayListExtra(EXTRA_SLIDE_ID_LIST)
+        }
+    }
+
+    private val slidesDetailViewModel by viewModels<SlidesDetailViewModel> {
+        SlidesDetailViewModel.Factory(this, slideIdList ?: arrayListOf())
     }
 
     private val galleryLauncher = registerForActivityResult(
@@ -101,19 +115,43 @@ class SlidesDetailActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         slidesDetailViewModel.apply {
-            slideItems.observe(this@SlidesDetailActivity) { slideList ->
-                currentlySelectedSlides.observe(this@SlidesDetailActivity) { selectedSlides ->
-                    binding.tvCaseId.text = selectedSlides?.caseRecordResponse?.id.toString()
+            annotationSuccessMessage.observe(this@SlidesDetailActivity) {
+                if (!it.isNullOrEmpty()) {
+                    Toast.makeText(this@SlidesDetailActivity, "Successfully Saved Annotations!", Toast.LENGTH_SHORT).show()
+                }
+            }
 
-                    binding.ivBaseImage.setImageBitmap(selectedSlides?.bitmapImage)
+            isEditingDiagnosis.observe(this@SlidesDetailActivity) {
+                binding.apply {
+                    edDiagnostics.isEnabled = it
+                    btnEditDiagnostics.visibility = if (it) View.GONE else View.VISIBLE
+                    layoutBtnDiagnosticsConfirmation.visibility = if (it) View.VISIBLE else View.GONE
+                }
+            }
+
+            allAnnotationList.observe(this@SlidesDetailActivity) {
+                savedAnnotationAdapter.submitList(it)
+            }
+
+            currentlySelectedSlidesId.observe(this@SlidesDetailActivity) {
+                getSlidesById(it)
+            }
+
+            currentlySelectedSlidesItemWithAnnotationResponse.observe(this@SlidesDetailActivity) { selectedSlides ->
+                selectedSlides?.let {
+                    binding.tvCaseId.text = selectedSlides.caseRecordResponse?.id.toString()
+                    binding.tvAiInsights.text = selectedSlides.aiInsights
+                    binding.edDiagnostics.setText(selectedSlides.diagnosis)
+
+                    binding.ivBaseImage.setImageBitmap(selectedSlides.bitmapImage)
 
                     binding.tvActiveSlides.text = getString(
                         R.string.activity_slides_detail_slides_selected,
-                        (slideList.indexOfFirst { it.id == selectedSlides?.id } + 1).toString(),
-                        slideList.size.toString(),
+                        (slideIdList.indexOfFirst { it == selectedSlides.id } + 1).toString(),
+                        slideIdList.size.toString(),
                     )
 
-                    handleSpinner(selectedSlides, slideList)
+                    handleSpinner(selectedSlides.id ?: 0L, slideIdList)
                 }
             }
 
@@ -293,10 +331,44 @@ class SlidesDetailActivity : AppCompatActivity() {
 
     private fun setListeners() {
         binding.apply {
+            savedAnnotationAdapter.onImageClick = {
+                val bitmap = Base64Helper.convertToBitmap(it)
+                val dialog = ImagePreviewDialogFragment.newInstance(bitmap)
+                dialog.show(supportFragmentManager, "ImagePreviewDialog")
+            }
+
+            ivBaseImage.onAnnotationImageSaved = { bitmap, label ->
+                val dialog = ImagePreviewDialogFragment.newInstance(bitmap)
+                dialog.show(supportFragmentManager, "ImagePreviewDialog")
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    dialog.dismiss()
+                    slidesDetailViewModel.storeNewLocalAnnotation(bitmap, label)
+                }, 700)
+            }
+
             btnCompleteReview.setOnClickListener {
                 openPostTestReviewDialog()
             }
 
+            btnSave.setOnClickListener {
+                slidesDetailViewModel.saveLocalAnnotationToNetwork()
+            }
+
+            // Diagnosis Editing Configuration
+            btnEditDiagnostics.setOnClickListener {
+                slidesDetailViewModel.isEditingDiagnosis.value = true
+            }
+
+            btnSaveDiagnostics.setOnClickListener {
+                slidesDetailViewModel.isEditingDiagnosis.value = false
+                slidesDetailViewModel.currentlySelectedSlidesItemWithAnnotationResponse.value?.diagnosis = edDiagnostics.text.toString()
+            }
+
+            btnCancelDiagnostics.setOnClickListener {
+                slidesDetailViewModel.isEditingDiagnosis.value = false
+                edDiagnostics.setText(slidesDetailViewModel.currentlySelectedSlidesItemWithAnnotationResponse.value?.diagnosis)
+            }
 
             // Left Menu Configuration
             btnSelect.setOnClickListener {
@@ -422,7 +494,6 @@ class SlidesDetailActivity : AppCompatActivity() {
             }
 
             rvSavedAnnotation.apply {
-                savedAnnotationAdapter.submitList(slidesDetailViewModel.generateDummyAnnotationItem())
                 adapter = savedAnnotationAdapter
                 layoutManager =
                     LinearLayoutManager(
@@ -436,7 +507,7 @@ class SlidesDetailActivity : AppCompatActivity() {
 
     private fun processFilter() {
         val originalBitmap =
-            slidesDetailViewModel.currentlySelectedSlides.value?.bitmapImage
+            slidesDetailViewModel.currentlySelectedSlidesItemWithAnnotationResponse.value?.bitmapImage
         if (originalBitmap != null) {
             val filteredBitmap = applyFilter(originalBitmap)
             binding.ivBaseImage.setImageBitmap(filteredBitmap)
@@ -516,22 +587,21 @@ class SlidesDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleSpinner(selectedSlides: SlidesItem?, slideList: List<SlidesItem>) {
-        val slideNames = slideList.map { it.id.toString() }
+    private fun handleSpinner(selectedSlidesIndex: Long, slideIdList: MutableList<Long>) {
+        val slideNames = slideIdList.map { it.toString() }
 
         val adapter = ArrayAdapter(
             this@SlidesDetailActivity,
-            android.R.layout.simple_dropdown_item_1line, // Menggunakan dropdown style
+            android.R.layout.simple_dropdown_item_1line,
             slideNames
         )
         binding.spinnerSlides.setAdapter(adapter)
 
-        val selectedIndex = slideList.indexOfFirst { it.id == selectedSlides?.id }
-        if (selectedIndex != -1) {
-            binding.spinnerSlides.setText(slideNames[selectedIndex], false)
-        } else if (slideList.isNotEmpty()) {
+        if (selectedSlidesIndex != -1L) {
+            binding.spinnerSlides.setText(selectedSlidesIndex.toString(), false)
+        } else if (slideIdList.isNotEmpty()) {
             binding.spinnerSlides.setText(slideNames[0], false)
-            slidesDetailViewModel.updateSelectedSlide(slideList[0])
+            slidesDetailViewModel.updateSelectedSlide(slideIdList[0])
         }
 
         // RESET STATE WHEN CHANGE IMAGE
@@ -544,7 +614,17 @@ class SlidesDetailActivity : AppCompatActivity() {
             binding.ivBaseImage.clearCanvas()
             binding.ivBaseImage.resetZoomManually()
 
-            val selectedSlide = slideList[position]
+            // Reset all accordions
+            listOf(
+                binding.accordionPatientDetail,
+                binding.accordionDiagnostics,
+                binding.accordionAiInsights,
+                binding.accordionViewSettings
+            ).forEach { accordion ->
+                if (accordion.isOpen) accordion.handleAccordion()
+            }
+
+            val selectedSlide = slideIdList[position]
             slidesDetailViewModel.updateSelectedSlide(selectedSlide)
         }
 
@@ -695,6 +775,7 @@ class SlidesDetailActivity : AppCompatActivity() {
         tvDateNow.text = currentDate
         tvTimeNow.text = currentTime
         tvDateTimeCombined.text = StringBuilder("$currentDate • $currentTime")
+        edDiagnosis.setText(slidesDetailViewModel.currentlySelectedSlidesItemWithAnnotationResponse.value?.diagnosis)
 
         if (patientResponseData?.gender?.lowercase().equals("female")) {
             ivGender.setImageDrawable(
@@ -738,11 +819,8 @@ class SlidesDetailActivity : AppCompatActivity() {
             } else {
                 dialog.dismiss()
 
-                Log.e("FTEST", "slidesdetail caseID: ${caseId}", )
-
                 val payload = PostTestReviewPayload(
                     caseRecordId = caseId,
-//                    caseRecordId = slidesDetailViewModel.currentlySelectedSlides.value?.id?.toInt(),
                     microscopicDc = edMicroscopic.text.toString(),
                     dateAndTime = currentFromattedDate,
                     diagnosis = edDiagnosis.text.toString(),
@@ -760,8 +838,6 @@ class SlidesDetailActivity : AppCompatActivity() {
                             }
 
                             is Result.Success -> {
-                                Log.e("FTEST", "slidesdetail slidesId: ${slidesDetailViewModel.currentlySelectedSlides.value?.id}", )
-
                                 val iReport =
                                     Intent(this@SlidesDetailActivity, ReportActivity::class.java)
                                 iReport.putExtra(ReportActivity.EXTRA_PATIENT, patientResponseData)
@@ -804,8 +880,17 @@ class SlidesDetailActivity : AppCompatActivity() {
         return dateFormat.format(Date())
     }
 
+    fun EditText.setEditable(editable: Boolean) {
+        isFocusable = editable
+        isFocusableInTouchMode = editable
+        isClickable = editable
+        isLongClickable = editable
+        inputType = if (editable) InputType.TYPE_CLASS_TEXT else InputType.TYPE_NULL
+    }
+
     companion object {
         const val EXTRA_PATIENT = "extra_patient"
         const val EXTRA_CASE_ID = "extra_case_id"
+        const val EXTRA_SLIDE_ID_LIST = "extra_slide_id_list"
     }
 }

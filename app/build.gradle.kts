@@ -114,6 +114,15 @@ dependencies {
     // ColorPicker
     implementation(libs.colorpickerview)
 
+    // ThreeTenABP for backward-compatible date/time handling
+    implementation(libs.threetenabp)
+
+    // ZoomImageView
+    implementation(libs.zoomimageview.android)
+
+    // Lottie
+    implementation(libs.lottie)
+
     // Testing dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

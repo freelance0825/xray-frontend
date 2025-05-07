@@ -347,8 +347,6 @@ class PatientListTableFragment : Fragment() {
 
             // Load images properly if available
             if (slideImages.isNotEmpty()) {
-                Log.e("FTEST", "updateFilteredTable: ${slideImages.getOrNull(0)}", )
-
                 slideImages.getOrNull(0)?.let {
                     image1.setImageBitmap(Base64Helper.convertToBitmap(it))
                 }

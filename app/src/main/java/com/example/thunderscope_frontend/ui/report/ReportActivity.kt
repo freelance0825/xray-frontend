@@ -45,7 +45,6 @@ class ReportActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityReportBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Log.e("FTEST", "report slidesId: ${slideId}", )
 
         observeViews()
 

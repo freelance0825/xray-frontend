@@ -15,8 +15,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.thunderscope_frontend.R
+import com.example.thunderscope_frontend.data.models.AnnotationResponse
 import com.example.thunderscope_frontend.data.models.CaseRecordResponse
 import com.example.thunderscope_frontend.data.models.PatientResponse
+import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.databinding.ActivitySlidesBinding
 import com.example.thunderscope_frontend.ui.slides.adapters.AnnotationAdapter
 import com.example.thunderscope_frontend.ui.slides.adapters.MenuSlidesAdapter
@@ -29,17 +31,12 @@ import com.example.thunderscope_frontend.viewmodel.CaseRecordUI
 class SlidesActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySlidesBinding
 
-    private val caseRecord: CaseRecordResponse? by lazy {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(EXTRA_CASE_RECORD, CaseRecordResponse::class.java)
-        } else {
-            @Suppress("DEPRECATION")
-            intent.getParcelableExtra(EXTRA_CASE_RECORD) as? CaseRecordResponse
-        }
+    private val caseRecordId: Int? by lazy {
+        intent.getIntExtra(EXTRA_CASE_RECORD_ID, -1)
     }
 
     private val slidesViewModel by viewModels<SlidesViewModel> {
-        SlidesViewModel.Factory(caseRecord, this)
+        SlidesViewModel.Factory(caseRecordId ?: -1, this)
     }
 
     private val slidesAdapter = SlidesAdapter()
@@ -53,13 +50,23 @@ class SlidesActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         observeViews()
-
-        setViews()
         setListeners()
     }
 
     private fun observeViews() {
         slidesViewModel.apply {
+            currentlySelectedSlide.observe(this@SlidesActivity) {
+                it?.let { slide ->
+                    binding.tvAiInsights.text = slide.aiInsights
+                }
+            }
+
+            caseRecordResponse.observe(this@SlidesActivity) { caseRecord ->
+                caseRecord?.let {
+                    setViews(it)
+                }
+            }
+
             slidesItem.observe(this@SlidesActivity) {
                 binding.tvAssesmentCount.text =
                     getString(R.string.activity_slides_assesment_count, it.size.toString())
@@ -84,7 +91,7 @@ class SlidesActivity : AppCompatActivity() {
                 photoAdapter.submitList(it)
             }
 
-            annotationItems.observe(this@SlidesActivity) {
+            selectedAnnotationListByActiveSlides.observe(this@SlidesActivity) {
                 binding.tvAnnotationCount.text =
                     getString(R.string.activity_slides_annotation_count, it.size.toString())
                 annotationAdapter.submitList(it)
@@ -94,10 +101,12 @@ class SlidesActivity : AppCompatActivity() {
         }
     }
 
-    private fun setViews() {
+    private fun setViews(caseRecord: CaseRecordResponse) {
         binding.apply {
-            caseRecord?.let {
-                ivPatient.setImageBitmap(Base64Helper.convertToBitmap(it.patient?.imageBase64))
+            caseRecord.let {
+                it.patient?.imageBase64?.let { patientImage ->
+                    ivPatient.setImageBitmap(Base64Helper.convertToBitmap(patientImage))
+                }
 
                 tvCaseId.text = it.id.toString()
                 tvCaseStatus.text = it.status
@@ -177,8 +186,10 @@ class SlidesActivity : AppCompatActivity() {
     private fun setListeners() {
         binding.apply {
             btnOpenViewer.setOnClickListener {
-                val activeSlidesList = slidesViewModel.activeSlidesItem.value
-                    ?: mutableListOf()
+                val activeSlidesList = arrayListOf<SlidesItem>()
+                activeSlidesList.addAll(
+                    (slidesViewModel.activeSlidesItem.value
+                        ?: mutableListOf()).map { SlidesItem(id = it.id) })
 
                 if (activeSlidesList.isEmpty()) {
                     Toast.makeText(this@SlidesActivity, "Select Slides First!", Toast.LENGTH_SHORT)
@@ -188,7 +199,7 @@ class SlidesActivity : AppCompatActivity() {
 
                     val patientResponse = PatientResponse()
 
-                    caseRecord?.let {
+                    slidesViewModel.caseRecordResponse.value?.let {
                         patientResponse.id = it.patient?.id
                         patientResponse.age = it.patient?.age
                         patientResponse.name = it.patient?.name
@@ -196,11 +207,14 @@ class SlidesActivity : AppCompatActivity() {
                         patientResponse.dateOfBirth = it.patient?.dateOfBirth
                     }
 
-                    Log.e("FTEST", "slides: ${caseRecord?.id}", )
-
                     val iDetail = Intent(this@SlidesActivity, SlidesDetailActivity::class.java)
                     iDetail.putExtra(SlidesDetailActivity.EXTRA_PATIENT, patientResponse)
-                    iDetail.putExtra(SlidesDetailActivity.EXTRA_CASE_ID, caseRecord?.id?.toLong())
+                    iDetail.putExtra(SlidesDetailActivity.EXTRA_CASE_ID, caseRecordId?.toLong())
+                    iDetail.putParcelableArrayListExtra(
+                        SlidesDetailActivity.EXTRA_SLIDE_ID_LIST,
+                        activeSlidesList
+                    )
+                    slidesViewModel.isOpeningRightMenu.value = false
                     startActivity(iDetail)
                 }
             }
@@ -404,8 +418,13 @@ class SlidesActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        slidesViewModel.getAllSlides()
+    }
 
     companion object {
         const val EXTRA_CASE_RECORD = "extra_case_record"
+        const val EXTRA_CASE_RECORD_ID = "extra_case_record_id"
     }
 }

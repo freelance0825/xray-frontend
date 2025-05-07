@@ -7,8 +7,12 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.PopupMenu
+import android.widget.SearchView
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +25,7 @@ import com.example.thunderscope_frontend.ui.login.LoginActivity
 import com.example.thunderscope_frontend.ui.patientdashboard.PatientDashboardActivity
 import com.example.thunderscope_frontend.ui.slides.SlidesActivity
 import com.example.thunderscope_frontend.ui.todolistdashboard.TodoListDashboardActivity
+import com.example.thunderscope_frontend.ui.utils.CaseRecordStatus
 
 class CaseDashboardActivity : AppCompatActivity() {
 
@@ -32,6 +37,20 @@ class CaseDashboardActivity : AppCompatActivity() {
         CaseDashboardViewModel.Factory(ThunderscopeRepository(this))
     }
 
+    private val activityLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult: ActivityResult ->
+            if (activityResult.resultCode == RESULT_OK) {
+                binding.spinnerGender.setSelection(0)
+                binding.spinnerAge.setSelection(0)
+                binding.spinnerStatus.setSelection(0)
+                binding.spinnerType.setSelection(0)
+                binding.spinnerTimePeriod.setSelection(0)
+                binding.svPatient.setQuery("", false)
+                binding.svDoctor.setQuery("", false)
+                binding.svPatient.clearFocus()
+                binding.svDoctor.clearFocus()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,38 +73,12 @@ class CaseDashboardActivity : AppCompatActivity() {
                 fetchCaseRecordsFilterId(selectedPatientId.value, doctorId)
             }
 
-            patientRecordsLiveData.observe(this@CaseDashboardActivity) { patientList ->
-                val patientStringArray = mutableListOf("All Patients")
-                patientStringArray.addAll(patientList.map { "${it.id} - ${it.name}" })
-
-                val adapter = ArrayAdapter(
-                    this@CaseDashboardActivity,
-                    R.layout.custom_spinner_dropdown,
-                    patientStringArray
-                )
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                binding.spinnerPatientID.adapter = adapter
-            }
-
-            doctorRecordsLiveData.observe(this@CaseDashboardActivity) { doctorList ->
-                val doctorStringArray = mutableListOf("All Doctors")
-                doctorStringArray.addAll(doctorList.map { "${it.id} - ${it.name}" })
-
-                val adapter = ArrayAdapter(
-                    this@CaseDashboardActivity,
-                    R.layout.custom_spinner_dropdown,
-                    doctorStringArray
-                )
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                binding.spinnerDoctorID.adapter = adapter
-            }
-
             caseRecordsLiveData.observe(this@CaseDashboardActivity) { caseList ->
                 val totalCases = caseList.size
-                val highPriorityCount = caseList.count { it.status == "High Priority" }
-                val inPreparationsCount = caseList.count { it.status == "In Preparations" }
-                val forReviewCount = caseList.count { it.status == "For Review" }
-                val completedCount = caseList.count { it.status == "Completed" }
+                val highPriorityCount = caseList.count { it.status == CaseRecordStatus.HIGH_PRIORITY.name }
+                val inPreparationsCount = caseList.count { it.status == CaseRecordStatus.IN_PREPARATIONS.name }
+                val forReviewCount = caseList.count { it.status == CaseRecordStatus.FOR_REVIEW.name }
+                val completedCount = caseList.count { it.status == CaseRecordStatus.COMPLETED.name }
 
                 binding.apply {
                     allCasesNumber.text = StringBuilder("($totalCases)")
@@ -137,16 +130,15 @@ class CaseDashboardActivity : AppCompatActivity() {
             setupPaginationButtons()
 
             caseAdapter.onItemClick = { caseRecord ->
-                val recordToBeSent = caseRecord.copy()
-                recordToBeSent.slides = mutableListOf()
-
                 val intent = Intent(this@CaseDashboardActivity, SlidesActivity::class.java)
-                intent.putExtra(SlidesActivity.EXTRA_CASE_RECORD, recordToBeSent)
+                intent.putExtra(SlidesActivity.EXTRA_CASE_RECORD_ID, caseRecord.id)
                 startActivity(intent)
             }
 
             startNewTestButton.setOnClickListener {
-                startActivity(Intent(this@CaseDashboardActivity, CreateNewTestActivity::class.java))
+                val iNewTest = Intent(this@CaseDashboardActivity, CreateNewTestActivity::class.java)
+                iNewTest.putExtra(CreateNewTestActivity.EXTRA_DOCTOR_ID, caseDashboardViewModel.doctorId.toLong())
+                activityLauncher.launch(iNewTest)
             }
 
             menuTodoList.setOnClickListener {
@@ -231,41 +223,41 @@ class CaseDashboardActivity : AppCompatActivity() {
         binding.spinnerGender.onItemSelectedListener = filterListener
         binding.spinnerAge.onItemSelectedListener = filterListener
 
-        binding.spinnerPatientID.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    if (position == 0) {
-                        caseDashboardViewModel.selectedPatientId.value = null
-                    } else {
-                        caseDashboardViewModel.selectedPatientId.value = caseDashboardViewModel.patientRecordsLiveData.value?.get(position - 1)?.id?.toInt()
-                    }
+        binding.svPatient.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(keyword: String): Boolean {
+                if (caseDashboardViewModel.searchPatient(keyword.trim().toInt())) {
+                    caseDashboardViewModel.selectedPatientId.value = keyword.trim().toInt()
+                } else {
+                    Toast.makeText(this@CaseDashboardActivity, "Patient with ID:$keyword not found!", Toast.LENGTH_LONG).show()
                 }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
+                return true
             }
 
-        binding.spinnerDoctorID.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    if (position == 0) {
-                        caseDashboardViewModel.selectedDoctorId.value = null
-                    } else {
-                        caseDashboardViewModel.selectedDoctorId.value = caseDashboardViewModel.doctorRecordsLiveData.value?.get(position - 1)?.id?.toInt()
-                    }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrEmpty()) {
+                    caseDashboardViewModel.selectedPatientId.value = null
                 }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
+                return false
             }
+        })
+
+        binding.svDoctor.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(keyword: String): Boolean {
+                if (caseDashboardViewModel.searchDoctor(keyword.trim().toInt())) {
+                    caseDashboardViewModel.selectedDoctorId.value = keyword.trim().toInt()
+                } else {
+                    Toast.makeText(this@CaseDashboardActivity, "Doctor with ID:$keyword not found!", Toast.LENGTH_LONG).show()
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrEmpty()) {
+                    caseDashboardViewModel.selectedDoctorId.value = null
+                }
+                return false
+            }
+        })
     }
 
     private fun setupPaginationButtons() {

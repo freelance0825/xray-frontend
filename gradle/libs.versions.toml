@@ -11,6 +11,7 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.1"
 composeBom = "2024.09.00"
+lottie = "6.6.6"
 opencvContrib = "4.5.3.0"
 retrofit = "2.11.0"
 appcompat = "1.7.0"
@@ -21,6 +22,8 @@ kspVersion = "2.0.21-1.0.27"
 roomRuntime = "2.6.1"
 roomKtx = "2.6.1"
 datastorePreferences = "1.1.1"
+threetenabp = "1.4.5"
+zoomimageviewAndroid = "1.02"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,6 +43,7 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 opencv-contrib = { module = "com.quickbirdstudios:opencv-contrib", version.ref = "opencvContrib" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
@@ -50,6 +54,8 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+threetenabp = { module = "com.jakewharton.threetenabp:threetenabp", version.ref = "threetenabp" }
+zoomimageview-android = { module = "com.github.sheetalkumar105:ZoomImageView-android", version.ref = "zoomimageviewAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

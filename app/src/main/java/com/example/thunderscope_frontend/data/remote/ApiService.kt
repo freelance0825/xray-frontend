@@ -2,10 +2,15 @@ package com.example.thunderscope_frontend.data.remote
 
 import com.example.thunderscope_frontend.data.models.AuthDoctorRequest
 import com.example.thunderscope_frontend.data.models.AuthDoctorResponse
+import com.example.thunderscope_frontend.data.models.BatchAnnotationResponse
 import com.example.thunderscope_frontend.data.models.CaseRecordFilterRequest
+import com.example.thunderscope_frontend.data.models.CaseRecordRequest
 import com.example.thunderscope_frontend.data.models.CaseRecordResponse
 import com.example.thunderscope_frontend.data.models.PatientResponse
+import com.example.thunderscope_frontend.data.models.SlideRequest
 import com.example.thunderscope_frontend.data.models.SlidesItem
+import com.example.thunderscope_frontend.data.models.SlidesItemWithAnnotationResponse
+import com.example.thunderscope_frontend.data.models.SlidesOnlyWithAnnotationResponse
 import com.example.thunderscope_frontend.data.models.UpdatePatientRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -19,11 +24,38 @@ interface ApiService {
     @POST("/api/doctors/login")
     suspend fun loginDoctor(@Body authDoctorRequest: AuthDoctorRequest): AuthDoctorResponse
 
+    @GET("case/{id}")
+    suspend fun getCaseById(@Path("id") caseId: Int): CaseRecordResponse
+
+    @POST("case")
+    suspend fun addCaseRecord(@Body caseRecordRequest: CaseRecordRequest): CaseRecordResponse
+
+    @Multipart
+    @POST("slides")
+    suspend fun addSlideItem(
+        @PartMap data: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part mainImage: MultipartBody.Part? = null
+    ): SlidesItem
+
     @GET("slides/case/{id}")
     suspend fun getAllSlides(@Path("id") caseId: Int): List<SlidesItem>
 
     @GET("slides/{id}")
     suspend fun getSlideItem(@Path("id") slidesId: Long): SlidesItem
+
+    @GET("slides/annotations/{id}")
+    suspend fun getAnnotationsBySlidesId(@Path("id") slidesId: Long): SlidesOnlyWithAnnotationResponse
+
+    @GET("slides/annotations/{id}")
+    suspend fun getSlidesWithAnnotations(@Path("id") slidesId: Long): SlidesItemWithAnnotationResponse
+
+    @Multipart
+    @POST("/api/slides/annotations/batch")
+    suspend fun uploadAnnotationsBatch(
+        @Part("slideId") slideId: RequestBody,
+        @Part annotatedImages: List<MultipartBody.Part>,
+        @Part labels: List<MultipartBody.Part>
+    ): List<BatchAnnotationResponse>
 
     @Multipart
     @PUT("slides/{id}")
@@ -46,7 +78,6 @@ interface ApiService {
 
     @GET("doctors")
     suspend fun getDoctorRecords(): List<AuthDoctorResponse>
-
 
     @DELETE("patients/{id}")
     suspend fun deletePatient(

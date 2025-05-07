@@ -12,10 +12,13 @@ import com.example.thunderscope_frontend.data.models.PatientResponse
 import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.data.repo.ThunderscopeRepository
 import com.example.thunderscope_frontend.ui.login.LoginViewModel
+import com.example.thunderscope_frontend.ui.utils.CaseRecordStatus
 import com.example.thunderscope_frontend.ui.utils.Result
 import com.example.thunderscope_frontend.viewmodel.SlidesRecordUI
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -24,6 +27,7 @@ import java.util.Locale
 class CaseDashboardViewModel(
     private val repository: ThunderscopeRepository
 ) : ViewModel() {
+    val doctorId = runBlocking { repository.getDoctorId().first() }
 
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
@@ -154,7 +158,6 @@ class CaseDashboardViewModel(
                 when (result) {
                     is Result.Loading -> {
                         _isLoading.value = true
-                        Log.e("FTEST", "fetchCaseRecordsFilterId: LOADING")
                     }
 
                     is Result.Success -> {
@@ -169,10 +172,8 @@ class CaseDashboardViewModel(
                     is Result.Error -> {
                         _isLoading.value = false
                         _errorLiveData.value = result.error
-                        Log.e("FTEST", "fetchCaseRecordsFilterId: ERROR ${result.error}")
                     }
                 }
-                Log.e("FTEST", "fetchCaseRecordsFilterId: FINISH")
             }
         }
     }
@@ -228,8 +229,12 @@ class CaseDashboardViewModel(
             // Same filter logic like you already have
             val statusMatch = when (selectedStatus.trim().lowercase()) {
                 "all status" -> true
-                "finished" -> record.status?.trim()?.lowercase() == "completed"
-                else -> record.status?.trim()?.lowercase() == selectedStatus.trim().lowercase()
+                "finished" -> record.status?.trim()
+                    ?.lowercase() == CaseRecordStatus.COMPLETED.name.lowercase()
+
+                else -> CaseRecordStatus.getTranslatedStringValue(
+                    record.status?.trim() ?: ""
+                ).lowercase() == selectedStatus.trim().lowercase()
             }
 
             val typeMatch = selectedType.trim().lowercase() == "all type" || record.type?.trim()
@@ -352,6 +357,14 @@ class CaseDashboardViewModel(
             Log.e("FilterError", "Date parsing failed: $recordDate $recordTime", e)
             false
         }
+    }
+
+    fun searchPatient(patientId: Int): Boolean {
+        return _patientRecordsLiveData.value?.any { it.id?.toInt() == patientId } ?: false
+    }
+
+    fun searchDoctor(doctorId: Int): Boolean {
+        return _doctorRecordsLiveData.value?.any { it.id?.toInt() == doctorId } ?: false
     }
 
     @Suppress("UNCHECKED_CAST")

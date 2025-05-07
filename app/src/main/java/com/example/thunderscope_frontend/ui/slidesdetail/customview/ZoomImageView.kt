@@ -33,8 +33,21 @@ import kotlin.math.absoluteValue
 import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sqrt
+import androidx.core.graphics.createBitmap
+import java.io.ByteArrayOutputStream
 
 open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
+
+    private var originalBitmap: Bitmap? = null
+
+    var onAnnotationImageSaved: ((Bitmap, String) -> Unit)? = null
+
+    /**
+     * Get the currently displayed image as Bitmap.
+     */
+    fun getImageBitmap(): Bitmap? {
+        return originalBitmap
+    }
 
     private var annotationCreateView: View? = null
 
@@ -75,6 +88,9 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
             annotationCreateView?.visibility = View.GONE
             edAnnotationName.text.clear()
             isDrawingActive = false
+
+            updateOriginalBitmapWithAnnotations()
+
             invalidate()
         } else {
             Toast.makeText(context, "Label cannot be empty", Toast.LENGTH_SHORT).show()
@@ -98,6 +114,99 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         clearLastDrawing()
     }
 
+    private fun updateOriginalBitmapWithAnnotations() {
+        originalBitmap?.let { baseBitmap ->
+            val tempBitmap = baseBitmap
+
+            val parentHeight = (parent as? View)?.height ?: return
+            val parentWidth = (parent as? View)?.width ?: return
+
+            val aspectRatio = baseBitmap.width.toFloat() / baseBitmap.height
+            val targetWidth = (aspectRatio * parentHeight).toInt()
+
+            val newBitmapForParent = Bitmap.createBitmap(parentWidth, parentHeight, Bitmap.Config.ARGB_8888)
+            val canvasParent = Canvas(newBitmapForParent)
+
+            val newBitmap = Bitmap.createBitmap(targetWidth, parentHeight, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(newBitmap)
+
+            val scale = parentHeight.toFloat() / baseBitmap.height
+            val scaleMatrix = Matrix().apply {
+                setScale(scale, scale)
+            }
+
+            canvas.drawBitmap(baseBitmap, scaleMatrix, null)
+            canvasParent.drawBitmap(newBitmap, (parentWidth - targetWidth) / 2f, 0f, null)
+
+            var firstLabel = ""
+
+            // --- Prepare inverse matrix to map zoomed coordinates back to image coordinates ---
+            val inverseMatrix = Matrix()
+            zoomMatrix.invert(inverseMatrix)
+
+            // --- Draw all shapes using inverse mapped coordinates ---
+            shapes.forEach { shape ->
+                val mappedShape = mapShapeToOriginal(shape, inverseMatrix)
+                drawShape(canvasParent, mappedShape)
+            }
+
+            // --- Draw all fixed labels using mapped coordinates ---
+            mappedFixedAnnotationLabel.forEach { (shape, label) ->
+                val mappedShape = mapShapeToOriginal(shape, inverseMatrix)
+                val boundingBox = getBoundingBox(mappedShape)
+
+                val textX = boundingBox.right + 25f
+                val textY = boundingBox.centerY()
+                firstLabel = label
+
+                drawAnnotationLabel(canvasParent, label, textX, textY)
+            }
+
+            val cropWidth = targetWidth
+            val cropHeight = parentHeight
+            val cropStartX = (parentWidth / 2) - (targetWidth / 2)
+
+            val croppedBitmap = Bitmap.createBitmap(cropWidth, cropHeight, Bitmap.Config.ARGB_8888)
+            val croppedCanvas = Canvas(croppedBitmap)
+
+            val cropRect = Rect(
+                cropStartX.toInt(), 0,
+                (cropStartX + cropWidth).toInt(), cropHeight
+            )
+            val destinationRectF = RectF(0f, 0f, cropWidth.toFloat(), cropHeight.toFloat())
+
+            croppedCanvas.drawBitmap(newBitmapForParent, cropRect, destinationRectF, null)
+
+            originalBitmap = croppedBitmap
+
+            onAnnotationImageSaved?.invoke(croppedBitmap, firstLabel)
+
+            clearCanvas(tempBitmap)
+        }
+    }
+
+    private fun mapShapeToOriginal(shape: Shape, inverseMatrix: Matrix): Shape {
+        // Transform rect
+        val rectPoints = floatArrayOf(
+            shape.rect.left, shape.rect.top,
+            shape.rect.right, shape.rect.bottom
+        )
+        inverseMatrix.mapPoints(rectPoints)
+
+        val mappedRect = RectF(
+            rectPoints[0], rectPoints[1],
+            rectPoints[2], rectPoints[3]
+        )
+
+        // Transform path if exists
+        val mappedPath = shape.path?.map { point ->
+            val pts = floatArrayOf(point.x, point.y)
+            inverseMatrix.mapPoints(pts)
+            PointF(pts[0], pts[1])
+        }?.toMutableList()
+
+        return shape.copy(rect = mappedRect, path = mappedPath)
+    }
 
     private val textPaint = Paint()
     private val zoomMatrix = Matrix()
@@ -166,11 +275,14 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
 
     private val inverseMatrix = Matrix()
 
-    private fun mapTouchToImage(x: Float, y: Float): Pair<Float, Float> {
-        val touchPoint = floatArrayOf(x, y)
-        zoomMatrix.invert(inverseMatrix)
-        inverseMatrix.mapPoints(touchPoint)
-        return touchPoint[0] to touchPoint[1]
+    private fun getBitmapDisplayRect(): RectF? {
+        originalBitmap?.let {
+            val src = RectF(0f, 0f, it.width.toFloat(), it.height.toFloat())
+            val dst = RectF()
+            zoomMatrix.mapRect(dst, src)
+            return dst
+        }
+        return null
     }
 
     constructor(context: Context) : super(context) {
@@ -297,6 +409,7 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
 
     override fun setImageBitmap(bm: Bitmap?) {
         super.setImageBitmap(bm)
+        originalBitmap = bm
 
         // Reset zooming and translation when setting a new bitmap
         resetZoomAndPan()
@@ -328,6 +441,13 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         }
         parent?.requestDisallowInterceptTouchEvent(disallowIntercept)
         return tapDetector.onTouchEvent(event!!) || return scaleDetector.onTouchEvent(event) || return true
+    }
+
+    private fun mapTouchToImage(x: Float, y: Float): Pair<Float, Float> {
+        val touchPoint = floatArrayOf(x, y)
+        zoomMatrix.invert(inverseMatrix)
+        inverseMatrix.mapPoints(touchPoint)
+        return touchPoint[0] to touchPoint[1]
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -544,18 +664,19 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         super.onDraw(canvas)
 
         canvas.save()
-        canvas.concat(zoomMatrix)
 
+        // Draw shapes
         shapes.forEach { shape ->
             drawShape(canvas, shape)
         }
 
-        // Bounding Box Helper
+        // Bounding box / selection overlay
         selectedShape?.let {
             showAnnotationOverlay()
-//            drawBoundingBox(canvas, it)
+//        drawBoundingBox(canvas, it)
         }
 
+        // Draw annotation labels
         mappedFixedAnnotationLabel.forEach { (shape, label) ->
             val boundingBox = getBoundingBox(shape)
             val textX = boundingBox.right + 25f
@@ -564,11 +685,12 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
             drawAnnotationLabel(canvas, label, textX, textY)
         }
 
+        // Draw current shape in progress
         currentShape?.let { drawShape(canvas, it) }
 
         canvas.restore()
 
-
+        // Draw debug info (outside zoomMatrix transform)
         if (debugInfoVisible) {
             canvas.drawText(logText, 10F, height - 10F, textPaint)
             val drawableBound = displayRect?.let {
@@ -577,6 +699,7 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
             canvas.drawText(drawableBound, 10F, 40F, textPaint)
         }
     }
+
 
     private fun drawAnnotationLabel(
         canvas: Canvas,
@@ -945,7 +1068,11 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         invalidate()
     }
 
-    fun clearCanvas() {
+    fun clearCanvas(tempBitmapImage: Bitmap? = null) {
+        tempBitmapImage?.let {
+            originalBitmap = it
+        }
+
         mappedFixedAnnotationLabel.clear()
         shapes.clear()
         selectedShape = null

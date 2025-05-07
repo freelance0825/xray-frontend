@@ -723,32 +723,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Right Eye (OD)"
+                    android:text="AI Insights"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_ai_insights"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="Optic Nerve:  Disc appears round with a clear margin.  Cup-to-disc ratio within normal limits.  No evidence of pallor or edema."
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Left Eye (OS)"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="Optic Nerve: Disc appears round with a clear margin. Cup-to-disc ratio slightly increased compared to previous exam, but still within borderline normal limits.  No evidence of pallor or edema."
+                    tools:text="Optic Nerve:  Disc appears round with a clear margin.  Cup-to-disc ratio within normal limits.  No evidence of pallor or edema."
                     android:textColor="@color/black" />
 
                 <View
