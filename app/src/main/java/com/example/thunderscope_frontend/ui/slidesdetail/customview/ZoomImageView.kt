@@ -38,6 +38,10 @@ import java.io.ByteArrayOutputStream
 
 open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
 
+    private val savedAnnotations = mutableListOf<AnnotationData>()
+
+    private var selectedAnnotationLabels: List<String> = emptyList()
+
     private var originalBitmap: Bitmap? = null
 
     var onAnnotationImageSaved: ((Bitmap, String) -> Unit)? = null
@@ -124,7 +128,8 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
             val aspectRatio = baseBitmap.width.toFloat() / baseBitmap.height
             val targetWidth = (aspectRatio * parentHeight).toInt()
 
-            val newBitmapForParent = Bitmap.createBitmap(parentWidth, parentHeight, Bitmap.Config.ARGB_8888)
+            val newBitmapForParent =
+                Bitmap.createBitmap(parentWidth, parentHeight, Bitmap.Config.ARGB_8888)
             val canvasParent = Canvas(newBitmapForParent)
 
             val newBitmap = Bitmap.createBitmap(targetWidth, parentHeight, Bitmap.Config.ARGB_8888)
@@ -144,9 +149,13 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
             val inverseMatrix = Matrix()
             zoomMatrix.invert(inverseMatrix)
 
+            val newAnnotation = AnnotationData()
+
             // --- Draw all shapes using inverse mapped coordinates ---
             shapes.forEach { shape ->
                 val mappedShape = mapShapeToOriginal(shape, inverseMatrix)
+                newAnnotation.shape = mappedShape
+
                 drawShape(canvasParent, mappedShape)
             }
 
@@ -159,8 +168,14 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
                 val textY = boundingBox.centerY()
                 firstLabel = label
 
+                newAnnotation.label = label
+                newAnnotation.labelX = textX
+                newAnnotation.labelY = textY
+
                 drawAnnotationLabel(canvasParent, label, textX, textY)
             }
+
+            savedAnnotations.add(newAnnotation)
 
             val cropWidth = targetWidth
             val cropHeight = parentHeight
@@ -181,8 +196,13 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
 
             onAnnotationImageSaved?.invoke(croppedBitmap, firstLabel)
 
-            clearCanvas(tempBitmap)
+            clearLastDrawing(tempBitmap)
         }
+    }
+
+    fun redrawAnnotationsByLabels(labelNames: List<String>) {
+        selectedAnnotationLabels = labelNames
+        invalidate()
     }
 
     private fun mapShapeToOriginal(shape: Shape, inverseMatrix: Matrix): Shape {
@@ -665,28 +685,59 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
 
         canvas.save()
 
-        // Draw shapes
-        shapes.forEach { shape ->
-            drawShape(canvas, shape)
-        }
+        if (selectedAnnotationLabels.isNotEmpty()) {
+            Log.e("FTEST", "onDraw: cek ini ${selectedAnnotationLabels.size}", )
 
-        // Bounding box / selection overlay
-        selectedShape?.let {
-            showAnnotationOverlay()
+            selectedAnnotationLabels.forEach { a ->
+                Log.e("FTEST", "-- selected:  ini ${a}", )
+            }
+
+            savedAnnotations.forEach { a ->
+                Log.e("FTEST", "-- selectedSaved:  ini ${a.label}", )
+            }
+            val annotationsToDraw = savedAnnotations.filter { it.label in selectedAnnotationLabels }
+            Log.e("FTEST", "onDraw: cek iniZZ ${annotationsToDraw.size}", )
+            annotationsToDraw.forEach { annotation ->
+                annotation.shape?.let {
+                    Log.e("FTEST", "onDraw: cek iniZZ shape true ${it.type}", )
+
+                    drawShape(canvas, it)
+                    drawAnnotationLabel(
+                        canvas,
+                        annotation.label ?: "",
+                        annotation.labelX ?: 0F,
+                        annotation.labelY ?: 0F
+                    )
+                } ?: kotlin.run {
+                    Log.e("FTEST", "onDraw: cek iniZZ shape false null", )
+                }
+            }
+        } else {
+            Log.e("FTEST", "onDraw: empty", )
+
+            // Draw shapes
+            shapes.forEach { shape ->
+                drawShape(canvas, shape)
+            }
+
+            // Bounding box / selection overlay
+            selectedShape?.let {
+                showAnnotationOverlay()
 //        drawBoundingBox(canvas, it)
+            }
+
+            // Draw annotation labels
+            mappedFixedAnnotationLabel.forEach { (shape, label) ->
+                val boundingBox = getBoundingBox(shape)
+                val textX = boundingBox.right + 25f
+                val textY = boundingBox.centerY()
+
+                drawAnnotationLabel(canvas, label, textX, textY)
+            }
+
+            // Draw current shape in progress
+            currentShape?.let { drawShape(canvas, it) }
         }
-
-        // Draw annotation labels
-        mappedFixedAnnotationLabel.forEach { (shape, label) ->
-            val boundingBox = getBoundingBox(shape)
-            val textX = boundingBox.right + 25f
-            val textY = boundingBox.centerY()
-
-            drawAnnotationLabel(canvas, label, textX, textY)
-        }
-
-        // Draw current shape in progress
-        currentShape?.let { drawShape(canvas, it) }
 
         canvas.restore()
 
@@ -1061,7 +1112,11 @@ open class ZoomImageView : androidx.appcompat.widget.AppCompatImageView {
         currentMode = mode
     }
 
-    fun clearLastDrawing() {
+    fun clearLastDrawing(tempBitmapImage: Bitmap? = null) {
+        tempBitmapImage?.let {
+            originalBitmap = it
+        }
+
         mappedFixedAnnotationLabel.remove(shapes.lastOrNull())
         shapes.removeLastOrNull()
         selectedShape = null
@@ -1111,3 +1166,10 @@ data class Shape(
 )
 
 enum class ShapeType { RECTANGLE, CIRCLE, FREE_DRAW }
+
+data class AnnotationData(
+    var shape: Shape? = null,
+    var label: String? = null,
+    var labelX: Float? = null,
+    var labelY: Float? = null,
+)

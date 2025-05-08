@@ -1,6 +1,7 @@
 package com.example.thunderscope_frontend.ui.slidesdetail.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -10,9 +11,12 @@ import com.example.thunderscope_frontend.data.models.AnnotationResponse
 import com.example.thunderscope_frontend.databinding.ItemImageProcessingAnnotationBinding
 import com.example.thunderscope_frontend.ui.utils.Base64Helper
 
-class SavedAnnotationAdapter : ListAdapter<AnnotationResponse, SavedAnnotationAdapter.SavedAnnotationViewHolder>(DIFF_CALLBACK) {
+class SavedAnnotationAdapter :
+    ListAdapter<AnnotationResponse, SavedAnnotationAdapter.SavedAnnotationViewHolder>(DIFF_CALLBACK) {
 
-    var onImageClick: ((annotationImageBase64: String) -> Unit)? = null
+    //    var onImageClick: ((annotationImageBase64: String) -> Unit)? = null
+    var onImageClick: ((List<String>) -> Unit)? = null
+    private val selectedLabels = mutableSetOf<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedAnnotationViewHolder {
         val binding = ItemImageProcessingAnnotationBinding.inflate(
@@ -35,8 +39,23 @@ class SavedAnnotationAdapter : ListAdapter<AnnotationResponse, SavedAnnotationAd
             binding.ivAnnotation.setImageBitmap(Base64Helper.convertToBitmap(item.annotatedImage))
             binding.tvAnnotationName.text = item.label
 
+//            binding.root.setOnClickListener {
+//                onImageClick?.invoke(item.annotatedImage ?: "")
+//            }
+
             binding.root.setOnClickListener {
-                onImageClick?.invoke(item.annotatedImage ?: "")
+                val label = item.label ?: return@setOnClickListener
+
+                if (selectedLabels.contains(label)) {
+                    selectedLabels.remove(label)
+                    binding.toggleChecklist.visibility = View.GONE
+                } else {
+                    selectedLabels.add(label)
+                    binding.toggleChecklist.visibility = View.VISIBLE
+                }
+
+                // Notify listener with the updated selected label list
+                onImageClick?.invoke(selectedLabels.toList())
             }
         }
     }

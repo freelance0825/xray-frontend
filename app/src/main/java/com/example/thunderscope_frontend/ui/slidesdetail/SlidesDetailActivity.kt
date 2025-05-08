@@ -331,10 +331,11 @@ class SlidesDetailActivity : AppCompatActivity() {
 
     private fun setListeners() {
         binding.apply {
-            savedAnnotationAdapter.onImageClick = {
-                val bitmap = Base64Helper.convertToBitmap(it)
-                val dialog = ImagePreviewDialogFragment.newInstance(bitmap)
-                dialog.show(supportFragmentManager, "ImagePreviewDialog")
+            savedAnnotationAdapter.onImageClick = { selectedLabels ->
+//                val bitmap = Base64Helper.convertToBitmap(it)
+//                val dialog = ImagePreviewDialogFragment.newInstance(bitmap)
+//                dialog.show(supportFragmentManager, "ImagePreviewDialog")
+                binding.ivBaseImage.redrawAnnotationsByLabels(selectedLabels)
             }
 
             ivBaseImage.onAnnotationImageSaved = { bitmap, label ->
