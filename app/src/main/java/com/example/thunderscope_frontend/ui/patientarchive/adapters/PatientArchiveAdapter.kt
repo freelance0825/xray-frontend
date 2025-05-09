@@ -3,6 +3,7 @@ package com.example.thunderscope_frontend.ui.patientarchive.adapters
 import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -44,27 +45,41 @@ class PatientArchiveAdapter(private val onArchive: (CaseRecordResponse, Boolean)
                 lastUpdateDate.text = record.date
                 lastUpdateTime.text = record.time
                 status.apply {
-                    text = CaseRecordStatus.getTranslatedStringValue(record.status ?: "")?.uppercase() ?: "UNKNOWN"
+                    text =
+                        CaseRecordStatus.getTranslatedStringValue(record.status ?: "")?.uppercase()
+                            ?: "UNKNOWN"
                     background = root.resources.getDrawable(R.drawable.bg_status_completed, null)
                     setTextColor(root.resources.getColor(R.color.white, null))
                 }
                 type.text = record.type?.trim()
 
                 btnArchive.setOnClickListener {
-                    AlertDialog.Builder(binding.root.context)
-                        .setTitle("Confirm Unarchive")
-                        .setMessage("Are you sure you want to unarchive this record?")
-                        .setPositiveButton("Yes") { _, _ ->
-                            onArchive(record, false)
-                        }
-                        .setNegativeButton("No", null)
-                        .show()
+                    val context = binding.root.context
+                    val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_archive_confirm, null)
+
+                    val dialog = AlertDialog.Builder(context)
+                        .setView(dialogView)
+                        .create()
+
+                    val btnYes = dialogView.findViewById<Button>(R.id.btn_yes)
+                    val btnNo = dialogView.findViewById<Button>(R.id.btn_no)
+
+                    btnYes.setOnClickListener {
+                        onArchive(record, false)
+                        dialog.dismiss()
+                    }
+
+                    btnNo.setOnClickListener {
+                        dialog.dismiss()
+                    }
+
+                    dialog.show()
                 }
             }
         }
     }
 
-    companion object {
+                companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CaseRecordResponse>() {
             override fun areItemsTheSame(oldItem: CaseRecordResponse, newItem: CaseRecordResponse): Boolean {
                 return oldItem.id == newItem.id
