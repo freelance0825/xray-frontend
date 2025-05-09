@@ -33,6 +33,7 @@ class TodoAdapter : ListAdapter<CaseRecordResponse, TodoAdapter.CaseViewHolder>(
                 caseRecordId.text = record.id.toString()
                 doctorId.text = record.doctor?.id.toString()
                 patientName.text = record.patient?.name.toString()
+                patientId.text = record.patient?.id.toString()
                 patientBirthdate.text = record.patient?.dateOfBirth.toString()
                 patientAge.text = StringBuilder("(${record.patient?.age} yo)")
                 patientGender.text = record.patient?.gender
