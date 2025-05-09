@@ -136,6 +136,7 @@
             android:id="@+id/layout_setup_device"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:background="@drawable/bg_soft_gray"
             android:gravity="center_vertical"
             android:orientation="horizontal">
