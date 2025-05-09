@@ -189,11 +189,12 @@ class TodoListDashboardViewModel(private val repository: ThunderscopeRepository)
         allRecords = caseRecordsLiveData.value.orEmpty()
 
         val filtered = allRecords.filter { record ->
+
             // Status Filter
-            val recordStatus = record.status?.trim()?.lowercase()
+            val recordStatus = record.status?.trim()?.uppercase()
             val translated = recordStatus?.let { CaseRecordStatus.getTranslatedStringValue(it) }
-            val statusMatch = when (selectedStatus) {
-                "All Status" -> true
+            val statusMatch = when (selectedStatus.trim().lowercase()) {
+                "all status" -> true
                 else -> translated?.lowercase()?.trim() == selectedStatus.lowercase().trim()
             }
 

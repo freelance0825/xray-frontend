@@ -24,7 +24,7 @@ interface ApiService {
     @POST("/api/doctors/login")
     suspend fun loginDoctor(@Body authDoctorRequest: AuthDoctorRequest): AuthDoctorResponse
 
-    @GET("case/{id}")
+    @GET("case/records/{id}")
     suspend fun getCaseById(@Path("id") caseId: Int): CaseRecordResponse
 
     @POST("case/records")

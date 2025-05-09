@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.data.models.CaseRecordResponse
 import com.example.thunderscope_frontend.databinding.ItemPatientReportRowBinding
-import com.example.thunderscope_frontend.ui.utils.CaseRecordStatus
 import com.example.thunderscope_frontend.ui.utils.PatientStatus
 import com.google.android.material.snackbar.Snackbar
 
@@ -44,7 +43,8 @@ class PatientReportAdapter(private val onArchive: (CaseRecordResponse, Boolean) 
                 patientGender.text = record.patient?.gender
                 lastUpdateDate.text = record.date
                 lastUpdateTime.text = record.time
-                status.apply { text = PatientStatus.getTranslatedStringValue(record.status ?: "")?.uppercase() ?: "UNKNOWN"
+                status.apply {
+                    text = PatientStatus.getTranslatedStringValue(record.status ?: "")?.uppercase() ?: "UNKNOWN"
                     background = root.resources.getDrawable(R.drawable.bg_status_completed, null)
                     setTextColor(root.resources.getColor(R.color.white, null))
                 }
@@ -52,10 +52,11 @@ class PatientReportAdapter(private val onArchive: (CaseRecordResponse, Boolean) 
             }
 
             binding.btnArchive.setOnClickListener {
+                // Store the current list BEFORE removing the item
+                currentListBeforeUndo = currentList.toList()
+
                 // Archive the item
                 onArchive(record, true)
-                // Store the current list before modification (for Undo)
-                currentListBeforeUndo = currentList
 
                 // Temporarily remove the item from the list
                 val updatedList = currentList.filter { it != record }
@@ -66,13 +67,12 @@ class PatientReportAdapter(private val onArchive: (CaseRecordResponse, Boolean) 
                     setAction("Undo") {
                         // Undo the archiving: restore the item back to the list
                         val restoredList = currentListBeforeUndo.toMutableList()
-                        restoredList.add(record) // Restore the item
-                        submitList(restoredList) // Update the list with the restored item
+                        restoredList.add(record)
+                        submitList(restoredList.distinctBy { it.id }) // Ensure no duplicates
                         onArchive(record, false) // Unarchive the record
                     }
-                    // Set custom 2-second duration
                     duration = Snackbar.LENGTH_SHORT
-                    setDuration(2000) // 2 seconds duration
+                    setDuration(2000)
                 }.show()
             }
         }

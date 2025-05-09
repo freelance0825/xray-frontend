@@ -224,10 +224,10 @@ class CaseDashboardViewModel(private val repository: ThunderscopeRepository) : V
         val filtered = allRecords.filter { record ->
 
             // Status Filter
-            val recordStatus = record.status?.trim()?.lowercase()
+            val recordStatus = record.status?.trim()?.uppercase()
             val translated = recordStatus?.let { CaseRecordStatus.getTranslatedStringValue(it) }
-            val statusMatch = when (selectedStatus) {
-                "All Status" -> true
+            val statusMatch = when (selectedStatus.trim().lowercase()) {
+                "all status" -> true
                 else -> translated?.lowercase()?.trim() == selectedStatus.lowercase().trim()
             }
 
@@ -235,12 +235,12 @@ class CaseDashboardViewModel(private val repository: ThunderscopeRepository) : V
             val typeMatch = selectedType.trim().lowercase() == "all type" ||
                     record.type?.trim()?.lowercase() == selectedType.trim().lowercase()
 
-            //Gender Filter
+            // Gender Filter
             val genderMatch = selectedGender.trim().lowercase() == "all gender" ||
                     record.patient?.gender?.trim()?.lowercase() == selectedGender.trim().lowercase()
 
             // Time Period Filter
-            val timeMatch = when (selectedTimePeriod) {
+            val timeMatch = when (selectedTimePeriod.trim().lowercase()) {
                 "all time" -> true
                 else -> filterByTime(
                     record.date ?: "",
@@ -249,7 +249,7 @@ class CaseDashboardViewModel(private val repository: ThunderscopeRepository) : V
                 )
             }
 
-            // age parsing
+            // Age Filter
             val recordAge = record.patient?.age?.toIntOrNull() ?: -1
             val ageMatch = when (selectedAge.trim().lowercase()) {
                 "all age" -> true
