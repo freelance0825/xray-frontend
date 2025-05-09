@@ -23,10 +23,10 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/caseRecordPatientId"
+            android:id="@+id/doctorId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="P-9890200"
+            android:text="D-9890200"
             android:textColor="@android:color/darker_gray"
             android:textSize="12sp" />
     </LinearLayout>

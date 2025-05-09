@@ -1,18 +1,13 @@
 package com.example.thunderscope_frontend.ui.todolistdashboard.adapters
 
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.data.models.CaseRecordResponse
-import com.example.thunderscope_frontend.databinding.ItemCaseRecordRowBinding
 import com.example.thunderscope_frontend.databinding.ItemTodoListRecordRowBinding
-import com.example.thunderscope_frontend.ui.slides.SlidesActivity
 import com.example.thunderscope_frontend.ui.utils.Base64Helper
 import com.example.thunderscope_frontend.ui.utils.CaseRecordStatus
 
@@ -36,7 +31,7 @@ class TodoAdapter : ListAdapter<CaseRecordResponse, TodoAdapter.CaseViewHolder>(
         fun bind(record: CaseRecordResponse) {
             binding.apply {
                 caseRecordId.text = record.id.toString()
-                caseRecordPatientId.text = record.patient?.id.toString()
+                doctorId.text = record.doctor?.id.toString()
                 patientName.text = record.patient?.name.toString()
                 patientBirthdate.text = record.patient?.dateOfBirth.toString()
                 patientAge.text = StringBuilder("(${record.patient?.age} yo)")
@@ -45,7 +40,7 @@ class TodoAdapter : ListAdapter<CaseRecordResponse, TodoAdapter.CaseViewHolder>(
                 lastUpdateTime.text = record.time
 
                 status.apply {
-                    text = CaseRecordStatus.getTranslatedStringValue(record.status ?: "").uppercase()
+                    text = CaseRecordStatus.getTranslatedStringValue(record.status ?: "")?.uppercase() ?: "UNKNOWN"
                     background = when (record.status?.trim()) {
                         CaseRecordStatus.COMPLETED.name -> resources.getDrawable(R.drawable.bg_status_completed, null)
                         CaseRecordStatus.FOR_REVIEW.name -> resources.getDrawable(R.drawable.bg_status_for_review, null)

@@ -13,6 +13,7 @@ import com.example.thunderscope_frontend.data.models.SlidesItem
 import com.example.thunderscope_frontend.data.repo.ThunderscopeRepository
 import com.example.thunderscope_frontend.ui.login.LoginViewModel
 import com.example.thunderscope_frontend.ui.utils.CaseRecordStatus
+import com.example.thunderscope_frontend.ui.utils.PatientStatus
 import com.example.thunderscope_frontend.ui.utils.Result
 import com.example.thunderscope_frontend.viewmodel.SlidesRecordUI
 import kotlinx.coroutines.Dispatchers
@@ -24,24 +25,20 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class CaseDashboardViewModel(
-    private val repository: ThunderscopeRepository
-) : ViewModel() {
+class CaseDashboardViewModel(private val repository: ThunderscopeRepository) : ViewModel() {
+
     val doctorId = runBlocking { repository.getDoctorId().first() }
 
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    private val _patientRecordsLiveData =
-        MutableLiveData<MutableList<PatientResponse>>(mutableListOf())
+    private val _patientRecordsLiveData = MutableLiveData<MutableList<PatientResponse>>(mutableListOf())
     val patientRecordsLiveData: LiveData<MutableList<PatientResponse>> = _patientRecordsLiveData
 
-    private val _doctorRecordsLiveData =
-        MutableLiveData<MutableList<AuthDoctorResponse>>(mutableListOf())
+    private val _doctorRecordsLiveData = MutableLiveData<MutableList<AuthDoctorResponse>>(mutableListOf())
     val doctorRecordsLiveData: LiveData<MutableList<AuthDoctorResponse>> = _doctorRecordsLiveData
 
-    private val _caseRecordsLiveData =
-        MutableLiveData<MutableList<CaseRecordResponse>>(mutableListOf())
+    private val _caseRecordsLiveData = MutableLiveData<MutableList<CaseRecordResponse>>(mutableListOf())
     val caseRecordsLiveData: LiveData<MutableList<CaseRecordResponse>> = _caseRecordsLiveData
 
     private val _slidesRecordsLiveData = MutableLiveData<MutableList<SlidesItem>>(mutableListOf())
@@ -53,7 +50,6 @@ class CaseDashboardViewModel(
     // Searching
     val selectedPatientId = MutableLiveData<Int>(null)
     val selectedDoctorId = MutableLiveData<Int>(null)
-
 
     // PAGINATION
     private var currentPage = 0
@@ -226,22 +222,22 @@ class CaseDashboardViewModel(
         allRecords = caseRecordsLiveData.value.orEmpty()
 
         val filtered = allRecords.filter { record ->
-            // Same filter logic like you already have
-            val statusMatch = when (selectedStatus.trim().lowercase()) {
-                "all status" -> true
-                "finished" -> record.status?.trim()
-                    ?.lowercase() == CaseRecordStatus.COMPLETED.name.lowercase()
 
-                else -> CaseRecordStatus.getTranslatedStringValue(
-                    record.status?.trim() ?: ""
-                ).lowercase() == selectedStatus.trim().lowercase()
+            // Status Filter
+            val recordStatus = record.status?.trim()?.lowercase()
+            val translated = recordStatus?.let { CaseRecordStatus.getTranslatedStringValue(it) }
+            val statusMatch = when (selectedStatus) {
+                "All Status" -> true
+                else -> translated?.lowercase()?.trim() == selectedStatus.lowercase().trim()
             }
 
-            val typeMatch = selectedType.trim().lowercase() == "all type" || record.type?.trim()
-                ?.lowercase() == selectedType.trim().lowercase()
-            val genderMatch =
-                selectedGender.trim().lowercase() == "all gender" || record.patient?.gender?.trim()
-                    ?.lowercase() == selectedGender.trim().lowercase()
+            // Type Filter
+            val typeMatch = selectedType.trim().lowercase() == "all type" ||
+                    record.type?.trim()?.lowercase() == selectedType.trim().lowercase()
+
+            //Gender Filter
+            val genderMatch = selectedGender.trim().lowercase() == "all gender" ||
+                    record.patient?.gender?.trim()?.lowercase() == selectedGender.trim().lowercase()
 
             // Time Period Filter
             val timeMatch = when (selectedTimePeriod) {

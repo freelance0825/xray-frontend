@@ -4,6 +4,7 @@ import android.os.Parcelable
 import android.transition.Slide
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
+import java.time.OffsetDateTime
 
 @Parcelize
 data class CaseRecordResponse(
@@ -34,6 +35,9 @@ data class CaseRecordResponse(
 
     @field:SerializedName("status")
 	val status: String? = null,
+
+    @field:SerializedName("updated_at")
+    val updatedAt: String? = null,
 
     var slides: MutableList<SlidesItem> = mutableListOf(),
 ): Parcelable

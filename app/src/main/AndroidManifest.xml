@@ -60,6 +60,12 @@
             android:name=".ui.patientdashboard.PatientDashboardActivity"
             android:exported="true"
             android:theme="@style/Theme.Thunderscopefrontend.Material3" /> <!-- PatientResponse Activity -->
+        <activity
+            android:name=".ui.patientreport.PatientReportActivity"
+            android:exported="true" /> <!-- PatientReport Activity -->
+        <activity
+            android:name=".ui.patientarchive.PatientArchiveActivity"
+            android:exported="true" /> <!-- PatientArchive Activity -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.thunderscope"

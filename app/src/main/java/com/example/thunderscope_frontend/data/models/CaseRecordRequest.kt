@@ -21,7 +21,4 @@ data class CaseRecordRequest(
 
 	@field:SerializedName("type")
 	var type: String? = null,
-
-	@field:SerializedName("status")
-	var status: String? = null
 )

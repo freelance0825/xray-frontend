@@ -22,7 +22,9 @@ import com.example.thunderscope_frontend.databinding.ActivityCaseDashboardBindin
 import com.example.thunderscope_frontend.ui.casedashboard.adapters.CaseAdapter
 import com.example.thunderscope_frontend.ui.createnewtest.CreateNewTestActivity
 import com.example.thunderscope_frontend.ui.login.LoginActivity
+import com.example.thunderscope_frontend.ui.patientarchive.PatientArchiveActivity
 import com.example.thunderscope_frontend.ui.patientdashboard.PatientDashboardActivity
+import com.example.thunderscope_frontend.ui.patientreport.PatientReportActivity
 import com.example.thunderscope_frontend.ui.slides.SlidesActivity
 import com.example.thunderscope_frontend.ui.todolistdashboard.TodoListDashboardActivity
 import com.example.thunderscope_frontend.ui.utils.CaseRecordStatus
@@ -52,6 +54,8 @@ class CaseDashboardActivity : AppCompatActivity() {
             }
         }
 
+    private var isCrmExpanded = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCaseDashboardBinding.inflate(layoutInflater)
@@ -75,18 +79,16 @@ class CaseDashboardActivity : AppCompatActivity() {
 
             caseRecordsLiveData.observe(this@CaseDashboardActivity) { caseList ->
                 val totalCases = caseList.size
-                val highPriorityCount = caseList.count { it.status == CaseRecordStatus.HIGH_PRIORITY.name }
-                val inPreparationsCount = caseList.count { it.status == CaseRecordStatus.IN_PREPARATIONS.name }
                 val forReviewCount = caseList.count { it.status == CaseRecordStatus.FOR_REVIEW.name }
+                val inProgressCount = caseList.count { it.status == CaseRecordStatus.IN_PROGRESS.name }
                 val completedCount = caseList.count { it.status == CaseRecordStatus.COMPLETED.name }
 
                 binding.apply {
                     allCasesNumber.text = StringBuilder("($totalCases)")
                     menuAllCasesCount.text = totalCases.toString()
-                    menuHighPriorityCount.text = highPriorityCount.toString()
-                    menuInPreparationsCount.text = inPreparationsCount.toString()
                     menuForReviewCount.text = forReviewCount.toString()
-                    menuFinishedCount.text = completedCount.toString()
+                    menuInProgressCount.text = inProgressCount.toString()
+                    menuCompletedCount.text = completedCount.toString()
                 }
 
                 applyFilters(
@@ -145,21 +147,31 @@ class CaseDashboardActivity : AppCompatActivity() {
                 startActivity(Intent(this@CaseDashboardActivity, TodoListDashboardActivity::class.java))
             }
 
-            menuPatientModule.setOnClickListener {
-                startActivity(
-                    Intent(
-                        this@CaseDashboardActivity,
-                        PatientDashboardActivity::class.java
-                    )
-                )
+            menuCrmModule.setOnClickListener {
+                // Toggle visibility of submenu
+                isCrmExpanded = !isCrmExpanded
+                crmSubmenu.visibility = if (isCrmExpanded) View.VISIBLE else View.GONE
+
+                // Rotate the arrow based on expansion state
+                val rotationAngle = if (isCrmExpanded) 180f else 0f
+                crmDropdownArrow.animate().rotation(rotationAngle).setDuration(200).start()
+            }
+
+            // Sub-features
+            menuPatient.setOnClickListener {
+                startActivity(Intent(this@CaseDashboardActivity, PatientDashboardActivity::class.java))
+            }
+
+            menuReport.setOnClickListener {
+                startActivity(Intent(this@CaseDashboardActivity, PatientReportActivity::class.java))
+            }
+
+            menuArchive.setOnClickListener {
+                startActivity(Intent(this@CaseDashboardActivity, PatientArchiveActivity::class.java))
             }
 
             settingsIcon.setOnClickListener {
-                val popupMenu =
-                    PopupMenu(
-                        this@CaseDashboardActivity,
-                        settingsIcon
-                    ) // or getContext() if inside Fragment
+                val popupMenu = PopupMenu(this@CaseDashboardActivity, settingsIcon) // or getContext() if inside Fragment
                 popupMenu.menuInflater.inflate(R.menu.settings_dropdown_menu, popupMenu.menu)
 
                 popupMenu.setOnMenuItemClickListener { item: MenuItem ->
@@ -228,7 +240,11 @@ class CaseDashboardActivity : AppCompatActivity() {
                 if (caseDashboardViewModel.searchPatient(keyword.trim().toInt())) {
                     caseDashboardViewModel.selectedPatientId.value = keyword.trim().toInt()
                 } else {
-                    Toast.makeText(this@CaseDashboardActivity, "Patient with ID:$keyword not found!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this@CaseDashboardActivity,
+                        "Patient with ID:$keyword not found!",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
                 return true
             }
@@ -246,7 +262,11 @@ class CaseDashboardActivity : AppCompatActivity() {
                 if (caseDashboardViewModel.searchDoctor(keyword.trim().toInt())) {
                     caseDashboardViewModel.selectedDoctorId.value = keyword.trim().toInt()
                 } else {
-                    Toast.makeText(this@CaseDashboardActivity, "Doctor with ID:$keyword not found!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this@CaseDashboardActivity,
+                        "Doctor with ID:$keyword not found!",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
                 return true
             }

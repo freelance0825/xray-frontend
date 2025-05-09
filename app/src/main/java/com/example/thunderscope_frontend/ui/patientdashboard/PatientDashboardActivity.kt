@@ -48,15 +48,17 @@ class PatientDashboardActivity : AppCompatActivity() {
                 val totalPatients = patientList.size
 
                 val notStartedCount = patientList.count { it.status == PatientStatus.NOT_STARTED.name }
-                val onProgressCount = patientList.count { it.status == PatientStatus.ON_PROGRESS.name }
+                val forReviewCount = patientList.count { it.status == PatientStatus.FOR_REVIEW.name }
+                val inProgressCount = patientList.count { it.status == PatientStatus.IN_PROGRESS.name }
                 val completedCount = patientList.count { it.status == PatientStatus.COMPLETED.name }
 
                 // Update UI
                 binding.allPatientNumber.text = StringBuilder("($totalPatients)")
                 binding.menuAllPatientCount.text = totalPatients.toString()
                 binding.menuNotStartedCount.text = notStartedCount.toString()
-                binding.menuOnProgressCount.text = onProgressCount.toString()
-                binding.menuFinishedCount.text = completedCount.toString()
+                binding.menuForReviewCount.text = forReviewCount.toString()
+                binding.menuInProgressCount.text = inProgressCount.toString()
+                binding.menuCompletedCount.text = completedCount.toString()
 
                 applyFilters(
                     binding.spinnerStatus.selectedItem.toString(),

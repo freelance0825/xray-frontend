@@ -47,10 +47,9 @@
     <!--- Spinner Case Record Status -->
     <string-array name="case_record_status_options">
         <item>All Status</item>
-        <item>High Priority</item>
-        <item>In Preparations</item>
         <item>For Review</item>
-        <item>Finished</item>
+        <item>In Progress</item>
+        <item>Completed</item>
     </string-array>
 
     <!--- Spinner Type -->
@@ -83,8 +82,9 @@
     <string-array name="patient_status_options">
         <item>All Status</item>
         <item>Not Started</item>
-        <item>On Progress</item>
-        <item>Finished</item>
+        <item>For Review</item>
+        <item>In Progress</item>
+        <item>Completed</item>
     </string-array>
 
 

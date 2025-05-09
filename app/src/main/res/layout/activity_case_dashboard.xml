@@ -217,60 +217,6 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- High Priority -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="8dp">
-
-                <TextView
-                    android:id="@+id/menu_high_priority_label"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="High Priority"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/menu_high_priority_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/sidebar_divider"
-                    android:gravity="end"
-                    android:text="0"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-            <!-- In Preparations -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="8dp">
-
-                <TextView
-                    android:id="@+id/menu_in_preparations_label"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="In Preparations"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/menu_in_preparations_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/sidebar_divider"
-                    android:gravity="end"
-                    android:text="1"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
             <!-- For Review -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -298,7 +244,7 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <!-- Finished -->
+            <!-- In Progress -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -306,16 +252,43 @@
                 android:paddingVertical="8dp">
 
                 <TextView
-                    android:id="@+id/menu_finished_label"
+                    android:id="@+id/menu_in_progress_label"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Finished"
+                    android:text="In Progress"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/menu_finished_count"
+                    android:id="@+id/menu_in_progress_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/sidebar_divider"
+                    android:gravity="end"
+                    android:text="1"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Completed -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp">
+
+                <TextView
+                    android:id="@+id/menu_completed_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Completed"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/menu_completed_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/sidebar_divider"
@@ -362,34 +335,122 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <!-- PatientResponse Icon and Text -->
+            <!-- CRM Module with Dropdown -->
             <LinearLayout
-                android:id="@+id/menu_patient_module"
+                android:id="@+id/menu_crm_module"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?selectableItemBackground"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="8dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingVertical="8dp">
+                android:background="?selectableItemBackground">
 
+                <!-- CRM Icon -->
                 <ImageView
-                    android:id="@+id/patient_icon"
+                    android:id="@+id/crm_icon"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginEnd="8dp"
-                    android:src="@drawable/ic_patient" />
+                    android:src="@drawable/ic_crm" />
 
+                <!-- CRM Label -->
                 <TextView
-                    android:id="@+id/etPatient"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/crm_label"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:text="Patient"
+                    android:layout_weight="1"
+                    android:text="CRM"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
+
+                <!-- Dropdown Arrow -->
+                <ImageView
+                    android:id="@+id/crm_dropdown_arrow"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@android:drawable/arrow_down_float" />
             </LinearLayout>
+
+            <!-- CRM Submenu (Initially Hidden) -->
+            <LinearLayout
+                android:id="@+id/crm_submenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:paddingStart="32dp">
+
+                <!-- Patient -->
+                <LinearLayout
+                    android:id="@+id/menu_patient"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="8dp"
+                    android:background="?selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_patient" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Patients"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Report -->
+                <LinearLayout
+                    android:id="@+id/menu_report"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="8dp"
+                    android:background="?selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_report" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Reports"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <!-- Archive -->
+                <LinearLayout
+                    android:id="@+id/menu_archive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="8dp"
+                    android:background="?selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_archive" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Archive"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+
 
         </LinearLayout>
 

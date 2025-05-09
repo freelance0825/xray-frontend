@@ -20,9 +20,7 @@ import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
 
-class PatientDashboardViewModel(
-    private val thunderscopeRepository: ThunderscopeRepository
-) : ViewModel() {
+class PatientDashboardViewModel(private val thunderscopeRepository: ThunderscopeRepository) : ViewModel() {
 
     private val _patientRecordsLiveData = MutableLiveData<List<PatientResponse>>()
     val patientRecordsLiveData: LiveData<List<PatientResponse>> = _patientRecordsLiveData
@@ -139,10 +137,10 @@ class PatientDashboardViewModel(
 
             // Status Filter
             val recordStatus = record.status?.trim()?.lowercase()
+            val translated = PatientStatus.getTranslatedStringValue(recordStatus)
             val statusMatch = when (selectedStatus) {
                 "All Status" -> true
-                else -> PatientStatus.getTranslatedStringValue(recordStatus ?: "")
-                    .lowercase().trim() == selectedStatus.lowercase().trim()
+                else -> translated?.lowercase()?.trim() == selectedStatus.lowercase().trim()
             }
 
             // Time Period Filter
