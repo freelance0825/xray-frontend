@@ -207,7 +207,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:padding="8dp"
-                    android:text="1-10 of 20"
+                    android:text="0-0 of 0"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />

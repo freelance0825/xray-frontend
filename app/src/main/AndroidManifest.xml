@@ -66,6 +66,9 @@
         <activity
             android:name=".ui.patientarchive.PatientArchiveActivity"
             android:exported="true" /> <!-- PatientArchive Activity -->
+        <activity
+            android:name=".ui.patientreportpdf.PatientReportPdfActivity"
+            android:exported="false" /> <!-- PatientReportPdf Activity -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.thunderscope"

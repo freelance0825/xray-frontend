@@ -178,7 +178,7 @@
         android:paddingHorizontal="4dp">
 
         <ImageView
-            android:id="@+id/btnDownloadPdf"
+            android:id="@+id/btnReportPdf"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:contentDescription="Download PDF"

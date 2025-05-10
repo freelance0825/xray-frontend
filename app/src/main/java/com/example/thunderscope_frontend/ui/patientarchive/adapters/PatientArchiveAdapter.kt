@@ -1,6 +1,7 @@
 package com.example.thunderscope_frontend.ui.patientarchive.adapters
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.data.models.CaseRecordResponse
 import com.example.thunderscope_frontend.databinding.ItemPatientArchiveRowBinding
+import com.example.thunderscope_frontend.ui.patientreportpdf.PatientReportPdfActivity
 import com.example.thunderscope_frontend.ui.utils.CaseRecordStatus
 
 class PatientArchiveAdapter(private val onArchive: (CaseRecordResponse, Boolean) -> Unit) :
@@ -75,6 +77,14 @@ class PatientArchiveAdapter(private val onArchive: (CaseRecordResponse, Boolean)
 
                     dialog.show()
                 }
+            }
+
+            binding.btnReportPdf.setOnClickListener {
+                val context = binding.root.context
+                val intent = Intent(context, PatientReportPdfActivity::class.java).apply {
+                    putExtra(PatientReportPdfActivity.EXTRA_CASE_ID, record.id?.toLong() ?: -1L)
+                }
+                context.startActivity(intent)
             }
         }
     }

@@ -440,6 +440,16 @@ class ThunderscopeRepository(private val context: Context) {
     }.flowOn(Dispatchers.IO)
 
 
+    fun getSlideByCaseId(caseId: Long) = flow {
+        emit(Result.Loading)
+        try {
+            val storyResponse = apiService.getSlideByCaseId(caseId)
+            emit(Result.Success(storyResponse))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
     private fun String.toRequestBody() =
         RequestBody.create("text/plain".toMediaTypeOrNull(), this)
 

@@ -1,5 +1,6 @@
 package com.example.thunderscope_frontend.ui.patientreport.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.thunderscope_frontend.R
 import com.example.thunderscope_frontend.data.models.CaseRecordResponse
 import com.example.thunderscope_frontend.databinding.ItemPatientReportRowBinding
+import com.example.thunderscope_frontend.ui.patientreportpdf.PatientReportPdfActivity
 import com.example.thunderscope_frontend.ui.utils.PatientStatus
 import com.google.android.material.snackbar.Snackbar
 
@@ -18,8 +20,7 @@ class PatientReportAdapter(private val onArchive: (CaseRecordResponse, Boolean) 
     private var currentListBeforeUndo: List<CaseRecordResponse> = currentList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CaseViewHolder {
-        val binding =
-            ItemPatientReportRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemPatientReportRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CaseViewHolder(binding)
     }
 
@@ -75,7 +76,17 @@ class PatientReportAdapter(private val onArchive: (CaseRecordResponse, Boolean) 
                     setDuration(2000)
                 }.show()
             }
+
+            binding.btnReportPdf.setOnClickListener {
+                val context = binding.root.context
+                val intent = Intent(context, PatientReportPdfActivity::class.java).apply {
+                    putExtra(PatientReportPdfActivity.EXTRA_CASE_ID, record.id?.toLong() ?: -1L)
+                }
+                context.startActivity(intent)
+            }
+
         }
+
     }
 
     companion object {

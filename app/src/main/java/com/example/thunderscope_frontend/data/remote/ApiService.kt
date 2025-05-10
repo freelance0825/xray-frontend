@@ -37,7 +37,7 @@ interface ApiService {
         @Part mainImage: MultipartBody.Part? = null
     ): SlidesItem
 
-    @GET("slides/case/{id}")
+    @GET("slides/case/list/{id}")
     suspend fun getAllSlides(@Path("id") caseId: Int): List<SlidesItem>
 
     @GET("slides/{id}")
@@ -110,5 +110,8 @@ interface ApiService {
 
     @GET("case/records/report/archive")
     suspend fun getArchivedCaseRecords(): List<CaseRecordResponse>
+
+    @GET("slides/case/{id}")
+    suspend fun getSlideByCaseId(@Path("id") caseId: Long): SlidesItem
 
 }
