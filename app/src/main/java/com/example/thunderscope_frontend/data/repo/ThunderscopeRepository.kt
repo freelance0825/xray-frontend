@@ -11,6 +11,7 @@ import com.example.thunderscope_frontend.data.models.AuthDoctorRequest
 import com.example.thunderscope_frontend.data.models.BatchAnnotationResponse
 import com.example.thunderscope_frontend.data.models.CaseRecordFilterRequest
 import com.example.thunderscope_frontend.data.models.CaseRecordRequest
+import com.example.thunderscope_frontend.data.models.CaseRecordResponse
 import com.example.thunderscope_frontend.data.models.PostTestReviewPayload
 import com.example.thunderscope_frontend.data.models.SlideRequest
 import com.example.thunderscope_frontend.data.models.SlidesItem
@@ -37,9 +38,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class ThunderscopeRepository(
-    private val context: Context
-) {
+class ThunderscopeRepository(private val context: Context) {
     private val authDataStore = AuthDataStore.getInstance(context)
     private val apiService = ApiConfig.getApiService(authDataStore)
     private val slidesDao = SlidesDatabase.getDatabase(context).slidesDao()
@@ -408,6 +407,38 @@ class ThunderscopeRepository(
             emit(Result.Error("Unexpected error: ${e.message}"))
         }
     }.flowOn(Dispatchers.IO)
+
+
+    fun getAllCaseRecordByCompletedStatus() = flow {
+        emit(Result.Loading)
+        try {
+            val caseRecordResponse = apiService.getAllCaseRecordByCompletedStatus()
+            emit(Result.Success(caseRecordResponse))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun archiveOrUnarchiveCaseRecord(caseRecordId: Long, isArchive: Boolean) = flow {
+        emit(Result.Loading)
+        try {
+            val response = apiService.archiveOrUnarchivedCaseRecord(caseRecordId, isArchive)
+            emit(Result.Success(response))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun getArchivedCaseRecords() = flow {
+        emit(Result.Loading)
+        try {
+            val caseRecordResponse = apiService.getArchivedCaseRecords()
+            emit(Result.Success(caseRecordResponse))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
 
     private fun String.toRequestBody() =
         RequestBody.create("text/plain".toMediaTypeOrNull(), this)

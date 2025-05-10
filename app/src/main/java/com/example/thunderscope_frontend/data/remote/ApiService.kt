@@ -24,10 +24,10 @@ interface ApiService {
     @POST("/api/doctors/login")
     suspend fun loginDoctor(@Body authDoctorRequest: AuthDoctorRequest): AuthDoctorResponse
 
-    @GET("case/{id}")
+    @GET("case/records/{id}")
     suspend fun getCaseById(@Path("id") caseId: Int): CaseRecordResponse
 
-    @POST("case")
+    @POST("case/records")
     suspend fun addCaseRecord(@Body caseRecordRequest: CaseRecordRequest): CaseRecordResponse
 
     @Multipart
@@ -65,10 +65,10 @@ interface ApiService {
         @Part doctorSignature: MultipartBody.Part? = null
     ): SlidesItem
 
-    @GET("case/list")
+    @GET("case/records")
     suspend fun getCaseRecords(): List<CaseRecordResponse>
 
-    @POST("case/filter")
+    @POST("case/records/filter")
     suspend fun getCaseRecordsFilterId(
         @Body caseRecordFilterRequest: CaseRecordFilterRequest
     ): List<CaseRecordResponse>
@@ -98,4 +98,17 @@ interface ApiService {
         @PartMap data: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part doctorSignature: MultipartBody.Part? = null
     ): PatientResponse
+
+    @GET("case/records/report")
+    suspend fun getAllCaseRecordByCompletedStatus(): List<CaseRecordResponse>
+
+    @PATCH("case/records/report/archive/{caseRecordId}")
+    suspend fun archiveOrUnarchivedCaseRecord(
+        @Path("caseRecordId") caseRecordId: Long,
+        @Query("isArchive") isArchive: Boolean
+    ): CaseRecordResponse
+
+    @GET("case/records/report/archive")
+    suspend fun getArchivedCaseRecords(): List<CaseRecordResponse>
+
 }

@@ -830,7 +830,7 @@ class SlidesDetailActivity : AppCompatActivity() {
 
                 lifecycleScope.launch {
                     slidesDetailViewModel.updateSlide(
-                        slidesDetailViewModel.currentlySelectedSlides.value?.id ?: 0L,
+                        slidesDetailViewModel.currentlySelectedSlidesId.value ?: 0L,
                         payload
                     ).collect { result ->
                         when (result) {
@@ -844,7 +844,7 @@ class SlidesDetailActivity : AppCompatActivity() {
                                 iReport.putExtra(ReportActivity.EXTRA_PATIENT, patientResponseData)
                                 iReport.putExtra(
                                     ReportActivity.EXTRA_SLIDE_ID,
-                                    slidesDetailViewModel.currentlySelectedSlides.value?.id
+                                    slidesDetailViewModel.currentlySelectedSlidesId.value ?: 0L
                                 )
                                 finish()
                                 startActivity(iReport)

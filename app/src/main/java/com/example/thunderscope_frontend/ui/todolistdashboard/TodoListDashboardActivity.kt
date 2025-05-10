@@ -54,18 +54,16 @@ class TodoListDashboardActivity : AppCompatActivity() {
 
             caseRecordsLiveData.observe(this@TodoListDashboardActivity) { caseList ->
                 val totalCases = caseList.size
-                val highPriorityCount = caseList.count { it.status == CaseRecordStatus.HIGH_PRIORITY.name }
-                val inPreparationsCount = caseList.count { it.status == CaseRecordStatus.IN_PREPARATIONS.name }
                 val forReviewCount = caseList.count { it.status == CaseRecordStatus.FOR_REVIEW.name }
+                val inProgressCount = caseList.count { it.status == CaseRecordStatus.IN_PROGRESS.name }
                 val completedCount = caseList.count { it.status == CaseRecordStatus.COMPLETED.name }
 
                 binding.apply {
                     todoListCount.text = StringBuilder("($totalCases)")
                     menuAllCasesCount.text = totalCases.toString()
-                    menuHighPriorityCount.text = highPriorityCount.toString()
-                    menuInPreparationsCount.text = inPreparationsCount.toString()
                     menuForReviewCount.text = forReviewCount.toString()
-                    menuFinishedCount.text = completedCount.toString()
+                    menuInProgressCount.text = inProgressCount.toString()
+                    menuCompletedCount.text = completedCount.toString()
                 }
 
                 applyFilters(
@@ -120,11 +118,7 @@ class TodoListDashboardActivity : AppCompatActivity() {
             }
 
             settingsIcon.setOnClickListener {
-                val popupMenu =
-                    PopupMenu(
-                        this@TodoListDashboardActivity,
-                        settingsIcon
-                    ) // or getContext() if inside Fragment
+                val popupMenu = PopupMenu(this@TodoListDashboardActivity, settingsIcon) // or getContext() if inside Fragment
                 popupMenu.menuInflater.inflate(R.menu.settings_dropdown_menu, popupMenu.menu)
 
                 popupMenu.setOnMenuItemClickListener { item: MenuItem ->
@@ -133,12 +127,7 @@ class TodoListDashboardActivity : AppCompatActivity() {
                         // Handle Logout
                         todoListDashboardViewModel.logout()
                         finishAffinity()
-                        startActivity(
-                            Intent(
-                                this@TodoListDashboardActivity,
-                                LoginActivity::class.java
-                            )
-                        )
+                        startActivity(Intent(this@TodoListDashboardActivity, LoginActivity::class.java))
 
                         return@setOnMenuItemClickListener true
                     }

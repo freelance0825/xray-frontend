@@ -103,7 +103,6 @@ class CreateNewTestViewModel(
             caseRecordRequest.time = timeFormat.format(now)
             caseRecordRequest.year = yearFormat.format(now)
             caseRecordRequest.type = "Left"
-            caseRecordRequest.status = CaseRecordStatus.IN_PREPARATIONS.name
         }
 
         viewModelScope.launch {
