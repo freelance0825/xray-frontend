@@ -724,18 +724,74 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="AI Insights"
+                    android:text="@string/technique_text"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textAllCaps="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/site_of_collection_text"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textAllCaps="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/clinical_history_text"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textAllCaps="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Findings"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_ai_insights"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
+                    android:text="Lungs: There is a large mass in the right upper lobe. The mass is well-circumscribed and measures 3 cm in diameter. There is no evidence of atelectasis or pleural effusion."
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Diagnosis"
                     android:textColor="@color/black"
-                    tools:text="Optic Nerve:  Disc appears round with a clear margin.  Cup-to-disc ratio within normal limits.  No evidence of pallor or edema." />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/bullet_diagnosis_text"
+                    android:textColor="@color/black" />
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="16dp"-->
+<!--                    android:text="AI Insights"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:textStyle="bold" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_ai_insights"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="6dp"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    tools:text="Optic Nerve:  Disc appears round with a clear margin.  Cup-to-disc ratio within normal limits.  No evidence of pallor or edema." />-->
 
                 <View
                     android:layout_width="match_parent"

@@ -139,7 +139,7 @@ class SlidesDetailActivity : AppCompatActivity() {
             currentlySelectedSlidesItemWithAnnotationResponse.observe(this@SlidesDetailActivity) { selectedSlides ->
                 selectedSlides?.let {
                     binding.tvCaseId.text = selectedSlides.caseRecordResponse?.id.toString()
-                    binding.tvAiInsights.text = selectedSlides.aiInsights
+//                    binding.tvAiInsights.text = selectedSlides.aiInsights
                     binding.edDiagnostics.setText(selectedSlides.diagnosis)
 
                     binding.ivBaseImage.setImageBitmap(selectedSlides.bitmapImage)

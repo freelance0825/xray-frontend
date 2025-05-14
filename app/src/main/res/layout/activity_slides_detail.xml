@@ -1576,12 +1576,76 @@
                         android:paddingHorizontal="16dp"
                         android:paddingBottom="16dp">
 
+<!--                        <TextView-->
+<!--                            android:id="@+id/tv_ai_insights"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            tools:text="Right eye: Normal fundus examination.\nLeft eye:  Borderline cup-to-disc ratio.  Possible drusen noted in the superior temporal quadrant.  Recommend follow-up examination in 6 months to monitor for any changes"-->
+<!--                            android:textColor="@color/white" />-->
+
                         <TextView
-                            android:id="@+id/tv_ai_insights"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:text="Right eye: Normal fundus examination.\nLeft eye:  Borderline cup-to-disc ratio.  Possible drusen noted in the superior temporal quadrant.  Recommend follow-up examination in 6 months to monitor for any changes"
-                            android:textColor="@color/white" />
+                            android:layout_marginTop="16dp"
+                            android:text="Gross Description"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="The specimen consists of a 0.5 x 0.4 x 0.3 cm skin ellipse with a central raised, firm, tan-white lesion. The surrounding skin appears unremarkable."
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="Microscopic Description"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="Tissue Architecture: The epidermis shows irregular acanthosis with focal areas of hyperkeratosis."
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="Infectious Disease"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="AI analyzes inflammatory biomarkers such as IL-6 (interleukin-6), D-dimer, and CRP (C-reactive protein) to predict disease severity."
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="Clinical Impact"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="Patients with high IL-6 levels are at greater risk for severe respiratory complications."
+                            android:textColor="@color/black" />
 
                     </LinearLayout>
 

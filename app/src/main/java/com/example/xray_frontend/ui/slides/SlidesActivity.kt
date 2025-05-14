@@ -53,7 +53,7 @@ class SlidesActivity : AppCompatActivity() {
         slidesViewModel.apply {
             currentlySelectedSlide.observe(this@SlidesActivity) {
                 it?.let { slide ->
-                    binding.tvAiInsights.text = slide.aiInsights
+//                    binding.tvAiInsights.text = slide.aiInsights
                 }
             }
 
