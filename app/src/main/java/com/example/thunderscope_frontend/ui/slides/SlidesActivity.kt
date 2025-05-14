@@ -119,6 +119,9 @@ class SlidesActivity : AppCompatActivity() {
                 tvDoctorName.text = it.doctor?.name
                 tvDoctorNameMenu.text = it.doctor?.name
                 tvDoctorInitial.text = generateInitials(it.doctor?.name.toString())
+
+                // Side Bar Case Status
+                tvCaseStatusSlideBar.text = it.status
             }
 
             rvSlides.apply {

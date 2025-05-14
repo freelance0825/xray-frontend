@@ -90,6 +90,8 @@ class AnnotationAdapter : ListAdapter<AnnotationResponse, RecyclerView.ViewHolde
             binding.ivAnnotation.setImageBitmap(Base64Helper.convertToBitmap(item.annotatedImage))
             binding.tvAnnotationName.text = item.label
             binding.tvAnnotationDate.text = convertDate(item.createdAt ?: "")
+            binding.tvCaseStatusAnnotation.text = item.caseRecordStatus
+
         }
     }
 

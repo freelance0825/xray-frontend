@@ -113,6 +113,7 @@ class TodoListDashboardActivity : AppCompatActivity() {
                 recordToBeSent.slides = mutableListOf()
 
                 val intent = Intent(this@TodoListDashboardActivity, SlidesActivity::class.java)
+                intent.putExtra(SlidesActivity.EXTRA_CASE_RECORD_ID, caseRecord.id)
                 intent.putExtra(SlidesActivity.EXTRA_CASE_RECORD, recordToBeSent)
                 startActivity(intent)
             }
