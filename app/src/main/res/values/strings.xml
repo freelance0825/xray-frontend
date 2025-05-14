@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">thunderscope-frontend</string>
+    <string name="app_name">xray-frontend</string>
 
     <!--- Activity Slides Resource -->
     <string name="activity_slides_assesment_count">Assesment (%1s)</string>
@@ -55,9 +55,9 @@
     <!--- Spinner Type -->
     <string-array name="type_options">
         <item>All Type</item>
-        <item>Left</item>
-        <item>Right</item>
-        <item>Left &amp; Right</item>
+        <item>Chest</item>
+        <item>Arm</item>
+        <item>Chest &amp; Arm</item>
     </string-array>
 
 

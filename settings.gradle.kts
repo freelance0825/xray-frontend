@@ -23,5 +23,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "thunderscope-frontend"
+rootProject.name = "xray-frontend"
 include(":app")

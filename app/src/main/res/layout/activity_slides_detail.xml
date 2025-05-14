@@ -224,7 +224,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.example.thunderscope_frontend.ui.slidesdetail.customview.ZoomImageView
+            <com.example.xray_frontend.ui.slidesdetail.customview.ZoomImageView
                 android:id="@+id/iv_base_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -924,7 +924,7 @@
                 android:padding="16dp">
 
                 <!-- View Settings Accordion-->
-                <com.example.thunderscope_frontend.ui.slidesdetail.customview.AccordionView
+                <com.example.xray_frontend.ui.slidesdetail.customview.AccordionView
                     android:id="@+id/accordion_view_settings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -1553,10 +1553,10 @@
 
                     </LinearLayout>
 
-                </com.example.thunderscope_frontend.ui.slidesdetail.customview.AccordionView>
+                </com.example.xray_frontend.ui.slidesdetail.customview.AccordionView>
 
                 <!-- AI Insights Accordion-->
-                <com.example.thunderscope_frontend.ui.slidesdetail.customview.AccordionView
+                <com.example.xray_frontend.ui.slidesdetail.customview.AccordionView
                     android:id="@+id/accordion_ai_insights"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -1585,10 +1585,10 @@
 
                     </LinearLayout>
 
-                </com.example.thunderscope_frontend.ui.slidesdetail.customview.AccordionView>
+                </com.example.xray_frontend.ui.slidesdetail.customview.AccordionView>
 
                 <!-- Diagnostic Accordion-->
-                <com.example.thunderscope_frontend.ui.slidesdetail.customview.AccordionView
+                <com.example.xray_frontend.ui.slidesdetail.customview.AccordionView
                     android:id="@+id/accordion_diagnostics"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -1697,10 +1697,10 @@
                     </LinearLayout>
 
 
-                </com.example.thunderscope_frontend.ui.slidesdetail.customview.AccordionView>
+                </com.example.xray_frontend.ui.slidesdetail.customview.AccordionView>
 
                 <!-- PatientResponse Detail Accordion-->
-                <com.example.thunderscope_frontend.ui.slidesdetail.customview.AccordionView
+                <com.example.xray_frontend.ui.slidesdetail.customview.AccordionView
                     android:id="@+id/accordion_patient_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -1867,7 +1867,7 @@
 
                     </LinearLayout>
 
-                </com.example.thunderscope_frontend.ui.slidesdetail.customview.AccordionView>
+                </com.example.xray_frontend.ui.slidesdetail.customview.AccordionView>
 
             </LinearLayout>
         </ScrollView>

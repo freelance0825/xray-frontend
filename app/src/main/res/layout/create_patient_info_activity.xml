@@ -190,7 +190,7 @@
     <!-- Fragment Container for dynamic content -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
-        android:name="com.example.thunderscope_frontend.ui.createnewtest.screens.CreatePatientInfoActivityFragment"
+        android:name="com.example.xray_frontend.ui.createnewtest.screens.CreatePatientInfoActivityFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/header_layout"

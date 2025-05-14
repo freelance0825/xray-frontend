@@ -16,7 +16,7 @@
         android:hardwareAccelerated="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Thunderscopefrontend"
+        android:theme="@style/Theme.XrayFrontend"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
@@ -25,17 +25,17 @@
         <activity
             android:name=".ui.slidesdetail.SlidesDetailActivity"
             android:exported="false"
-            android:theme="@style/Theme.Thunderscopefrontend.Material3" />
+            android:theme="@style/Theme.XrayFrontend.Material3" />
         <activity
             android:name=".ui.slides.SlidesActivity"
             android:exported="false"
-            android:theme="@style/Theme.Thunderscopefrontend.Material3" /> <!-- Main Activity - Forced Landscape Mode -->
+            android:theme="@style/Theme.XrayFrontend.Material3" /> <!-- Main Activity - Forced Landscape Mode -->
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.Thunderscopefrontend" >
+            android:theme="@style/Theme.XrayFrontend" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,11 +45,11 @@
         <activity
             android:name=".ui.signup.SignUpActivity"
             android:exported="true"
-            android:theme="@style/Theme.Thunderscopefrontend.Material3" /> <!-- Sign Up Activity -->
+            android:theme="@style/Theme.XrayFrontend.Material3" /> <!-- Sign Up Activity -->
         <activity
             android:name=".ui.casedashboard.CaseDashboardActivity"
             android:exported="true"
-            android:theme="@style/Theme.Thunderscopefrontend.Material3" /> <!-- PatientResponse List Activity -->
+            android:theme="@style/Theme.XrayFrontend.Material3" /> <!-- PatientResponse List Activity -->
         <activity
             android:name=".ui.todolistdashboard.TodoListDashboardActivity"
             android:exported="true" /> <!-- To Do List Activity -->
@@ -59,7 +59,7 @@
         <activity
             android:name=".ui.patientdashboard.PatientDashboardActivity"
             android:exported="true"
-            android:theme="@style/Theme.Thunderscopefrontend.Material3" /> <!-- PatientResponse Activity -->
+            android:theme="@style/Theme.XrayFrontend.Material3" /> <!-- PatientResponse Activity -->
         <activity
             android:name=".ui.patientreport.PatientReportActivity"
             android:exported="true" /> <!-- PatientReport Activity -->
@@ -71,7 +71,7 @@
             android:exported="false" /> <!-- PatientReportPdf Activity -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.thunderscope"
+            android:authorities="com.example.xray"
             android:exported="false"
             android:grantUriPermissions="true" >
             <meta-data

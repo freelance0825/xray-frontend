@@ -1,10 +1,10 @@
 <resources>
 
-    <style name="Theme.Thunderscopefrontend" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.XrayFrontend" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:statusBarColor">@color/black</item>
     </style>
 
-    <style name="Theme.Thunderscopefrontend.Material3" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.XrayFrontend.Material3" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:statusBarColor">@color/black</item>
     </style>
 

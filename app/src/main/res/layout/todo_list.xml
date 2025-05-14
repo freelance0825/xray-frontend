@@ -326,7 +326,7 @@
     <!-- Fragment Container for Dynamic Content -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
-        android:name="com.example.thunderscope_frontend.ui.fragments.TodoListActivityFragment"
+        android:name="com.example.xray_frontend.ui.fragments.TodoListActivityFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"

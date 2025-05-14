@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.thunderscope_frontend"
+    namespace = "com.example.xray_frontend"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.thunderscope_frontend"
+        applicationId = "com.example.xray_frontend"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
