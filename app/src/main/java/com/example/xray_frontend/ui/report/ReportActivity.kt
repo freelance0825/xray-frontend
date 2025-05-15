@@ -65,8 +65,8 @@ class ReportActivity : AppCompatActivity() {
                     }
 
                     tvSampleCollectedAtAddress.text = slide.collectionSite
-                    tvSubmissionConclusion.text = slide.microscopicDc
-                    tvSubmissionDiagnosis.text = slide.diagnosis
+//                    tvSubmissionConclusion.text = slide.microscopicDc
+//                    tvSubmissionDiagnosis.text = slide.diagnosis
 
                     slide.caseRecordResponse?.doctor.let {
                         ivSignature.setImageBitmap(Base64Helper.convertToBitmap(it?.signature))

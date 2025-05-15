@@ -144,8 +144,8 @@ class SlidesViewModel(
         return List(30) { index ->
             PhotoItem(
                 id = index,
-                imageRes = R.drawable.asset_image_annotate_2,
-                name = "OD Nasal Color",
+                imageRes = R.drawable.asset_image_annotate_1,
+                name = "Chest",
                 hour = hours[index % hours.size]
             )
         }.toMutableList()

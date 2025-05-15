@@ -139,8 +139,9 @@ class SlidesDetailActivity : AppCompatActivity() {
             currentlySelectedSlidesItemWithAnnotationResponse.observe(this@SlidesDetailActivity) { selectedSlides ->
                 selectedSlides?.let {
                     binding.tvCaseId.text = selectedSlides.caseRecordResponse?.id.toString()
-                    binding.tvAiInsights.text = selectedSlides.aiInsights
-                    binding.edDiagnostics.setText(selectedSlides.diagnosis)
+//                    binding.tvAiInsights.text = selectedSlides.aiInsights
+//                    binding.edDiagnostics.setText(selectedSlides.diagnosis)
+                    binding.edDiagnostics.setText("AI analyzes inflammatory biomarkers such as IL-6 (interleukin-6), D-dimer, and CRP (C-reactive protein) to predict disease severity.")
 
                     binding.ivBaseImage.setImageBitmap(selectedSlides.bitmapImage)
 

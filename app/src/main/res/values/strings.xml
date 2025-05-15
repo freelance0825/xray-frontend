@@ -87,5 +87,10 @@
         <item>Completed</item>
     </string-array>
 
+    <!--- Slides Details -->
+    <string name="technique_text"><b>TECHNIQUE</b>: pa and lateral views of the chest were obtained using a standard protocol.</string>
+    <string name="site_of_collection_text"><b>SITE OF COLLECTION</b>: left forearm</string>
+    <string name="clinical_history_text"><b>CLINICAL HISTORY</b>: chronic cough</string>
+    <string name="bullet_diagnosis_text">• Lung cancer\n• Benign tumor\n• Pulmonary nodule</string>
 
 </resources>
