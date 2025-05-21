@@ -7,10 +7,12 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.xray_frontend.ui.utils.enums.LanguageOptions
 import kotlinx.coroutines.flow.map
 
 class AuthDataStore private constructor(private val dataStore: DataStore<Preferences>) {
     fun getToken() = dataStore.data.map { it[TOKEN_PREFERENCES] ?: preferencesDefaultValue }
+    fun getLanguage() = dataStore.data.map { it[LANGAUGE_PREFERENCES] ?: preferencesDefaultLanguage }
     fun getDoctorId() = dataStore.data.map { it[DOCTOR_ID_PREFERENCES] ?: 0 }
 
     suspend fun saveToken(
@@ -29,6 +31,12 @@ class AuthDataStore private constructor(private val dataStore: DataStore<Prefere
         }
     }
 
+    suspend fun saveLanguage(language: String) {
+        dataStore.edit { prefs ->
+            prefs[LANGAUGE_PREFERENCES] = language
+        }
+    }
+
     suspend fun clearPreferences() {
         dataStore.edit { prefs ->
             prefs.clear()
@@ -37,10 +45,13 @@ class AuthDataStore private constructor(private val dataStore: DataStore<Prefere
 
     companion object {
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "account_preferences")
+
         private val TOKEN_PREFERENCES = stringPreferencesKey("token_preferences")
+        private val LANGAUGE_PREFERENCES = stringPreferencesKey("language_preferences")
         private val DOCTOR_ID_PREFERENCES = intPreferencesKey("doctor_id_preferences")
 
         const val preferencesDefaultValue: String = "preferences_default_value"
+        val preferencesDefaultLanguage: String = LanguageOptions.English.langValue
 
         @Volatile
         private var INSTANCE: AuthDataStore? = null

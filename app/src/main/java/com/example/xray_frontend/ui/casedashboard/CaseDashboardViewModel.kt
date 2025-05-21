@@ -11,8 +11,8 @@ import com.example.xray_frontend.data.models.CaseRecordResponse
 import com.example.xray_frontend.data.models.PatientResponse
 import com.example.xray_frontend.data.models.SlidesItem
 import com.example.xray_frontend.data.repo.ThunderscopeRepository
-import com.example.xray_frontend.ui.utils.CaseRecordStatus
-import com.example.xray_frontend.ui.utils.Result
+import com.example.xray_frontend.ui.utils.enums.CaseRecordStatus
+import com.example.xray_frontend.ui.utils.helpers.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -21,6 +21,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import kotlin.text.toInt
 
 class CaseDashboardViewModel(private val repository: ThunderscopeRepository) : ViewModel() {
 
@@ -173,7 +174,6 @@ class CaseDashboardViewModel(private val repository: ThunderscopeRepository) : V
 
     fun getSlidesByCaseID(caseId: Int) {
         viewModelScope.launch {
-
             repository.getAllSlides(caseId).collect { result ->
                 when (result) {
                     is Result.Loading -> {
@@ -370,3 +370,4 @@ class CaseDashboardViewModel(private val repository: ThunderscopeRepository) : V
         }
     }
 }
+

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.xray_frontend.data.models.SlidesItem
 import com.example.xray_frontend.databinding.ItemSlidesColumnBinding
-import com.example.xray_frontend.ui.utils.Base64Helper
+import com.example.xray_frontend.ui.utils.helpers.Base64Helper
 
 class SlidesAdapter : ListAdapter<SlidesItem, SlidesAdapter.SlidesViewHolder>(DIFF_CALLBACK) {
     var onItemClick: ((SlidesItem, Int) -> Unit)? = null

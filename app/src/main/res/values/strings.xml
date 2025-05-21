@@ -1,18 +1,305 @@
 <resources>
-    <string name="app_name">xray-frontend</string>
+    <string name="app_name">thunderscope-frontend</string>
 
-    <!--- Activity Slides Resource -->
-    <string name="activity_slides_assesment_count">Assesment (%1s)</string>
-    <string name="activity_slides_annotation_count">Image and documents (%1s)</string>
-    <string name="activity_slides_photo_count">Photo Gallery (%1s)</string>
+    <!--- Activity Login -->
+    <string name="activity_login_title">Login To Account</string>
+    <string name="activity_login_email_label">Email</string>
+    <string name="activity_login_email_hint">Email</string>
+    <string name="activity_login_password_label">Password</string>
+    <string name="activity_login_password_hint">Password</string>
+    <string name="activity_login_button_label">Login to account</string>
+    <string name="activity_login_dont_have_an_account_label">Don\'t have an account?</string>
+    <string name="activity_login_sign_up_label">Sign Up</string>
+
+    <!--- Activity Sign Up -->
+    <string name="activity_sign_up_title">Sign Up</string>
+    <string name="activity_sign_up_email_label">Email</string>
+    <string name="activity_sign_up_email_hint">Email</string>
+    <string name="activity_sign_up_password_label">Password</string>
+    <string name="activity_sign_up_password_hint">Enter password</string>
+    <string name="activity_sign_up_name_label">Name</string>
+    <string name="activity_sign_up_name_hint">Enter name</string>
+    <string name="activity_sign_up_phone_number_label">Phone Number</string>
+    <string name="activity_sign_up_phone_number_hint">Enter phone number</string>
+    <string name="activity_sign_up_specialist_label">Specialist</string>
+    <string name="activity_sign_up_birthdate_label">Birthdate</string>
+    <string name="activity_sign_up_birthdate_hint">YYYY-DD-MM</string>
+    <string name="activity_sign_up_button_create_account">Create Account</string>
+    <string name="activity_sign_up_have_account_label">Have Account?</string>
+    <string name="activity_sign_up_login_now_label">Login Now</string>
+
+    <!--- Activity Case Dashboard -->
+    <string name="activity_case_dashboard_header_cases_title">Cases</string>
+    <string name="activity_case_dashboard_header_device_status">Device Connected</string>
+    <string name="activity_case_dashboard_section_all_cases_label">All Cases</string>
+    <string name="activity_case_dashboard_section_all_cases_count">(27)</string>
+    <string name="activity_case_dashboard_section_button_start_new_test">Start New Test</string>
+    <string name="activity_case_dashboard_sidebar_menu_all_cases_label">All Cases</string>
+    <string name="activity_case_dashboard_sidebar_menu_all_cases_count">27</string>
+    <string name="activity_case_dashboard_sidebar_menu_for_review_label">For Review</string>
+    <string name="activity_case_dashboard_sidebar_menu_for_review_count">1</string>
+    <string name="activity_case_dashboard_sidebar_menu_in_progress">In Progress</string>
+    <string name="activity_case_dashboard_sidebar_menu_in_progress_count">1</string>
+    <string name="activity_case_dashboard_sidebar_menu_completed">Completed</string>
+    <string name="activity_case_dashboard_sidebar_menu_completed_count">0</string>
+    <string name="activity_case_dashboard_sidebar_menu_todo_list">To Do List</string>
+    <string name="activity_case_dashboard_sidebar_menu_crm">Crm</string>
+    <string name="activity_case_dashboard_sidebar_menu_crm_submenu_patients">Patients</string>
+    <string name="activity_case_dashboard_sidebar_menu_crm_submenu_reports">Reports</string>
+    <string name="activity_case_dashboard_sidebar_menu_crm_submenu_archive">Archive</string>
+    <string name="activity_case_dashboard_filter_section_time_period_label">Time Period</string>
+    <string name="activity_case_dashboard_filter_section_status_label">Status</string>
+    <string name="activity_case_dashboard_filter_section_type_label">Type</string>
+    <string name="activity_case_dashboard_filter_section_gender_label">Gender</string>
+    <string name="activity_case_dashboard_filter_section_age_label">Age</string>
+    <string name="activity_case_dashboard_sp_section_search_by_label">Search by: </string>
+    <string name="activity_case_dashboard_sp_section_search_patient_id_hint">Search Patient ID</string>
+    <string name="activity_case_dashboard_sp_section_search_doctor_id_hint">Search Doctor ID</string>
+    <string name="activity_case_dashboard_sp_section_pagination">1-10 of 20</string>
+    <string name="activity_case_dashboard_th_section_case_label">Case</string>
+    <string name="activity_case_dashboard_th_section_physician_label">Physician</string>
+    <string name="activity_case_dashboard_th_section_patient_label">Patient</string>
+    <string name="activity_case_dashboard_th_section_birthdate_and_gender_label">Birthdate &amp; Gender</string>
+    <string name="activity_case_dashboard_th_section_last_update_label">Last Update</string>
+    <string name="activity_case_dashboard_th_section_status_label">Status</string>
+    <string name="activity_case_dashboard_th_section_type_label">Type</string>
+    <string name="activity_case_dashboard_th_section_assessment_label">Assessments</string>
+
+    <!--- Activity Create New Test -->
+    <string name="activity_create_new_test_header_title">Create New Test</string>
+    <string name="activity_create_new_test_header_device_status">Device Connected</string>
+    <string name="activity_create_new_test_sidebar_menu_setup_device">Setup Device </string>
+    <string name="activity_create_new_test_sidebar_menu_patient_info">Patient Info</string>
+
+    <!--- Activity Create New Test Fragment -->
+    <string name="activity_create_new_test_fragment_setup_device_label">Setup Device</string>
+    <string name="activity_create_new_test_fragment_steps_to_set_up_label">Steps to set up</string>
+    <string name="activity_create_new_test_fragment_step1_label">1. Connect the microscope</string>
+    <string name="activity_create_new_test_fragment_step2_label">2. Press the start button on the device</string>
+    <string name="activity_create_new_test_fragment_button_connect">Connect</string>
+
+    <!--- Activity Create Patient Info Fragment -->
+    <string name="activity_create_patient_info_fragment_label">Create Patient Info</string>
+    <string name="activity_create_patient_info_fragment_select_option_label">Select Option:</string>
+    <string name="activity_create_patient_info_fragment_sp_create_new_patient_label">Create New Patient</string>
+    <string name="activity_create_patient_info_fragment_sp_select_existing_patient_label">Select Existing Patient</string>
+    <string name="activity_create_patient_info_fragment_sp_search_patient_id_hint">Search Patient ID</string>
+    <string name="activity_create_patient_info_fragment_name_label">Patient Name</string>
+    <string name="activity_create_patient_info_fragment_name_hint">Enter Name</string>
+    <string name="activity_create_patient_info_fragment_gender_label">Gender</string>
+    <string name="activity_create_patient_info_fragment_email_label">Email</string>
+    <string name="activity_create_patient_info_fragment_email_hint">Email</string>
+    <string name="activity_create_patient_info_fragment_phone_number_label">Phone Number</string>
+    <string name="activity_create_patient_info_fragment_phone_number_hint">Phone Number</string>
+    <string name="activity_create_patient_info_fragment_birth_date_label">Birth Date</string>
+    <string name="activity_create_patient_info_fragment_birth_date_hint">YYYY-DD-MM</string>
+    <string name="activity_create_patient_info_fragment_age_label">Age</string>
+    <string name="activity_create_patient_info_fragment_age_hint">Age</string>
+    <string name="activity_create_patient_info_fragment_state_label">State</string>
+    <string name="activity_create_patient_info_fragment_address_label">Address</string>
+    <string name="activity_create_patient_info_fragment_address_hint">Enter address</string>
+    <string name="activity_create_patient_info_fragment_button_submit">Submit</string>
+
+    <!--- Activity To Do List Dashboard -->
+    <string name="activity_todo_list_dashboard_header_cases_title">Cases</string>
+    <string name="activity_todo_list_dashboard_header_device_status">Device Connected</string>
+    <string name="activity_todo_list_dashboard_section_todo_list_label">To Do List</string>
+    <string name="activity_todo_list_dashboard_section_todo_list_count">(26)</string>
+    <string name="activity_todo_list_dashboard_sidebar_menu_all_cases_label">All Cases</string>
+    <string name="activity_todo_list_dashboard_sidebar_menu_all_cases_count">27</string>
+    <string name="activity_todo_list_dashboard_sidebar_menu_for_review_label">For Review</string>
+    <string name="activity_todo_list_dashboard_sidebar_menu_for_review_count">1</string>
+    <string name="activity_todo_list_dashboard_sidebar_menu_in_progress_label">In Progress</string>
+    <string name="activity_todo_list_dashboard_sidebar_menu_in_progress_count">1</string>
+    <string name="activity_todo_list_dashboard_sidebar_menu_completed_label">Completed</string>
+    <string name="activity_todo_list_dashboard_sidebar_menu_completed_count">0</string>
+    <string name="activity_todo_list_dashboard_filter_section_time_period_label">Time Period</string>
+    <string name="activity_todo_list_dashboard_filter_section_status_label">Status</string>
+    <string name="activity_todo_list_dashboard_filter_section_type_label">Type</string>
+    <string name="activity_todo_list_dashboard_filter_section_gender_label">Gender</string>
+    <string name="activity_todo_list_dashboard_filter_section_age_label">Age</string>
+    <string name="activity_todo_list_dashboard_sp_section_search_by_label">Search by: </string>
+    <string name="activity_todo_list_dashboard_sp_section_search_patient_id_hint">Search Patient ID</string>
+    <string name="activity_todo_list_dashboard_sp_section_pagination">1-10 of 20</string>
+    <string name="activity_todo_list_dashboard_th_section_case_label">Case</string>
+    <string name="activity_todo_list_dashboard_th_section_todo_label">To Do</string>
+    <string name="activity_todo_list_dashboard_th_section_patient_label">Patient</string>
+    <string name="activity_todo_list_dashboard_th_section_birthdate_and_gender_label">Birthdate &amp; Gender</string>
+    <string name="activity_todo_list_dashboard_th_section_last_update_label">Last Update</string>
+    <string name="activity_todo_list_dashboard_th_section_status_label">Status</string>
+    <string name="activity_todo_list_dashboard_th_section_assessments_label">Assessments</string>
+
+    <!---CRM: Activity Patient Dashboard -->
+    <string name="activity_patient_dashboard_header_patients_title">Patients</string>
+    <string name="activity_patient_dashboard_header_device_status">Device Connected</string>
+    <string name="activity_patient_dashboard_section_patients_label">Patients</string>
+    <string name="activity_patient_dashboard_section_patients_count">(26)</string>
+    <string name="activity_patient_dashboard_section_button_add_new_patient">Add New Patient</string>
+    <string name="activity_patient_dashboard_sidebar_menu_all_list_label">All List</string>
+    <string name="activity_patient_dashboard_sidebar_menu_all_list_count">26</string>
+    <string name="activity_patient_dashboard_sidebar_menu_not_started_label">Not Started</string>
+    <string name="activity_patient_dashboard_sidebar_menu_not_started_count">25</string>
+    <string name="activity_patient_dashboard_sidebar_menu_in_progress_label">In Progress</string>
+    <string name="activity_patient_dashboard_sidebar_menu_in_progress_count">0</string>
+    <string name="activity_patient_dashboard_sidebar_menu_for_review_label">For Review</string>
+    <string name="activity_patient_dashboard_sidebar_menu_for_review_count">0</string>
+    <string name="activity_patient_dashboard_sidebar_menu_completed_label">Completed</string>
+    <string name="activity_patient_dashboard_sidebar_menu_completed_count">1</string>
+    <string name="activity_patient_dashboard_filter_section_time_period_label">Time Period</string>
+    <string name="activity_patient_dashboard_filter_section_status_label">Status</string>
+    <string name="activity_patient_dashboard_filter_section_type_label">Type</string>
+    <string name="activity_patient_dashboard_filter_section_gender_label">Gender</string>
+    <string name="activity_patient_dashboard_filter_section_age_label">Age</string>
+    <string name="activity_patient_dashboard_sp_section_pagination">1-10 of 20</string>
+    <string name="activity_patient_dashboard_th_section_patient_id">Patient ID</string>
+    <string name="activity_patient_dashboard_th_section_patient_name_label">Patient Name</string>
+    <string name="activity_patient_dashboard_th_section_birthdate_and_gender_label">Birthdate &amp; Gender</string>
+    <string name="activity_patient_dashboard_th_section_phone_number_and_email_label">Phone Number &amp; Email</string>
+    <string name="activity_patient_dashboard_th_section_address_label">Address</string>
+    <string name="activity_patient_dashboard_th_section_case_label">Case</string>
+
+    <!---CRM: Edit Patient Dialog Fragment -->
+    <string name="edit_patient_dialog_fragment_title">Edit Patient</string>
+    <string name="edit_patient_dialog_fragment_patient_name_label">Patient Name</string>
+    <string name="edit_patient_dialog_fragment_patient_name_hint">Enter Name</string>
+    <string name="edit_patient_dialog_fragment_gender_label">Gender</string>
+    <string name="edit_patient_dialog_fragment_email_label">Email</string>
+    <string name="edit_patient_dialog_fragment_email_hint">Email</string>
+    <string name="edit_patient_dialog_fragment_phone_number_label">Phone Number</string>
+    <string name="edit_patient_dialog_fragment_phone_number_hint">Phone Number</string>
+    <string name="edit_patient_dialog_fragment_birth_date_label">Birth Date</string>
+    <string name="edit_patient_dialog_fragment_birth_date_hint">YYYY-DD-MM</string>
+    <string name="edit_patient_dialog_fragment_age_label">Age</string>
+    <string name="edit_patient_dialog_fragment_age_hint">Age</string>
+    <string name="edit_patient_dialog_fragment_address_label">Address</string>
+    <string name="edit_patient_dialog_fragment_address_hint">Enter Address</string>
+    <string name="edit_patient_dialog_fragment_button_submit">Submit</string>
+
+    <!---CRM: Activity Patient Report Dashboard -->
+    <string name="activity_patient_report_dashboard_header_cases_title">Cases</string>
+    <string name="activity_patient_report_dashboard_header_device_status">Device Connected</string>
+    <string name="activity_patient_report_dashboard_section_reports_label">Reports</string>
+    <string name="activity_patient_report_dashboard_section_reports_count">(26)</string>
+    <string name="activity_patient_report_dashboard_filter_section_time_period_label">Time Period</string>
+    <string name="activity_patient_report_dashboard_filter_section_status_label">Status</string>
+    <string name="activity_patient_report_dashboard_filter_section_type_label">Type</string>
+    <string name="activity_patient_report_dashboard_filter_section_gender_label">Gender</string>
+    <string name="activity_patient_report_dashboard_filter_section_age_label">Age</string>
+    <string name="activity_patient_report_dashboard_sp_section_search_by_label">Search by: </string>
+    <string name="activity_patient_report_dashboard_sp_section_search_patient_id_hint">Search Patient ID</string>
+    <string name="activity_patient_report_dashboard_sp_section_search_doctor_id_hint">Search Doctor ID</string>
+    <string name="activity_patient_report_dashboard_sp_section_pagination">0-0 of 0</string>
+    <string name="activity_patient_report_dashboard_th_section_case_label">Case</string>
+    <string name="activity_patient_report_dashboard_th_section_physician_label">Physician</string>
+    <string name="activity_patient_report_dashboard_th_section_patient_label">Patient</string>
+    <string name="activity_patient_report_dashboard_th_section_birthdate_and_gender_label">Birthdate &amp; Gender"</string>
+    <string name="activity_patient_report_dashboard_th_section_last_update_label">Last Update</string>
+    <string name="activity_patient_report_dashboard_th_section_status_label">Status</string>
+    <string name="activity_patient_report_dashboard_th_section_type_label">Type</string>
+    <string name="activity_patient_report_dashboard_th_section_actions_label">Actions</string>
+
+    <!---CRM: Activity Patient Report Archive Dashboard -->
+    <string name="activity_patient_report_archive_dashboard_header_cases_title">Cases</string>
+    <string name="activity_patient_report_archive_dashboard_header_device_status">Device Connected</string>
+    <string name="activity_patient_report_archive_dashboard_section_archive_label">Archive</string>
+    <string name="activity_patient_report_archive_dashboard_section_archive_count">(26)</string>
+    <string name="activity_patient_report_archive_dashboard_sp_section_pagination">0-0 of 0</string>
+    <string name="activity_patient_report_archive_dashboard_th_section_case_label">Case</string>
+    <string name="activity_patient_report_archive_dashboard_th_section_physician_label">Physician</string>
+    <string name="activity_patient_report_archive_dashboard_th_section_patient_label">Patient</string>
+    <string name="activity_patient_report_archive_dashboard_th_section_birthdate_and_gender_label">Birthdate &amp; Gender"</string>
+    <string name="activity_patient_report_archive_dashboard_th_section_last_update_label">Last Update</string>
+    <string name="activity_patient_report_archive_dashboard_th_section_status_label">Status</string>
+    <string name="activity_patient_report_archive_dashboard_th_section_type_label">Type</string>
+    <string name="activity_patient_report_archive_dashboard_th_section_actions_label">Actions</string>
+
+    <!---CRM: Dialog Archive Confirm -->
+    <string name="dialog_archive_confirm_message">Are you sure you want to unarchive this record?</string>
+    <string name="dialog_archive_confirm_button_yes">Yes</string>
+    <string name="dialog_archive_confirm_button_no">No</string>
+
+    <!---CRM: Activity Patient Report Dashboard PDF & Slides PDF Report-->
+    <string name="activity_patient_report_dashboard_pdf_header_title">Fundoscopic Exam Report</string>
+    <string name="activity_patient_report_dashboard_pdf_mob_no_label">Mob. No: (%1s)</string>
+    <string name="activity_patient_report_dashboard_pdf_patient_id_label">ID: (%1s)</string>
+    <string name="activity_patient_report_dashboard_pdf_sample_collected_at_label">Sample Collected At:</string>
+    <string name="activity_patient_report_dashboard_pdf_mdc_label">Microscopic Description &amp; Comment</string>
+    <string name="activity_patient_report_dashboard_pdf_diagnosis_label">Diagnosis</string>
+    <string name="activity_patient_report_dashboard_pdf_visualization_label">Visualization</string>
+    <string name="activity_patient_report_dashboard_pdf_analysis_label">Analysis of Retinal Nerve Fiber Layer Defects : Glaucoma</string>
+    <string name="activity_patient_report_dashboard_pdf_morphological_label">Morphological Measurement</string>
+
+    <!--Activity Slides-->
+    <string name="activity_slides_header_device_status">Device Connected</string>
+    <string name="activity_slides_patient_phone_number_label">Phone Number</string>
+    <string name="activity_slides_patient_birthdate_label">Birthdate</string>
+    <string name="activity_slides_patient_gender_label">Gender</string>
+    <string name="activity_slides_patient_age_label">Age</string>
+    <string name="activity_slides_assessment_count">Assessment (%1s)</string>
     <string name="activity_slides_active_count">%1s Slides Selected</string>
+    <string name="activity_slides_button_open_in_viewer">Open in viewer</string>
+    <string name="activity_slides_annotation_count">Image and documents (%1s)</string>
+    <string name="activity_slides_button_upload_files">Upload Files</string>
+    <string name="activity_slides_photo_count">Photo Gallery (%1s)</string>
 
-    <!--- Activity Slides Detail Resource -->
-    <string name="activity_slides_detail_slides_selected">Slide %1s of %1s</string>
+    <!--- Activity Slides Detail-->
+    <string name="activity_slides_detail_header_slides_selected">Slide %1s of %1s</string>
+    <string name="activity_slides_detail_header_button_complete_review">Complete Review</string>
+    <string name="activity_slides_detail_header_button_save">Save</string>
+    <string name="activity_slides_detail_header_device_status">Device Connected</string>
+    <string name="activity_slides_detail_menu_items_select_label">Select</string>
+    <string name="activity_slides_detail_menu_items_annotate_label">Annotate</string>
+    <string name="activity_slides_detail_menu_items_image_settings_label">Image\nSettings</string>
+    <string name="activity_slides_detail_menu_items_as_label">Annotate Shape</string>
+    <string name="activity_slides_detail_menu_items_as_gamma_label">Gamma</string>
+    <string name="activity_slides_detail_menu_items_as_gamma_count">2.5</string>
+    <string name="activity_slides_detail_menu_items_as_brightness_label">Brightness</string>
+    <string name="activity_slides_detail_menu_items_as_brightness_count">100%</string>
+    <string name="activity_slides_detail_menu_items_as_contrast_label">Contrast</string>
+    <string name="activity_slides_detail_menu_items_as_contrast_count">100%</string>
+    <string name="activity_slides_detail_menu_items_rgb_label">RGB</string>
+    <string name="activity_slides_detail_menu_items_rgb_red_label">Red</string>
+    <string name="activity_slides_detail_menu_items_rgb_red_count">100%</string>
+    <string name="activity_slides_detail_menu_items_rgb_green_label">Green</string>
+    <string name="activity_slides_detail_menu_items_rgb_green_count">100%</string>
+    <string name="activity_slides_detail_menu_items_rgb_blue_label">Blue</string>
+    <string name="activity_slides_detail_menu_items_rgb_blue_count">100%</string>
+    <string name="activity_slides_detail_menu_items_button_reset">Reset</string>
+    <string name="activity_slides_detail_accordion_view_settings_label">View Settings</string>
+    <string name="activity_slides_detail_accordion_ai_insights_label">AI Insights</string>
+    <string name="activity_slides_detail_accordion_diagnostic_label">Diagnostic</string>
+    <string name="activity_slides_detail_accordion_diagnostic_button_edit">Edit</string>
+    <string name="activity_slides_detail_accordion_diagnostic_button_save">Save</string>
+    <string name="activity_slides_detail_accordion_diagnostic_button_cancel">Cancel</string>
+    <string name="activity_slides_detail_accordion_patient_detail_label">Patient Detail</string>
 
-    <!--- Report Detail Resource -->
-    <string name="activity_report_mob_no">Mob. No: (%1s)</string>
-    <string name="activity_report_patient_id">ID: (%1s)</string>
+    <!--- Activity Slides Detail: Dialog Create Annotation-->
+    <string name="dialog_create_annotation_set_annotation_label">Set Annotation</string>
+    <string name="dialog_create_annotation_label_label">Label</string>
+    <string name="dialog_create_annotation_label_hint">Need Review</string>
+    <string name="dialog_create_annotation_button_save">Save</string>
+    <string name="dialog_create_annotation_button_cancel">Cancel</string>
+
+    <!--- Activity Slides Detail: Dialog Post Test Review-->
+    <string name="dialog_post_test_review_label">Post Test Review</string>
+    <string name="dialog_post_test_review_date_label">Date</string>
+    <string name="dialog_post_test_review_time_label">Time</string>
+    <string name="dialog_post_test_review_date_and_time_review_label">Date &amp; Time Review</string>
+    <string name="dialog_post_test_review_mc_label">Microscopic description &amp; comments</string>
+    <string name="dialog_post_test_review_mc_hint">Write microscopic description &amp; comments</string>
+    <string name="dialog_post_test_review_pd_label">Possible Diagnosis</string>
+    <string name="dialog_post_test_review_pd_hint">Write possible Diagnosis</string>
+    <string name="dialog_post_test_review_signature_label">Signature</string>
+    <string name="dialog_post_test_review_button_change">Change</string>
+    <string name="dialog_post_test_review_button_submit">Submit</string>
+
+    <!--- Activity Settings -->
+    <string name="activity_settings_settings">Settings</string>
+    <string name="activity_settings_language_options">Language Options</string>
+    <string name="activity_settings_english">English</string>
+    <string name="activity_settings_bahasa_indonesia">Bahasa Indonesia</string>
+    <string name="activity_settings_account_options">Account Options</string>
+    <string name="activity_settings_log_out">Log Out</string>
 
     <!--- Spinner Specialist -->
     <string-array name="specialist_options">
@@ -35,7 +322,6 @@
         <item>New York</item>
     </string-array>
 
-
     <!--- Spinner Time Period -->
     <string-array name="time_period_options">
         <item>All Time</item>
@@ -55,11 +341,10 @@
     <!--- Spinner Type -->
     <string-array name="type_options">
         <item>All Type</item>
-        <item>Chest</item>
-        <item>Arm</item>
-        <item>Chest &amp; Arm</item>
+        <item>Left</item>
+        <item>Right</item>
+        <item>Left &amp; Right</item>
     </string-array>
-
 
     <!--- Spinner Gender Filter-->
     <string-array name="gender_filter_options">

@@ -23,7 +23,8 @@
             android:id="@+id/header_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CASES"
+            android:text="@string/activity_case_dashboard_header_cases_title"
+            android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -54,7 +55,8 @@
                 android:id="@+id/device_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DEVICE CONNECTED"
+                android:text="@string/activity_case_dashboard_header_device_status"
+                android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -82,6 +84,30 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/settings_icon"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <!--            &lt;!&ndash; Divider Line &ndash;&gt;-->
+            <!--            <View-->
+            <!--                android:id="@+id/translateDivider"-->
+            <!--                android:layout_width="1dp"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:layout_marginHorizontal="16dp"-->
+            <!--                android:background="@color/gray_opacity_80"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toStartOf="@id/translate_icon"-->
+            <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+            <!--            <ImageView-->
+            <!--                android:id="@+id/translate_icon"-->
+            <!--                android:layout_width="30dp"-->
+            <!--                android:layout_height="30dp"-->
+            <!--                android:clickable="true"-->
+            <!--                android:focusable="true"-->
+            <!--                android:padding="4dp"-->
+            <!--                android:src="@drawable/ic_translate"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
 
             <!-- Divider Line -->
             <View
@@ -128,7 +154,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="All Cases"
+            android:text="@string/activity_case_dashboard_section_all_cases_label"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -137,11 +163,11 @@
 
         <!-- "27" Text (Separate) -->
         <TextView
-            android:id="@+id/all_cases_number"
+            android:id="@+id/all_cases_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="(27)"
+            android:text="@string/activity_case_dashboard_section_all_cases_count"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             app:layout_constraintBaseline_toBaselineOf="@id/all_cases_label"
@@ -155,7 +181,7 @@
             android:layout_marginEnd="92dp"
             android:backgroundTint="@color/header_blue"
             android:drawableLeft="@drawable/ic_drawable_add"
-            android:text="Start New Test"
+            android:text="@string/activity_case_dashboard_section_button_start_new_test"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textStyle="bold"
@@ -201,7 +227,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="All Cases"
+                    android:text="@string/activity_case_dashboard_sidebar_menu_all_cases_label"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
 
@@ -211,7 +237,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/sidebar_divider"
                     android:gravity="end"
-                    android:text="27"
+                    android:text="@string/activity_case_dashboard_sidebar_menu_all_cases_count"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -229,7 +255,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="For Review"
+                    android:text="@string/activity_case_dashboard_sidebar_menu_for_review_label"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
 
@@ -239,7 +265,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/sidebar_divider"
                     android:gravity="end"
-                    android:text="1"
+                    android:text="@string/activity_case_dashboard_sidebar_menu_for_review_count"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -256,7 +282,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="In Progress"
+                    android:text="@string/activity_case_dashboard_sidebar_menu_in_progress"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
 
@@ -266,7 +292,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/sidebar_divider"
                     android:gravity="end"
-                    android:text="1"
+                    android:text="@string/activity_case_dashboard_sidebar_menu_in_progress_count"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -283,7 +309,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Completed"
+                    android:text="@string/activity_case_dashboard_sidebar_menu_completed"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
 
@@ -293,7 +319,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/sidebar_divider"
                     android:gravity="end"
-                    android:text="0"
+                    android:text="@string/activity_case_dashboard_sidebar_menu_completed_count"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -330,7 +356,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="To Do List"
+                    android:text="@string/activity_case_dashboard_sidebar_menu_todo_list"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -362,7 +388,8 @@
                     android:layout_marginStart="12dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="CRM"
+                    android:text="@string/activity_case_dashboard_sidebar_menu_crm"
+                    android:textAllCaps="true"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
 
@@ -401,7 +428,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Patients"
+                        android:text="@string/activity_case_dashboard_sidebar_menu_crm_submenu_patients"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -423,7 +450,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Reports"
+                        android:text="@string/activity_case_dashboard_sidebar_menu_crm_submenu_reports"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -445,7 +472,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Archive"
+                        android:text="@string/activity_case_dashboard_sidebar_menu_crm_submenu_archive"
                         android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -499,7 +526,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Time period"
+                        android:text="@string/activity_case_dashboard_filter_section_time_period_label"
                         android:textColor="@android:color/darker_gray" />
 
                     <Spinner
@@ -526,7 +553,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Status"
+                        android:text="@string/activity_case_dashboard_filter_section_status_label"
                         android:textColor="@android:color/darker_gray" />
 
                     <Spinner
@@ -553,7 +580,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Type"
+                        android:text="@string/activity_case_dashboard_filter_section_type_label"
                         android:textColor="@android:color/darker_gray" />
 
                     <Spinner
@@ -580,7 +607,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Gender"
+                        android:text="@string/activity_case_dashboard_filter_section_gender_label"
                         android:textColor="@android:color/darker_gray" />
 
                     <Spinner
@@ -607,7 +634,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Age"
+                        android:text="@string/activity_case_dashboard_filter_section_age_label"
                         android:textColor="@android:color/darker_gray" />
 
                     <Spinner
@@ -655,7 +682,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Search by: " />
+                        android:text="@string/activity_case_dashboard_sp_section_search_by_label" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -670,7 +697,7 @@
                             android:iconifiedByDefault="false"
                             android:inputType="number"
                             android:queryBackground="@android:color/transparent"
-                            android:queryHint="Search Patient ID" />
+                            android:queryHint="@string/activity_case_dashboard_sp_section_search_patient_id_hint" />
 
                     </LinearLayout>
 
@@ -688,7 +715,7 @@
                             android:iconifiedByDefault="false"
                             android:inputType="number"
                             android:queryBackground="@android:color/transparent"
-                            android:queryHint="Search Doctor ID" />
+                            android:queryHint="@string/activity_case_dashboard_sp_section_search_doctor_id_hint" />
 
                     </LinearLayout>
 
@@ -742,7 +769,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:padding="8dp"
-                        android:text="1-10 of 20"
+                        android:text="@string/activity_case_dashboard_sp_section_pagination"
                         android:textColor="@android:color/black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -793,7 +820,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Case"
+                android:text="@string/activity_case_dashboard_th_section_case_label"
                 android:textStyle="bold" />
 
             <!-- Header: Physician -->
@@ -801,7 +828,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Physician"
+                android:text="@string/activity_case_dashboard_th_section_physician_label"
                 android:textStyle="bold" />
 
             <!-- Header: PatientResponse -->
@@ -809,7 +836,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Patient"
+                android:text="@string/activity_case_dashboard_th_section_patient_label"
                 android:textStyle="bold" />
 
             <!-- Header: Birthdate & Gender -->
@@ -817,7 +844,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.2"
-                android:text="Birthdate &amp; Gender"
+                android:text="@string/activity_case_dashboard_th_section_birthdate_and_gender_label"
                 android:textStyle="bold" />
 
             <!-- Header: Last Update -->
@@ -825,7 +852,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.7"
-                android:text="Last Update"
+                android:text="@string/activity_case_dashboard_th_section_last_update_label"
                 android:textStyle="bold" />
 
             <!-- Header: Status -->
@@ -834,7 +861,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.5"
-                android:text="Status"
+                android:text="@string/activity_case_dashboard_th_section_status_label"
                 android:textStyle="bold" />
 
             <!-- Header: Type -->
@@ -842,7 +869,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Type"
+                android:text="@string/activity_case_dashboard_th_section_type_label"
                 android:textStyle="bold" />
 
             <!-- Header: Assessment -->
@@ -850,7 +877,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="Assessments"
+                android:text="@string/activity_case_dashboard_th_section_assessment_label"
                 android:textStyle="bold" />
 
         </LinearLayout>

@@ -34,7 +34,7 @@
                 android:layout_width="153dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="8dp"
-                android:text="Create Patient Info"
+                android:text="@string/activity_create_patient_info_fragment_label"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -63,7 +63,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Select Option:"
+                        android:text="@string/activity_create_patient_info_fragment_select_option_label"
                         android:textColor="@android:color/black"
                         android:textStyle="bold" />
 
@@ -80,7 +80,7 @@
                             android:layout_height="wrap_content"
                             android:buttonTint="@color/darker_blue"
                             android:checked="true"
-                            android:text="Create New Patient" />
+                            android:text="@string/activity_create_patient_info_fragment_sp_create_new_patient_label" />
 
                         <RadioButton
                             android:id="@+id/rb_select_existing_patient"
@@ -88,7 +88,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:buttonTint="@color/darker_blue"
-                            android:text="Select Existing Patient" />
+                            android:text="@string/activity_create_patient_info_fragment_sp_select_existing_patient_label" />
 
                     </RadioGroup>
 
@@ -110,7 +110,7 @@
                             android:iconifiedByDefault="false"
                             android:inputType="number"
                             android:queryBackground="@android:color/transparent"
-                            android:queryHint="Search Patient ID" />
+                            android:queryHint="@string/activity_create_patient_info_fragment_sp_search_patient_id_hint" />
 
                     </LinearLayout>
 
@@ -168,7 +168,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:text="Patient Name"
+                            android:text="@string/activity_create_patient_info_fragment_name_label"
                             android:textColor="@android:color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -178,7 +178,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
                             android:background="@drawable/input_background"
-                            android:hint="Enter name"
+                            android:hint="@string/activity_create_patient_info_fragment_name_hint"
                             android:paddingStart="8dp" />
                     </LinearLayout>
 
@@ -194,7 +194,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:text="Gender"
+                            android:text="@string/activity_create_patient_info_fragment_gender_label"
                             android:textColor="@android:color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -249,7 +249,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:text="Email"
+                            android:text="@string/activity_create_patient_info_fragment_email_label"
                             android:textColor="@android:color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -259,7 +259,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
                             android:background="@drawable/input_background"
-                            android:hint="Email"
+                            android:hint="@string/activity_create_patient_info_fragment_email_hint"
                             android:paddingStart="8dp" />
                     </LinearLayout>
 
@@ -280,7 +280,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:text="Phone Number"
+                            android:text="@string/activity_create_patient_info_fragment_phone_number_label"
                             android:textColor="@android:color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -290,7 +290,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
                             android:background="@drawable/input_background"
-                            android:hint="Phone Number"
+                            android:hint="@string/activity_create_patient_info_fragment_phone_number_hint"
                             android:inputType="phone"
                             android:paddingStart="8dp" />
                     </LinearLayout>
@@ -317,7 +317,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:text="Birth Date"
+                            android:text="@string/activity_create_patient_info_fragment_birth_date_label"
                             android:textColor="@android:color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -342,7 +342,7 @@
                                 android:layout_height="match_parent"
                                 android:background="@android:color/transparent"
                                 android:focusable="false"
-                                android:hint="DD-MM-YYYY"
+                                android:hint="@string/activity_create_patient_info_fragment_birth_date_hint"
                                 android:paddingStart="8dp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -362,7 +362,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:text="Age"
+                            android:text="@string/activity_create_patient_info_fragment_age_label"
                             android:textColor="@android:color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -375,7 +375,7 @@
                             android:clickable="false"
                             android:cursorVisible="false"
                             android:focusable="false"
-                            android:hint="Age"
+                            android:hint="@string/activity_create_patient_info_fragment_age_hint"
                             android:inputType="none"
                             android:paddingStart="8dp" />
                     </LinearLayout>
@@ -395,7 +395,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:text="State"
+                            android:text="@string/activity_create_patient_info_fragment_state_label"
                             android:textColor="@android:color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -439,7 +439,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:text="Address"
+                        android:text="@string/activity_create_patient_info_fragment_address_label"
                         android:textColor="@android:color/black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -450,7 +450,7 @@
                         android:layout_height="100dp"
                         android:background="@drawable/input_address_bg"
                         android:gravity="top"
-                        android:hint="Enter address"
+                        android:hint="@string/activity_create_patient_info_fragment_address_hint"
                         android:paddingStart="8dp" />
                 </LinearLayout>
 
@@ -462,7 +462,7 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="16dp"
                     android:backgroundTint="@color/darker_blue"
-                    android:text="Submit"
+                    android:text="@string/activity_create_patient_info_fragment_button_submit"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"

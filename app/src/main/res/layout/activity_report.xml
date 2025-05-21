@@ -222,7 +222,7 @@
                                 android:id="@+id/tv_patient_mobile_number"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/activity_report_mob_no"
+                                android:text="@string/activity_patient_report_dashboard_pdf_mob_no_label"
                                 android:textColor="@color/black"
                                 android:textSize="18sp" />
 
@@ -230,7 +230,7 @@
                                 android:id="@+id/tv_patient_id"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/activity_report_patient_id"
+                                android:text="@string/activity_patient_report_dashboard_pdf_patient_id_label"
                                 android:textColor="@color/black"
                                 android:textSize="18sp" />
 

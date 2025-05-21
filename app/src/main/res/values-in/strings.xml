@@ -1,0 +1,451 @@
+<resources>
+    <string name="app_name">thunderscope-frontend</string>
+
+    <!--- Activity Login -->
+    <string name="activity_login_title">Masuk ke Akun</string>
+    <string name="activity_login_email_label">Email</string>
+    <string name="activity_login_email_hint">Email</string>
+    <string name="activity_login_password_label">Kata Sandi</string>
+    <string name="activity_login_password_hint">Kata Sandi</string>
+    <string name="activity_login_button_label">Masuk ke akun</string>
+    <string name="activity_login_dont_have_an_account_label">Belum punya akun?</string>
+    <string name="activity_login_sign_up_label">Daftar</string>
+
+    <!--- Activity Sign Up -->
+    <string name="activity_sign_up_title">Daftar</string>
+    <string name="activity_sign_up_email_label">Email</string>
+    <string name="activity_sign_up_email_hint">Email</string>
+    <string name="activity_sign_up_password_label">Kata Sandi</string>
+    <string name="activity_sign_up_password_hint">Masukkan kata sandi</string>
+    <string name="activity_sign_up_name_label">Nama</string>
+    <string name="activity_sign_up_name_hint">Masukkan nama</string>
+    <string name="activity_sign_up_phone_number_label">Nomor Telepon</string>
+    <string name="activity_sign_up_phone_number_hint">Masukkan nomor telepon</string>
+    <string name="activity_sign_up_specialist_label">Spesialis</string>
+    <string name="activity_sign_up_birthdate_label">Tanggal Lahir</string>
+    <string name="activity_sign_up_birthdate_hint">TTTT-BB-HH</string>
+    <string name="activity_sign_up_button_create_account">Buat Akun</string>
+    <string name="activity_sign_up_have_account_label">Sudah punya akun?</string>
+    <string name="activity_sign_up_login_now_label">Masuk Sekarang</string>
+
+    <!--- Activity Case Dashboard -->
+    <string name="activity_case_dashboard_header_cases_title">Kasus</string>
+    <string name="activity_case_dashboard_header_device_status">Perangkat Terhubung</string>
+    <string name="activity_case_dashboard_section_all_cases_label">Semua Kasus</string>
+    <string name="activity_case_dashboard_section_all_cases_count">(27)</string>
+    <string name="activity_case_dashboard_section_button_start_new_test">Mulai Tes Baru</string>
+    <string name="activity_case_dashboard_sidebar_menu_all_cases_label">Semua Kasus</string>
+    <string name="activity_case_dashboard_sidebar_menu_all_cases_count">27</string>
+    <string name="activity_case_dashboard_sidebar_menu_for_review_label">Untuk Ditinjau</string>
+    <string name="activity_case_dashboard_sidebar_menu_for_review_count">1</string>
+    <string name="activity_case_dashboard_sidebar_menu_in_progress">Sedang Berlangsung</string>
+    <string name="activity_case_dashboard_sidebar_menu_in_progress_count">1</string>
+    <string name="activity_case_dashboard_sidebar_menu_completed">Selesai</string>
+    <string name="activity_case_dashboard_sidebar_menu_completed_count">0</string>
+    <string name="activity_case_dashboard_sidebar_menu_todo_list">Daftar Tugas</string>
+    <string name="activity_case_dashboard_sidebar_menu_crm">CRM</string>
+    <string name="activity_case_dashboard_sidebar_menu_crm_submenu_patients">Pasien</string>
+    <string name="activity_case_dashboard_sidebar_menu_crm_submenu_reports">Laporan</string>
+    <string name="activity_case_dashboard_sidebar_menu_crm_submenu_archive">Arsip</string>
+    <string name="activity_case_dashboard_filter_section_time_period_label">Periode Waktu</string>
+    <string name="activity_case_dashboard_filter_section_status_label">Status</string>
+    <string name="activity_case_dashboard_filter_section_type_label">Tipe</string>
+    <string name="activity_case_dashboard_filter_section_gender_label">Jenis Kelamin</string>
+    <string name="activity_case_dashboard_filter_section_age_label">Usia</string>
+    <string name="activity_case_dashboard_sp_section_search_by_label">Cari berdasarkan: </string>
+    <string name="activity_case_dashboard_sp_section_search_patient_id_hint">Cari ID Pasien</string>
+    <string name="activity_case_dashboard_sp_section_search_doctor_id_hint">Cari ID Dokter</string>
+    <string name="activity_case_dashboard_sp_section_pagination">1-10 dari 20</string>
+    <string name="activity_case_dashboard_th_section_case_label">Kasus</string>
+    <string name="activity_case_dashboard_th_section_physician_label">Dokter</string>
+    <string name="activity_case_dashboard_th_section_patient_label">Pasien</string>
+    <string name="activity_case_dashboard_th_section_birthdate_and_gender_label">Tanggal Lahir &amp; Jenis Kelamin</string>
+    <string name="activity_case_dashboard_th_section_last_update_label">Pembaharuan Terakhir</string>
+    <string name="activity_case_dashboard_th_section_status_label">Status</string>
+    <string name="activity_case_dashboard_th_section_type_label">Tipe</string>
+    <string name="activity_case_dashboard_th_section_assessment_label">Penilaian</string>
+
+    <!--- Activity Create New Test -->
+    <string name="activity_create_new_test_header_title">Buat Tes Baru</string>
+    <string name="activity_create_new_test_header_device_status">Perangkat Terhubung</string>
+    <string name="activity_create_new_test_sidebar_menu_setup_device">Siapkan Perangkat</string>
+    <string name="activity_create_new_test_sidebar_menu_patient_info">Info Pasien</string>
+
+    <!--- Activity Create New Test Fragment -->
+    <string name="activity_create_new_test_fragment_setup_device_label">Siapkan Perangkat</string>
+    <string name="activity_create_new_test_fragment_steps_to_set_up_label">Langkah-langkah untuk menyiapkan</string>
+    <string name="activity_create_new_test_fragment_step1_label">1. Sambungkan mikroskop</string>
+    <string name="activity_create_new_test_fragment_step2_label">2. Tekan tombol mulai pada perangkat</string>
+    <string name="activity_create_new_test_fragment_button_connect">Hubungkan</string>
+
+    <!--- Activity Create Patient Info Fragment -->
+    <string name="activity_create_patient_info_fragment_label">Buat Info Pasien</string>
+    <string name="activity_create_patient_info_fragment_select_option_label">Pilih Opsi:</string>
+    <string name="activity_create_patient_info_fragment_sp_create_new_patient_label">Buat Pasien Baru</string>
+    <string name="activity_create_patient_info_fragment_sp_select_existing_patient_label">Pilih Pasien yang Ada</string>
+    <string name="activity_create_patient_info_fragment_sp_search_patient_id_hint">Cari ID Pasien</string>
+    <string name="activity_create_patient_info_fragment_name_label">Nama Pasien</string>
+    <string name="activity_create_patient_info_fragment_name_hint">Masukkan Nama</string>
+    <string name="activity_create_patient_info_fragment_gender_label">Jenis Kelamin</string>
+    <string name="activity_create_patient_info_fragment_email_label">Email</string>
+    <string name="activity_create_patient_info_fragment_email_hint">Email</string>
+    <string name="activity_create_patient_info_fragment_phone_number_label">Nomor Telepon</string>
+    <string name="activity_create_patient_info_fragment_phone_number_hint">Nomor Telepon</string>
+    <string name="activity_create_patient_info_fragment_birth_date_label">Tanggal Lahir</string>
+    <string name="activity_create_patient_info_fragment_birth_date_hint">TTTT-BB-HH</string>
+    <string name="activity_create_patient_info_fragment_age_label">Usia</string>
+    <string name="activity_create_patient_info_fragment_age_hint">Usia</string>
+    <string name="activity_create_patient_info_fragment_state_label">Provinsi</string>
+    <string name="activity_create_patient_info_fragment_address_label">Alamat</string>
+    <string name="activity_create_patient_info_fragment_address_hint">Masukkan alamat</string>
+    <string name="activity_create_patient_info_fragment_button_submit">Kirim</string>
+
+    <!--- Activity To Do List Dashboard -->
+    <string name="activity_todo_list_dashboard_header_cases_title">Kasus</string>
+    <string name="activity_todo_list_dashboard_header_device_status">Perangkat Terhubung</string>
+    <string name="activity_todo_list_dashboard_section_todo_list_label">Daftar Tugas</string>
+    <string name="activity_todo_list_dashboard_section_todo_list_count">(26)</string>
+    <string name="activity_todo_list_dashboard_sidebar_menu_all_cases_label">Semua Kasus</string>
+    <string name="activity_todo_list_dashboard_sidebar_menu_all_cases_count">27</string>
+    <string name="activity_todo_list_dashboard_sidebar_menu_for_review_label">Untuk Ditinjau</string>
+    <string name="activity_todo_list_dashboard_sidebar_menu_for_review_count">1</string>
+    <string name="activity_todo_list_dashboard_sidebar_menu_in_progress_label">Sedang Berjalan</string>
+    <string name="activity_todo_list_dashboard_sidebar_menu_in_progress_count">1</string>
+    <string name="activity_todo_list_dashboard_sidebar_menu_completed_label">Selesai</string>
+    <string name="activity_todo_list_dashboard_sidebar_menu_completed_count">0</string>
+    <string name="activity_todo_list_dashboard_filter_section_time_period_label">Periode Waktu</string>
+    <string name="activity_todo_list_dashboard_filter_section_status_label">Status</string>
+    <string name="activity_todo_list_dashboard_filter_section_type_label">Tipe</string>
+    <string name="activity_todo_list_dashboard_filter_section_gender_label">Jenis Kelamin</string>
+    <string name="activity_todo_list_dashboard_filter_section_age_label">Usia</string>
+    <string name="activity_todo_list_dashboard_sp_section_search_by_label">Cari berdasarkan: </string>
+    <string name="activity_todo_list_dashboard_sp_section_search_patient_id_hint">Cari ID Pasien</string>
+    <string name="activity_todo_list_dashboard_sp_section_pagination">1-10 dari 20</string>
+    <string name="activity_todo_list_dashboard_th_section_case_label">Kasus</string>
+    <string name="activity_todo_list_dashboard_th_section_todo_label">Tugas</string>
+    <string name="activity_todo_list_dashboard_th_section_patient_label">Pasien</string>
+    <string name="activity_todo_list_dashboard_th_section_birthdate_and_gender_label">Tanggal Lahir &amp; Jenis Kelamin</string>
+    <string name="activity_todo_list_dashboard_th_section_last_update_label">Pembaharuan Terakhir</string>
+    <string name="activity_todo_list_dashboard_th_section_status_label">Status</string>
+    <string name="activity_todo_list_dashboard_th_section_assessments_label">Penilaian</string>
+
+    <!---CRM: Activity Patient Dashboard -->
+    <string name="activity_patient_dashboard_header_patients_title">Pasien</string>
+    <string name="activity_patient_dashboard_header_device_status">Perangkat Terhubung</string>
+    <string name="activity_patient_dashboard_section_patients_label">Pasien</string>
+    <string name="activity_patient_dashboard_section_patients_count">(26)</string>
+    <string name="activity_patient_dashboard_section_button_add_new_patient">Tambah Pasien Baru</string>
+    <string name="activity_patient_dashboard_sidebar_menu_all_list_label">Semua Daftar</string>
+    <string name="activity_patient_dashboard_sidebar_menu_all_list_count">26</string>
+    <string name="activity_patient_dashboard_sidebar_menu_not_started_label">Belum Dimulai</string>
+    <string name="activity_patient_dashboard_sidebar_menu_not_started_count">25</string>
+    <string name="activity_patient_dashboard_sidebar_menu_in_progress_label">Sedang Berlangsung</string>
+    <string name="activity_patient_dashboard_sidebar_menu_in_progress_count">0</string>
+    <string name="activity_patient_dashboard_sidebar_menu_for_review_label">Untuk Ditinjau</string>
+    <string name="activity_patient_dashboard_sidebar_menu_for_review_count">0</string>
+    <string name="activity_patient_dashboard_sidebar_menu_completed_label">Selesai</string>
+    <string name="activity_patient_dashboard_sidebar_menu_completed_count">1</string>
+    <string name="activity_patient_dashboard_filter_section_time_period_label">Periode Waktu</string>
+    <string name="activity_patient_dashboard_filter_section_status_label">Status</string>
+    <string name="activity_patient_dashboard_filter_section_type_label">Tipe</string>
+    <string name="activity_patient_dashboard_filter_section_gender_label">Jenis Kelamin</string>
+    <string name="activity_patient_dashboard_filter_section_age_label">Usia</string>
+    <string name="activity_patient_dashboard_sp_section_pagination">1-10 dari 20</string>
+    <string name="activity_patient_dashboard_th_section_patient_id">ID Pasien</string>
+    <string name="activity_patient_dashboard_th_section_patient_name_label">Nama Pasien</string>
+    <string name="activity_patient_dashboard_th_section_birthdate_and_gender_label">Tanggal Lahir &amp; Jenis Kelamin</string>
+    <string name="activity_patient_dashboard_th_section_phone_number_and_email_label">Nomor Telepon &amp; Email</string>
+    <string name="activity_patient_dashboard_th_section_address_label">Alamat</string>
+    <string name="activity_patient_dashboard_th_section_case_label">Kasus</string>
+
+    <!---CRM: Edit Patient Dialog Fragment -->
+    <string name="edit_patient_dialog_fragment_title">Edit Pasien</string>
+    <string name="edit_patient_dialog_fragment_patient_name_label">Nama Pasien</string>
+    <string name="edit_patient_dialog_fragment_patient_name_hint">Masukkan Nama</string>
+    <string name="edit_patient_dialog_fragment_gender_label">Jenis Kelamin</string>
+    <string name="edit_patient_dialog_fragment_email_label">Email</string>
+    <string name="edit_patient_dialog_fragment_email_hint">Email</string>
+    <string name="edit_patient_dialog_fragment_phone_number_label">Nomor Telepon</string>
+    <string name="edit_patient_dialog_fragment_phone_number_hint">Nomor Telepon</string>
+    <string name="edit_patient_dialog_fragment_birth_date_label">Tanggal Lahir</string>
+    <string name="edit_patient_dialog_fragment_birth_date_hint">TTTT-BB-HH</string>
+    <string name="edit_patient_dialog_fragment_age_label">Usia</string>
+    <string name="edit_patient_dialog_fragment_age_hint">Usia</string>
+    <string name="edit_patient_dialog_fragment_address_label">Alamat</string>
+    <string name="edit_patient_dialog_fragment_address_hint">Masukkan Alamat</string>
+    <string name="edit_patient_dialog_fragment_button_submit">Kirim</string>
+
+    <!---CRM: Activity Patient Report Dashboard -->
+    <string name="activity_patient_report_dashboard_header_cases_title">Kasus</string>
+    <string name="activity_patient_report_dashboard_header_device_status">Perangkat Terhubung</string>
+    <string name="activity_patient_report_dashboard_section_reports_label">Laporan</string>
+    <string name="activity_patient_report_dashboard_section_reports_count">(26)</string>
+    <string name="activity_patient_report_dashboard_filter_section_time_period_label">Periode Waktu</string>
+    <string name="activity_patient_report_dashboard_filter_section_status_label">Status</string>
+    <string name="activity_patient_report_dashboard_filter_section_type_label">Tipe</string>
+    <string name="activity_patient_report_dashboard_filter_section_gender_label">Jenis Kelamin</string>
+    <string name="activity_patient_report_dashboard_filter_section_age_label">Usia</string>
+    <string name="activity_patient_report_dashboard_sp_section_search_by_label">Cari berdasarkan: </string>
+    <string name="activity_patient_report_dashboard_sp_section_search_patient_id_hint">Cari ID Pasien</string>
+    <string name="activity_patient_report_dashboard_sp_section_search_doctor_id_hint">Cari ID Dokter</string>
+    <string name="activity_patient_report_dashboard_sp_section_pagination">0-0 dari 0</string>
+    <string name="activity_patient_report_dashboard_th_section_case_label">Kasus</string>
+    <string name="activity_patient_report_dashboard_th_section_physician_label">Dokter</string>
+    <string name="activity_patient_report_dashboard_th_section_patient_label">Pasien</string>
+    <string name="activity_patient_report_dashboard_th_section_birthdate_and_gender_label">Tanggal Lahir &amp; Jenis Kelamin</string>
+    <string name="activity_patient_report_dashboard_th_section_last_update_label">Terakhir Diperbarui</string>
+    <string name="activity_patient_report_dashboard_th_section_status_label">Status</string>
+    <string name="activity_patient_report_dashboard_th_section_type_label">Tipe</string>
+    <string name="activity_patient_report_dashboard_th_section_actions_label">Aksi</string>
+
+    <!---CRM: Activity Patient Report Archive Dashboard -->
+    <string name="activity_patient_report_archive_dashboard_header_cases_title">Kasus</string>
+    <string name="activity_patient_report_archive_dashboard_header_device_status">Perangkat Terhubung</string>
+    <string name="activity_patient_report_archive_dashboard_section_archive_label">Arsip</string>
+    <string name="activity_patient_report_archive_dashboard_section_archive_count">(26)</string>
+    <string name="activity_patient_report_archive_dashboard_sp_section_pagination">0-0 dari 0</string>
+    <string name="activity_patient_report_archive_dashboard_th_section_case_label">Kasus</string>
+    <string name="activity_patient_report_archive_dashboard_th_section_physician_label">Dokter</string>
+    <string name="activity_patient_report_archive_dashboard_th_section_patient_label">Pasien</string>
+    <string name="activity_patient_report_archive_dashboard_th_section_birthdate_and_gender_label">Tanggal Lahir &amp; Jenis Kelamin</string>
+    <string name="activity_patient_report_archive_dashboard_th_section_last_update_label">Terakhir Diperbarui</string>
+    <string name="activity_patient_report_archive_dashboard_th_section_status_label">Status</string>
+    <string name="activity_patient_report_archive_dashboard_th_section_type_label">Tipe</string>
+    <string name="activity_patient_report_archive_dashboard_th_section_actions_label">Aksi</string>
+
+    <!---CRM: Dialog Archive Confirm -->
+    <string name="dialog_archive_confirm_message">Apakah Anda yakin ingin mengembalikan arsip data ini?</string>
+    <string name="dialog_archive_confirm_button_yes">Ya</string>
+    <string name="dialog_archive_confirm_button_no">Tidak</string>
+
+    <!---CRM: Activity Patient Report Dashboard PDF & Slides PDF Report-->
+    <string name="activity_patient_report_dashboard_pdf_header_title">Laporan Pemeriksaan Fundoskopi</string>
+    <string name="activity_patient_report_dashboard_pdf_mob_no_label">No. HP: (%1s)</string>
+    <string name="activity_patient_report_dashboard_pdf_patient_id_label">ID: (%1s)</string>
+    <string name="activity_patient_report_dashboard_pdf_sample_collected_at_label">Sampel Diambil Pada:</string>
+    <string name="activity_patient_report_dashboard_pdf_mdc_label">Deskripsi Mikroskopis &amp; Komentar</string>
+    <string name="activity_patient_report_dashboard_pdf_diagnosis_label">Diagnosis</string>
+    <string name="activity_patient_report_dashboard_pdf_visualization_label">Visualisasi</string>
+    <string name="activity_patient_report_dashboard_pdf_analysis_label">Analisis Kerusakan Serat Saraf Retina: Glaukoma</string>
+    <string name="activity_patient_report_dashboard_pdf_morphological_label">Pengukuran Morfologis</string>
+
+    <!--Activity Slides-->
+    <string name="activity_slides_header_device_status">Perangkat Terhubung</string>
+    <string name="activity_slides_patient_phone_number_label">Nomor Telepon</string>
+    <string name="activity_slides_patient_birthdate_label">Tanggal Lahir</string>
+    <string name="activity_slides_patient_gender_label">Jenis Kelamin</string>
+    <string name="activity_slides_patient_age_label">Usia</string>
+    <string name="activity_slides_assessment_count">Penilaian (%1s)</string>
+    <string name="activity_slides_active_count">%1s Slide Dipilih</string>
+    <string name="activity_slides_button_open_in_viewer">Buka di penampil</string>
+    <string name="activity_slides_annotation_count">Gambar dan dokumen (%1s)</string>
+    <string name="activity_slides_button_upload_files">Unggah Berkas</string>
+    <string name="activity_slides_photo_count">Galeri Foto (%1s)</string>
+
+    <!--- Activity Slides Detail-->
+    <string name="activity_slides_detail_header_slides_selected">Slide %1s dari %1s</string>
+    <string name="activity_slides_detail_header_button_complete_review">Selesaikan Review</string>
+    <string name="activity_slides_detail_header_button_save">Simpan</string>
+    <string name="activity_slides_detail_header_device_status">Perangkat Terhubung</string>
+    <string name="activity_slides_detail_menu_items_select_label">Pilih</string>
+    <string name="activity_slides_detail_menu_items_annotate_label">Anotasi</string>
+    <string name="activity_slides_detail_menu_items_image_settings_label">Pengaturan\nGambar</string>
+    <string name="activity_slides_detail_menu_items_as_label">Bentuk Anotasi</string>
+    <string name="activity_slides_detail_menu_items_as_gamma_label">Gamma</string>
+    <string name="activity_slides_detail_menu_items_as_gamma_count">2.5</string>
+    <string name="activity_slides_detail_menu_items_as_brightness_label">Kecerahan</string>
+    <string name="activity_slides_detail_menu_items_as_brightness_count">100%</string>
+    <string name="activity_slides_detail_menu_items_as_contrast_label">Kontras</string>
+    <string name="activity_slides_detail_menu_items_as_contrast_count">100%</string>
+    <string name="activity_slides_detail_menu_items_rgb_label">RGB</string>
+    <string name="activity_slides_detail_menu_items_rgb_red_label">Merah</string>
+    <string name="activity_slides_detail_menu_items_rgb_red_count">100%</string>
+    <string name="activity_slides_detail_menu_items_rgb_green_label">Hijau</string>
+    <string name="activity_slides_detail_menu_items_rgb_green_count">100%</string>
+    <string name="activity_slides_detail_menu_items_rgb_blue_label">Biru</string>
+    <string name="activity_slides_detail_menu_items_rgb_blue_count">100%</string>
+    <string name="activity_slides_detail_menu_items_button_reset">Atur Ulang</string>
+    <string name="activity_slides_detail_accordion_view_settings_label">Pengaturan Tampilan</string>
+    <string name="activity_slides_detail_accordion_ai_insights_label">Insight AI</string>
+    <string name="activity_slides_detail_accordion_diagnostic_label">Diagnostik</string>
+    <string name="activity_slides_detail_accordion_diagnostic_button_edit">Ubah</string>
+    <string name="activity_slides_detail_accordion_diagnostic_button_save">Simpan</string>
+    <string name="activity_slides_detail_accordion_diagnostic_button_cancel">Batal</string>
+    <string name="activity_slides_detail_accordion_patient_detail_label">Detail Pasien</string>
+
+    <!--- Activity Slides Detail: Dialog Create Annotation-->
+    <string name="dialog_create_annotation_set_annotation_label">Atur Anotasi</string>
+    <string name="dialog_create_annotation_label_label">Label</string>
+    <string name="dialog_create_annotation_label_hint">Perlu Ditinjau</string>
+    <string name="dialog_create_annotation_button_save">Simpan</string>
+    <string name="dialog_create_annotation_button_cancel">Batal</string>
+
+    <!--- Activity Slides Detail: Dialog Post Test Review-->
+    <string name="dialog_post_test_review_label">Tinjauan Pasca Tes</string>
+    <string name="dialog_post_test_review_date_label">Tanggal</string>
+    <string name="dialog_post_test_review_time_label">Waktu</string>
+    <string name="dialog_post_test_review_date_and_time_review_label">Tanggal &amp; Waktu Tinjauan</string>
+    <string name="dialog_post_test_review_mc_label">Deskripsi Mikroskopis &amp; Komentar</string>
+    <string name="dialog_post_test_review_mc_hint">Tulis deskripsi mikroskopis &amp; komentar</string>
+    <string name="dialog_post_test_review_pd_label">Diagnosa Kemungkinan</string>
+    <string name="dialog_post_test_review_pd_hint">Tulis diagnosa kemungkinan</string>
+    <string name="dialog_post_test_review_signature_label">Tanda Tangan</string>
+    <string name="dialog_post_test_review_button_change">Ubah</string>
+    <string name="dialog_post_test_review_button_submit">Kirim</string>
+
+    <!--- Activity Settings -->
+    <string name="activity_settings_settings">Pengaturan</string>
+    <string name="activity_settings_language_options">Opsi Bahasa</string>
+    <string name="activity_settings_english">English</string>
+    <string name="activity_settings_bahasa_indonesia">Bahasa Indonesia</string>
+    <string name="activity_settings_account_options">Opsi Akun</string>
+    <string name="activity_settings_log_out">Keluar</string>
+
+    <!--- Spinner Specialist -->
+    <string-array name="specialist_options">
+        <item>Pathologist</item>
+        <item>Surgeon</item>
+        <item>Cardiologists</item>
+    </string-array>
+
+    <!--- Spinner Gender -->
+    <string-array name="gender_options">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <!--- Spinner State -->
+    <string-array name="state_options">
+        <item>United States</item>
+        <item>Singapore</item>
+        <item>Macau</item>
+        <item>New York</item>
+    </string-array>
+
+    <!--- Spinner Time Period -->
+    <string-array name="time_period_options">
+        <item>All Time</item>
+        <item>Last 24 Hours</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+    </string-array>
+
+    <!--- Spinner Case Record Status -->
+    <string-array name="case_record_status_options">
+        <item>All Status</item>
+        <item>For Review</item>
+        <item>In Progress</item>
+        <item>Completed</item>
+    </string-array>
+
+    <!--- Spinner Type -->
+    <string-array name="type_options">
+        <item>All Type</item>
+        <item>Left</item>
+        <item>Right</item>
+        <item>Left &amp; Right</item>
+    </string-array>
+
+    <!--- Spinner Gender Filter-->
+    <string-array name="gender_filter_options">
+        <item>All Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <!--- Spinner Age -->
+    <string-array name="age_options">
+        <item>All Age</item>
+        <item>0-12 (Children)</item>
+        <item>13-17 (Teens)</item>
+        <item>18-64 (Adults)</item>
+        <item>65+ (Seniors)</item>
+    </string-array>
+
+
+    <!--- Spinner PatientResponse Status -->
+    <string-array name="patient_status_options">
+        <item>All Status</item>
+        <item>Not Started</item>
+        <item>For Review</item>
+        <item>In Progress</item>
+        <item>Completed</item>
+    </string-array>
+
+    <!--- Slides Details -->
+    <string name="technique_text"><b>TECHNIQUE</b>: pa and lateral views of the chest were obtained using a standard protocol.</string>
+    <string name="site_of_collection_text"><b>SITE OF COLLECTION</b>: left forearm</string>
+    <string name="clinical_history_text"><b>CLINICAL HISTORY</b>: chronic cough</string>
+    <string name="bullet_diagnosis_text">• Lung cancer\n• Benign tumor\n• Pulmonary nodule</string>
+
+    <!--    &lt;!&ndash;- Spinner Specialist &ndash;&gt;-->
+    <!--    <string-array name="specialist_options">-->
+    <!--        <item>Ahli Patologi</item>-->
+    <!--        <item>Ahli Bedah</item>-->
+    <!--        <item>Kardiolog</item>-->
+    <!--    </string-array>-->
+
+    <!--    &lt;!&ndash;- Spinner Gender &ndash;&gt;-->
+    <!--    <string-array name="gender_options">-->
+    <!--        <item>Laki-laki</item>-->
+    <!--        <item>Perempuan</item>-->
+    <!--    </string-array>-->
+
+    <!--    &lt;!&ndash;- Spinner State &ndash;&gt;-->
+    <!--    <string-array name="state_options">-->
+    <!--        <item>Amerika Serikat</item>-->
+    <!--        <item>Singapura</item>-->
+    <!--        <item>Makau</item>-->
+    <!--        <item>New York</item>-->
+    <!--    </string-array>-->
+
+    <!--    &lt;!&ndash;- Spinner Time Period &ndash;&gt;-->
+    <!--    <string-array name="time_period_options">-->
+    <!--        <item>Sepanjang Waktu</item>-->
+    <!--        <item>24 Jam Terakhir</item>-->
+    <!--        <item>Mingguan</item>-->
+    <!--        <item>Bulanan</item>-->
+    <!--    </string-array>-->
+
+    <!--    &lt;!&ndash;- Spinner Case Record Status &ndash;&gt;-->
+    <!--    <string-array name="case_record_status_options">-->
+    <!--        <item>Semua Status</item>-->
+    <!--        <item>Untuk Ditinjau</item>-->
+    <!--        <item>Sedang Berlangsung</item>-->
+    <!--        <item>Selesai</item>-->
+    <!--    </string-array>-->
+
+    <!--    &lt;!&ndash;- Spinner Type &ndash;&gt;-->
+    <!--    <string-array name="type_options">-->
+    <!--        <item>Semua Tipe</item>-->
+    <!--        <item>Kiri</item>-->
+    <!--        <item>Kanan</item>-->
+    <!--        <item>Kiri &amp; Kanan</item>-->
+    <!--    </string-array>-->
+
+    <!--    &lt;!&ndash;- Spinner Gender Filter&ndash;&gt;-->
+    <!--    <string-array name="gender_filter_options">-->
+    <!--        <item>Semua Gender</item>-->
+    <!--        <item>Laki-laki</item>-->
+    <!--        <item>Perempuan</item>-->
+    <!--    </string-array>-->
+
+    <!--    &lt;!&ndash;- Spinner Age &ndash;&gt;-->
+    <!--    <string-array name="age_options">-->
+    <!--        <item>Semua Usia</item>-->
+    <!--        <item>0-12 (Anak-anak)</item>-->
+    <!--        <item>13-17 (Remaja)</item>-->
+    <!--        <item>18-64 (Dewasa)</item>-->
+    <!--        <item>65+ (Lansia)</item>-->
+    <!--    </string-array>-->
+
+    <!--    &lt;!&ndash;- Spinner PatientResponse Status &ndash;&gt;-->
+    <!--    <string-array name="patient_status_options">-->
+    <!--        <item>Semua Status</item>-->
+    <!--        <item>Belum Dimulai</item>-->
+    <!--        <item>Untuk Ditinjau</item>-->
+    <!--        <item>Sedang Berlangsung</item>-->
+    <!--        <item>Selesai</item>-->
+    <!--    </string-array>-->
+
+</resources>

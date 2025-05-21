@@ -16,12 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.xray_frontend.R
 import com.example.xray_frontend.data.repo.ThunderscopeRepository
 import com.example.xray_frontend.databinding.ActivityTodoListDashboardBinding
+import com.example.xray_frontend.ui.baseactivity.BaseActivity
 import com.example.xray_frontend.ui.login.LoginActivity
 import com.example.xray_frontend.ui.slides.SlidesActivity
 import com.example.xray_frontend.ui.todolistdashboard.adapters.TodoAdapter
-import com.example.xray_frontend.ui.utils.CaseRecordStatus
+import com.example.xray_frontend.ui.utils.enums.CaseRecordStatus
 
-class TodoListDashboardActivity : AppCompatActivity() {
+class TodoListDashboardActivity : BaseActivity() {
     private lateinit var binding: ActivityTodoListDashboardBinding
 
     private val todoAdapter = TodoAdapter()

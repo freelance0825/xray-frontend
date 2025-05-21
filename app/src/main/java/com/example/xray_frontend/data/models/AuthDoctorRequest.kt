@@ -10,8 +10,8 @@ data class AuthDoctorRequest(
 	@field:SerializedName("specialist")
 	val specialist: String? = null,
 
-	@field:SerializedName("birth_date")
-	val birthDate: String? = null,
+	@field:SerializedName("date_of_birth")
+	val dateOfBirth: String? = null,
 
 	@field:SerializedName("name")
 	val name: String? = null,

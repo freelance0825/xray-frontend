@@ -54,7 +54,8 @@
                 android:id="@+id/device_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DEVICE CONNECTED"
+                android:text="@string/activity_slides_header_device_status"
+                android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -227,7 +228,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Phone Number"
+                            android:text="@string/activity_slides_patient_phone_number_label"
                             android:textSize="16sp" />
 
                         <TextView
@@ -256,7 +257,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Birthdate"
+                            android:text="@string/activity_slides_patient_birthdate_label"
                             android:textSize="16sp" />
 
                         <TextView
@@ -285,7 +286,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Gender"
+                            android:text="@string/activity_slides_patient_gender_label"
                             android:textSize="16sp" />
 
                         <TextView
@@ -314,7 +315,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Age"
+                            android:text="@string/activity_slides_patient_age_label"
                             android:textSize="16sp" />
 
                         <TextView
@@ -513,7 +514,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="start|center"
-                        android:text="@string/activity_slides_assesment_count"
+                        android:text="@string/activity_slides_assessment_count"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -537,7 +538,7 @@
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/header_blue"
                         android:drawableLeft="@drawable/ic_viewer"
-                        android:text="Open in viewer"
+                        android:text="@string/activity_slides_button_open_in_viewer"
                         android:textAllCaps="false"
                         android:translationX="10dp"
                         android:visibility="invisible"
@@ -632,6 +633,7 @@
         app:layout_constraintEnd_toStartOf="@id/layout_right_menu"
         app:layout_constraintTop_toBottomOf="@id/header_layout"
         tools:translationX="0dp" />
+
 
     <!-- Menu Layout -->
     <LinearLayout

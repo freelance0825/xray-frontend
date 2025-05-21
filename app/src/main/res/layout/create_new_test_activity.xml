@@ -33,7 +33,8 @@
             android:id="@+id/header_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CREATE NEW TEST"
+            android:text="@string/activity_create_new_test_header_title"
+            android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -64,7 +65,8 @@
                 android:id="@+id/device_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DEVICE CONNECTED"
+                android:text="@string/activity_create_new_test_header_device_status"
+                android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -157,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="Setup Device"
+                android:text="@string/activity_create_new_test_sidebar_menu_setup_device"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -185,7 +187,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="Patient Info"
+                android:text="@string/activity_create_new_test_sidebar_menu_patient_info"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </LinearLayout>
