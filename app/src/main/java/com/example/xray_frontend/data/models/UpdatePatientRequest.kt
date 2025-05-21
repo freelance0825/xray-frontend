@@ -14,8 +14,8 @@ data class UpdatePatientRequest(
 	@field:SerializedName("gender")
 	val gender: String? = null,
 
-	@field:SerializedName("dob")
-	val dob: String? = null,
+	@field:SerializedName("date_of_birth")
+	val dateOfBirth: String? = null,
 
 	@field:SerializedName("name")
 	val name: String? = null,

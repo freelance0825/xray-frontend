@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.xray_frontend.data.models.AnnotationResponse
 import com.example.xray_frontend.databinding.ItemAnnotationRowBinding
 import com.example.xray_frontend.databinding.ItemUploadAnnotationHeaderBinding
-import com.example.xray_frontend.ui.utils.Base64Helper
+import com.example.xray_frontend.ui.utils.helpers.Base64Helper
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 

@@ -17,8 +17,8 @@ import com.example.xray_frontend.data.models.SlidesItem
 import com.example.xray_frontend.data.models.UpdatePatientRequest
 import com.example.xray_frontend.data.remote.ApiConfig
 import com.example.xray_frontend.data.utils.SlidesMapper
-import com.example.xray_frontend.ui.utils.Base64Helper
-import com.example.xray_frontend.ui.utils.Result
+import com.example.xray_frontend.ui.utils.helpers.Base64Helper
+import com.example.xray_frontend.ui.utils.helpers.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -67,9 +67,19 @@ class ThunderscopeRepository(private val context: Context) {
     fun registerDoctor(authDoctorRequest: AuthDoctorRequest) = flow {
         emit(Result.Loading)
         try {
-            val registerResponse = apiService.registerDoctor(authDoctorRequest)
+            val formData = mutableMapOf<String, RequestBody>().apply {
+                authDoctorRequest.password?.let { this["password"] = it.toRequestBody() }
+                authDoctorRequest.specialist?.let { this["specialist"] = it.toRequestBody() }
+                authDoctorRequest.dateOfBirth?.let { this["dateOfBirth"] = it.toRequestBody() }
+                authDoctorRequest.name?.let { this["name"] = it.toRequestBody() }
+                authDoctorRequest.phoneNumber?.let { this["phoneNumber"] = it.toRequestBody() }
+                authDoctorRequest.email?.let { this["email"] = it.toRequestBody() }
+            }
 
-            // SAVE TOKEN TO DATASTORE
+            // Make the API call
+            val registerResponse = apiService.registerDoctor(formData)
+
+            // Save token and doctor ID to datastore
             runBlocking {
                 authDataStore.saveToken(registerResponse.token.toString())
                 authDataStore.saveDoctorId(registerResponse.id?.toInt() ?: 0)
@@ -136,7 +146,7 @@ class ThunderscopeRepository(private val context: Context) {
             patientRequest.name?.let { formData["name"] = it.toRequestBody() }
             patientRequest.email?.let { formData["email"] = it.toRequestBody() }
             patientRequest.phoneNumber?.let { formData["phoneNumber"] = it.toRequestBody() }
-            patientRequest.dob?.let { formData["dob"] = it.toRequestBody() }
+            patientRequest.dateOfBirth?.let { formData["dateOfBirth"] = it.toRequestBody() }
             patientRequest.age?.let { formData["age"] = it.toRequestBody() }
             patientRequest.address?.let { formData["address"] = it.toRequestBody() }
             patientRequest.gender?.let { formData["gender"] = it.toRequestBody() }
@@ -169,7 +179,7 @@ class ThunderscopeRepository(private val context: Context) {
             patientRequest.name?.let { formData["name"] = it.toRequestBody() }
             patientRequest.email?.let { formData["email"] = it.toRequestBody() }
             patientRequest.phoneNumber?.let { formData["phoneNumber"] = it.toRequestBody() }
-            patientRequest.dob?.let { formData["dob"] = it.toRequestBody() }
+            patientRequest.dateOfBirth?.let { formData["dateOfBirth"] = it.toRequestBody() }
             patientRequest.age?.let { formData["age"] = it.toRequestBody() }
             patientRequest.address?.let { formData["address"] = it.toRequestBody() }
             patientRequest.gender?.let { formData["gender"] = it.toRequestBody() }
@@ -239,6 +249,7 @@ class ThunderscopeRepository(private val context: Context) {
                 val slideRequest = SlideRequest().apply {
                     caseRecordId = caseId
                     mainImage = getFileFromDrawable(context, R.drawable.asset_image_annotate_4)
+//                    mainImage = getDicomFileFromRaw(context, R.raw.sample_dicom_asset)
                     qrCode = "QR1121231"
                     microscopicDc = "Test microscopic diagnosis and test"
                     specimenType = "Test Speciment"
@@ -256,7 +267,7 @@ class ThunderscopeRepository(private val context: Context) {
                         caseRecordResponse.slides.add(result.data)
                         emit(Result.Success(caseRecordResponse)) // only emit success if slide added
                     } else if (result is Result.Error) {
-                        Log.e("FTEST", "Slide upload failed: ${result.error}" )
+                        Log.e("FTEST", "Slide upload failed: ${result.error}")
                         emit(Result.Error("Slide upload failed: ${result.error}"))
                     }
                 }
@@ -273,7 +284,9 @@ class ThunderscopeRepository(private val context: Context) {
         emit(Result.Loading)
         try {
             val formData = mutableMapOf<String, RequestBody>()
-            slideRequest.caseRecordId?.let { formData["caseRecordId"] = it.toString().toRequestBody() }
+            slideRequest.caseRecordId?.let {
+                formData["caseRecordId"] = it.toString().toRequestBody()
+            }
             slideRequest.dateAndTime?.let { formData["dateAndTime"] = it.toRequestBody() }
             slideRequest.microscopicDc?.let { formData["microscopicDc"] = it.toRequestBody() }
             slideRequest.specimenType?.let { formData["specimenType"] = it.toRequestBody() }
@@ -482,6 +495,10 @@ class ThunderscopeRepository(private val context: Context) {
         slidesDao.clearAllSlides()
     }
 
+    suspend fun saveLanguage(language: String) = authDataStore.saveLanguage(language)
+
+    fun getLanguage() = authDataStore.getLanguage()
+
     suspend fun getDoctorId() = authDataStore.getDoctorId()
 
     // DUMMY SLIDES FOR CREATE NEW TEST PURPOSE!!!
@@ -506,5 +523,16 @@ class ThunderscopeRepository(private val context: Context) {
             out.flush()
         }
         return file
+    }
+
+    private fun getDicomFileFromRaw(context: Context, rawResId: Int): File {
+        val inputStream = context.resources.openRawResource(rawResId)
+        val tempFile = File(context.cacheDir, "temp_file.dcm")
+
+        FileOutputStream(tempFile).use { outputStream ->
+            inputStream.copyTo(outputStream)
+        }
+
+        return tempFile
     }
 }

@@ -2,7 +2,7 @@ package com.example.xray_frontend.data.models
 
 import android.graphics.Bitmap
 import android.os.Parcelable
-import com.example.xray_frontend.ui.utils.Base64Helper
+import com.example.xray_frontend.ui.utils.helpers.Base64Helper
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
@@ -59,4 +59,8 @@ data class SlidesItemWithAnnotationResponse(
 			}
 			return _bitmapImage
 		}
+
+	fun setBitmapImage(bitmap: Bitmap?) {
+		_bitmapImage = bitmap
+	}
 }

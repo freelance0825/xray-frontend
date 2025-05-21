@@ -2,11 +2,9 @@ package com.example.xray_frontend.ui.casedashboard
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.PopupMenu
 import android.widget.SearchView
 import android.widget.Spinner
 import android.widget.Toast
@@ -14,22 +12,22 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.xray_frontend.R
 import com.example.xray_frontend.data.repo.ThunderscopeRepository
 import com.example.xray_frontend.databinding.ActivityCaseDashboardBinding
+import com.example.xray_frontend.ui.baseactivity.BaseActivity
 import com.example.xray_frontend.ui.casedashboard.adapters.CaseAdapter
 import com.example.xray_frontend.ui.createnewtest.CreateNewTestActivity
-import com.example.xray_frontend.ui.login.LoginActivity
-import com.example.xray_frontend.ui.patientarchive.PatientArchiveActivity
-import com.example.xray_frontend.ui.patientdashboard.PatientDashboardActivity
-import com.example.xray_frontend.ui.patientreport.PatientReportActivity
+import com.example.xray_frontend.ui.crmpatient.patientarchive.PatientArchiveActivity
+import com.example.xray_frontend.ui.crmpatient.patientdashboard.PatientDashboardActivity
+import com.example.xray_frontend.ui.crmpatient.patientreport.PatientReportActivity
+import com.example.xray_frontend.ui.settings.SettingsActivity
 import com.example.xray_frontend.ui.slides.SlidesActivity
 import com.example.xray_frontend.ui.todolistdashboard.TodoListDashboardActivity
-import com.example.xray_frontend.ui.utils.CaseRecordStatus
+import com.example.xray_frontend.ui.utils.enums.CaseRecordStatus
 
-class CaseDashboardActivity : AppCompatActivity() {
+class CaseDashboardActivity : BaseActivity() {
 
     private lateinit var binding: ActivityCaseDashboardBinding
 
@@ -42,15 +40,7 @@ class CaseDashboardActivity : AppCompatActivity() {
     private val activityLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult: ActivityResult ->
             if (activityResult.resultCode == RESULT_OK) {
-                binding.spinnerGender.setSelection(0)
-                binding.spinnerAge.setSelection(0)
-                binding.spinnerStatus.setSelection(0)
-                binding.spinnerType.setSelection(0)
-                binding.spinnerTimePeriod.setSelection(0)
-                binding.svPatient.setQuery("", false)
-                binding.svDoctor.setQuery("", false)
-                binding.svPatient.clearFocus()
-                binding.svDoctor.clearFocus()
+//                refreshCases()
             }
         }
 
@@ -79,12 +69,14 @@ class CaseDashboardActivity : AppCompatActivity() {
 
             caseRecordsLiveData.observe(this@CaseDashboardActivity) { caseList ->
                 val totalCases = caseList.size
-                val forReviewCount = caseList.count { it.status == CaseRecordStatus.FOR_REVIEW.name }
-                val inProgressCount = caseList.count { it.status == CaseRecordStatus.IN_PROGRESS.name }
+                val forReviewCount =
+                    caseList.count { it.status == CaseRecordStatus.FOR_REVIEW.name }
+                val inProgressCount =
+                    caseList.count { it.status == CaseRecordStatus.IN_PROGRESS.name }
                 val completedCount = caseList.count { it.status == CaseRecordStatus.COMPLETED.name }
 
                 binding.apply {
-                    allCasesNumber.text = StringBuilder("($totalCases)")
+                    allCasesCount.text = StringBuilder("($totalCases)")
                     menuAllCasesCount.text = totalCases.toString()
                     menuForReviewCount.text = forReviewCount.toString()
                     menuInProgressCount.text = inProgressCount.toString()
@@ -102,14 +94,12 @@ class CaseDashboardActivity : AppCompatActivity() {
 
             filteredRecordsLiveData.observe(this@CaseDashboardActivity) { filteredRecords ->
                 caseAdapter.submitList(filteredRecords)
-                binding.textPagination.text =
-                    StringBuilder("Showing ${startIndex + 1} - ${endIndex} of ${totalRecords}")
+                binding.textPagination.text = "Showing ${startIndex + 1} - ${endIndex} of ${totalRecords}"
             }
 
             errorLiveData.observe(this@CaseDashboardActivity) { errorMessage ->
                 if (errorMessage.isNotEmpty()) {
-                    Toast.makeText(this@CaseDashboardActivity, errorMessage, Toast.LENGTH_LONG)
-                        .show()
+                    Toast.makeText(this@CaseDashboardActivity, errorMessage, Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -134,17 +124,25 @@ class CaseDashboardActivity : AppCompatActivity() {
             caseAdapter.onItemClick = { caseRecord ->
                 val intent = Intent(this@CaseDashboardActivity, SlidesActivity::class.java)
                 intent.putExtra(SlidesActivity.EXTRA_CASE_RECORD_ID, caseRecord.id)
-                startActivity(intent)
+                activityLauncher.launch(intent)
             }
 
             startNewTestButton.setOnClickListener {
                 val iNewTest = Intent(this@CaseDashboardActivity, CreateNewTestActivity::class.java)
-                iNewTest.putExtra(CreateNewTestActivity.EXTRA_DOCTOR_ID, caseDashboardViewModel.doctorId.toLong())
+                iNewTest.putExtra(
+                    CreateNewTestActivity.EXTRA_DOCTOR_ID,
+                    caseDashboardViewModel.doctorId.toLong()
+                )
                 activityLauncher.launch(iNewTest)
             }
 
             menuTodoList.setOnClickListener {
-                startActivity(Intent(this@CaseDashboardActivity, TodoListDashboardActivity::class.java))
+                activityLauncher.launch(
+                    Intent(
+                        this@CaseDashboardActivity,
+                        TodoListDashboardActivity::class.java
+                    )
+                )
             }
 
             menuCrmModule.setOnClickListener {
@@ -159,34 +157,30 @@ class CaseDashboardActivity : AppCompatActivity() {
 
             // Sub-features
             menuPatient.setOnClickListener {
-                startActivity(Intent(this@CaseDashboardActivity, PatientDashboardActivity::class.java))
+                activityLauncher.launch(
+                    Intent(
+                        this@CaseDashboardActivity,
+                        PatientDashboardActivity::class.java
+                    )
+                )
             }
 
             menuReport.setOnClickListener {
-                startActivity(Intent(this@CaseDashboardActivity, PatientReportActivity::class.java))
+                activityLauncher.launch(Intent(this@CaseDashboardActivity, PatientReportActivity::class.java))
             }
 
             menuArchive.setOnClickListener {
-                startActivity(Intent(this@CaseDashboardActivity, PatientArchiveActivity::class.java))
+                activityLauncher.launch(
+                    Intent(
+                        this@CaseDashboardActivity,
+                        PatientArchiveActivity::class.java
+                    )
+                )
             }
 
+            // Settings menu
             settingsIcon.setOnClickListener {
-                val popupMenu = PopupMenu(this@CaseDashboardActivity, settingsIcon) // or getContext() if inside Fragment
-                popupMenu.menuInflater.inflate(R.menu.settings_dropdown_menu, popupMenu.menu)
-
-                popupMenu.setOnMenuItemClickListener { item: MenuItem ->
-                    val id = item.itemId
-                    if (id == R.id.menu_logout) {
-                        // Handle Logout
-                        caseDashboardViewModel.logout()
-                        finishAffinity()
-                        startActivity(Intent(this@CaseDashboardActivity, LoginActivity::class.java))
-
-                        return@setOnMenuItemClickListener true
-                    }
-                    false
-                }
-                popupMenu.show()
+                activityLauncher.launch(Intent(this@CaseDashboardActivity, SettingsActivity::class.java))
             }
         }
     }
@@ -288,5 +282,24 @@ class CaseDashboardActivity : AppCompatActivity() {
         binding.btnPrevPage.setOnClickListener {
             caseDashboardViewModel.previousPage()
         }
+    }
+
+    private fun refreshCases() {
+        binding.spinnerGender.setSelection(0)
+        binding.spinnerAge.setSelection(0)
+        binding.spinnerStatus.setSelection(0)
+        binding.spinnerType.setSelection(0)
+        binding.spinnerTimePeriod.setSelection(0)
+        binding.svPatient.setQuery("", false)
+        binding.svDoctor.setQuery("", false)
+        binding.svPatient.clearFocus()
+        binding.svDoctor.clearFocus()
+
+        caseDashboardViewModel.fetchCaseRecords()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshCases()
     }
 }

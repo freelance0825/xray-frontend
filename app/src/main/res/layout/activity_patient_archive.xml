@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_gray"
-    tools:context=".ui.patientarchive.PatientArchiveActivity">
+    tools:context=".ui.crmpatient.patientarchive.PatientArchiveActivity">
 
     <!-- Header Layout -->
     <LinearLayout
@@ -31,7 +31,8 @@
             android:id="@+id/header_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CASES"
+            android:text="@string/activity_patient_report_archive_dashboard_header_cases_title"
+            android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -54,7 +55,8 @@
                 android:id="@+id/device_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DEVICE CONNECTED"
+                android:text="@string/activity_patient_report_archive_dashboard_header_device_status"
+                android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -109,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="Archive"
+            android:text="@string/activity_case_dashboard_sidebar_menu_crm_submenu_archive"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -123,7 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="(26)"
+            android:text="@string/activity_patient_report_archive_dashboard_section_archive_count"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             app:layout_constraintBaseline_toBaselineOf="@id/archive_label"
@@ -207,7 +209,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:padding="8dp"
-                    android:text="0-0 of 0"
+                    android:text="@string/activity_patient_report_archive_dashboard_sp_section_pagination"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -252,7 +254,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Case"
+            android:text="@string/activity_patient_report_archive_dashboard_th_section_case_label"
             android:textStyle="bold"
             android:textSize="14sp"
             android:gravity="center_vertical"/>
@@ -261,7 +263,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
-            android:text="Physician"
+            android:text="@string/activity_patient_report_archive_dashboard_th_section_physician_label"
             android:textStyle="bold"
             android:textSize="14sp"
             android:gravity="center_vertical"/>
@@ -270,7 +272,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
-            android:text="Patient"
+            android:text="@string/activity_patient_report_archive_dashboard_th_section_patient_label"
             android:textStyle="bold"
             android:textSize="14sp"
             android:gravity="center_vertical"/>
@@ -279,7 +281,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2.2"
-            android:text="Birthdate &amp; Gender"
+            android:text="@string/activity_patient_report_archive_dashboard_th_section_birthdate_and_gender_label"
             android:textStyle="bold"
             android:textSize="14sp"
             android:gravity="center_vertical"/>
@@ -288,7 +290,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.7"
-            android:text="Last Update"
+            android:text="@string/activity_patient_report_archive_dashboard_th_section_last_update_label"
             android:textStyle="bold"
             android:textSize="14sp"
             android:gravity="center_vertical"/>
@@ -297,7 +299,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Status"
+            android:text="@string/activity_patient_report_archive_dashboard_th_section_status_label"
             android:textStyle="bold"
             android:textSize="14sp"
             android:gravity="center_vertical"/>
@@ -306,7 +308,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Type"
+            android:text="@string/activity_patient_report_archive_dashboard_th_section_type_label"
             android:textStyle="bold"
             android:textSize="14sp"
             android:gravity="center_vertical"/>
@@ -315,7 +317,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Actions"
+            android:text="@string/activity_patient_report_archive_dashboard_th_section_actions_label"
             android:textStyle="bold"
             android:textSize="14sp"
             android:gravity="center"/>

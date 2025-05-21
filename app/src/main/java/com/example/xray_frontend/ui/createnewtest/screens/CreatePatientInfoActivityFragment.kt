@@ -38,6 +38,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.Calendar
+import kotlin.toString
 
 
 class CreatePatientInfoActivityFragment : Fragment() {
@@ -101,11 +102,21 @@ class CreatePatientInfoActivityFragment : Fragment() {
                     val activeSlidesList = arrayListOf<SlidesItem>()
                     activeSlidesList.addAll(caseRecord.slides.map { slideItem -> SlidesItem(id = slideItem.id) })
 
+                    val patientResponse = PatientResponse()
+
+                    viewModel?.selectedPatient?.value?.let { pat ->
+                        patientResponse.id = pat.id
+                        patientResponse.age = pat.age
+                        patientResponse.name = pat.name
+                        patientResponse.gender = pat.gender
+                        patientResponse.dateOfBirth = pat.dateOfBirth
+                    }
+
                     Handler(Looper.getMainLooper()).postDelayed({
                         requireActivity().finish()
                         val iDetail =
                             Intent(requireActivity(), SlidesDetailActivity::class.java)
-                        iDetail.putExtra(SlidesDetailActivity.EXTRA_PATIENT, viewModel?.selectedPatient?.value)
+                        iDetail.putExtra(SlidesDetailActivity.EXTRA_PATIENT, patientResponse)
                         iDetail.putExtra(SlidesDetailActivity.EXTRA_CASE_ID, caseRecord.id?.toLong())
                         iDetail.putParcelableArrayListExtra(SlidesDetailActivity.EXTRA_SLIDE_ID_LIST, activeSlidesList)
                         startActivity(iDetail)
@@ -168,8 +179,7 @@ class CreatePatientInfoActivityFragment : Fragment() {
 
         // Gender Spinner Setup
         val genderOptions = resources.getStringArray(R.array.gender_options)
-        val genderAdapter =
-            ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, genderOptions)
+        val genderAdapter = ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, genderOptions)
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerGender.adapter = genderAdapter
         binding.spinnerGender.setSelection(0)
@@ -178,8 +188,7 @@ class CreatePatientInfoActivityFragment : Fragment() {
         val stateOptions = mutableListOf("Select State").apply {
             addAll(resources.getStringArray(R.array.state_options))
         }
-        val stateAdapter =
-            ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, stateOptions)
+        val stateAdapter = ArrayAdapter(requireContext(), R.layout.custom_spinner_dropdown, stateOptions)
         stateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerState.adapter = stateAdapter
         binding.spinnerState.setSelection(0, false)
@@ -203,7 +212,7 @@ class CreatePatientInfoActivityFragment : Fragment() {
             name = binding.etPatientName.text.toString(),
             email = binding.etEmail.text.toString(),
             phoneNumber = binding.etPhoneNumber.text.toString(),
-            dob = binding.etBirthDate.text.toString(),
+            dateOfBirth = binding.etBirthDate.text.toString(),
             age = binding.etAge.text.toString(),
             address = binding.etAddress.text.toString(),
             gender = binding.spinnerGender.selectedItem.toString(),
@@ -230,16 +239,36 @@ class CreatePatientInfoActivityFragment : Fragment() {
             requireContext(),
             R.style.CustomDatePickerDialog,
             { _, selectedYear, selectedMonth, selectedDay ->
-                val selectedDate =
-                    String.format("%02d-%02d-%04d", selectedMonth + 1, selectedDay, selectedYear)
-                binding.etBirthDate.setText(selectedDate)
-                binding.etAge.setText((year - selectedYear).toString())
-            }, year, month, day
+                // Format: YYYY-MM-DD
+                val formattedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
+                binding.etBirthDate.setText(formattedDate)
+
+                // Auto-calculate age
+                calculateAndSetAge(selectedYear, selectedMonth, selectedDay)
+            },
+            year, month, day
         )
 
         datePickerDialog.datePicker.maxDate = calendar.timeInMillis
         datePickerDialog.show()
     }
+
+    private fun calculateAndSetAge(year: Int, month: Int, day: Int) {
+        val today = Calendar.getInstance()
+        val birthDate = Calendar.getInstance().apply {
+            set(year, month, day)
+        }
+
+        var age = today.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR)
+
+        // Adjust if birthdate hasn't occurred yet this year
+        if (today.get(Calendar.DAY_OF_YEAR) < birthDate.get(Calendar.DAY_OF_YEAR)) {
+            age--
+        }
+
+        binding.etAge.setText(age.toString())
+    }
+
 
     // Validate Input Fields
     private fun validateInputs(): Boolean {
@@ -260,9 +289,9 @@ class CreatePatientInfoActivityFragment : Fragment() {
             return false
         }
         if (binding.etBirthDate.text.isBlank() || !binding.etBirthDate.text.toString()
-                .matches(Regex("^\\d{2}-\\d{2}-\\d{4}$"))
+                .matches(Regex("^\\d{4}-\\d{2}-\\d{2}$"))
         ) {
-            binding.etBirthDate.error = "Enter birthdate in MM-DD-YYYY format"
+            binding.etBirthDate.error = "Enter birthdate in YYYY-MM-DD format"
             return false
         }
         if (binding.etAge.text.isBlank()) {

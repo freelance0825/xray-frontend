@@ -16,8 +16,11 @@ import okhttp3.ResponseBody
 import retrofit2.http.*
 
 interface ApiService {
+    @Multipart
     @POST("/api/doctors/add")
-    suspend fun registerDoctor(@Body authDoctorRequest: AuthDoctorRequest): AuthDoctorResponse
+    suspend fun registerDoctor(
+        @PartMap data: Map<String, @JvmSuppressWildcards RequestBody>
+    ): AuthDoctorResponse
 
     @POST("/api/doctors/login")
     suspend fun loginDoctor(@Body authDoctorRequest: AuthDoctorRequest): AuthDoctorResponse

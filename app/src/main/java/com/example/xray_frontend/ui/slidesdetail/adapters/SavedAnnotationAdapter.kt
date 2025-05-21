@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.xray_frontend.data.models.AnnotationResponse
 import com.example.xray_frontend.databinding.ItemImageProcessingAnnotationBinding
-import com.example.xray_frontend.ui.utils.Base64Helper
+import com.example.xray_frontend.ui.utils.helpers.Base64Helper
 
 class SavedAnnotationAdapter :
     ListAdapter<AnnotationResponse, SavedAnnotationAdapter.SavedAnnotationViewHolder>(DIFF_CALLBACK) {

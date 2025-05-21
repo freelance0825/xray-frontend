@@ -2,7 +2,7 @@ package com.example.xray_frontend.data.models
 
 import android.graphics.Bitmap
 import android.os.Parcelable
-import com.example.xray_frontend.ui.utils.Base64Helper
+import com.example.xray_frontend.ui.utils.helpers.Base64Helper
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
@@ -56,4 +56,25 @@ data class SlidesItem(
 			}
 			return _bitmapImage
 		}
+}
+
+fun SlidesItem.toSlidesItemWithAnnotationResponse(): SlidesItemWithAnnotationResponse {
+	return SlidesItemWithAnnotationResponse(
+		mainImage = this.mainImage,
+		qrCode = this.qrCode,
+		reportId = this.reportId,
+		diagnosis = this.diagnosis,
+		id = this.id,
+		specimenType = this.specimenType,
+		caseRecordResponse = this.caseRecordResponse,
+		aiInsights = this.aiInsights,
+		collectionSite = this.collectionSite,
+		clinicalData = this.clinicalData,
+		microscopicDc = this.microscopicDc,
+		isActive = this.isActive,
+		isCurrentlySelected = this.isCurrentlySelected,
+		slidesAnnotationList = mutableListOf()
+	).also {
+		it.setBitmapImage(this.bitmapImage)
+	}
 }

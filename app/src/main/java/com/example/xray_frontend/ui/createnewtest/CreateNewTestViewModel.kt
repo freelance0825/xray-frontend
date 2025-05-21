@@ -11,13 +11,14 @@ import com.example.xray_frontend.data.models.CaseRecordResponse
 import com.example.xray_frontend.data.models.PatientResponse
 import com.example.xray_frontend.data.models.UpdatePatientRequest
 import com.example.xray_frontend.data.repo.ThunderscopeRepository
-import com.example.xray_frontend.ui.utils.Result
+import com.example.xray_frontend.ui.utils.helpers.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.text.toInt
 
 class CreateNewTestViewModel(
     private val thunderscopeRepository: ThunderscopeRepository,

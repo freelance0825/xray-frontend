@@ -10,11 +10,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.xray_frontend.data.repo.ThunderscopeRepository
 import com.example.xray_frontend.databinding.ActivityLoginBinding
+import com.example.xray_frontend.ui.baseactivity.BaseActivity
 import com.example.xray_frontend.ui.casedashboard.CaseDashboardActivity
 import com.example.xray_frontend.ui.signup.SignUpActivity
-import com.example.xray_frontend.ui.utils.AsteriskPasswordTransformation
+import com.example.xray_frontend.ui.utils.helpers.AsteriskPasswordTransformation
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLoginBinding
 

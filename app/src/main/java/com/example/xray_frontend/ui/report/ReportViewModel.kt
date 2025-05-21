@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.xray_frontend.data.models.SlidesItem
 import com.example.xray_frontend.data.repo.ThunderscopeRepository
-import com.example.xray_frontend.ui.utils.Result
+import com.example.xray_frontend.ui.utils.helpers.Result
 import kotlinx.coroutines.launch
 
 class ReportViewModel(

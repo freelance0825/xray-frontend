@@ -66,7 +66,8 @@
                 android:layout_marginTop="20dp"
                 android:gravity="start"
                 android:paddingBottom="24dp"
-                android:text="SIGNUP"
+                android:text="@string/activity_sign_up_title"
+                android:textAllCaps="true"
                 android:textColor="@color/black"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -91,7 +92,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Email"
+                        android:text="@string/activity_sign_up_email_label"
                         android:textColor="@android:color/black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -109,7 +110,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/input_bg"
-                            android:hint="Enter email"
+                            android:hint="@string/activity_sign_up_email_hint"
                             android:inputType="textEmailAddress"
                             android:padding="18dp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -126,7 +127,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Password"
+                        android:text="@string/activity_sign_up_password_label"
                         android:textColor="@android:color/black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -146,7 +147,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/input_bg"
-                            android:hint="Enter your password"
+                            android:hint="@string/activity_sign_up_password_hint"
                             android:inputType="textPassword"
                             android:padding="18dp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -174,7 +175,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Name"
+                        android:text="@string/activity_sign_up_name_label"
                         android:textColor="@android:color/black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -191,7 +192,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/input_bg"
-                            android:hint="Enter name"
+                            android:hint="@string/activity_sign_up_name_hint"
                             android:inputType="textPersonName"
                             android:padding="18dp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -208,7 +209,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Phone Number"
+                        android:text="@string/activity_sign_up_phone_number_label"
                         android:textColor="@android:color/black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -225,7 +226,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/input_bg"
-                            android:hint="Enter phone number"
+                            android:hint="@string/activity_sign_up_phone_number_hint"
                             android:inputType="phone"
                             android:padding="18dp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -252,7 +253,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Specialist"
+                        android:text="@string/activity_sign_up_specialist_label"
                         android:textColor="@android:color/black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -308,7 +309,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Birthdate"
+                        android:text="@string/activity_sign_up_birthdate_label"
                         android:textColor="@android:color/black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -325,7 +326,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/input_bg"
-                            android:hint="MM-DD-YYYY"
+                            android:hint="@string/activity_sign_up_birthdate_hint"
                             android:inputType="none"
                             android:padding="18dp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -342,7 +343,7 @@
                 android:backgroundTint="@color/blue_dark"
                 android:drawableEnd="@drawable/ic_drawable_arrow_right"
                 android:gravity="start|center_vertical"
-                android:text="Create Account"
+                android:text="@string/activity_sign_up_button_create_account"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="14sp" />
@@ -362,7 +363,7 @@
                     android:layout_gravity="start|center_vertical"
                     android:layout_marginTop="28dp"
                     android:layout_marginBottom="30dp"
-                    android:text="Have Account?"
+                    android:text="@string/activity_sign_up_have_account_label"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -374,7 +375,7 @@
                     android:layout_marginStart="6dp"
                     android:layout_marginTop="28dp"
                     android:layout_marginBottom="30dp"
-                    android:text="Login Now"
+                    android:text="@string/activity_sign_up_login_now_label"
                     android:textColor="@color/blue"
                     android:textSize="14sp"
                     android:textStyle="bold" />

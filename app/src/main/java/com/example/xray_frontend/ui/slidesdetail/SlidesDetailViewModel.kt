@@ -14,13 +14,17 @@ import com.example.xray_frontend.data.models.AnnotationResponse
 import com.example.xray_frontend.data.models.PostTestReviewPayload
 import com.example.xray_frontend.data.models.SlidesItem
 import com.example.xray_frontend.data.models.SlidesItemWithAnnotationResponse
+import com.example.xray_frontend.data.models.toSlidesItemWithAnnotationResponse
 import com.example.xray_frontend.data.repo.ThunderscopeRepository
 import com.example.xray_frontend.ui.slidesdetail.customview.ShapeType
-import com.example.xray_frontend.ui.utils.Base64Helper
-import com.example.xray_frontend.ui.utils.Result
+import com.example.xray_frontend.ui.utils.helpers.Base64Helper
+import com.example.xray_frontend.ui.utils.helpers.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.io.File
+import kotlin.collections.addAll
+import kotlin.text.orEmpty
+import kotlin.text.toMutableList
 
 class SlidesDetailViewModel(
     private val thunderscopeRepository: ThunderscopeRepository,
@@ -95,6 +99,8 @@ class SlidesDetailViewModel(
                     }
 
                     is Result.Success -> {
+//                        val slideWithAnnotation= result.data.toSlidesItemWithAnnotationResponse()
+
                         errorMessage.value = ""
                         currentlySelectedSlidesItemWithAnnotationResponse.value = result.data
                         networkAnnotationList.value = result.data.slidesAnnotationList
@@ -122,7 +128,7 @@ class SlidesDetailViewModel(
                 currentlySelectedSlidesId.value ?: 0,
                 mappedAnnotationImages,
                 mappedAnnotationLabels
-                ).collect { result ->
+            ).collect { result ->
                 when (result) {
                     is Result.Loading -> {
                         // Handle loading here

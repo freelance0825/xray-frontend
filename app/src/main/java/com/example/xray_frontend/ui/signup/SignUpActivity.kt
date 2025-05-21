@@ -6,15 +6,15 @@ import android.util.Patterns
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import com.example.xray_frontend.ui.login.LoginActivity
 import com.example.xray_frontend.R
 import com.example.xray_frontend.data.models.AuthDoctorRequest
 import com.example.xray_frontend.data.repo.ThunderscopeRepository
 import com.example.xray_frontend.databinding.ActivitySignUpBinding
+import com.example.xray_frontend.ui.baseactivity.BaseActivity
 import com.example.xray_frontend.ui.casedashboard.CaseDashboardActivity
+import com.example.xray_frontend.ui.login.LoginActivity
 
-class SignUpActivity : AppCompatActivity() {
+class SignUpActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
 
@@ -81,7 +81,7 @@ class SignUpActivity : AppCompatActivity() {
         val email = binding.etEmail.text.toString().trim()
         val password = binding.etPassword.text.toString().trim()
         val phoneNumber = binding.etPhoneNumber.text.toString().trim()
-        val birthDate = binding.etBirthDate.text.toString().trim()
+        val dateOfBirth = binding.etBirthDate.text.toString().trim()
         val specialist = binding.spinnerSpecialist.selectedItem.toString()
 
         if (name.isEmpty()) {
@@ -100,8 +100,8 @@ class SignUpActivity : AppCompatActivity() {
             binding.etPhoneNumber.error = "Enter a valid phone number"
             return false
         }
-        if (birthDate.isEmpty() || !birthDate.matches(Regex("^\\d{2}-\\d{2}-\\d{4}$"))) {
-            binding.etBirthDate.error = "Enter birthdate in MM-DD-YYYY format"
+        if (dateOfBirth.isEmpty() || !dateOfBirth.matches(Regex("^\\d{4}-\\d{2}-\\d{2}$"))) {
+            binding.etBirthDate.error = "Enter birthdate in YYYY-MM-DD format"
             return false
         }
         if (specialist == "Select Specialist") {
@@ -119,10 +119,11 @@ class SignUpActivity : AppCompatActivity() {
             password = binding.etPassword.text.toString().trim(),
             phoneNumber = binding.etPhoneNumber.text.toString().trim(),
             specialist = binding.spinnerSpecialist.selectedItem.toString(),
-            birthDate = binding.etBirthDate.text.toString().trim()
+            dateOfBirth = binding.etBirthDate.text.toString().trim()
         )
 
         // Pass the Doctor object to the ViewModel for registration
         signUpViewModel.registerDoctor(authDoctorRequest)
     }
 }
+

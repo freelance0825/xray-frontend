@@ -35,12 +35,13 @@ import com.example.xray_frontend.data.models.PatientResponse
 import com.example.xray_frontend.data.models.PostTestReviewPayload
 import com.example.xray_frontend.data.models.SlidesItem
 import com.example.xray_frontend.databinding.ActivitySlidesDetailBinding
+import com.example.xray_frontend.ui.baseactivity.BaseActivity
 import com.example.xray_frontend.ui.customview.ImagePreviewDialogFragment
 import com.example.xray_frontend.ui.report.ReportActivity
 import com.example.xray_frontend.ui.slidesdetail.adapters.SavedAnnotationAdapter
 import com.example.xray_frontend.ui.slidesdetail.customview.ShapeType
 import com.example.xray_frontend.ui.slidesdetail.customview.ZoomImageView
-import com.example.xray_frontend.ui.utils.Result
+import com.example.xray_frontend.ui.utils.helpers.Result
 import com.google.android.material.button.MaterialButton
 import com.skydoves.colorpickerview.ColorEnvelope
 import com.skydoves.colorpickerview.ColorPickerDialog
@@ -60,7 +61,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-class SlidesDetailActivity : AppCompatActivity() {
+class SlidesDetailActivity : BaseActivity() {
     private lateinit var binding: ActivitySlidesDetailBinding
 
     private val caseId by lazy {
@@ -146,7 +147,7 @@ class SlidesDetailActivity : AppCompatActivity() {
                     binding.ivBaseImage.setImageBitmap(selectedSlides.bitmapImage)
 
                     binding.tvActiveSlides.text = getString(
-                        R.string.activity_slides_detail_slides_selected,
+                        R.string.activity_slides_detail_header_slides_selected,
                         (slideIdList.indexOfFirst { it == selectedSlides.id } + 1).toString(),
                         slideIdList.size.toString(),
                     )

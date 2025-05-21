@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_gray"
-    tools:context=".ui.patientreport.PatientReportActivity">
+    tools:context=".ui.crmpatient.patientreport.PatientReportActivity">
 
     <!-- Header Layout -->
     <LinearLayout
@@ -31,7 +31,8 @@
             android:id="@+id/header_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CASES"
+            android:text="@string/activity_patient_report_dashboard_header_cases_title"
+            android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -54,7 +55,8 @@
                 android:id="@+id/device_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DEVICE CONNECTED"
+                android:text="@string/activity_patient_report_dashboard_header_device_status"
+                android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -109,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="Reports"
+            android:text="@string/activity_patient_report_dashboard_section_reports_label"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -123,13 +125,171 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="(26)"
+            android:text="@string/activity_patient_report_dashboard_section_reports_count"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             app:layout_constraintBaseline_toBaselineOf="@id/reports_label"
             app:layout_constraintStart_toEndOf="@id/reports_label" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Filter Section -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/filterSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reports_section_layout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Time Period -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/activity_patient_report_dashboard_filter_section_time_period_label"
+                    android:textColor="@android:color/darker_gray" />
+
+                <Spinner
+                    android:id="@+id/spinnerTimePeriod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/gray_opacity_70" />
+
+            <!-- Status -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/activity_patient_report_dashboard_filter_section_status_label"
+                    android:textColor="@android:color/darker_gray" />
+
+                <Spinner
+                    android:id="@+id/spinnerStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/gray_opacity_70" />
+
+            <!-- Type -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/activity_patient_report_dashboard_filter_section_type_label"
+                    android:textColor="@android:color/darker_gray" />
+
+                <Spinner
+                    android:id="@+id/spinnerType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/gray_opacity_70" />
+
+            <!-- Gender -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/activity_patient_report_dashboard_filter_section_gender_label"
+                    android:textColor="@android:color/darker_gray" />
+
+                <Spinner
+                    android:id="@+id/spinnerGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/gray_opacity_70" />
+
+            <!-- Age (Now has spacing) -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/activity_patient_report_dashboard_filter_section_age_label"
+                    android:textColor="@android:color/darker_gray" />
+
+                <Spinner
+                    android:id="@+id/spinnerAge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <View
+        android:id="@+id/filter_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_opacity_70"
+
+        app:layout_constraintTop_toBottomOf="@id/filterSection" />
 
     <!-- Third Section (Buttons + Pagination) -->
     <androidx.cardview.widget.CardView
@@ -139,7 +299,7 @@
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reports_section_layout">
+        app:layout_constraintTop_toBottomOf="@id/filter_divider">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -156,6 +316,45 @@
                 android:gravity="center|start"
                 android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activity_patient_report_dashboard_sp_section_search_by_label" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card_grey_border"
+                    android:padding="6dp">
+
+                    <android.widget.SearchView
+                        android:id="@+id/sv_patient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:iconifiedByDefault="false"
+                        android:inputType="number"
+                        android:queryBackground="@android:color/transparent"
+                        android:queryHint="@string/activity_patient_report_dashboard_sp_section_search_patient_id_hint" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_card_grey_border"
+                    android:padding="6dp">
+
+                    <android.widget.SearchView
+                        android:id="@+id/sv_doctor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:iconifiedByDefault="false"
+                        android:inputType="number"
+                        android:queryBackground="@android:color/transparent"
+                        android:queryHint="@string/activity_patient_report_dashboard_sp_section_search_doctor_id_hint" />
+
+                </LinearLayout>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnOpenViewer"
@@ -207,7 +406,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:padding="8dp"
-                    android:text="0-0 of 0"
+                    android:text="@string/activity_patient_report_dashboard_sp_section_pagination"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -244,15 +443,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/actionSection"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/actionSection">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Case"
+            android:text="@string/activity_patient_report_dashboard_th_section_case_label"
             android:textStyle="bold"
             android:textSize="14sp"
             android:gravity="center_vertical"/>
@@ -261,7 +460,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
-            android:text="Physician"
+            android:text="@string/activity_patient_report_dashboard_th_section_physician_label"
             android:textStyle="bold"
             android:textSize="14sp"
             android:gravity="center_vertical"/>
@@ -270,7 +469,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
-            android:text="Patient"
+            android:text="@string/activity_patient_report_dashboard_th_section_patient_label"
             android:textStyle="bold"
             android:textSize="14sp"
             android:gravity="center_vertical"/>
@@ -279,7 +478,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2.2"
-            android:text="Birthdate &amp; Gender"
+            android:text="@string/activity_patient_report_dashboard_th_section_birthdate_and_gender_label"
             android:textStyle="bold"
             android:textSize="14sp"
             android:gravity="center_vertical"/>
@@ -288,7 +487,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.7"
-            android:text="Last Update"
+            android:text="@string/activity_patient_report_dashboard_th_section_last_update_label"
             android:textStyle="bold"
             android:textSize="14sp"
             android:gravity="center_vertical"/>
@@ -297,7 +496,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Status"
+            android:text="@string/activity_patient_report_dashboard_th_section_status_label"
             android:textStyle="bold"
             android:textSize="14sp"
             android:gravity="center_vertical"/>
@@ -306,7 +505,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Type"
+            android:text="@string/activity_patient_report_dashboard_th_section_type_label"
             android:textStyle="bold"
             android:textSize="14sp"
             android:gravity="center_vertical"/>
@@ -315,7 +514,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Actions"
+            android:text="@string/activity_patient_report_dashboard_th_section_actions_label"
             android:textStyle="bold"
             android:textSize="14sp"
             android:gravity="center"/>

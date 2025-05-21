@@ -18,7 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.XrayFrontend"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.report.ReportActivity"
             android:exported="false" />
@@ -57,17 +60,17 @@
             android:name=".ui.createnewtest.CreateNewTestActivity"
             android:exported="true" /> <!-- Create New Test Activity -->
         <activity
-            android:name=".ui.patientdashboard.PatientDashboardActivity"
+            android:name=".ui.crmpatient.patientdashboard.PatientDashboardActivity"
             android:exported="true"
             android:theme="@style/Theme.XrayFrontend.Material3" /> <!-- PatientResponse Activity -->
         <activity
-            android:name=".ui.patientreport.PatientReportActivity"
+            android:name=".ui.crmpatient.patientreport.PatientReportActivity"
             android:exported="true" /> <!-- PatientReport Activity -->
         <activity
-            android:name=".ui.patientarchive.PatientArchiveActivity"
+            android:name=".ui.crmpatient.patientarchive.PatientArchiveActivity"
             android:exported="true" /> <!-- PatientArchive Activity -->
         <activity
-            android:name=".ui.patientreportpdf.PatientReportPdfActivity"
+            android:name=".ui.crmpatient.patientreportpdf.PatientReportPdfActivity"
             android:exported="false" /> <!-- PatientReportPdf Activity -->
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -81,8 +84,8 @@
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
-            android:grantUriPermissions="true"
-            android:exported="false">
+            android:exported="false"
+            android:grantUriPermissions="true" >
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/pdf_paths" />

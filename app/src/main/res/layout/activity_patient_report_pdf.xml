@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:text="Fundoscopic Exam Report"
+                    android:text="@string/activity_patient_report_dashboard_pdf_header_title"
                     android:textColor="@color/black"
                     android:textSize="26sp"
                     android:textStyle="bold" />
@@ -222,7 +222,7 @@
                                 android:id="@+id/tv_patient_mobile_number"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/activity_report_mob_no"
+                                android:text="@string/activity_patient_report_dashboard_pdf_mob_no_label"
                                 android:textColor="@color/black"
                                 android:textSize="18sp" />
 
@@ -230,7 +230,7 @@
                                 android:id="@+id/tv_patient_id"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/activity_report_patient_id"
+                                android:text="@string/activity_patient_report_dashboard_pdf_patient_id_label"
                                 android:textColor="@color/black"
                                 android:textSize="18sp" />
 
@@ -279,7 +279,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Sample Collected At:"
+                                android:text="@string/activity_patient_report_dashboard_pdf_sample_collected_at_label"
                                 android:textColor="@color/black"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
@@ -381,7 +381,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:text="Microscopic Description &amp; Comments"
+                        android:text="@string/activity_patient_report_dashboard_pdf_mdc_label"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -407,7 +407,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:text="Diagnosis"
+                        android:text="@string/activity_patient_report_dashboard_pdf_diagnosis_label"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -441,7 +441,7 @@ Retinal detachment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:text="Visualization"
+                        android:text="@string/activity_patient_report_dashboard_pdf_visualization_label"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -518,7 +518,7 @@ Retinal detachment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="32dp"
-                        android:text="Analysis of Retinal Nerve Fiber Layer Defects : Glaucoma"
+                        android:text="@string/activity_patient_report_dashboard_pdf_analysis_label"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -932,7 +932,7 @@ Retinal detachment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="32dp"
-                        android:text="Morphological Measurement"
+                        android:text="@string/activity_patient_report_dashboard_pdf_morphological_label"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />
