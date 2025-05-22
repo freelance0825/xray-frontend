@@ -341,9 +341,8 @@
     <!--- Spinner Type -->
     <string-array name="type_options">
         <item>All Type</item>
-        <item>Left</item>
-        <item>Right</item>
-        <item>Left &amp; Right</item>
+        <item>Chest</item>
+        <item>Arm</item>
     </string-array>
 
     <!--- Spinner Gender Filter-->

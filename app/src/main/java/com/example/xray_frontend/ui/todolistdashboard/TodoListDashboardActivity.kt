@@ -120,7 +120,7 @@ class TodoListDashboardActivity : BaseActivity() {
             }
 
             settingsIcon.setOnClickListener {
-                val popupMenu = PopupMenu(this@TodoListDashboardActivity, settingsIcon) // or getContext() if inside Fragment
+           /*     val popupMenu = PopupMenu(this@TodoListDashboardActivity, settingsIcon) // or getContext() if inside Fragment
                 popupMenu.menuInflater.inflate(R.menu.settings_dropdown_menu, popupMenu.menu)
 
                 popupMenu.setOnMenuItemClickListener { item: MenuItem ->
@@ -135,7 +135,7 @@ class TodoListDashboardActivity : BaseActivity() {
                     }
                     false
                 }
-                popupMenu.show()
+                popupMenu.show()*/
             }
         }
     }
