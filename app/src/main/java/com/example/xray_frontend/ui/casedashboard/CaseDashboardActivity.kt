@@ -94,12 +94,14 @@ class CaseDashboardActivity : BaseActivity() {
 
             filteredRecordsLiveData.observe(this@CaseDashboardActivity) { filteredRecords ->
                 caseAdapter.submitList(filteredRecords)
-                binding.textPagination.text = "Showing ${startIndex + 1} - ${endIndex} of ${totalRecords}"
+                binding.textPagination.text =
+                    "Showing ${if (totalRecords > 0) startIndex + 1 else totalRecords} - ${endIndex} of ${totalRecords}"
             }
 
             errorLiveData.observe(this@CaseDashboardActivity) { errorMessage ->
                 if (errorMessage.isNotEmpty()) {
-                    Toast.makeText(this@CaseDashboardActivity, errorMessage, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@CaseDashboardActivity, errorMessage, Toast.LENGTH_LONG)
+                        .show()
                 }
             }
         }
@@ -166,7 +168,12 @@ class CaseDashboardActivity : BaseActivity() {
             }
 
             menuReport.setOnClickListener {
-                activityLauncher.launch(Intent(this@CaseDashboardActivity, PatientReportActivity::class.java))
+                activityLauncher.launch(
+                    Intent(
+                        this@CaseDashboardActivity,
+                        PatientReportActivity::class.java
+                    )
+                )
             }
 
             menuArchive.setOnClickListener {
@@ -180,7 +187,12 @@ class CaseDashboardActivity : BaseActivity() {
 
             // Settings menu
             settingsIcon.setOnClickListener {
-                activityLauncher.launch(Intent(this@CaseDashboardActivity, SettingsActivity::class.java))
+                activityLauncher.launch(
+                    Intent(
+                        this@CaseDashboardActivity,
+                        SettingsActivity::class.java
+                    )
+                )
             }
         }
     }
@@ -295,6 +307,8 @@ class CaseDashboardActivity : BaseActivity() {
         binding.svPatient.clearFocus()
         binding.svDoctor.clearFocus()
 
+        caseDashboardViewModel.fetchPatientRecords()
+        caseDashboardViewModel.fetchDoctorRecords()
         caseDashboardViewModel.fetchCaseRecords()
     }
 

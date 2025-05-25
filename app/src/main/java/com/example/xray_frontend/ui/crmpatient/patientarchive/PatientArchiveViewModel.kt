@@ -1,5 +1,6 @@
 package com.example.xray_frontend.ui.crmpatient.patientarchive
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.xray_frontend.data.models.CaseRecordResponse
 import com.example.xray_frontend.data.repo.ThunderscopeRepository
@@ -58,10 +59,12 @@ class PatientArchiveViewModel(private val repository: ThunderscopeRepository) : 
         val start = currentPage * _recordsPerPage
         val end = minOf(start + _recordsPerPage, allRecords.size)
 
-        if (start >= allRecords.size) return
+        if (start >= allRecords.size && allRecords.isNotEmpty()) {
+            return
+        }
 
         val currentList = _caseRecordsLiveData.value ?: mutableListOf()
-        val nextPageItems = allRecords.subList(start, end)
+        val nextPageItems = if (allRecords.isNotEmpty()) allRecords.subList(start, end) else mutableListOf()
 
         currentList.addAll(nextPageItems)
         _caseRecordsLiveData.value = currentList

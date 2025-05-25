@@ -115,6 +115,12 @@ class SlidesDetailActivity : BaseActivity() {
 
     private fun observeViewModel() {
         slidesDetailViewModel.apply {
+            errorMessage.observe(this@SlidesDetailActivity) {
+                if (!it.isNullOrEmpty()) {
+                    Toast.makeText(this@SlidesDetailActivity, it, Toast.LENGTH_SHORT).show()
+                }
+            }
+
             annotationSuccessMessage.observe(this@SlidesDetailActivity) {
                 if (!it.isNullOrEmpty()) {
                     Toast.makeText(this@SlidesDetailActivity, "Successfully Saved Annotations!", Toast.LENGTH_SHORT).show()

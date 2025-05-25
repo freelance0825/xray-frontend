@@ -57,7 +57,8 @@ class PatientArchiveAdapter(private val onArchive: (CaseRecordResponse, Boolean)
 
                 btnArchive.setOnClickListener {
                     val context = binding.root.context
-                    val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_archive_confirm, null)
+                    val dialogView =
+                        LayoutInflater.from(context).inflate(R.layout.dialog_archive_confirm, null)
 
                     val dialog = AlertDialog.Builder(context)
                         .setView(dialogView)
@@ -89,13 +90,19 @@ class PatientArchiveAdapter(private val onArchive: (CaseRecordResponse, Boolean)
         }
     }
 
-                companion object {
+    companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CaseRecordResponse>() {
-            override fun areItemsTheSame(oldItem: CaseRecordResponse, newItem: CaseRecordResponse): Boolean {
+            override fun areItemsTheSame(
+                oldItem: CaseRecordResponse,
+                newItem: CaseRecordResponse
+            ): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: CaseRecordResponse, newItem: CaseRecordResponse): Boolean {
+            override fun areContentsTheSame(
+                oldItem: CaseRecordResponse,
+                newItem: CaseRecordResponse
+            ): Boolean {
                 return oldItem == newItem
             }
         }

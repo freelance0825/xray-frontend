@@ -30,13 +30,16 @@ class CaseDashboardViewModel(private val repository: ThunderscopeRepository) : V
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    private val _patientRecordsLiveData = MutableLiveData<MutableList<PatientResponse>>(mutableListOf())
+    private val _patientRecordsLiveData =
+        MutableLiveData<MutableList<PatientResponse>>(mutableListOf())
     val patientRecordsLiveData: LiveData<MutableList<PatientResponse>> = _patientRecordsLiveData
 
-    private val _doctorRecordsLiveData = MutableLiveData<MutableList<AuthDoctorResponse>>(mutableListOf())
+    private val _doctorRecordsLiveData =
+        MutableLiveData<MutableList<AuthDoctorResponse>>(mutableListOf())
     val doctorRecordsLiveData: LiveData<MutableList<AuthDoctorResponse>> = _doctorRecordsLiveData
 
-    private val _caseRecordsLiveData = MutableLiveData<MutableList<CaseRecordResponse>>(mutableListOf())
+    private val _caseRecordsLiveData =
+        MutableLiveData<MutableList<CaseRecordResponse>>(mutableListOf())
     val caseRecordsLiveData: LiveData<MutableList<CaseRecordResponse>> = _caseRecordsLiveData
 
     private val _slidesRecordsLiveData = MutableLiveData<MutableList<SlidesItem>>(mutableListOf())
@@ -67,7 +70,7 @@ class CaseDashboardViewModel(private val repository: ThunderscopeRepository) : V
         fetchCaseRecords()
     }
 
-    private fun fetchPatientRecords() {
+    fun fetchPatientRecords() {
         viewModelScope.launch(Dispatchers.Main) {
             repository.getAllPatients().collect { result ->
                 when (result) {
@@ -90,7 +93,7 @@ class CaseDashboardViewModel(private val repository: ThunderscopeRepository) : V
         }
     }
 
-    private fun fetchDoctorRecords() {
+    fun fetchDoctorRecords() {
         viewModelScope.launch(Dispatchers.Main) {
             repository.getAllDoctors().collect { result ->
                 when (result) {

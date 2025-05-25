@@ -79,7 +79,9 @@ class TodoListDashboardActivity : BaseActivity() {
             filteredRecordsLiveData.observe(this@TodoListDashboardActivity) { filteredRecords ->
                 todoAdapter.submitList(filteredRecords)
                 binding.textPagination.text =
-                    StringBuilder("Showing ${startIndex + 1} - ${endIndex} of ${totalRecords}")
+                    StringBuilder(
+                        "Showing ${if (totalRecords > 0) startIndex + 1 else totalRecords} - ${endIndex} of ${totalRecords}"
+                    )
             }
 
             errorLiveData.observe(this@TodoListDashboardActivity) { errorMessage ->

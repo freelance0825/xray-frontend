@@ -248,7 +248,7 @@ class ThunderscopeRepository(private val context: Context) {
 
                 val slideRequest = SlideRequest().apply {
                     caseRecordId = caseId
-                    mainImage = getFileFromDrawable(context, R.drawable.asset_image_annotate_4)
+                    mainImage = getFileFromDrawable(context, R.drawable.asset_image_annotate_3)
 //                    mainImage = getDicomFileFromRaw(context, R.raw.sample_dicom_asset)
                     qrCode = "QR1121231"
                     microscopicDc = "Test microscopic diagnosis and test"
@@ -501,10 +501,6 @@ class ThunderscopeRepository(private val context: Context) {
 
     suspend fun getDoctorId() = authDataStore.getDoctorId()
 
-    // DUMMY SLIDES FOR CREATE NEW TEST PURPOSE!!!
-    suspend fun generateDummySlidesToDatabaseForMVPPurpose() {
-        insertSlides(slidesList)
-    }
 
     private fun bitmapToFile(bitmap: Bitmap, filename: String): File {
         val file = File.createTempFile(filename, null)

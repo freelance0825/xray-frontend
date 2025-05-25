@@ -69,7 +69,9 @@ class PatientReportActivity : BaseActivity() {
             filteredRecordsLiveData.observe(this@PatientReportActivity) { filteredRecords ->
                 patientReportAdapter.submitList(filteredRecords)
                 binding.textPagination.text =
-                    StringBuilder("Showing ${startIndex + 1} - ${endIndex} of ${totalRecords}")
+                    StringBuilder(
+                        "Showing ${if (totalRecords > 0) startIndex + 1 else totalRecords} - ${endIndex} of ${totalRecords}"
+                    )
             }
 
             errorLiveData.observe(this@PatientReportActivity) { errorMessage ->

@@ -54,7 +54,7 @@ class PatientArchiveActivity : BaseActivity() {
 
         patientArchiveViewModel.pageInfoLiveData.observe(this) { (start, end) ->
             val total = patientArchiveViewModel.totalRecords
-            binding.textPagination.text = "Showing $start–$end of $total"
+            binding.textPagination.text = "Showing ${if (total>0) start else total}–$end of $total"
         }
 
         patientArchiveViewModel.caseRecordsLiveData.observe(this) {
