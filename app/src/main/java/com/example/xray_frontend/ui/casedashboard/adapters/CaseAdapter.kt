@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.xray_frontend.R
 import com.example.xray_frontend.data.models.CaseRecordResponse
 import com.example.xray_frontend.databinding.ItemCaseRecordRowBinding
-import com.example.xray_frontend.ui.utils.Base64Helper
-import com.example.xray_frontend.ui.utils.CaseRecordStatus
+import com.example.xray_frontend.ui.utils.helpers.Base64Helper
+import com.example.xray_frontend.ui.utils.enums.CaseRecordStatus
 
 class CaseAdapter : ListAdapter<CaseRecordResponse, CaseAdapter.CaseViewHolder>(DIFF_CALLBACK) {
 

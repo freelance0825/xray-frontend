@@ -31,7 +31,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Post Test Review"
+                    android:text="@string/dialog_post_test_review_label"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -114,7 +114,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Date"
+                            android:text="@string/dialog_post_test_review_date_label"
                             android:textSize="18sp" />
 
                         <TextView
@@ -139,7 +139,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Time"
+                            android:text="@string/dialog_post_test_review_time_label"
                             android:textSize="18sp" />
 
                         <TextView
@@ -180,7 +180,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Date &amp; Time Review"
+                        android:text="@string/dialog_post_test_review_date_and_time_review_label"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -221,7 +221,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Microscopic description &amp; comments"
+                        android:text="@string/dialog_post_test_review_mc_label"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -233,7 +233,7 @@
                         android:layout_marginTop="6dp"
                         android:background="@drawable/bg_rounded_dialog_form_white"
                         android:gravity="start"
-                        android:hint="Write microscopic description &amp; comments"
+                        android:hint="@string/dialog_post_test_review_mc_hint"
                         android:importantForAutofill="no"
                         android:inputType="textMultiLine"
                         android:paddingHorizontal="24dp"
@@ -253,7 +253,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Possible Diagnosis"
+                        android:text="@string/dialog_post_test_review_pd_label"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -265,7 +265,7 @@
                         android:layout_marginTop="6dp"
                         android:background="@drawable/bg_rounded_dialog_form_white"
                         android:gravity="start"
-                        android:hint="Write possible diagnosis"
+                        android:hint="@string/dialog_post_test_review_pd_hint"
                         android:importantForAutofill="no"
                         android:inputType="textMultiLine"
                         android:paddingHorizontal="24dp"
@@ -290,7 +290,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Signature"
+                        android:text="@string/dialog_post_test_review_signature_label"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -352,7 +352,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Change"
+                                android:text="@string/dialog_post_test_review_button_change"
                                 android:layout_gravity="bottom"
                                 android:background="@drawable/bg_rounded_dialog_form"
                                 android:paddingHorizontal="12dp"
@@ -384,7 +384,7 @@
                 android:backgroundTint="@color/blue_dark"
                 android:paddingHorizontal="52dp"
                 android:paddingVertical="12dp"
-                android:text="Submit"
+                android:text="@string/dialog_post_test_review_button_submit"
                 android:textAllCaps="false"
                 app:cornerRadius="10dp" />
         </LinearLayout>

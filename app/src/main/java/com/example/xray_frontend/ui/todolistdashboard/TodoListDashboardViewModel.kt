@@ -10,8 +10,8 @@ import com.example.xray_frontend.data.models.CaseRecordResponse
 import com.example.xray_frontend.data.models.PatientResponse
 import com.example.xray_frontend.data.models.SlidesItem
 import com.example.xray_frontend.data.repo.ThunderscopeRepository
-import com.example.xray_frontend.ui.utils.CaseRecordStatus
-import com.example.xray_frontend.ui.utils.Result
+import com.example.xray_frontend.ui.utils.enums.CaseRecordStatus
+import com.example.xray_frontend.ui.utils.helpers.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.ParseException

@@ -12,7 +12,7 @@ import com.example.xray_frontend.data.models.CaseRecordResponse
 import com.example.xray_frontend.data.models.PhotoItem
 import com.example.xray_frontend.data.models.SlidesItem
 import com.example.xray_frontend.data.repo.ThunderscopeRepository
-import com.example.xray_frontend.ui.utils.Result
+import com.example.xray_frontend.ui.utils.helpers.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -144,8 +144,8 @@ class SlidesViewModel(
         return List(30) { index ->
             PhotoItem(
                 id = index,
-                imageRes = R.drawable.asset_image_annotate_1,
-                name = "Chest",
+                imageRes = R.drawable.asset_image_annotate_2,
+                name = "OD Nasal Color",
                 hour = hours[index % hours.size]
             )
         }.toMutableList()

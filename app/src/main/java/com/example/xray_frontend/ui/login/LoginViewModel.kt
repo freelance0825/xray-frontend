@@ -9,7 +9,7 @@ import com.example.xray_frontend.data.local.datastore.AuthDataStore
 import com.example.xray_frontend.data.models.AuthDoctorResponse
 import com.example.xray_frontend.data.repo.ThunderscopeRepository
 import kotlinx.coroutines.launch
-import com.example.xray_frontend.ui.utils.Result
+import com.example.xray_frontend.ui.utils.helpers.Result
 
 class LoginViewModel(private val thunderscopeRepository: ThunderscopeRepository) : ViewModel() {
 

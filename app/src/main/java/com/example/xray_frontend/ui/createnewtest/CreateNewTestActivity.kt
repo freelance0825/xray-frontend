@@ -8,10 +8,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.xray_frontend.R
 import com.example.xray_frontend.databinding.CreateNewTestActivityBinding
+import com.example.xray_frontend.ui.baseactivity.BaseActivity
 import com.example.xray_frontend.ui.createnewtest.screens.CreateNewTestActivityFragment
 import com.example.xray_frontend.ui.createnewtest.screens.CreatePatientInfoActivityFragment
 
-class CreateNewTestActivity : AppCompatActivity() {
+class CreateNewTestActivity : BaseActivity() {
 
     private lateinit var binding: CreateNewTestActivityBinding
 
@@ -89,6 +90,12 @@ class CreateNewTestActivity : AppCompatActivity() {
                 tvSetupDevice.setTypeface(null, Typeface.BOLD)
             }
         }
+    }
+
+    override fun onDestroy() {
+        val intent = Intent()
+        setResult(RESULT_OK, intent)
+        super.onDestroy()
     }
 
     companion object {

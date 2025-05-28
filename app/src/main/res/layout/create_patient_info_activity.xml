@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_gray"
-    tools:context=".ui.createnewtest.CreatePatientInfoActivity">
+    tools:context=".ui.createnewtest.CreateNewTestActivity">
 
     <!-- Header Layout -->
     <LinearLayout
@@ -198,9 +198,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout="@layout/create_patient_info_activity_fragment"/>
-
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

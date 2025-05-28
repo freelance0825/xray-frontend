@@ -17,14 +17,15 @@ import com.example.xray_frontend.data.models.CaseRecordResponse
 import com.example.xray_frontend.data.models.PatientResponse
 import com.example.xray_frontend.data.models.SlidesItem
 import com.example.xray_frontend.databinding.ActivitySlidesBinding
+import com.example.xray_frontend.ui.baseactivity.BaseActivity
 import com.example.xray_frontend.ui.slides.adapters.AnnotationAdapter
 import com.example.xray_frontend.ui.slides.adapters.MenuSlidesAdapter
 import com.example.xray_frontend.ui.slides.adapters.PhotoAdapter
 import com.example.xray_frontend.ui.slides.adapters.SlidesAdapter
 import com.example.xray_frontend.ui.slidesdetail.SlidesDetailActivity
-import com.example.xray_frontend.ui.utils.Base64Helper
+import com.example.xray_frontend.ui.utils.helpers.Base64Helper
 
-class SlidesActivity : AppCompatActivity() {
+class SlidesActivity : BaseActivity() {
     private lateinit var binding: ActivitySlidesBinding
 
     private val caseRecordId: Int? by lazy {
@@ -65,7 +66,7 @@ class SlidesActivity : AppCompatActivity() {
 
             slidesItem.observe(this@SlidesActivity) {
                 binding.tvAssesmentCount.text =
-                    getString(R.string.activity_slides_assesment_count, it.size.toString())
+                    getString(R.string.activity_slides_assessment_count, it.size.toString())
                 slidesAdapter.submitList(it)
             }
 

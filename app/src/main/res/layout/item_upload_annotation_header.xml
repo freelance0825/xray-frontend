@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginTop="16dp"
-        android:text="Upload Files"
+        android:text="@string/activity_slides_button_upload_files"
         android:textColor="@color/dark_blue"
         android:textStyle="bold" />
 

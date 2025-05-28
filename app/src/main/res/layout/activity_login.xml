@@ -66,7 +66,8 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="30dp"
                 android:gravity="start"
-                android:text="LOGIN TO ACCOUNT"
+                android:text="@string/activity_login_title"
+                android:textAllCaps="true"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -81,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
-                android:text="Email"
+                android:text="@string/activity_login_email_label"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
@@ -98,7 +99,7 @@
                 android:background="@drawable/edittext_bg"
                 android:drawableStart="@drawable/ic_email"
                 android:drawablePadding="16dp"
-                android:hint="Email"
+                android:hint="@string/activity_login_email_hint"
                 android:inputType="textEmailAddress"
                 android:padding="18dp" />
 
@@ -107,7 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
-                android:text="Password"
+                android:text="@string/activity_login_password_label"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
@@ -127,7 +128,7 @@
                     android:background="@drawable/edittext_bg"
                     android:drawableStart="@drawable/ic_lock"
                     android:drawablePadding="16dp"
-                    android:hint="Password"
+                    android:hint="@string/activity_login_password_hint"
                     android:inputType="textPassword"
                     android:padding="18dp" />
 
@@ -158,7 +159,7 @@
                 android:gravity="start|center_vertical"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
-                android:text="Login to account"
+                android:text="@string/activity_login_button_label"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white" />
 
@@ -177,7 +178,7 @@
                     android:layout_gravity="start|center_vertical"
                     android:layout_marginTop="28dp"
                     android:layout_marginBottom="30dp"
-                    android:text="Don't have an account?"
+                    android:text="@string/activity_login_dont_have_an_account_label"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -189,7 +190,7 @@
                     android:layout_marginStart="6dp"
                     android:layout_marginTop="28dp"
                     android:layout_marginBottom="30dp"
-                    android:text="Sign Up"
+                    android:text="@string/activity_login_sign_up_label"
                     android:textColor="@color/blue"
                     android:textSize="14sp"
                     android:textStyle="bold" />

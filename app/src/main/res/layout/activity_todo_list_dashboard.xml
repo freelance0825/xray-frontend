@@ -33,7 +33,8 @@
             android:id="@+id/header_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CASES"
+            android:text="@string/activity_todo_list_dashboard_header_cases_title"
+            android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -64,7 +65,8 @@
                 android:id="@+id/device_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DEVICE CONNECTED"
+                android:text="@string/activity_todo_list_dashboard_header_device_status"
+                android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -137,7 +139,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="To Do List"
+            android:text="@string/activity_todo_list_dashboard_section_todo_list_label"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -151,7 +153,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="(26)"
+            android:text="@string/activity_todo_list_dashboard_section_todo_list_count"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             app:layout_constraintBaseline_toBaselineOf="@id/todo_list_label"
@@ -193,7 +195,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="All Cases"
+                    android:text="@string/activity_todo_list_dashboard_sidebar_menu_all_cases_label"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
 
@@ -203,7 +205,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/sidebar_divider"
                     android:gravity="end"
-                    android:text="27"
+                    android:text="@string/activity_todo_list_dashboard_sidebar_menu_all_cases_count"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -221,7 +223,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="For Review"
+                    android:text="@string/activity_case_dashboard_sidebar_menu_for_review_label"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
 
@@ -231,7 +233,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/sidebar_divider"
                     android:gravity="end"
-                    android:text="1"
+                    android:text="@string/activity_todo_list_dashboard_sidebar_menu_for_review_count"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -248,7 +250,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="In Progress"
+                    android:text="@string/activity_todo_list_dashboard_sidebar_menu_in_progress_label"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
 
@@ -258,7 +260,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/sidebar_divider"
                     android:gravity="end"
-                    android:text="1"
+                    android:text="@string/activity_todo_list_dashboard_sidebar_menu_in_progress_count"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -275,7 +277,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Completed"
+                    android:text="@string/activity_todo_list_dashboard_sidebar_menu_completed_label"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
 
@@ -285,7 +287,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignEnd="@+id/sidebar_divider"
                     android:gravity="end"
-                    android:text="0"
+                    android:text="@string/activity_todo_list_dashboard_sidebar_menu_completed_count"
                     android:textColor="@android:color/black"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -338,7 +340,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Time period"
+                        android:text="@string/activity_todo_list_dashboard_filter_section_time_period_label"
                         android:textColor="@android:color/darker_gray" />
 
                     <Spinner
@@ -365,7 +367,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Status"
+                        android:text="@string/activity_todo_list_dashboard_filter_section_status_label"
                         android:textColor="@android:color/darker_gray" />
 
                     <Spinner
@@ -392,7 +394,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Type"
+                        android:text="@string/activity_todo_list_dashboard_filter_section_type_label"
                         android:textColor="@android:color/darker_gray" />
 
                     <Spinner
@@ -419,7 +421,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Gender"
+                        android:text="@string/activity_todo_list_dashboard_filter_section_gender_label"
                         android:textColor="@android:color/darker_gray" />
 
                     <Spinner
@@ -446,7 +448,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Age"
+                        android:text="@string/activity_todo_list_dashboard_filter_section_age_label"
                         android:textColor="@android:color/darker_gray" />
 
                     <Spinner
@@ -494,7 +496,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Search by: " />
+                        android:text="@string/activity_todo_list_dashboard_sp_section_search_by_label" />
 
 
                     <LinearLayout
@@ -510,7 +512,7 @@
                             android:iconifiedByDefault="false"
                             android:inputType="number"
                             android:queryBackground="@android:color/transparent"
-                            android:queryHint="Search Patient ID" />
+                            android:queryHint="@string/activity_todo_list_dashboard_sp_section_search_patient_id_hint" />
 
                     </LinearLayout>
 
@@ -564,7 +566,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:padding="8dp"
-                        android:text="1-10 of 20"
+                        android:text="@string/activity_todo_list_dashboard_sp_section_pagination"
                         android:textColor="@android:color/black"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -609,7 +611,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="Case"
+                android:text="@string/activity_todo_list_dashboard_th_section_case_label"
                 android:textStyle="bold" />
 
             <!-- Header: To do -->
@@ -619,7 +621,7 @@
                 android:layout_weight="2.7"
                 android:gravity="start"
                 android:padding="10dp"
-                android:text="To Do"
+                android:text="@string/activity_todo_list_dashboard_th_section_todo_label"
                 android:textStyle="bold" />
 
             <!-- Header: PatientResponse -->
@@ -628,7 +630,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.6"
                 android:gravity="start"
-                android:text="Patient"
+                android:text="@string/activity_todo_list_dashboard_th_section_patient_label"
                 android:textStyle="bold" />
 
             <!-- Header: Birthdate & Gender -->
@@ -637,7 +639,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2.2"
                 android:gravity="start"
-                android:text="Birthdate &amp; Gender"
+                android:text="@string/activity_todo_list_dashboard_th_section_birthdate_and_gender_label"
                 android:textStyle="bold" />
 
             <!-- Header: Last Update -->
@@ -646,7 +648,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
                 android:gravity="start"
-                android:text="Last Update"
+                android:text="@string/activity_todo_list_dashboard_th_section_last_update_label"
                 android:textStyle="bold" />
 
             <!-- Header: Status -->
@@ -656,7 +658,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2.5"
                 android:gravity="start"
-                android:text="Status"
+                android:text="@string/activity_todo_list_dashboard_th_section_status_label"
                 android:textStyle="bold" />
 
             <!-- Header: Assessment -->
@@ -665,7 +667,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:gravity="start"
-                android:text="Assessments"
+                android:text="@string/activity_todo_list_dashboard_th_section_assessments_label"
                 android:textStyle="bold" />
 
         </LinearLayout>

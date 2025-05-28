@@ -16,12 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.xray_frontend.R
 import com.example.xray_frontend.data.repo.ThunderscopeRepository
 import com.example.xray_frontend.databinding.ActivityTodoListDashboardBinding
+import com.example.xray_frontend.ui.baseactivity.BaseActivity
 import com.example.xray_frontend.ui.login.LoginActivity
 import com.example.xray_frontend.ui.slides.SlidesActivity
 import com.example.xray_frontend.ui.todolistdashboard.adapters.TodoAdapter
-import com.example.xray_frontend.ui.utils.CaseRecordStatus
+import com.example.xray_frontend.ui.utils.enums.CaseRecordStatus
 
-class TodoListDashboardActivity : AppCompatActivity() {
+class TodoListDashboardActivity : BaseActivity() {
     private lateinit var binding: ActivityTodoListDashboardBinding
 
     private val todoAdapter = TodoAdapter()
@@ -78,7 +79,9 @@ class TodoListDashboardActivity : AppCompatActivity() {
             filteredRecordsLiveData.observe(this@TodoListDashboardActivity) { filteredRecords ->
                 todoAdapter.submitList(filteredRecords)
                 binding.textPagination.text =
-                    StringBuilder("Showing ${startIndex + 1} - ${endIndex} of ${totalRecords}")
+                    StringBuilder(
+                        "Showing ${if (totalRecords > 0) startIndex + 1 else totalRecords} - ${endIndex} of ${totalRecords}"
+                    )
             }
 
             errorLiveData.observe(this@TodoListDashboardActivity) { errorMessage ->
@@ -119,7 +122,7 @@ class TodoListDashboardActivity : AppCompatActivity() {
             }
 
             settingsIcon.setOnClickListener {
-                val popupMenu = PopupMenu(this@TodoListDashboardActivity, settingsIcon) // or getContext() if inside Fragment
+           /*     val popupMenu = PopupMenu(this@TodoListDashboardActivity, settingsIcon) // or getContext() if inside Fragment
                 popupMenu.menuInflater.inflate(R.menu.settings_dropdown_menu, popupMenu.menu)
 
                 popupMenu.setOnMenuItemClickListener { item: MenuItem ->
@@ -134,7 +137,7 @@ class TodoListDashboardActivity : AppCompatActivity() {
                     }
                     false
                 }
-                popupMenu.show()
+                popupMenu.show()*/
             }
         }
     }

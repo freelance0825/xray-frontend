@@ -62,7 +62,7 @@
             android:id="@+id/tv_active_slides"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/activity_slides_detail_slides_selected"
+            android:text="@string/activity_slides_detail_header_slides_selected"
             android:textColor="@color/white"
             android:textSize="16sp" />
 
@@ -115,7 +115,7 @@
             android:layout_marginStart="16dp"
             android:backgroundTint="@color/dark_blue"
             android:drawableLeft="@drawable/ic_checkbox"
-            android:text="Complete Review"
+            android:text="@string/activity_slides_detail_header_button_complete_review"
             android:textAllCaps="false"
             android:textSize="12sp"
             app:cornerRadius="6dp" />
@@ -127,7 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:backgroundTint="@android:color/transparent"
-            android:text="Save"
+            android:text="@string/activity_slides_detail_header_button_save"
             android:textSize="12sp"
             app:cornerRadius="6dp"
             app:strokeColor="@color/dark_blue"
@@ -156,7 +156,8 @@
                 android:id="@+id/device_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DEVICE CONNECTED"
+                android:text="@string/activity_slides_detail_header_device_status"
+                android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -286,7 +287,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Select"
+                    android:text="@string/activity_slides_detail_menu_items_select_label"
                     android:textColor="@color/white" />
 
             </LinearLayout>
@@ -365,7 +366,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Annotate"
+                    android:text="@string/activity_slides_detail_menu_items_annotate_label"
                     android:textColor="@color/white" />
 
             </LinearLayout>
@@ -489,7 +490,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Image\nSettings"
+                    android:text="@string/activity_slides_detail_menu_items_image_settings_label"
                     android:textAlignment="center"
                     android:textColor="@color/white" />
 
@@ -566,7 +567,7 @@
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    tools:text="Annotation Shape" />
+                    tools:text="@string/activity_slides_detail_menu_items_as_label" />
 
                 <ImageView
                     android:id="@+id/btn_close"
@@ -659,14 +660,14 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Gamma"
+                            android:text="@string/activity_slides_detail_menu_items_as_gamma_label"
                             android:textColor="@color/white" />
 
                         <TextView
                             android:id="@+id/tv_gamma_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="2.5"
+                            android:text="@string/activity_slides_detail_menu_items_as_gamma_count"
                             android:textColor="@color/white" />
 
 
@@ -696,14 +697,14 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Brightness"
+                            android:text="@string/activity_slides_detail_menu_items_as_brightness_label"
                             android:textColor="@color/white" />
 
                         <TextView
                             android:id="@+id/tv_brightness_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="100%"
+                            android:text="@string/activity_slides_detail_menu_items_as_brightness_count"
                             android:textColor="@color/white" />
 
 
@@ -733,14 +734,14 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Contrast"
+                            android:text="@string/activity_slides_detail_menu_items_as_contrast_label"
                             android:textColor="@color/white" />
 
                         <TextView
                             android:id="@+id/tv_contrast_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="100%"
+                            android:text="@string/activity_slides_detail_menu_items_as_contrast_count"
                             android:textColor="@color/white" />
 
 
@@ -769,7 +770,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginVertical="12dp"
-                        android:text="RGB"
+                        android:text="@string/activity_slides_detail_menu_items_rgb_label"
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -785,14 +786,14 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Red"
+                            android:text="@string/activity_slides_detail_menu_items_rgb_red_label"
                             android:textColor="@color/white" />
 
                         <TextView
                             android:id="@+id/tv_red_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="100%"
+                            android:text="@string/activity_slides_detail_menu_items_rgb_red_count"
                             android:textColor="@color/white" />
 
 
@@ -822,14 +823,14 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Green"
+                            android:text="@string/activity_slides_detail_menu_items_rgb_green_label"
                             android:textColor="@color/white" />
 
                         <TextView
                             android:id="@+id/tv_green_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="100%"
+                            android:text="@string/activity_slides_detail_menu_items_rgb_green_count"
                             android:textColor="@color/white" />
 
 
@@ -859,14 +860,14 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Blue"
+                            android:text="@string/activity_slides_detail_menu_items_rgb_blue_label"
                             android:textColor="@color/white" />
 
                         <TextView
                             android:id="@+id/tv_blue_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="100%"
+                            android:text="@string/activity_slides_detail_menu_items_rgb_blue_count"
                             android:textColor="@color/white" />
 
 
@@ -898,7 +899,7 @@
                             android:layout_height="40dp"
                             android:layout_weight="1"
                             android:backgroundTint="@color/white"
-                            android:text="Reset"
+                            android:text="@string/activity_slides_detail_menu_items_button_reset"
                             android:textColor="@color/black"
                             app:cornerRadius="8dp" />
 
@@ -931,7 +932,7 @@
                     android:orientation="vertical"
                     app:textColor="@android:color/white"
                     app:textSize="16sp"
-                    app:title="View Settings"
+                    app:title="@string/activity_slides_detail_accordion_view_settings_label"
                     app:titleColor="@android:color/white"
                     app:titleIcon="@drawable/ic_eye"
                     app:titleSize="10sp">
@@ -1564,7 +1565,7 @@
                     android:orientation="vertical"
                     app:textColor="@android:color/white"
                     app:textSize="16sp"
-                    app:title="AI Insights"
+                    app:title="@string/activity_slides_detail_accordion_ai_insights_label"
                     app:titleColor="@android:color/white"
                     app:titleIcon="@drawable/ic_ai_insights"
                     app:titleSize="10sp">
@@ -1576,12 +1577,12 @@
                         android:paddingHorizontal="16dp"
                         android:paddingBottom="16dp">
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/tv_ai_insights"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            tools:text="Right eye: Normal fundus examination.\nLeft eye:  Borderline cup-to-disc ratio.  Possible drusen noted in the superior temporal quadrant.  Recommend follow-up examination in 6 months to monitor for any changes"-->
-<!--                            android:textColor="@color/white" />-->
+                        <!--                        <TextView-->
+                        <!--                            android:id="@+id/tv_ai_insights"-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            tools:text="Right eye: Normal fundus examination.\nLeft eye:  Borderline cup-to-disc ratio.  Possible drusen noted in the superior temporal quadrant.  Recommend follow-up examination in 6 months to monitor for any changes"-->
+                        <!--                            android:textColor="@color/white" />-->
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -1660,7 +1661,7 @@
                     android:orientation="vertical"
                     app:textColor="@android:color/white"
                     app:textSize="16sp"
-                    app:title="Diagnostic"
+                    app:title="@string/activity_slides_detail_accordion_diagnostic_label"
                     app:titleColor="@android:color/white"
                     app:titleIcon="@drawable/ic_list"
                     app:titleSize="10sp">
@@ -1722,7 +1723,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
                             android:backgroundTint="#51A3EF"
-                            android:text="Edit"
+                            android:text="@string/activity_slides_detail_accordion_diagnostic_button_edit"
                             android:textColor="@color/white"
                             android:textStyle="bold"
                             app:cornerRadius="8dp" />
@@ -1740,7 +1741,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="#51A3EF"
-                                android:text="Save"
+                                android:text="@string/activity_slides_detail_accordion_diagnostic_button_save"
                                 android:textColor="@color/white"
                                 android:textStyle="bold"
                                 app:cornerRadius="8dp" />
@@ -1750,7 +1751,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="#51A3EF"
-                                android:text="Cancel"
+                                android:text="@string/activity_slides_detail_accordion_diagnostic_button_cancel"
                                 android:layout_marginStart="12dp"
                                 android:textColor="@color/white"
                                 android:textStyle="bold"
@@ -1772,7 +1773,7 @@
                     android:orientation="vertical"
                     app:textColor="@android:color/white"
                     app:textSize="16sp"
-                    app:title="Patient Detail"
+                    app:title="@string/activity_slides_detail_accordion_patient_detail_label"
                     app:titleColor="@android:color/white"
                     app:titleIcon="@drawable/ic_person"
                     app:titleSize="10sp">

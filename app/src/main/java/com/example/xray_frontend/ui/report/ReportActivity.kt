@@ -14,12 +14,13 @@ import androidx.core.content.FileProvider
 import com.example.xray_frontend.R
 import com.example.xray_frontend.data.models.PatientResponse
 import com.example.xray_frontend.databinding.ActivityReportBinding
-import com.example.xray_frontend.ui.utils.Base64Helper
+import com.example.xray_frontend.ui.baseactivity.BaseActivity
+import com.example.xray_frontend.ui.utils.helpers.Base64Helper
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-class ReportActivity : AppCompatActivity() {
+class ReportActivity : BaseActivity() {
     private lateinit var binding: ActivityReportBinding
 
     private val slideId by lazy {
@@ -59,8 +60,8 @@ class ReportActivity : AppCompatActivity() {
                         val patientPrefix = if (it.gender?.lowercase().equals("female")) "Mrs." else "Mr."
                         tvPatientName.text = StringBuilder("$patientPrefix ${it.name}")
                         tvPatientGenderAge.text = StringBuilder("${patientResponseData?.gender} • ${patientResponseData?.age} years old")
-                        tvPatientMobileNumber.text = getString(R.string.activity_report_mob_no, it.phoneNumber.toString())
-                        tvPatientId.text = getString(R.string.activity_report_patient_id, it.id.toString())
+                        tvPatientMobileNumber.text = getString(R.string.activity_patient_report_dashboard_pdf_mob_no_label, it.phoneNumber.toString())
+                        tvPatientId.text = getString(R.string.activity_patient_report_dashboard_pdf_patient_id_label, it.id.toString())
                         tvPatientAddress.text = it.address
                     }
 
@@ -84,8 +85,8 @@ class ReportActivity : AppCompatActivity() {
                 val patientPrefix = if (it.gender?.lowercase().equals("female")) "Mrs." else "Mr."
                 tvPatientName.text = StringBuilder("$patientPrefix ${it.name}")
                 tvPatientGenderAge.text = StringBuilder("${patientResponseData?.gender} • ${patientResponseData?.age} years old")
-                tvPatientMobileNumber.text = getString(R.string.activity_report_mob_no, it.phoneNumber.toString())
-                tvPatientId.text = getString(R.string.activity_report_patient_id, it.id.toString())
+                tvPatientMobileNumber.text = getString(R.string.activity_patient_report_dashboard_pdf_mob_no_label, it.phoneNumber.toString())
+                tvPatientId.text = getString(R.string.activity_patient_report_dashboard_pdf_patient_id_label, it.id.toString())
                 tvPatientAddress.text = it.address
             }
         }
